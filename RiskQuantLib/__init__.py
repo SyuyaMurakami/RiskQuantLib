@@ -219,6 +219,7 @@ def listProjectTemplate():
 
     Returns
     -------
+    None
     """
     import os
     RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]

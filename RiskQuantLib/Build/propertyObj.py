@@ -46,7 +46,7 @@ class propertyObj():
             self.sourceListFilePath = self.listPathDict[self.belongTo]
         else:
             self.sourceListFilePath = ''
-        # print()
+
 
 
 
