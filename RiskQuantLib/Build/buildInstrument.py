@@ -4,7 +4,24 @@ import sys,os,importlib
 from RiskQuantLib.Tool.codeBuilderTool import pythonScriptBuilder
 
 
-def clearInstrumentPath(targetProjectPath = ''):
+def clearInstrumentPath(targetProjectPath:str = ''):
+    """
+    clearInstrumentPath(targetProjectPath:str = '') is a function to clear all instrument path registration
+    of RiskQuantLib.
+    This function won't delete instrument class files, it only remove path registration,
+    so that you can not use it directly through RiskQuantLib.Module,
+    or build new instrument classes inherited from it.
+    This function won't clear default instrument registration.
+
+    Parameters
+    ----------
+    targetProjectPath : str
+        The location of RiskQuantLib project where you want to clear all instrument registration.
+
+    Returns
+    -------
+    None
+    """
     # add path to pathObj
     if targetProjectPath == '':
         pathObjPath = sys.path[0]+os.sep+'RiskQuantLib'+os.sep+'Build'+os.sep+'pathObj.py'
@@ -23,7 +40,7 @@ def clearInstrumentPath(targetProjectPath = ''):
 
     newContent = former + '#-<pathDictBegin>\n    #-<pathDictEnd>' + ender
     with open(pathObjPath, 'w') as f:
-        f.truncate()  # 清空文件内容
+        f.truncate()  # clear all contents
         f.write(newContent.strip(' ').strip('\t\n'))
 
     # write list file path
@@ -39,7 +56,7 @@ def clearInstrumentPath(targetProjectPath = ''):
 
     newContent = former + '#-<listPathDictBegin>\n    #-<listPathDictEnd>' + ender
     with open(pathObjPath, 'w') as f:
-        f.truncate()  # 清空文件内容
+        f.truncate()  # clear all contents
         f.write(newContent.strip(' ').strip('\t\n'))
 
     # write class import path
@@ -55,7 +72,7 @@ def clearInstrumentPath(targetProjectPath = ''):
 
     newContent = former + '#-<classPathDictBegin>\n    #-<classPathDictEnd>' + ender
     with open(pathObjPath, 'w') as f:
-        f.truncate()  # 清空文件内容
+        f.truncate()  # clear all contents
         f.write(newContent.strip(' ').strip('\t\n'))
 
     # write class name path
@@ -71,10 +88,29 @@ def clearInstrumentPath(targetProjectPath = ''):
 
     newContent = former + '#-<classNameDictBegin>\n    #-<classNameDictEnd>' + ender
     with open(pathObjPath, 'w') as f:
-        f.truncate()  # 清空文件内容
+        f.truncate()  # clear all contents
         f.write(newContent.strip(' ').strip('\t\n'))
 
-def buildInstrumentPath(instrumentNameString,parentRQLClassName = '',targetProjectPath = ''):
+def buildInstrumentPath(instrumentNameString:str,parentRQLClassName:str = '',targetProjectPath:str = ''):
+    """
+    buildInstrumentPath(instrumentNameString:str,parentRQLClassName:str = '',targetProjectPath:str = '')
+    is a function to create new instrument class file paths. The created path will be beside its parent
+    RiskQuantLib class file. If path already exists, it won't be overwritten. If multiple RiskQuantLib parent
+    classes are specified, new class file will be beside the first RiskQuantLib parent class file.
+
+    Parameters
+    ----------
+    instrumentNameString : str
+        The instrument name that you want to create by.
+    parentRQLClassName : str or list
+        The parent RiskQuantLib class name or a list of class names.
+    targetProjectPath : str
+        The location of RiskQuantLib project where you want to create instrument path.
+
+    Returns
+    -------
+    List[filePath:str,setFilePath:str,listFilePath:str,setListFilePath:str]
+    """
     # create a dictionary path to hold new python script. this new dictionary should be besides its parent RQL class script
     c_instrumentNameString = instrumentNameString[0].capitalize()+instrumentNameString[1:]
     if targetProjectPath == '':
@@ -125,19 +161,19 @@ def buildInstrumentPath(instrumentNameString,parentRQLClassName = '',targetProje
     setListFilePathWD = "".join([i+os.sep for i in setListFilePath.split(os.sep)[:-1]]).strip(os.sep)
     if os.path.exists(filePathWD):
         with open(filePathWD + os.sep + '__init__.py', 'w+') as f:
-            f.truncate()  # 清空文件内容
+            f.truncate()  # clear all contents
     else:
         os.mkdir(filePathWD)
         with open(filePathWD+os.sep+'__init__.py', 'w+') as f:
-            f.truncate()  # 清空文件内容
+            f.truncate()  # clear all contents
 
     if os.path.exists(setFilePathWD):
         with open(setFilePathWD + os.sep + '__init__.py', 'w+') as f:
-            f.truncate()  # 清空文件内容
+            f.truncate()  # clear all contents
     else:
         os.mkdir(setFilePathWD)
         with open(setFilePathWD+os.sep+'__init__.py', 'w+') as f:
-            f.truncate()  # 清空文件内容
+            f.truncate()  # clear all contents
 
     if os.path.exists(listFilePathWD):
         with open(listFilePathWD + os.sep + '__init__.py', 'w+') as f:
@@ -145,15 +181,15 @@ def buildInstrumentPath(instrumentNameString,parentRQLClassName = '',targetProje
     else:
         os.mkdir(listFilePathWD)
         with open(listFilePathWD+os.sep+'__init__.py', 'w+') as f:
-            f.truncate()  # 清空文件内容
+            f.truncate()  # clear all contents
 
     if os.path.exists(setListFilePathWD):
         with open(setListFilePathWD + os.sep + '__init__.py', 'w+') as f:
-            f.truncate()  # 清空文件内容
+            f.truncate()  # clear all contents
     else:
         os.mkdir(setListFilePathWD)
         with open(setListFilePathWD+os.sep+'__init__.py', 'w+') as f:
-            f.truncate()  # 清空文件内容
+            f.truncate()  # clear all contents
 
     # add path to pathObj
     pathObjPath = targetProjectPath+os.sep+'Build'+os.sep+'pathObj.py'
@@ -172,7 +208,7 @@ def buildInstrumentPath(instrumentNameString,parentRQLClassName = '',targetProje
     add_code = r'''    pathDict["'''+c_instrumentNameString+'''"] = "'''+setFilePath.split('RiskQuantLib')[-1].strip(os.sep).replace(os.sep,'" + os.sep + "')+'''"'''
     newContent = former + '#-<pathDictBegin>\n' + middle.strip('\t').strip('    ') + add_code + '\n    #-<pathDictEnd>' + ender
     with open(pathObjPath, 'w') as f:
-        f.truncate()  # 清空文件内容
+        f.truncate()  # clear all contents
         f.write(newContent.strip(' ').strip('\t\n'))
 
     # write list file path
@@ -190,7 +226,7 @@ def buildInstrumentPath(instrumentNameString,parentRQLClassName = '',targetProje
     add_code = r'''    listPathDict["''' + c_instrumentNameString + '''"] = "''' + setListFilePath.split('RiskQuantLib')[-1].strip(os.sep).replace(os.sep, '" + os.sep + "') + '''"'''
     newContent = former + '#-<listPathDictBegin>\n' + middle.strip('\t').strip('    ') +add_code + '\n    #-<listPathDictEnd>' + ender
     with open(pathObjPath, 'w') as f:
-        f.truncate()  # 清空文件内容
+        f.truncate()  # clear all contents
         f.write(newContent.strip(' ').strip('\t\n'))
 
     # write class import path
@@ -208,7 +244,7 @@ def buildInstrumentPath(instrumentNameString,parentRQLClassName = '',targetProje
     add_code = r'''    classPathDict["'''+c_instrumentNameString+'''"] = "RiskQuantLib.'''+filePath.split('RiskQuantLib')[-1].strip(os.sep).replace(os.sep,'.').strip('.py')+'''"'''
     newContent = former + '#-<classPathDictBegin>\n' + middle.strip('\t').strip('    ') +add_code + '\n    #-<classPathDictEnd>' + ender
     with open(pathObjPath, 'w') as f:
-        f.truncate()  # 清空文件内容
+        f.truncate()  # clear all contents
         f.write(newContent.strip(' ').strip('\t\n'))
 
     # write class name path
@@ -226,13 +262,42 @@ def buildInstrumentPath(instrumentNameString,parentRQLClassName = '',targetProje
     add_code = r'''    classNameDict["'''+c_instrumentNameString+'''"] = "'''+instrumentNameString+'''"'''
     newContent = former + '#-<classNameDictBegin>\n' + middle.strip('\t').strip('    ') +add_code + '\n    #-<classNameDictEnd>' + ender
     with open(pathObjPath, 'w') as f:
-        f.truncate()  # 清空文件内容
+        f.truncate()  # clear all contents
         f.write(newContent.strip(' ').strip('\t\n'))
 
     return [filePath,setFilePath,listFilePath,setListFilePath]
 
 
-def buildInstrumentObj(instrumentNameString, parentRQLClassName = '', parentQuantLibClassName = '', libraryName = '', defaultInstrumentType = ''):
+def buildInstrumentObj(instrumentNameString:str, parentRQLClassName:str = '', parentQuantLibClassName:str = '', libraryName:str = '', defaultInstrumentType:str = ''):
+    """
+    buildInstrumentObj(instrumentNameString:str, parentRQLClassName:str = '',
+    parentQuantLibClassName:str = '', libraryName:str = '', defaultInstrumentType:str = '')
+    is a function to generate source code of new instrument file, given instrument name and which class it
+    inherited from.
+
+    Parameters
+    ----------
+    instrumentNameString : str
+        The instrument name you want to create python source file by.
+    parentRQLClassName : str or list
+        The parent RiskQuantLib class name you want the new instrument class to
+        inherit from. If 'Any' is specified, it will inherit from RiskQuantLib.Security.base
+        If ''(blank string) is specified, it will inherit from no RiskQuantLib class
+        and created as an independent new class, located at project root path.
+    parentQuantLibClassName : str
+        The parent QuantLib class name you want the new instrument class to
+        inherit from. If ''(blank string) is specified, it will inherit from no QuantLib class.
+    libraryName : str or list
+        Other library you want to use in new instrument class file.
+    defaultInstrumentType :str
+        The default type you want to mark your new instrument class as.
+
+    Returns
+    -------
+    psb : pythonScriptBuilder
+        A pythonScriptBuilder object.
+
+    """
     c_instrumentNameString = instrumentNameString[0].capitalize() + instrumentNameString[1:]
     import RiskQuantLib.Build.pathObj as POJ
     importlib.reload(POJ)
@@ -322,7 +387,24 @@ def buildInstrumentObj(instrumentNameString, parentRQLClassName = '', parentQuan
     return psb
 
 
-def buildInstrumentSet(instrumentNameString, parentRQLClassName=''):
+def buildInstrumentSet(instrumentNameString: str, parentRQLClassName: str = ''):
+    """
+    buildInstrumentSet(instrumentNameString: str, parentRQLClassName: str = '')
+    is a function to generate code of instrument set class, given instrument name
+    and which parent RiskQuantLib class it inherited from.
+
+    Parameters
+    ----------
+    instrumentNameString : str
+        The name you want to create instrument set class by.
+    parentRQLClassName : str or list
+        Which RiskQuantLib set class it inherits from. This parameter can also be a list.
+
+    Returns
+    -------
+    psb : pythonScriptBuilder
+        A python ScriptBuilder object
+    """
     c_instrumentNameString = instrumentNameString[0].capitalize() + instrumentNameString[1:]
     import RiskQuantLib.Build.pathObj as POJ
     importlib.reload(POJ)
@@ -360,7 +442,26 @@ def buildInstrumentSet(instrumentNameString, parentRQLClassName=''):
     psb.code.add_line(r'''    #-<End>''')
     return psb
 
-def buildInstrumentList(instrumentNameString, parentRQLClassName='',securityType = ''):
+def buildInstrumentList(instrumentNameString: str, parentRQLClassName: str = '',securityType: str = ''):
+    """
+    buildInstrumentList(instrumentNameString: str, parentRQLClassName: str = '',securityType: str = '')
+    is a function to generate code of instrument list class, given instrument name
+    and which parent RiskQuantLib class it inherited from.
+
+    Parameters
+    ----------
+    instrumentNameString : str
+        The name you want to create instrument list class by.
+    parentRQLClassName : str or list
+        Which RiskQuantLib list class it inherits from. This parameter can also be a list.
+    securityType : str
+        The default type of instrument list.
+
+    Returns
+    -------
+    psb : pythonScriptBuilder
+        A python ScriptBuilder object
+    """
     c_instrumentNameString = instrumentNameString[0].capitalize() + instrumentNameString[1:]
     import RiskQuantLib.Build.pathObj as POJ
     importlib.reload(POJ)
@@ -425,7 +526,25 @@ def buildInstrumentList(instrumentNameString, parentRQLClassName='',securityType
     psb.endClass()
     return psb
 
-def buildInstrumentListSet(instrumentNameString, parentRQLClassName=''):
+def buildInstrumentListSet(instrumentNameString: str, parentRQLClassName: str = ''):
+    """
+    buildInstrumentListSet(instrumentNameString: str, parentRQLClassName: str = '')
+    is a function to generate code of instrument list set class, given instrument name
+    and which parent RiskQuantLib list set class it inherited from.
+
+    Parameters
+    ----------
+    instrumentNameString : str
+        The name you want to create instrument list set class by.
+    parentRQLClassName : str or list
+        Which RiskQuantLib list set class it inherits from. This parameter can also be a list.
+
+    Returns
+    -------
+    psb : pythonScriptBuilder
+        A python ScriptBuilder object
+
+    """
     c_instrumentNameString = instrumentNameString[0].capitalize() + instrumentNameString[1:]
     import RiskQuantLib.Build.pathObj as POJ
     importlib.reload(POJ)
@@ -462,14 +581,58 @@ def buildInstrumentListSet(instrumentNameString, parentRQLClassName=''):
     psb.code.add_line(r'''    #-<End>''')
     return psb
 
-def commitBuildInstrument(sourcePSBObj,targetPath):
+def commitBuildInstrument(sourcePSBObj:pythonScriptBuilder,targetPath:str):
+    """
+    commitBuildInstrument(sourcePSBObj:pythonScriptBuilder,targetPath:str)
+    is a function to commit generated source code change to target files.
+    If the file already exists, it will skip.
+
+    Parameters
+    ----------
+    sourcePSBObj : pythonScriptBuilder
+        The pythonScriptBuilder object, which contains source code.
+    targetPath : str
+        The file path where you want to overwrite contents with new contents.
+
+    Returns
+    -------
+    None
+    """
     if os.path.exists(targetPath):
         pass
     else:
         sourcePSBObj.writeToFile(targetPath)
 
 
-def buildInstrument(instrumentNameString, parentRQLClassName = '', parentQuantLibClassName = '', libraryName = '', defaultInstrumentType = '',targetProjectPath=''):
+def buildInstrument(instrumentNameString:str, parentRQLClassName:str = '', parentQuantLibClassName:str = '', libraryName:str = '', defaultInstrumentType:str = '',targetProjectPath:str=''):
+    """
+    buildInstrument(instrumentNameString:str, parentRQLClassName:str = '',
+    parentQuantLibClassName:str = '', libraryName:str = '', defaultInstrumentType:str = '',
+    targetProjectPath:str='') is the entrance of build instruments.
+    It call four functions to generate source code of instrument class, instrument set class,
+    instrument list class, instrument list set class. Then it commit change to target files.
+
+    Parameters
+    ----------
+    instrumentNameString : str
+        The name you want to create new instrument by.
+    parentRQLClassName : str or list
+        The parent RiskQuantLib class you want to inherit from. This parameter can also be a list.
+    parentQuantLibClassName : str
+        The parent QuantLib class you want to inherit from.
+    libraryName : str
+        Other library you want to include in your source file.
+    defaultInstrumentType : str
+        The default instrument type you want to mark your new instrument.
+    targetProjectPath : str
+        The RiskQuantLib project path where you want to build instruments. A ''(blank string) will
+        specify this project.
+
+    Returns
+    -------
+    None
+
+    """
     pathList = buildInstrumentPath(instrumentNameString, parentRQLClassName=parentRQLClassName)
     IO = buildInstrumentObj(instrumentNameString, parentRQLClassName, parentQuantLibClassName, libraryName, defaultInstrumentType)
     IOS = buildInstrumentSet(instrumentNameString, parentRQLClassName)
