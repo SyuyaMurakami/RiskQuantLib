@@ -111,6 +111,23 @@ def packProject():
     print('RiskQuantLib Project Packaged!')
 
 def addProjectTemplate():
+    """
+    addProjectTemplate() is a function to add a RiskQuantLib project '.zip' file to library.
+
+    Use terminal command 'addRQL' to use this function.
+    The terminal command 'addRQL' accept a parameter 'targetPathString',
+    which is the RiskQuantLib project '.zip' file path that you want to add to library.
+    It have to be a '.zip' file to be added to library.
+
+    Parameters
+    ----------
+    targetPathString : str
+        A terminal command parameter, specify the RiskQuantLib project '.zip' file path which you want to add to library.
+
+    Returns
+    -------
+    None
+    """
     projectPackPath = sys.argv[1]
     try:
         name = sys.argv[2]
