@@ -111,6 +111,23 @@ def packProject():
     print('RiskQuantLib Project Packaged!')
 
 def addProjectTemplate():
+    """
+    addProjectTemplate() is a function to add a RiskQuantLib project '.zip' file to library.
+
+    Use terminal command 'addRQL' to use this function.
+    The terminal command 'addRQL' accept a parameter 'targetPathString',
+    which is the RiskQuantLib project '.zip' file path that you want to add to library.
+    It have to be a '.zip' file to be added to library.
+
+    Parameters
+    ----------
+    targetPathString : str
+        A terminal command parameter, specify the RiskQuantLib project '.zip' file path which you want to add to library.
+
+    Returns
+    -------
+    None
+    """
     projectPackPath = sys.argv[1]
     try:
         name = sys.argv[2]
@@ -135,10 +152,55 @@ def addProjectTemplate():
     print('RiskQuantLib Project Template added!')
 
 def saveProject():
+    """
+    saveProject() is a function to save a RiskQuantLib project and add it to library.
+
+    Use terminal command 'saveRQL' to use this function.
+    The terminal command 'saveRQL' accept a parameter 'targetPathString',
+    which is the RiskQuantLib project path that you want to save,
+    and an optional parameter 'projectName',
+    which is the name you want to give to this project.
+    After calling this function, a '.zip' file will be created in RiskQuantLib project dictionary,
+    and this project will be stored as a template.
+
+    Parameters
+    ----------
+    targetPathString : str
+        A terminal command parameter, specify the RiskQuantLib project path which you want to save as template.
+    projectName : str
+        A terminal command parameter, specify the name you want to save this project as.
+
+    Returns
+    -------
+    None
+    """
     packProject()
     addProjectTemplate()
 
 def unpackProject():
+    """
+    unpackProject() is a function to unpack a RiskQuantLib project from library and use it again.
+
+    Use terminal command 'tplRQL' to use this function.
+    The terminal command 'tplRQL' accept a parameter 'projectName',
+    which is the project name you want to unpack from library.
+    and a parameter 'targetPathString',
+    which is the path where you want to unpack RiskQuantLib project,
+    After calling this function, the content of existing RiskQuantLib project will be unpacked to the location you choose,
+    and you can start a project at the fundation of this unpakced project.
+
+    Parameters
+    ----------
+    projectName : str
+        A terminal command parameter, specify the project name you want to unpack from library.
+
+    targetPathString : str
+        A terminal command parameter, specify the path where you want to unpack RiskQuantLib project.
+
+    Returns
+    -------
+    None
+    """
     import sys,os,shutil
     RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
     source_path = os.path.abspath(RiskQuantLibDictionary)+os.sep+r'RQLTemplate'
@@ -150,14 +212,40 @@ def unpackProject():
     print('RiskQuantLib Project Template '+projectName+' Unpack Finished!')
 
 def listProjectTemplate():
+    """
+    listProjectTemplate() is a function to show all RiskQuantLib projects from library.
+
+    Use terminal command 'listRQL' to use this function.
+
+    Returns
+    -------
+    """
     import os
     RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
     source_path = os.path.abspath(RiskQuantLibDictionary)+os.sep+r'RQLTemplate'
     projectNameList = [i.replace('.zip','') for i in os.listdir(source_path)]
-    print("Show All RiskQuantLib Template Projects:")
-    [print(i) for i in projectNameList]
+    hints = "Show All RiskQuantLib Template Projects:"
+    print(hints,'\n',"".join(['-' for i in range(len(hints))]))
+    [print(index,"->",name) for index,name in enumerate(projectNameList)]
 
 def delProjectTemplate():
+    """
+    delProject() is a function to delete a RiskQuantLib project from library.
+
+    Use terminal command 'delRQL' to use this function.
+    The terminal command 'delRQL' accept a parameter 'projectName',
+    which is the project name you want to delete from library.
+    After calling this function, the existing RiskQuantLib project will be removed from library.
+
+    Parameters
+    ----------
+    projectName : str
+        A terminal command parameter, specify the project name you want to delete from library.
+
+    Returns
+    -------
+    None
+    """
     import os
     RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
     source_path = os.path.abspath(RiskQuantLibDictionary)+os.sep+r'RQLTemplate'
@@ -170,10 +258,24 @@ def delProjectTemplate():
         print("There Is No RiskQuantLib Project Named As ",targetName)
 
 def clearAllProjectTemplate():
-    import os
-    RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
-    source_path = os.path.abspath(RiskQuantLibDictionary)+os.sep+r'RQLTemplate'
-    projectNameList = [i.replace('.zip','') for i in os.listdir(source_path)]
-    [os.remove(source_path+os.sep+targetName+'.zip') for targetName in projectNameList]
-    print("Delete All RiskQuantLib Project Templates Finished! ")
+    """
+    clearAllProjectTemplate() is a function to delete all RiskQuantLib projects from library.
+
+    Use terminal command 'clearRQL' to use this function.
+    After calling this function, all existing RiskQuantLib projects will be removed.
+
+    Returns
+    -------
+    None
+    """
+    confirm = input("This action can not be canceled, are you sure to move on? (y/n)")
+    if confirm.lower() != 'y':
+        return None
+    else:
+        import os
+        RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
+        source_path = os.path.abspath(RiskQuantLibDictionary)+os.sep+r'RQLTemplate'
+        projectNameList = [i.replace('.zip','') for i in os.listdir(source_path)]
+        [os.remove(source_path+os.sep+targetName+'.zip') for targetName in projectNameList]
+        print("Delete All RiskQuantLib Project Templates Finished! ")
 
