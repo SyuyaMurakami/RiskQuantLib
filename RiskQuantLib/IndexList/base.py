@@ -6,19 +6,31 @@ from RiskQuantLib.Set.IndexList.base import setBase
 from RiskQuantLib.Operation.listBaseOperation import listBase
 
 class base(Index,setBase,listBase):
+    """
+    This class the list of index.
+    """
     def __init__(self):
         self.all = []
         self.__init_get_item__()
 
-    def addIndexList(self,indexObjList):
+    def addIndexList(self,indexObjList:list):
+        """
+        Add bundles of index into this list.
+        """
         tmpList = self.all + indexObjList
         self.setAll(tmpList)
 
-    def addIndex(self,indexCodeString,indexNameString,indexTypeString = 'Index'):
+    def addIndex(self,indexCodeString:str,indexNameString:str,indexTypeString:str = 'Index'):
+        """
+        Add a single index object into this list.
+        """
         tmpList = self.all + [index(indexCodeString,indexNameString,indexTypeString)]
         self.setAll(tmpList)
 
     def addIndexSeries(self,indexCodeSeries,indexNameSeries,indexTypeString = 'Index'):
+        """
+        Add a series of index into this list.
+        """
         tmpList = self.all + [index(i,j,indexTypeString) for i,j in zip(indexCodeSeries,indexNameSeries)]
         self.setAll(tmpList)
 
