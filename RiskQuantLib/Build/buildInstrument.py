@@ -177,7 +177,7 @@ def buildInstrumentPath(instrumentNameString:str,parentRQLClassName:str = '',tar
 
     if os.path.exists(listFilePathWD):
         with open(listFilePathWD + os.sep + '__init__.py', 'w+') as f:
-            f.truncate()  # 清空文件内容
+            f.truncate()  # clear all contents
     else:
         os.mkdir(listFilePathWD)
         with open(listFilePathWD+os.sep+'__init__.py', 'w+') as f:
