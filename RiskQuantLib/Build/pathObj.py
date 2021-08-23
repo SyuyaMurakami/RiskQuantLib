@@ -3,6 +3,12 @@
 import os
 
 class pathObj():
+    """
+    pathObj() is a registration class, which stores the file path and class information.
+    The information stored here will be used to locate files across the whole project.
+
+    This class itself can also be built. It will be auto-updated once a new instrument are specified and committed.
+    """
     pathDict = {}
     pathDict['Any'] = 'Set' + os.sep + 'Security' + os.sep + 'base.py'
     pathDict['Stock'] = 'Set' + os.sep + 'Security' + os.sep + 'Stock' + os.sep + 'stock.py'
