@@ -10,12 +10,56 @@ from RiskQuantLib.Operation.loc import loc
 from RiskQuantLib.Tool.strTool import changeSecurityListToStr
 
 class listBase():
+    """
+    listBase() is the function class that makes all RiskQuantLib list object functional.
+    Any RiskQuantLib list class should inherit from this class to own certain functions,
+    such as groupBy, execFunc, etc.
 
-    def setAll(self,List):
+    Users can define their own functions here to set new attribute function to
+    RiskQuantLib list class.
+    """
+
+    def setAll(self,List:list):
+        """
+        Update all elements by the list of new elements. Old elements will be deleted.
+
+        Parameters
+        ----------
+        List : list
+            A collection of RiskQuantLib instrument objects.
+
+        Returns
+        -------
+        None
+        """
         self.all = List
         self.__init_get_item__()
 
     def __getitem__(self, item):
+        """
+        This function makes RiqkQuantLib list object selectable. Use [] to call this function.
+        Mixed index is used here. By calling [], you can index either element or attribute.
+
+        Parameters
+        ----------
+        item : str or list or slice
+            If a string is given, all elements will be examined, if 'code' attribute equals
+            to the given string, return the first element that meets this requirement.
+
+            If no element code meets this requirement, try to return a list of attribute
+            value, whose name equals to the given string.
+
+            If a slice or int number is given, this function behaves like iloc, returns the
+            item-th element or a collection of elements.
+
+            If a list is given, return all elements whose code in the given list. If no code
+            in the given list, return a 2-dimension array of attribute values, where attribute
+            name is in the given list.
+
+        Returns
+        -------
+        None
+        """
         if type(item) == type(''):
             try:
                 return [i for i in self.all if i.code == item][0]
@@ -44,8 +88,28 @@ class listBase():
             raise StopIteration
 
     def __add__(self, other, useObj = True):
+        """
+        Add a RiskQuantLib list object to a list or another RiskQuantLib list object.
+        All attributes of the RiskQuantLib list will be neglected, only elements will be added to
+        the merged list.
+
+        This use shallow copy. After add finish, all elements refer to the original
+        elements. Change to the original will render to changes of the results. If
+        you want to use a deep copy add, call '.add()' rather than use '+'.
+
+        Parameters
+        ----------
+        other : list or RiskQuantLib list
+            The other RiskQuantLib list object or a collection of RiskQuantLib instrument object.
+        useObj : bool
+            If true, return a RiskQuantLib list object; if false, return a list.
+
+        Returns
+        -------
+        list or RiskQuantLib list
+        """
         if useObj:
-            tmpObj = copy.deepcopy(self)
+            tmpObj = self.new()
             if type(other) == type([]):
                 tmpObj.setAll(self.all + other)
             else:
@@ -58,6 +122,26 @@ class listBase():
                 return self.all + other.all
 
     def __sub__(self, other, useObj = True):
+        """
+        Subtract a list or another RiskQuantLib list object from a RiskQuantLib list object.
+        All attributes of the RiskQuantLib list will be neglected, only elements will be subtracted
+        from the first list.
+
+        This use shallow copy. After sub finish, all elements refer to the original
+        elements. Change to the original will render to changes of the results. If
+        you want to use a deep copy sub, call '.sub()' rather than use '-'.
+
+        Parameters
+        ----------
+        other : list or RiskQuantLib list
+            The other RiskQuantLib list object or a collection of RiskQuantLib instrument object.
+        useObj : bool
+            If true, return a RiskQuantLib list object; if false, return a list.
+
+        Returns
+        -------
+        list or RiskQuantLib list
+        """
         if useObj:
             tmpObj = copy.deepcopy(self)
             if type(other) == type([]):
@@ -72,12 +156,18 @@ class listBase():
                 return [i for i in self.all if i not in other.all]
 
     def __str__(self):
+        """
+        This returns a list of string, showing the code of each element.
+        """
         try:
             return changeSecurityListToStr(self['code'])
         except:
             return ''
 
     def __len__(self):
+        """
+        This function returns the length of RiskQuantLib list.
+        """
         return len(self.all)
 
     def _sortIterator(self,sortObj):
@@ -86,6 +176,9 @@ class listBase():
         return tuple(sortList)
 
     def add(self,other, useObj = True):
+        """
+        This function uses deep copy. It returns the addition of copies of two RiskQuantLib lists.
+        """
         a = self.copy(deep=True)
         b = other.copy(deep=True)
         if useObj:
@@ -94,6 +187,9 @@ class listBase():
             return (a+b).all
 
     def sub(self, other, useObj=True):
+        """
+        This function uses deep copy. It returns the subtraction of copies of two RiskQuantLib lists.
+        """
         a = self.copy(deep=True)
         b = other.copy(deep=True)
         if useObj:
@@ -102,6 +198,23 @@ class listBase():
             return (a - b).all
 
     def uniqueCode(self,inplace = False, keep = 'First'):
+        """
+        This function returns a RiskQuantLib list object, where the code value
+        is unique.
+
+        Parameters
+        ----------
+        inplace : bool
+            If true, operation will done in present list object.
+            If false, operation will done in a copy of present list object.
+        keep : str
+            Only support 'First' or 'Last'. If multiple elements have the same
+            code value. The first or last element will be kept, given your choice.
+
+        Returns
+        -------
+        RiskQuantLib list object
+        """
         codeList = list(set([i.code for i in self.all]))
         if keep == 'First':
             keepIndex = 0
@@ -116,7 +229,26 @@ class listBase():
         else:
             return [[j for j in self.all if j.code == i][keepIndex] for i in codeList]
 
-    def uniqueAttr(self,attrNameString,inplace = False, keep = 'First'):
+    def uniqueAttr(self,attrNameString:str,inplace = False, keep = 'First'):
+        """
+        This function returns a RiskQuantLib list object, where the attribute value
+        is unique.
+
+        Parameters
+        ----------
+        attrNameString :str
+            The attribute name that you want to get the unique value list from.
+        inplace : bool
+            If true, operation will done in present list object.
+            If false, operation will done in a copy of present list object.
+        keep : str
+            Only support 'First' or 'Last'. If multiple elements have the same
+            attribute value. The first or last element will be kept, given your choice.
+
+        Returns
+        -------
+        RiskQuantLib list object
+        """
         propertyValueList = list(set([getattr(i,attrNameString,np.nan) for i in self.all if hasattr(i,attrNameString)]))
         if keep == 'First':
             keepIndex = 0
@@ -132,9 +264,29 @@ class listBase():
             return [[j for j in self.all if getattr(j,attrNameString) == i][keepIndex] for i in propertyValueList]
 
     def apply(self,applyFunction,*args):
+        """
+        This function will apply the given function to each element of RiskQuantLib list.
+        Default settings will leave any change to element out. Your change to elements won't
+        be kept. Only the result of applyFunction is returned.
+        """
         return Parallel(n_jobs=mp.cpu_count())(delayed(applyFunction)(i,*args) for i in self.all)
 
-    def groupBy(self, attrName, useObj = True, inplace = True):
+    def groupBy(self, attrName:str, useObj = True, inplace = True):
+        """
+        This function use pandas.DataFrame.groupby as engine. Its behavior is totally
+        the same with pandas.
+
+        Parameters
+        ----------
+        attrName : str
+            The attribute that you want to group data by.
+        useObj : bool
+            If true, return a RiskQuantLib list object, each element of which is also a
+            RiskQuantLib list object. Each element will be marked by setting the attribute
+            as the common value.
+        inplace : bool
+            If true, operation will be done in present RiskQuantLib list object.
+        """
         if type(attrName) == type(''):
             attrName = [attrName]
         else:
@@ -161,21 +313,57 @@ class listBase():
         else:
             return dict(zip(attrValueList,securityList))
 
-    def sum(self,attrName,inplace = False):
+    def sum(self,attrName:str,inplace = False):
+        """
+        This function will sum the value of each element, given the attribute name.
+        If some elements don't have the attribute, an numpy.nan will be used, and
+        the result will skip this value.
+
+        Parameters
+        ----------
+        attrName : str
+            The attribute name whose value you want to sum.
+        inplace : bool
+            If true, the 'attributeSum' property will be added to present object.
+        """
         if inplace:
             setattr(self,attrName+'Sum',np.nansum([getattr(i,attrName,np.nan) for i in self.all]))
             return None
         else:
             return np.nansum([getattr(i,attrName,np.nan) for i in self.all])
 
-    def mean(self,attrName,inplace=False):
+    def mean(self,attrName:str,inplace=False):
+        """
+        This function will average the value of each element, given the attribute name.
+        If some elements don't have the attribute, an numpy.nan will be used, and
+        the result will skip this value when calculating mean.
+
+        Parameters
+        ----------
+        attrName : str
+            The attribute name whose value you want to average.
+        inplace : bool
+            If true, the 'attributeMean' property will be added to present object.
+        """
         if inplace:
             setattr(self,attrName+'Mean',np.nanmean([getattr(i,attrName,np.nan) for i in self.all]))
             return None
         else:
             return np.nanmean([getattr(i,attrName,np.nan) for i in self.all])
 
-    def std(self,attrName,inplace=False):
+    def std(self,attrName:str,inplace=False):
+        """
+        This function will calculate the standard deviation of value of each element,
+        given the attribute name. If some elements don't have the attribute, an numpy.nan will be used, and
+        the result will skip this value.
+
+        Parameters
+        ----------
+        attrName : str
+            The attribute name whose value you want to calculate standard deviation.
+        inplace : bool
+            If true, the 'attributeStd' property will be added to present object.
+        """
         if inplace:
             setattr(self,attrName+'Std',np.nanstd([getattr(i,attrName,np.nan) for i in self.all]))
             return None
@@ -183,6 +371,19 @@ class listBase():
             return np.nanstd([getattr(i,attrName,np.nan) for i in self.all])
 
     def execFunc(self,functionName,*args):
+        """
+        This function will execute instance function for every element is present RiskQuantLib list object,
+        given the function name. If some elements don't have the function, a Null function will be used, and
+        the result will skip the execution for that element.
+
+        If the length of present list is not long, list comprehension will be used. If it's a long
+        list, joblib will be used to establish multiple threads.
+
+        Parameters
+        ----------
+        functionName : str
+            The function that element has, and you want to call.
+        """
         try:
             if len(self.all)<1000:
                 result = [getattr(i,functionName,lambda x:None)(*args) for i in self.all]
@@ -195,6 +396,9 @@ class listBase():
 
 
     def copy(self,deep = True):
+        """
+        Get a copy of present RiskQuantLib list object.
+        """
         if deep:
             tmp = copy.deepcopy(self)
             tmp.__init_get_item__()
@@ -204,7 +408,11 @@ class listBase():
             tmp.__init_get_item__()
             return tmp
 
-    def sort(self,propertyList,reverse = False,inplace=False, useObj = True):
+    def sort(self,propertyList:list,reverse = False,inplace=False, useObj = True):
+        """
+        Sort the present RiskQuantLib list by attributes. You can also sort it by a single
+        attribute.
+        """
         if type(propertyList)!=type([]):
             self._sortPropertyList = [propertyList]
         else:
@@ -219,7 +427,12 @@ class listBase():
         else:
             return sorted(self.all,key=self._sortIterator,reverse=reverse)
 
-    def fillna(self, propertyList, value, inplace=False, useObj = True):
+    def fillna(self, propertyList:list, value, inplace=False, useObj = True):
+        """
+        Fill the nan value or blank string will the given value.
+        If attribute doesn't exist, nothing will be done.
+        You can fill the nan value by single attribute or a list of attributes.
+        """
         from RiskQuantLib.Tool.mathTool import isnan
         if type(propertyList)!=type([]):
             propertyList = [propertyList]
@@ -246,7 +459,11 @@ class listBase():
     def __set_number_index__(self):
         [setattr(i,'numberIndex',j) for j,i in enumerate(self.all)]
 
-    def setIndex(self, propertyNameString, inplace = True):
+    def setIndex(self, propertyNameString:str, inplace = True):
+        """
+        Set the index for each element, given attribute name. The index value will be set as the attribute value
+        you choose.
+        """
         if inplace:
             [i.setIndex(getattr(i,propertyNameString,np.nan)) for i in self.all]
             return None
@@ -256,6 +473,9 @@ class listBase():
             return tmpObj
 
     def dropIndex(self, inplace=True):
+        """
+        Delete index for each element.
+        """
         if inplace:
             [delattr(i,'index') for i in self.all]
             return None
@@ -264,7 +484,12 @@ class listBase():
             [delattr(i,'index') for i in tmpObj.all]
             return tmpObj
 
-    def reIndex(self, indexList, useObj = True, inplace = False):
+    def reIndex(self, indexList:list, useObj = True, inplace = False):
+        """
+        Return a new RiskQuantLib list object whose elements are chosen according to
+        the index, the index of new list element must be in th indexList to be included.
+        If more than one elements meet requirement, only the first one will be kept.
+        """
         tmpList = [[j for j in self.all if j.index == i][0] for i in indexList]
         if inplace:
             self.setAll(tmpList)
@@ -277,6 +502,9 @@ class listBase():
             return tmpList
 
     def resetIndex(self, inplace = True):
+        """
+        Reset the index as the n-th element of list.
+        """
         if inplace:
             [j.setIndex(i) for i,j in enumerate(self.all)]
             return None
@@ -290,6 +518,12 @@ class listBase():
 
 
     def rolling(self,windowNumber:int,useObj = True):
+        """
+        For each element, This function will collect the n elements before
+        that element, create a new RiskQuantLib list object to holding it. The new list
+        will be set as an attribute of '_rolling', thus the present element can reach to
+        the information of its former elements.
+        """
         rollingList = [self[max((i-windowNumber+1),0):(i+1)] for i in range(len(self))]
         if useObj:
             rollingObj = [self.__new__(type(self)) for i in range(len(self))]
@@ -305,11 +539,18 @@ class listBase():
             return rollingList
 
     def new(self):
+        """
+        Return a totally new RiskQuantLib list object like this.
+        """
         tmpObj = self.__new__(type(self))
         tmpObj.__init__()
         return tmpObj
 
     def filter(self,filterFunction,useObj = True):
+        """
+        Return a RiskQuantLib list object given the fiter function.
+        This is used to choose some elements which meet your requirements.
+        """
         resultList = [i for i in self.all if filterFunction(i)]
         if useObj:
             tmpObj = self.new()
@@ -318,13 +559,51 @@ class listBase():
         else:
             return resultList
 
-    def join(self,anotherList,targetAttrName,filterFunction = lambda x,y:True):
+    def join(self,anotherList,targetAttrName : str,filterFunction = lambda x,y:True):
+        """
+        For each element, find all elements that meet requirements from another RiskQuantLib
+        list object. The elements meeting requirement will be set as an attribute of present
+        list.
+
+        This function is very like pandas.DataFrame.merge.
+
+        Parameters
+        ----------
+        anotherList : RiskQuantLib list or list
+            Another list object, holding elements waiting to be selected.
+        targetAttrName : str
+            The attribute name that you want to use to mark collected elements from another list.
+        filterFunction : function
+            This function has two parameter, left and right, and must return a bool value.
+            If true is returned, the element will be added. False means not added.
+
+        """
         valueList = [[another for another in anotherList.all if filterFunction(this,another)] for this in self.all]
         valueObj = [anotherList.new() for i in self.all]
         [obj.setAll(value) for obj,value in zip(valueObj,valueList)]
         [setattr(i,targetAttrName,j) for i,j in zip(self.all,valueObj)]
 
     def scale(self,attrName,targetAttrName = '',filterFunction = lambda x:True,inplace = False):
+        """
+        For each element, find the attribute value and calculate the portion of each element to the sum,
+        given attribute name.
+
+        After calling this function, a 'scaled_attrName' attribute will be added to each element.
+
+        This function is very like pandas.DataFrame.groupby.agg.
+
+        Parameters
+        ----------
+        attrName :str
+            The attribute which you want to scale.
+        targetAttrName : str
+            The attribute name that you want to use to mark the portion of element.
+        filterFunction : function
+            This function has one parameter, element, and must return a bool value.
+            If true is returned, the element will be include when process scale.
+            False means not included.
+
+        """
         if targetAttrName=='':
             targetAttrName = 'scaled_'+attrName
         total = self.sum(attrName)
@@ -337,3 +616,15 @@ class listBase():
             tmpObj.setAll(objList)
             [setattr(obj, targetAttrName, scaledValue) for obj, scaledValue in zip(tmpObj.all, scaled)]
             return tmpObj
+
+    def merge(self, anotherList, how:str, on = lambda x,y:True, inplace = False):
+        """
+        This function will merge two RiskQuantLib list object.
+
+        It's like pandas.DataFrame.merge
+
+
+        """
+        if inplace:
+            outer = [{'left':left,'right':right} for left in self.all for right in anotherList if on(left,right)]
+            [[setattr(element['left'],attr,getattr(element['right'],attr,np.nan)) if not hasattr(element['left'],attr) else None for attr in dir(element['right'])] for element in outer]
