@@ -6,7 +6,18 @@ from QuantLib import InterestRate
 from RiskQuantLib.Set.InterestRate.base import setBase
 
 class base(InterestRate,setBase):
-    def __init__(self,codeString,nameString,interestRateNum,interestTenor,interestRateTypeString = '',dayCount = ql.Actual365Fixed(), compounding = ql.Compounded, frequency = ql.Annual):
+    """
+    This is a class of interestrate.
+    """
+    def __init__(self,codeString:str,nameString:str,interestRateNum:float,interestTenor:float,interestRateTypeString = '',dayCount = ql.Actual365Fixed(), compounding = ql.Compounded, frequency = ql.Annual):
+        """
+        You must specify interest code, insterest name, interest value, interest tenor to initialize an
+        interest object.
+
+        Default day count convention is Actual365Fixed. Default compounding is Compounded.
+        Default compounding frequency is Annual.
+
+        """
         self.code = codeString
         self.name = nameString
         self.interestRateType = interestRateTypeString
@@ -19,10 +30,16 @@ class base(InterestRate,setBase):
         self.frequency = frequency
 
     def iniInterestObj(self):
+        """
+        Calling this function will initialize QuantLib module with present attribute value.
+        """
         args = (self.interestRate,self.dayCount,self.compounding,self.frequency)
         InterestRate.__init__(self,*args)
 
     def iniPricingModule(self, interestRateNum = np.nan ,dayCount = ql.Actual365Fixed(), compounding = ql.Compounded, frequency = ql.Annual):
+        """
+        Calling this function will initialize QuantLib module, given attribute value.
+        """
         if type(interestRateNum)==type(np.nan) and np.isnan(interestRateNum):
             pass
         else:
