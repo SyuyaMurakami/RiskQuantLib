@@ -617,14 +617,75 @@ class listBase():
             [setattr(obj, targetAttrName, scaledValue) for obj, scaledValue in zip(tmpObj.all, scaled)]
             return tmpObj
 
-    def merge(self, anotherList, how:str, on = lambda x,y:True, inplace = False):
+    def merge(self, anotherList, how : str, on = lambda x,y:True, inplace = False):
         """
-        This function will merge two RiskQuantLib list object.
+        This function will merge two RiskQuantLib list object. This function should only
+        be used when washing data. After merge, any change to source list will or will not
+        influence merge result, depending on python copy mechanism. This won't be a problem
+        if data flows by single direction. However, troubles will come when you wish to
+        change the origin to influence the merge result list, after merge action.
 
-        It's like pandas.DataFrame.merge
+        In short, do not change the origin list once you merge them, any change should be
+        done by merged result.
 
+        If 'on' function can not identify the only element to merge, all unique attributes
+        of the elements that meet requirement will be added to present list element.
+        (Unique means this attribute only appears once in the list element, the others
+        don't have it.) If the attribute appears more than one times, only the first will
+        be added.
+
+        It's like pandas.DataFrame.merge, but not totally the same. In RiskQuantLib,
+        listA.merge(listB) is not the same from listB.merge(listA), even if you specify
+        the same value of parameter 'how' and 'on'.
+
+        No matter what value parameter 'how' is given, attributes of elements in anotherList that
+        meet requirement of 'on' will be added as attributes of elements in present list. The
+        attributes who have the same name in both lists won't be copied, which means you can't
+        merge two lists twice. (In the second time you merge them, the first list object has all
+        attributes that anotherList has, so all attributes will be skipped, no attribute will be
+        copied.)
+
+        If how == 'inner', only the elements in the present list who have relative elements
+        in anotherList will be returned.
+
+        If how == 'outer', all elements in presentList, plus elements from anotherList that
+        don't have relative elements in present list will be returned.
+
+        If how == 'left', all elements in presentList will be returned.
+
+        if how == 'right', the elements in the present list who have relative elements
+        in anotherList, plus elements from anotherList that don't have relative elements
+        in present list will be returned.
 
         """
+        def trySetAttr(obj,attrName,attrValue):
+            try:
+                setattr(obj,attrName,attrValue)
+            except:
+                pass
         if inplace:
-            outer = [{'left':left,'right':right} for left in self.all for right in anotherList if on(left,right)]
-            [[setattr(element['left'],attr,getattr(element['right'],attr,np.nan)) if not hasattr(element['left'],attr) else None for attr in dir(element['right'])] for element in outer]
+            leftList = self.all
+            rightList = anotherList
+        else:
+            leftList = self.copy(deep=True).all
+            rightList = copy.deepcopy(anotherList)
+        inner = [{'left':left,'right':right} for left in leftList for right in rightList if on(left,right)]
+        leftInner = list(set([pair['left'] for pair in inner]))
+        rightInner = list(set([pair['right'] for pair in inner]))
+        leftResidual = [i for i in leftList if i not in leftInner]
+        rightResidual = [i for i in rightList if i not in rightInner]
+        if len(leftInner) == len(inner):
+            [[trySetAttr(element['left'],attr,getattr(element['right'],attr,np.nan)) if not hasattr(element['left'],attr) else None for attr in dir(element['right'])] for element in inner]
+        else:
+            for element in inner:
+                [trySetAttr(element['left'], attr, getattr(element['right'], attr, np.nan)) if not hasattr(element['left'], attr) else None for attr in dir(element['right'])]
+        tmpObj = self.new()
+        if how == 'outer':
+            tmpObj.setAll(leftInner+leftResidual+rightResidual)
+        elif how == 'inner':
+            tmpObj.setAll(leftInner)
+        elif how == 'left':
+            tmpObj.setAll(leftInner + leftResidual)
+        elif how == 'right':
+            tmpObj.setAll(leftInner + rightResidual)
+        return tmpObj

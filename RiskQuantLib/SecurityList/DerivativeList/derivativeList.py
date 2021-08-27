@@ -8,6 +8,9 @@ from RiskQuantLib.Set.SecurityList.DerivativeList.derivativeList import setDeriv
 
 
 class derivativeList(baseList,setDerivativeList):
+    """
+    derivativeList is one of the five basic list classes.
+    """
     def __init__(self):
         super(derivativeList, self).__init__()
         self.listType = 'Derivative List'

@@ -6,6 +6,9 @@ from RiskQuantLib.Security.base import base
 from QuantLib import Bond
 
 class bond(base, Bond, setBond):
+    """
+    bond is one of the five basic classes.
+    """
     def __init__(self,codeString,nameString,securityTypeString = 'Bond'):
         base.__init__(self,codeString,nameString,securityTypeString)
 

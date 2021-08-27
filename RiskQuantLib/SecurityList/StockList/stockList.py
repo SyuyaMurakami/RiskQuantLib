@@ -8,6 +8,9 @@ from RiskQuantLib.Set.SecurityList.StockList.stockList import setStockList
 
 
 class stockList(baseList,setStockList):
+    """
+    stockList is one of the five basic list classes.
+    """
     def __init__(self):
         super(stockList,self).__init__()
         self.listType = 'Stock List'
