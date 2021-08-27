@@ -7,6 +7,9 @@ from RiskQuantLib.Operation.listBaseOperation import listBase
 from RiskQuantLib.Security.base import base as securityBase
 
 class baseList(setBaseList,listBase):
+    """
+    This is the basic list class. Any security list class should inherit from this.
+    """
     def __init__(self):
         self.all = []
         self.__init_get_item__()

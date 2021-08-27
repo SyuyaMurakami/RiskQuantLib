@@ -8,6 +8,9 @@ from RiskQuantLib.Set.SecurityList.RepoList.repoList import setRepoList
 
 
 class repoList(baseList,setRepoList):
+    """
+    repoList is one of the five basic list classes.
+    """
     def __init__(self):
         super(repoList, self).__init__()
         self.listType = 'Repo List'

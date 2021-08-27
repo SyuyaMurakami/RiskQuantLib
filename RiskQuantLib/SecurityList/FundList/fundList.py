@@ -6,6 +6,9 @@ from RiskQuantLib.Security.Fund.fund import fund
 from RiskQuantLib.Set.SecurityList.FundList.fundList import setFundList
 
 class fundList(baseList,setFundList):
+    """
+    fundList is one of the five basic list classes.
+    """
     def __init__(self):
         super(fundList,self).__init__()
         self.listType = 'Fund List'
