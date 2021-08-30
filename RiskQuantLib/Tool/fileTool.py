@@ -3,7 +3,14 @@
 
 import time, os, datetime
 
-def modifyDateIsToday(filePath,mode='M'):
+import pandas as pd
+
+
+def modifyDateIsToday(filePath:str,mode='M'):
+	"""
+	This function will return a bool value, showing whether the target
+	file is modified on today.
+	"""
 	if mode == 'M':
 		modifyDate = os.path.getmtime(filePath)
 	elif mode=='C':
@@ -18,22 +25,34 @@ def modifyDateIsToday(filePath,mode='M'):
 	else:
 		return False
 
-def waitForFile(filePath,fileNameKeyWord):
+def waitForFile(filePath:str,fileNameKeyWord:str):
+	"""
+	This function will wait for the change or modification of a file.
+	"""
 	fileListInPath = [i for i in os.listdir(filePath) if i.find(fileNameKeyWord)!=-1]
 	while len(fileListInPath)==0:
 		time.sleep(2)
 		fileListInPath = [i for i in os.listdir(filePath) if i.find(fileNameKeyWord)!=-1]
 	return 0
 
-def dumpVariable(variable,filePath):
+def dumpVariable(variable,filePath:str):
+	"""
+	Use python module pickle to dump variable.
+	"""
 	import pickle as pkl
 	pkl.dump(variable,open(filePath,"wb"))
 
-def dumpDictToJson(dictVariable,filePath):
+def dumpDictToJson(dictVariable:dict,filePath:str):
+	"""
+	Dump dict to json file.
+	"""
 	import json
 	json.dump(dictVariable,open(filePath,"w",encoding='UTF-8'),ensure_ascii=False)
 
-def clearCachePklFile(filePath):
+def clearCachePklFile(filePath:str):
+	"""
+	Delete all '.pkl' files in filePath.
+	"""
 	print("Clearing Cache in "+filePath)
 	fileListInPath = [i for i in os.listdir(filePath) if i.find('.pkl')!=-1]
 	while len(fileListInPath)!=0:
@@ -42,6 +61,9 @@ def clearCachePklFile(filePath):
 	time.sleep(2)
 
 def findFirstNotNanValueOfSeries(x):
+	"""
+	Return the first not nan value of a pandas.Series object.
+	"""
 	import numpy as np
 	for i in x.values:
 		if type(i)==type(np.nan) and np.isnan(i):
@@ -50,13 +72,34 @@ def findFirstNotNanValueOfSeries(x):
 			return i
 	return np.nan
 
-def resetIndexByFirstNotNanValue(df,dropFirst = False):
+def resetIndexByFirstNotNanValue(df:pd.DataFrame,dropFirst = False):
+	"""
+	Reset index by the first not nan value.
+	"""
 	df.dropna(axis=0,how='all',inplace=True)
 	df.index = df.apply(findFirstNotNanValueOfSeries,axis=1)
 	if dropFirst:
 		df.drop(columns=[df.columns[0]],inplace=True)
 
-def louverBox(target_df,groupBy = '',insertTo = ''):
+def louverBox(target_df:pd.DataFrame,groupBy:str = '',insertTo:str = ''):
+	"""
+	This function is like pandas.DataFrame.sum, however, this function will
+	sum the value for each column, and insert it as a new row before the dataframe.
+
+	Parameters
+	-----------
+	target_df : pd.DataFrame
+		The dataframe you want to louverBox
+	groupBy : str
+		The column name that you want to groupby.
+	insertTo : str
+		The index name of the insert row.
+
+	Returns
+	-------
+	tmp_df : pd.DataFrame
+		The louverBox-ed dataframe.
+	"""
 	import numpy as np
 	tmp_df = target_df.copy()
 	groupName  = tmp_df[groupBy].unique()[0]
@@ -78,14 +121,48 @@ def louverBox(target_df,groupBy = '',insertTo = ''):
 	tmp_df.reset_index(drop=True,inplace=True)
 	return tmp_df
 
-def dataFrameLouverBox(df,groupBy='',insertTo=''):
+def dataFrameLouverBox(df:pd.DataFrame,groupBy:str='',insertTo:str=''):
+	"""
+	This function is like pandas.DataFrame.groupby, however, this function will
+	sum the value for each group, and insert it as a new row before that group.
+
+	Parameters
+	----------
+	df : pd.DataFrame
+		The dataframe that you want to louverBox
+	groupBy : str
+		The column you want to group by.
+	insertTo :str
+		The column you want to record the result
+
+	Returns
+	-------
+	result : pd.DataFrame
+	"""
 	if insertTo not in df.columns.to_list():
 		df[insertTo] = ''
 	result = df.groupby(groupBy).apply(lambda x:louverBox(x,groupBy=groupBy,insertTo=insertTo))
 	result.reset_index(drop=True,inplace=True)
 	return result
 
-def generateFileDictFromPath(filePathString, targetDict = {}, onlyExcel = True):
+def generateFileDictFromPath(filePathString:str, targetDict:dict = {}, onlyExcel:bool = True):
+	"""
+	This function generate a dict of file.
+
+	Parameters
+	----------
+	filePathString :str
+		The path you want to read files from.
+	targetDict : dict
+		The dict to hold result.
+	onlyExcel : bool
+		If true, only excel will be read and loaded.
+
+	Returns
+	-------
+	targetDict : dict
+		The dict holding excel dataframe or paths.
+	"""
 	import pandas as pd
 	fileList = os.listdir(filePathString)
 	if onlyExcel:
@@ -99,7 +176,10 @@ def generateFileDictFromPath(filePathString, targetDict = {}, onlyExcel = True):
 		targetDict[filePathString] = fileList
 		return targetDict
 
-def generateDataFrameFromDict(inputDict, dateString, fileNameString, columnNameString):
+def generateDataFrameFromDict(inputDict:dict, dateString:str, fileNameString:str, columnNameString:str):
+	"""
+	Generate a dataframe from a dict.
+	"""
 	import pandas as pd
 	df = pd.DataFrame([inputDict.keys(),inputDict.values()], index=['ROW','VALUE']).T
 	df['PATH'] = dateString
@@ -107,7 +187,23 @@ def generateDataFrameFromDict(inputDict, dateString, fileNameString, columnNameS
 	df['COLUMN'] = columnNameString
 	return df
 
-def compressExcel(filePathString, outputPathString, subDictionary = True):
+def compressExcel(filePathString:str, outputPathString:str, subDictionary:bool = True):
+	"""
+	Re-format excel in form of ['PATH','FILE','COLUMN','ROW','VALUE']
+
+	Parameters
+	----------
+	filePathString : str
+		The path where you hold your excel files.
+	outputPathString : str
+		The path of return file.
+	subDictionary : bool
+		If there are still other dictionaries in filePathString.
+
+	Returns
+	-------
+	None
+	"""
 	import pandas as pd
 	import operator
 	from functools import reduce

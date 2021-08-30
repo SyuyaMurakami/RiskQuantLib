@@ -2,6 +2,9 @@
 # coding = utf-8
 
 class codeBuilder(object):
+    """
+    This class is the basic class used to generate source code of any language.
+    """
     # Build source code conveniently
 
     def __init__(self, indent = 0, global_indent_step = 0):
@@ -28,7 +31,7 @@ class codeBuilder(object):
                 exec(self.python_source, global_namespace)
             return global_namespace
 
-    def add_line(self, line):
+    def add_line(self, line:str):
         # Add a line of source to the code.
         # Indentation and new line will be added for you, don't provide them.
         self.code.extend([" " * self.indent_level*(self.global_indent_step+1), line, "\n"])
@@ -48,18 +51,44 @@ class codeBuilder(object):
         return section
 
 class pythonScriptBuilder():
-
+    """
+    This class is the python source code builder, used to generate python
+    source code automatically.
+    """
     def __init__(self):
         self.title = ''
         self.importLibrary = ''
 
     def setTitle(self, titleString=''):
+        """
+        Set python source file title, including coding method and python version.
+        """
         if titleString == '':
             self.title = '''#!/usr/bin/python\n# coding = utf-8\n'''
         else:
             self.title = titleString
 
-    def setImport(self, libraryNameString, libraryAbbrString='', importSubModule = False, subModuleName = ''):
+    def setImport(self, libraryNameString:str, libraryAbbrString:str='', importSubModule:bool = False, subModuleName:str = ''):
+        """
+        Import a module to python source file.
+
+        Parameters
+        ----------
+        libraryNameString : str
+            The library name you want to import.
+        libraryAbbrString : str
+            If not blank, library will be imported with the form 'import libraryNameString as libraryAbbrString'
+        importSubModule : bool
+            If True, library will be imported with the form 'from libraryNameString import subModuleName
+            as libraryAbbrString'
+        subModuleName : str
+            If not blank and importSubModule is true, library will be imported with the form 'from
+            libraryNameString import subModuleName as libraryAbbrString'
+
+        Returns
+        -------
+        None
+        """
         if importSubModule:
             if libraryAbbrString == '':
                 self.importLibrary = self.importLibrary + '''from '''+libraryNameString+''' import ''' + subModuleName+'''\n'''
@@ -71,7 +100,10 @@ class pythonScriptBuilder():
             else:
                 self.importLibrary = self.importLibrary + '''import ''' + libraryNameString + ''' as '''+libraryAbbrString+'''\n'''
 
-    def startClass(self, classNameString, parentClassName = ''):
+    def startClass(self, classNameString:str, parentClassName:str = ''):
+        """
+        Start a new class. This function must be followed by endClass()
+        """
         self.classNameString = classNameString
         self.code = codeBuilder(indent=0)
 
@@ -91,7 +123,10 @@ class pythonScriptBuilder():
         self.code.dedent()
         return self.code
 
-    def startFunction(self, functionName, variableName = ''):
+    def startFunction(self, functionName:str, variableName:str = ''):
+        """
+        Start a function. This function must be followed by endFunction()
+        """
         self.functionName = functionName
 
         if variableName == '':
@@ -104,18 +139,27 @@ class pythonScriptBuilder():
         self.code.indent()
 
     def endFunction(self):
+        """
+        Specify the end of a function.
+        """
         self.functionName = ''
         self.code.dedent()
 
     def endClass(self):
+        """
+        Specify the end of a class.
+        """
         self.classNameString = ''
         self.code.dedent()
 
 
-    def writeToFile(self,filePathString):
+    def writeToFile(self,filePathString:str):
+        """
+        Output the source code to a file, use mode 'w+'.
+        """
         self.code.get_globals()
         content = self.title+self.importLibrary+self.code.python_source
         with open(filePathString, 'w+',encoding="utf-8") as f:
-            f.truncate()  # 清空文件内容
+            f.truncate()  # clear all contents
             f.write(content.strip(' ').strip('\t\n'))
-        print()
+
