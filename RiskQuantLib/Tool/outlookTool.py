@@ -3,18 +3,21 @@
 
 
 import os,re
-from win32com import client as win32  # 发送邮件模块
-from win32com.client.gencache import EnsureDispatch as Dispatch  # 读取邮件模块
+from win32com import client as win32  # outlook control module
+from win32com.client.gencache import EnsureDispatch as Dispatch  # read mail module
 
 class readMailFromOutlook():
-
+    """
+    This class is used to control Outlook App in windows.
+    Due to the difference of version of win32.com module, this class may not perform well.
+    """
     def _saveMailAttachment(self,mailObject):
-        # 保存邮件中的附件，如果没有附件不会执行也不会产生异常
+        # save all attachments in the mail
         attachment = mailObject.Attachments
         for each in attachment:
-            save_attachment_path = os.getcwd()  # 保存附件到当前路径
+            save_attachment_path = os.getcwd()  # save files to current dictionary
             each.SaveAsFile(r'{}\{}'.format(save_attachment_path, each.FileName))
-            print('附件（{}）保存完毕'.format(each.FileName))
+            print('Attachment（{}）Saved'.format(each.FileName))
 
     def _getMailAttr(self, mailObject, attrNameString):
         if hasattr(mailObject, attrNameString):
@@ -49,43 +52,55 @@ class readMailFromOutlook():
             resultDict['contentWithoutLink'] = re.sub(pattern,'\n', contentWithoutLink,count=0)
         return resultDict
 
-    def readOutlookMailbox(self,numberOfReadingMails):
+    def readOutlookMailbox(self,numberOfReadingMails:int):
+        """
+        Connect to outlook, and read numberOfReadingMails mails in receive box.
 
-        """连接Outlook邮箱，读取收件箱内的邮件内容"""
-        # 使用MAPI协议连接Outlook
+        Parameters
+        ----------
+        numberOfReadingMails : int
+            The number of mails you want to read.
+
+        Returns
+        -------
+        result : dict
+            A dict which contains information of mails. Key starts from 1.
+        """
+        # connect outlook with MAPI
         account = Dispatch('Outlook.Application').GetNamespace('MAPI')
 
-        # 获取收件箱所在位置
-        inbox = account.GetDefaultFolder(6)  # 数字6代表收件箱
-        # 获取收件箱下的所有邮件
+        # get the position of receive box
+        inbox = account.GetDefaultFolder(6)  # number 6 means receive box
+        # get all mails in receive box
         mails = inbox.Items
-        mails.Sort('[ReceivedTime]', True)  # 邮件按时间排序
+        mails.Sort('[ReceivedTime]', True)  # sort mails by time
 
-        # 读取收件箱内前3封邮件的所有信息（下标从1开始）
+        # read all information of the first numberOfReadingMails mails（index start from 1）
         infoList = [self._extractInfoFromMailsObject(mails,i) for i in range(1,numberOfReadingMails+1)]
         result = dict(zip(range(1,numberOfReadingMails+1),infoList))
         self.mail = result
         return result
 
 class sendMailFromOutlook():
-
-    def sendMail(self,receiverAddressList, subjectString, htmlBodyString, addAttachment = False, attachmentFilePathString = ''):
+    """
+    This class is used to send mails by outlook.
+    """
+    def sendMail(self,receiverAddressList:list, subjectString:str, htmlBodyString:str, addAttachment:bool = False, attachmentFilePathString:str = ''):
         """
-        连接Outlook邮箱，发送邮件
-        :return:
+        Send mails by outlook
         """
-        outlook = win32.Dispatch('Outlook.Application')  # 连接Outlook
+        outlook = win32.Dispatch('Outlook.Application')  # connect outlook.
 
-        mail_item = outlook.CreateItem(0)  # 创建新邮件
-        [mail_item.Recipients.Add(i) for i in receiverAddressList]  # 收件人邮箱
-        mail_item.Subject = subjectString  # 主题
-        mail_item.BodyFormat = 2  # 使用HTML格式编写正文
+        mail_item = outlook.CreateItem(0)  # create a new mail
+        [mail_item.Recipients.Add(i) for i in receiverAddressList]  # receiver
+        mail_item.Subject = subjectString  # subject
+        mail_item.BodyFormat = 2  # write content with html
         mail_item.HTMLBody = htmlBodyString
         if addAttachment:
-            mail_item.Attachments.Add(attachmentFilePathString)  # 添加附件
+            mail_item.Attachments.Add(attachmentFilePathString)  # add attachment
         else:
             pass
-        mail_item.Send()  # 发送邮件
+        mail_item.Send()  # send it.
 
 
 
