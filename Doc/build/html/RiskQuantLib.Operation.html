@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>RiskQuantLib.Operation package &mdash; RiskQuantLib 0.0.24 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="RiskQuantLib.Property package" href="RiskQuantLib.Property.html" />
+    <link rel="prev" title="RiskQuantLib.Model.KMV package" href="RiskQuantLib.Model.KMV.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> RiskQuantLib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">RiskQuantLib</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="RiskQuantLib.html">RiskQuantLib package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="RiskQuantLib.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Build.html">RiskQuantLib.Build package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Company.html">RiskQuantLib.Company package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.CompanyList.html">RiskQuantLib.CompanyList package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.DataInputAPI.html">RiskQuantLib.DataInputAPI package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Index.html">RiskQuantLib.Index package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.IndexList.html">RiskQuantLib.IndexList package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.InterestRate.html">RiskQuantLib.InterestRate package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Model.html">RiskQuantLib.Model package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">RiskQuantLib.Operation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Property.html">RiskQuantLib.Property package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Security.html">RiskQuantLib.Security package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.SecurityList.html">RiskQuantLib.SecurityList package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Set.html">RiskQuantLib.Set package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Tool.html">RiskQuantLib.Tool package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="RiskQuantLib.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RiskQuantLib.html#module-RiskQuantLib.Module">RiskQuantLib.Module module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RiskQuantLib.html#module-RiskQuantLib">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RiskQuantLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">RiskQuantLib</a> &raquo;</li>
+        
+          <li><a href="RiskQuantLib.html">RiskQuantLib package</a> &raquo;</li>
+        
+      <li>RiskQuantLib.Operation package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="riskquantlib-operation-package">
+<h1>RiskQuantLib.Operation package<a class="headerlink" href="#riskquantlib-operation-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-RiskQuantLib.Operation.iloc">
+<span id="riskquantlib-operation-iloc-module"></span><h2>RiskQuantLib.Operation.iloc module<a class="headerlink" href="#module-RiskQuantLib.Operation.iloc" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.iloc.iloc">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">iloc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataList</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/iloc.html#iloc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.iloc.iloc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class is the function class for RiskQuantLib list to use iloc function. It’s similar to
+that in pandas. Use it by calling stockList.iloc[number]. It returns the number-th element in
+that list.</p>
+<p>Passing a list to initialize iloc object.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-RiskQuantLib.Operation.listBaseOperation">
+<span id="riskquantlib-operation-listbaseoperation-module"></span><h2>RiskQuantLib.Operation.listBaseOperation module<a class="headerlink" href="#module-RiskQuantLib.Operation.listBaseOperation" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">listBase</span></span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>listBase() is the function class that makes all RiskQuantLib list object functional.
+Any RiskQuantLib list class should inherit from this class to own certain functions,
+such as groupBy, execFunc, etc.</p>
+<p>Users can define their own functions here to set new attribute function to
+RiskQuantLib list class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useObj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function uses deep copy. It returns the addition of copies of two RiskQuantLib lists.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">applyFunction</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.apply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will apply the given function to each element of RiskQuantLib list.
+Default settings will leave any change to element out. Your change to elements won’t
+be kept. Only the result of applyFunction is returned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a copy of present RiskQuantLib list object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.dropIndex">
+<span class="sig-name descname"><span class="pre">dropIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.dropIndex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.dropIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete index for each element.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.execFunc">
+<span class="sig-name descname"><span class="pre">execFunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">functionName</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.execFunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.execFunc" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will execute instance function for every element is present RiskQuantLib list object,
+given the function name. If some elements don’t have the function, a Null function will be used, and
+the result will skip the execution for that element.</p>
+<p>If the length of present list is not long, list comprehension will be used. If it’s a long
+list, joblib will be used to establish multiple threads.</p>
+<dl class="simple">
+<dt>functionName<span class="classifier">str</span></dt><dd><p>The function that element has, and you want to call.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.fillna">
+<span class="sig-name descname"><span class="pre">fillna</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">propertyList</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useObj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.fillna"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.fillna" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill the nan value or blank string will the given value.
+If attribute doesn’t exist, nothing will be done.
+You can fill the nan value by single attribute or a list of attributes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filterFunction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useObj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a RiskQuantLib list object given the fiter function.
+This is used to choose some elements which meet your requirements.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.groupBy">
+<span class="sig-name descname"><span class="pre">groupBy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useObj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.groupBy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.groupBy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function use pandas.DataFrame.groupby as engine. Its behavior is totally
+the same with pandas.</p>
+<dl class="simple">
+<dt>attrName<span class="classifier">str</span></dt><dd><p>The attribute that you want to group data by.</p>
+</dd>
+<dt>useObj<span class="classifier">bool</span></dt><dd><p>If true, return a RiskQuantLib list object, each element of which is also a
+RiskQuantLib list object. Each element will be marked by setting the attribute
+as the common value.</p>
+</dd>
+<dt>inplace<span class="classifier">bool</span></dt><dd><p>If true, operation will be done in present RiskQuantLib list object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.join">
+<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">anotherList</span></em>, <em class="sig-param"><span class="pre">targetAttrName</span></em>, <em class="sig-param"><span class="pre">filterFunction=&lt;function</span> <span class="pre">listBase.&lt;lambda&gt;&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.join"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.join" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each element, find all elements that meet requirements from another RiskQuantLib
+list object. The elements meeting requirement will be set as an attribute of present
+list.</p>
+<p>This function is very like pandas.DataFrame.merge.</p>
+<dl class="simple">
+<dt>anotherList<span class="classifier">RiskQuantLib list or list</span></dt><dd><p>Another list object, holding elements waiting to be selected.</p>
+</dd>
+<dt>targetAttrName<span class="classifier">str</span></dt><dd><p>The attribute name that you want to use to mark collected elements from another list.</p>
+</dd>
+<dt>filterFunction<span class="classifier">function</span></dt><dd><p>This function has two parameter, left and right, and must return a bool value.
+If true is returned, the element will be added. False means not added.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.mean">
+<span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will average the value of each element, given the attribute name.
+If some elements don’t have the attribute, an numpy.nan will be used, and
+the result will skip this value when calculating mean.</p>
+<dl class="simple">
+<dt>attrName<span class="classifier">str</span></dt><dd><p>The attribute name whose value you want to average.</p>
+</dd>
+<dt>inplace<span class="classifier">bool</span></dt><dd><p>If true, the ‘attributeMean’ property will be added to present object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.merge">
+<span class="sig-name descname"><span class="pre">merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">anotherList</span></em>, <em class="sig-param"><span class="pre">how</span></em>, <em class="sig-param"><span class="pre">on=&lt;function</span> <span class="pre">listBase.&lt;lambda&gt;&gt;</span></em>, <em class="sig-param"><span class="pre">inplace=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.merge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will merge two RiskQuantLib list object. This function should only
+be used when washing data. After merge, any change to source list will or will not
+influence merge result, depending on python copy mechanism. This won’t be a problem
+if data flows by single direction. However, troubles will come when you wish to
+change the origin to influence the merge result list, after merge action.</p>
+<p>In short, do not change the origin list once you merge them, any change should be
+done by merged result.</p>
+<p>If ‘on’ function can not identify the only element to merge, all unique attributes
+of the elements that meet requirement will be added to present list element.
+(Unique means this attribute only appears once in the list element, the others
+don’t have it.) If the attribute appears more than one times, only the first will
+be added.</p>
+<p>It’s like pandas.DataFrame.merge, but not totally the same. In RiskQuantLib,
+listA.merge(listB) is not the same from listB.merge(listA), even if you specify
+the same value of parameter ‘how’ and ‘on’.</p>
+<p>No matter what value parameter ‘how’ is given, attributes of elements in anotherList that
+meet requirement of ‘on’ will be added as attributes of elements in present list. The
+attributes who have the same name in both lists won’t be copied, which means you can’t
+merge two lists twice. (In the second time you merge them, the first list object has all
+attributes that anotherList has, so all attributes will be skipped, no attribute will be
+copied.)</p>
+<p>If how == ‘inner’, only the elements in the present list who have relative elements
+in anotherList will be returned.</p>
+<p>If how == ‘outer’, all elements in presentList, plus elements from anotherList that
+don’t have relative elements in present list will be returned.</p>
+<p>If how == ‘left’, all elements in presentList will be returned.</p>
+<p>if how == ‘right’, the elements in the present list who have relative elements
+in anotherList, plus elements from anotherList that don’t have relative elements
+in present list will be returned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.new">
+<span class="sig-name descname"><span class="pre">new</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.new"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.new" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a totally new RiskQuantLib list object like this.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.reIndex">
+<span class="sig-name descname"><span class="pre">reIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indexList</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useObj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.reIndex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.reIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new RiskQuantLib list object whose elements are chosen according to
+the index, the index of new list element must be in th indexList to be included.
+If more than one elements meet requirement, only the first one will be kept.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.resetIndex">
+<span class="sig-name descname"><span class="pre">resetIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.resetIndex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.resetIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the index as the n-th element of list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.rolling">
+<span class="sig-name descname"><span class="pre">rolling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">windowNumber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useObj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.rolling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.rolling" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each element, This function will collect the n elements before
+that element, create a new RiskQuantLib list object to holding it. The new list
+will be set as an attribute of ‘_rolling’, thus the present element can reach to
+the information of its former elements.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.scale">
+<span class="sig-name descname"><span class="pre">scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">attrName</span></em>, <em class="sig-param"><span class="pre">targetAttrName=''</span></em>, <em class="sig-param"><span class="pre">filterFunction=&lt;function</span> <span class="pre">listBase.&lt;lambda&gt;&gt;</span></em>, <em class="sig-param"><span class="pre">inplace=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each element, find the attribute value and calculate the portion of each element to the sum,
+given attribute name.</p>
+<p>After calling this function, a ‘scaled_attrName’ attribute will be added to each element.</p>
+<p>This function is very like pandas.DataFrame.groupby.agg.</p>
+<dl class="simple">
+<dt>attrName :str</dt><dd><p>The attribute which you want to scale.</p>
+</dd>
+<dt>targetAttrName<span class="classifier">str</span></dt><dd><p>The attribute name that you want to use to mark the portion of element.</p>
+</dd>
+<dt>filterFunction<span class="classifier">function</span></dt><dd><p>This function has one parameter, element, and must return a bool value.
+If true is returned, the element will be include when process scale.
+False means not included.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.setAll">
+<span class="sig-name descname"><span class="pre">setAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">List</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.setAll"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.setAll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update all elements by the list of new elements. Old elements will be deleted.</p>
+<dl class="simple">
+<dt>List<span class="classifier">list</span></dt><dd><p>A collection of RiskQuantLib instrument objects.</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.setIndex">
+<span class="sig-name descname"><span class="pre">setIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">propertyNameString</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.setIndex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.setIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the index for each element, given attribute name. The index value will be set as the attribute value
+you choose.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.sort">
+<span class="sig-name descname"><span class="pre">sort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">propertyList</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useObj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.sort"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort the present RiskQuantLib list by attributes. You can also sort it by a single
+attribute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.std">
+<span class="sig-name descname"><span class="pre">std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.std"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.std" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will calculate the standard deviation of value of each element,
+given the attribute name. If some elements don’t have the attribute, an numpy.nan will be used, and
+the result will skip this value.</p>
+<dl class="simple">
+<dt>attrName<span class="classifier">str</span></dt><dd><p>The attribute name whose value you want to calculate standard deviation.</p>
+</dd>
+<dt>inplace<span class="classifier">bool</span></dt><dd><p>If true, the ‘attributeStd’ property will be added to present object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.str">
+<span class="sig-name descname"><span class="pre">str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.sub">
+<span class="sig-name descname"><span class="pre">sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useObj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.sub"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.sub" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function uses deep copy. It returns the subtraction of copies of two RiskQuantLib lists.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.sum">
+<span class="sig-name descname"><span class="pre">sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.sum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will sum the value of each element, given the attribute name.
+If some elements don’t have the attribute, an numpy.nan will be used, and
+the result will skip this value.</p>
+<dl class="simple">
+<dt>attrName<span class="classifier">str</span></dt><dd><p>The attribute name whose value you want to sum.</p>
+</dd>
+<dt>inplace<span class="classifier">bool</span></dt><dd><p>If true, the ‘attributeSum’ property will be added to present object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.uniqueAttr">
+<span class="sig-name descname"><span class="pre">uniqueAttr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrNameString</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'First'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.uniqueAttr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.uniqueAttr" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns a RiskQuantLib list object, where the attribute value
+is unique.</p>
+<dl class="simple">
+<dt>attrNameString :str</dt><dd><p>The attribute name that you want to get the unique value list from.</p>
+</dd>
+<dt>inplace<span class="classifier">bool</span></dt><dd><p>If true, operation will done in present list object.
+If false, operation will done in a copy of present list object.</p>
+</dd>
+<dt>keep<span class="classifier">str</span></dt><dd><p>Only support ‘First’ or ‘Last’. If multiple elements have the same
+attribute value. The first or last element will be kept, given your choice.</p>
+</dd>
+</dl>
+<p>RiskQuantLib list object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.listBaseOperation.listBase.uniqueCode">
+<span class="sig-name descname"><span class="pre">uniqueCode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'First'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/listBaseOperation.html#listBase.uniqueCode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.listBaseOperation.listBase.uniqueCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns a RiskQuantLib list object, where the code value
+is unique.</p>
+<dl class="simple">
+<dt>inplace<span class="classifier">bool</span></dt><dd><p>If true, operation will done in present list object.
+If false, operation will done in a copy of present list object.</p>
+</dd>
+<dt>keep<span class="classifier">str</span></dt><dd><p>Only support ‘First’ or ‘Last’. If multiple elements have the same
+code value. The first or last element will be kept, given your choice.</p>
+</dd>
+</dl>
+<p>RiskQuantLib list object</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-RiskQuantLib.Operation.loc">
+<span id="riskquantlib-operation-loc-module"></span><h2>RiskQuantLib.Operation.loc module<a class="headerlink" href="#module-RiskQuantLib.Operation.loc" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="RiskQuantLib.Operation.loc.loc">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">loc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataList</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Operation/loc.html#loc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Operation.loc.loc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class is the function class for RiskQuantLib list to use loc function. It’s similar to
+that in pandas. Use it by calling stockList.loc[index]. It returns the element in
+that list whose index equals given value.</p>
+<p>Passing a list to initialize loc object.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-RiskQuantLib.Operation">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-RiskQuantLib.Operation" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="RiskQuantLib.Property.html" class="btn btn-neutral float-right" title="RiskQuantLib.Property package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="RiskQuantLib.Model.KMV.html" class="btn btn-neutral float-left" title="RiskQuantLib.Model.KMV package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright .
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
