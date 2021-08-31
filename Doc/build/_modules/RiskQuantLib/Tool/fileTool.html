@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>RiskQuantLib.Tool.fileTool &mdash; RiskQuantLib 0.0.24 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> RiskQuantLib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RiskQuantLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../RiskQuantLib.html">RiskQuantLib</a> &raquo;</li>
+        
+      <li>RiskQuantLib.Tool.fileTool</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for RiskQuantLib.Tool.fileTool</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1">#coding = utf-8</span>
+
+<span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">datetime</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="modifyDateIsToday"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.fileTool.modifyDateIsToday">[docs]</a><span class="k">def</span> <span class="nf">modifyDateIsToday</span><span class="p">(</span><span class="n">filePath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;M&#39;</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	This function will return a bool value, showing whether the target</span>
+<span class="sd">	file is modified on today.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span>
+		<span class="n">modifyDate</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">filePath</span><span class="p">)</span>
+	<span class="k">elif</span> <span class="n">mode</span><span class="o">==</span><span class="s1">&#39;C&#39;</span><span class="p">:</span>
+		<span class="n">modifyDate</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getctime</span><span class="p">(</span><span class="n">filePath</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mode Error&quot;</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="n">datetimeModifyDate</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="n">modifyDate</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y--%m--</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+	<span class="n">datetimeDateNow</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y--%m--</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">datetimeModifyDate</span> <span class="o">==</span> <span class="n">datetimeDateNow</span><span class="p">:</span>
+		<span class="k">return</span> <span class="kc">True</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="waitForFile"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.fileTool.waitForFile">[docs]</a><span class="k">def</span> <span class="nf">waitForFile</span><span class="p">(</span><span class="n">filePath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">fileNameKeyWord</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	This function will wait for the change or modification of a file.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">fileListInPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">filePath</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">fileNameKeyWord</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">]</span>
+	<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">fileListInPath</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+		<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+		<span class="n">fileListInPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">filePath</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">fileNameKeyWord</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">]</span>
+	<span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="dumpVariable"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.fileTool.dumpVariable">[docs]</a><span class="k">def</span> <span class="nf">dumpVariable</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span><span class="n">filePath</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Use python module pickle to dump variable.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="kn">import</span> <span class="nn">pickle</span> <span class="k">as</span> <span class="nn">pkl</span>
+	<span class="n">pkl</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span><span class="nb">open</span><span class="p">(</span><span class="n">filePath</span><span class="p">,</span><span class="s2">&quot;wb&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="dumpDictToJson"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.fileTool.dumpDictToJson">[docs]</a><span class="k">def</span> <span class="nf">dumpDictToJson</span><span class="p">(</span><span class="n">dictVariable</span><span class="p">:</span><span class="nb">dict</span><span class="p">,</span><span class="n">filePath</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Dump dict to json file.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="kn">import</span> <span class="nn">json</span>
+	<span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dictVariable</span><span class="p">,</span><span class="nb">open</span><span class="p">(</span><span class="n">filePath</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">),</span><span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="clearCachePklFile"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.fileTool.clearCachePklFile">[docs]</a><span class="k">def</span> <span class="nf">clearCachePklFile</span><span class="p">(</span><span class="n">filePath</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Delete all &#39;.pkl&#39; files in filePath.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Clearing Cache in &quot;</span><span class="o">+</span><span class="n">filePath</span><span class="p">)</span>
+	<span class="n">fileListInPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">filePath</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.pkl&#39;</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">]</span>
+	<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">fileListInPath</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+		<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;del &quot;&#39;</span><span class="o">+</span><span class="n">filePath</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;*.pkl&quot;&#39;</span><span class="p">)</span>
+		<span class="n">fileListInPath</span>  <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">filePath</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.pkl&#39;</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">]</span>
+	<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="findFirstNotNanValueOfSeries"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.fileTool.findFirstNotNanValueOfSeries">[docs]</a><span class="k">def</span> <span class="nf">findFirstNotNanValueOfSeries</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Return the first not nan value of a pandas.Series object.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+		<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">==</span><span class="nb">type</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+			<span class="k">pass</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">i</span>
+	<span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span></div>
+
+<div class="viewcode-block" id="resetIndexByFirstNotNanValue"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.fileTool.resetIndexByFirstNotNanValue">[docs]</a><span class="k">def</span> <span class="nf">resetIndexByFirstNotNanValue</span><span class="p">(</span><span class="n">df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span><span class="n">dropFirst</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Reset index by the first not nan value.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">findFirstNotNanValueOfSeries</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">dropFirst</span><span class="p">:</span>
+		<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="louverBox"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.fileTool.louverBox">[docs]</a><span class="k">def</span> <span class="nf">louverBox</span><span class="p">(</span><span class="n">target_df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span><span class="n">groupBy</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">insertTo</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	This function is like pandas.DataFrame.sum, however, this function will</span>
+<span class="sd">	sum the value for each column, and insert it as a new row before the dataframe.</span>
+
+<span class="sd">	Parameters</span>
+<span class="sd">	-----------</span>
+<span class="sd">	target_df : pd.DataFrame</span>
+<span class="sd">		The dataframe you want to louverBox</span>
+<span class="sd">	groupBy : str</span>
+<span class="sd">		The column name that you want to groupby.</span>
+<span class="sd">	insertTo : str</span>
+<span class="sd">		The index name of the insert row.</span>
+
+<span class="sd">	Returns</span>
+<span class="sd">	-------</span>
+<span class="sd">	tmp_df : pd.DataFrame</span>
+<span class="sd">		The louverBox-ed dataframe.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+	<span class="n">tmp_df</span> <span class="o">=</span> <span class="n">target_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+	<span class="n">groupName</span>  <span class="o">=</span> <span class="n">tmp_df</span><span class="p">[</span><span class="n">groupBy</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="n">tmp_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">tmp_df</span> <span class="o">=</span> <span class="n">tmp_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">groupBy</span><span class="p">])</span>
+	<span class="n">tmp_df</span><span class="p">[</span><span class="s1">&#39;IF_ASSEMBLE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+	<span class="n">insertList</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">tmp_df</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">if</span> <span class="n">tmp_df</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dtypes</span><span class="o">!=</span><span class="n">np</span><span class="o">.</span><span class="n">object</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tmp_df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+	<span class="n">insertList</span><span class="p">[</span><span class="n">tmp_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">insertTo</span><span class="p">)]</span> <span class="o">=</span> <span class="n">groupName</span>
+	<span class="n">insertList</span><span class="p">[</span><span class="n">tmp_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;IF_ASSEMBLE&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
+	<span class="k">if</span> <span class="n">tmp_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="mi">1</span><span class="p">:</span>
+		<span class="n">tmp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">insertList</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">tmp_df</span><span class="p">[</span><span class="n">insertTo</span><span class="p">]</span> <span class="o">=</span> <span class="n">groupName</span>
+		<span class="n">tmp_df</span><span class="p">[</span><span class="s1">&#39;IF_ASSEMBLE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+	<span class="n">tmp_df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">)</span>
+	<span class="n">tmp_df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">tmp_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">tmp_df</span></div>
+
+<div class="viewcode-block" id="dataFrameLouverBox"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.fileTool.dataFrameLouverBox">[docs]</a><span class="k">def</span> <span class="nf">dataFrameLouverBox</span><span class="p">(</span><span class="n">df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span><span class="n">groupBy</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">insertTo</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	This function is like pandas.DataFrame.groupby, however, this function will</span>
+<span class="sd">	sum the value for each group, and insert it as a new row before that group.</span>
+
+<span class="sd">	Parameters</span>
+<span class="sd">	----------</span>
+<span class="sd">	df : pd.DataFrame</span>
+<span class="sd">		The dataframe that you want to louverBox</span>
+<span class="sd">	groupBy : str</span>
+<span class="sd">		The column you want to group by.</span>
+<span class="sd">	insertTo :str</span>
+<span class="sd">		The column you want to record the result</span>
+
+<span class="sd">	Returns</span>
+<span class="sd">	-------</span>
+<span class="sd">	result : pd.DataFrame</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">if</span> <span class="n">insertTo</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">():</span>
+		<span class="n">df</span><span class="p">[</span><span class="n">insertTo</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+	<span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">groupBy</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">louverBox</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">groupBy</span><span class="o">=</span><span class="n">groupBy</span><span class="p">,</span><span class="n">insertTo</span><span class="o">=</span><span class="n">insertTo</span><span class="p">))</span>
+	<span class="n">result</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="generateFileDictFromPath"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.fileTool.generateFileDictFromPath">[docs]</a><span class="k">def</span> <span class="nf">generateFileDictFromPath</span><span class="p">(</span><span class="n">filePathString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">targetDict</span><span class="p">:</span><span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">onlyExcel</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	This function generate a dict of file.</span>
+
+<span class="sd">	Parameters</span>
+<span class="sd">	----------</span>
+<span class="sd">	filePathString :str</span>
+<span class="sd">		The path you want to read files from.</span>
+<span class="sd">	targetDict : dict</span>
+<span class="sd">		The dict to hold result.</span>
+<span class="sd">	onlyExcel : bool</span>
+<span class="sd">		If true, only excel will be read and loaded.</span>
+
+<span class="sd">	Returns</span>
+<span class="sd">	-------</span>
+<span class="sd">	targetDict : dict</span>
+<span class="sd">		The dict holding excel dataframe or paths.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+	<span class="n">fileList</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">filePathString</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">onlyExcel</span><span class="p">:</span>
+		<span class="n">fileList</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fileList</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">i</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.xls&#39;</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">excelList</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">filePathString</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="n">i</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fileList</span><span class="p">]</span>
+		<span class="n">fileDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">fileList</span><span class="p">,</span><span class="n">excelList</span><span class="p">))</span>
+		<span class="p">[</span><span class="n">resetIndexByFirstNotNanValue</span><span class="p">(</span><span class="n">fileDict</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fileList</span><span class="p">]</span>
+		<span class="n">targetDict</span><span class="p">[</span><span class="n">filePathString</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">fileList</span><span class="p">,[</span><span class="n">fileDict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fileList</span><span class="p">]))</span>
+		<span class="k">return</span> <span class="n">targetDict</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">targetDict</span><span class="p">[</span><span class="n">filePathString</span><span class="p">]</span> <span class="o">=</span> <span class="n">fileList</span>
+		<span class="k">return</span> <span class="n">targetDict</span></div>
+
+<div class="viewcode-block" id="generateDataFrameFromDict"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.fileTool.generateDataFrameFromDict">[docs]</a><span class="k">def</span> <span class="nf">generateDataFrameFromDict</span><span class="p">(</span><span class="n">inputDict</span><span class="p">:</span><span class="nb">dict</span><span class="p">,</span> <span class="n">dateString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">fileNameString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">columnNameString</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Generate a dataframe from a dict.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+	<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">inputDict</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span><span class="n">inputDict</span><span class="o">.</span><span class="n">values</span><span class="p">()],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ROW&#39;</span><span class="p">,</span><span class="s1">&#39;VALUE&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+	<span class="n">df</span><span class="p">[</span><span class="s1">&#39;PATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dateString</span>
+	<span class="n">df</span><span class="p">[</span><span class="s1">&#39;FILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fileNameString</span>
+	<span class="n">df</span><span class="p">[</span><span class="s1">&#39;COLUMN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">columnNameString</span>
+	<span class="k">return</span> <span class="n">df</span></div>
+
+<div class="viewcode-block" id="compressExcel"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.fileTool.compressExcel">[docs]</a><span class="k">def</span> <span class="nf">compressExcel</span><span class="p">(</span><span class="n">filePathString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">outputPathString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">subDictionary</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Re-format excel in form of [&#39;PATH&#39;,&#39;FILE&#39;,&#39;COLUMN&#39;,&#39;ROW&#39;,&#39;VALUE&#39;]</span>
+
+<span class="sd">	Parameters</span>
+<span class="sd">	----------</span>
+<span class="sd">	filePathString : str</span>
+<span class="sd">		The path where you hold your excel files.</span>
+<span class="sd">	outputPathString : str</span>
+<span class="sd">		The path of return file.</span>
+<span class="sd">	subDictionary : bool</span>
+<span class="sd">		If there are still other dictionaries in filePathString.</span>
+
+<span class="sd">	Returns</span>
+<span class="sd">	-------</span>
+<span class="sd">	None</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+	<span class="kn">import</span> <span class="nn">operator</span>
+	<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+	<span class="k">if</span> <span class="n">subDictionary</span><span class="p">:</span>
+		<span class="n">dirList</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">filePathString</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">==-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">subDictionaryDict</span> <span class="o">=</span> <span class="p">{}</span>
+		<span class="p">[</span><span class="n">generateFileDictFromPath</span><span class="p">(</span><span class="n">filePathString</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="n">i</span><span class="p">,</span><span class="n">subDictionaryDict</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dirList</span><span class="p">]</span>
+		<span class="n">dfArray</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">generateDataFrameFromDict</span><span class="p">(</span><span class="n">subDictionaryDict</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">],</span><span class="n">dateString</span><span class="o">=</span><span class="n">i</span><span class="p">,</span><span class="n">fileNameString</span><span class="o">=</span><span class="n">j</span><span class="p">,</span><span class="n">columnNameString</span><span class="o">=</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">subDictionaryDict</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">subDictionaryDict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">subDictionaryDict</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+		<span class="n">dfList</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span><span class="n">dfArray</span><span class="p">)</span>
+		<span class="n">dfList</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span><span class="n">dfList</span><span class="p">)</span>
+		<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfList</span><span class="p">)</span>
+		<span class="n">result</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+		<span class="n">result</span><span class="p">[[</span><span class="s1">&#39;PATH&#39;</span><span class="p">,</span><span class="s1">&#39;FILE&#39;</span><span class="p">,</span><span class="s1">&#39;COLUMN&#39;</span><span class="p">,</span><span class="s1">&#39;ROW&#39;</span><span class="p">,</span><span class="s1">&#39;VALUE&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">outputPathString</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">dictionaryDict</span> <span class="o">=</span> <span class="p">{}</span>
+		<span class="n">generateFileDictFromPath</span><span class="p">(</span><span class="n">filePathString</span><span class="p">,</span><span class="n">dictionaryDict</span><span class="p">)</span>
+		<span class="n">dfArray</span> <span class="o">=</span> <span class="p">[[[</span><span class="n">generateDataFrameFromDict</span><span class="p">(</span><span class="n">dictionaryDict</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">],</span><span class="n">dateString</span><span class="o">=</span><span class="n">i</span><span class="p">,</span><span class="n">fileNameString</span><span class="o">=</span><span class="n">j</span><span class="p">,</span><span class="n">columnNameString</span><span class="o">=</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">dictionaryDict</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">dictionaryDict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dictionaryDict</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+		<span class="n">dfList</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span><span class="n">dfArray</span><span class="p">)</span>
+		<span class="n">dfList</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span><span class="n">dfList</span><span class="p">)</span>
+		<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfList</span><span class="p">)</span>
+		<span class="n">result</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+		<span class="n">result</span><span class="p">[[</span><span class="s1">&#39;PATH&#39;</span><span class="p">,</span><span class="s1">&#39;FILE&#39;</span><span class="p">,</span><span class="s1">&#39;COLUMN&#39;</span><span class="p">,</span><span class="s1">&#39;ROW&#39;</span><span class="p">,</span><span class="s1">&#39;VALUE&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">outputPathString</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright .
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
