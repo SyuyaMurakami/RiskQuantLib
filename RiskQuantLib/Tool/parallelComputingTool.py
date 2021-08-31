@@ -8,8 +8,28 @@ except Exception as e:
     os.popen(command)
     import pp
 
-def parallelComputing(functionPointer,inputIterationList,functionDependencyTuple,libraryDependencyTuple,serverSecret = "123456"):
-    # 初始化服务器
+def parallelComputing(functionPointer,inputIterationList:list,functionDependencyTuple:tuple,libraryDependencyTuple:tuple,serverSecret:str = "123456"):
+    """
+    Call a function by multiple processes. Each process can accept a different input.
+
+    Parameters
+    ----------
+    functionPointer : function
+        The function name.
+    inputIterationList : list
+        A list holding inputs. Each element is a input for single process.
+    functionDependencyTuple : tuple
+        A tuple of string, telling the dependency of function.
+    libraryDependencyTuple : tuple
+        A tuple of string, telling the dependency of library.
+    serverSecret: str
+        A string used to communicate with in two computers.
+
+    Returns
+    -------
+    resultDict : dict
+        A dict whose key is input and value is the return of function.
+    """
     ppservers = ()
     if len(sys.argv) >1:
         ncpus = int(sys.argv[1])

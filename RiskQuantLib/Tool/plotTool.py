@@ -4,11 +4,33 @@
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+import pandas as pd
+
 matplotlib.rcParams['axes.unicode_minus'] = False
 from pylab import *
 mpl.rcParams['font.sans-serif'] = ['SimHei']
 
-def plotLine(df,titleStr,xLabelStr,yLabelStr,savePathStr):
+def plotLine(df:pd.DataFrame,titleStr:str,xLabelStr:str,yLabelStr:str,savePathStr:str):
+	"""
+	Plot a multiple line graph.
+
+	Parameters
+	----------
+	df : pd.DataFrame
+		The dataframe you want to plot. Each column is a series. Values must be number.
+	titleStr : str
+		The graph title.
+	xLabelStr : str
+		The x label
+	yLabelStr : str
+		The y label
+	savePathStr : str
+		The path where you want to save the graph
+
+	Returns
+	-------
+	None
+	"""
 	fig = plt.figure(figsize=(16,11))
 	ax = fig.add_subplot(111)
 	plt.plot(df)
@@ -20,7 +42,23 @@ def plotLine(df,titleStr,xLabelStr,yLabelStr,savePathStr):
 	plt.savefig(savePathStr)
 	plt.show()
 
-def plotPie(df,titleStr,savePathStr):
+def plotPie(df:pd.DataFrame,titleStr:str,savePathStr:str):
+	"""
+	Plot a pie chart.
+
+	Parameters
+	----------
+	df : pd.DataFrame
+		The dataframe you want to plot. Each column is a series. Values must be number.
+	titleStr : str
+		The chart title.
+	savePathStr : str
+		The path where you want to save the chart
+
+	Returns
+	-------
+	None
+	"""
 	fig = plt.figure(figsize=(16,11))
 	ax = fig.add_subplot(111)
 	plt.pie(df,autopct='%3.2f%%',radius=0.8,labels=df.index)
@@ -28,7 +66,27 @@ def plotPie(df,titleStr,savePathStr):
 	plt.savefig(savePathStr)
 	plt.show()
 
-def plotBar(df,titleStr,xLabelStr,yLabelStr,savePathStr):
+def plotBar(df:pd.DataFrame,titleStr:str,xLabelStr:str,yLabelStr:str,savePathStr:str):
+	"""
+	Plot a bar chart.
+
+	Parameters
+	----------
+	df : pd.DataFrame
+		The dataframe you want to plot. Each column is a series. Values must be number.
+	titleStr : str
+		The chart title.
+	xLabelStr : str
+		The x label
+	yLabelStr : str
+		The y label
+	savePathStr : str
+		The path where you want to save the chart
+
+	Returns
+	-------
+	None
+	"""
 	fig = plt.figure(figsize=(16,11))
 	ax = fig.add_subplot(111)
 	for i in df.columns:
@@ -41,10 +99,32 @@ def plotBar(df,titleStr,xLabelStr,yLabelStr,savePathStr):
 	plt.savefig(savePathStr)
 	plt.show()
 
-def plotMultiBar(xSeries,yDataframe,xLabelStr,yLabelStr,titleStr,savePathStr):
+def plotMultiBar(xSeries:pd.Series,yDataframe:pd.DataFrame,xLabelStr:str,yLabelStr:str,titleStr:str,savePathStr:str):
+	"""
+	Plot a bar chart.
+
+	Parameters
+	----------
+	xSeries : pd.Series
+		The series you want to use as x axis.
+	yDataframe : pd.DataFrame
+		The dataframe you want to plot. Each column is a series. Value must be number.
+	titleStr : str
+		The chart title.
+	xLabelStr : str
+		The x label
+	yLabelStr : str
+		The y label
+	savePathStr : str
+		The path where you want to save the chart
+
+	Returns
+	-------
+	None
+	"""
 	fig = plt.figure(figsize=(16,11))
 	ax = fig.add_subplot(111)
-	# 柱高
+	# height of the bar
 	yDict = {}
 	for i in yDataframe.columns:
 		yDict[i] = list(yDataframe[i])
@@ -53,11 +133,11 @@ def plotMultiBar(xSeries,yDataframe,xLabelStr,yLabelStr,titleStr,savePathStr):
 	barWidth = 0.25
 	tickLabel = list(xSeries)
 
-	# 显示每个柱的具体高度
+	# show the height of bar
 	for j,i in enumerate(yDict.values()):
 		for q,p in zip(x,i):
 			plt.text(q + 0.005+0.24*j, p +0.005, '%.0f' % p, ha='center',va='bottom')
-		# 绘制柱状图
+		# plot bar
 		plt.bar([o+barWidth*j for o in x], i, barWidth,align="center",label=list(yDict.keys())[j],alpha=0.5)
 
 	plt.xlabel(xLabelStr)
