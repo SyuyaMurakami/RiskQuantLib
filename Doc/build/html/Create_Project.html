@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Create A New Project &mdash; RiskQuantLib 0.0.24 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Install" href="Install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> RiskQuantLib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Create A New Project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#riskquantlib">RiskQuantLib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-instrument-xlsx">Build_Instrument.xlsx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-attr-xlsx">Build_Attr.xlsx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-py">build.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-py">main.py</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RiskQuantLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Create A New Project</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="create-a-new-project">
+<h1>Create A New Project<a class="headerlink" href="#create-a-new-project" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>RiskQuantLib is based on project. For any data analysis mission, you should create at least one project to do it.</p>
+<p>To create a new RiskQuantLib project, you can use <code class="docutils literal notranslate"><span class="pre">newRQL</span></code> command in terminal as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">newRQL</span> <span class="n">your_project_path</span>
+</pre></div>
+</div>
+<p><strong>Notice: If there is already a project in the target dictionary, all old files will be deleted, and replaced with brand new project files.</strong></p>
+<p>After this command, your dictionary should looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">your_project_path</span>
+  <span class="o">--</span><span class="n">RiskQuantLib</span>
+  <span class="o">--</span><span class="n">build</span><span class="o">.</span><span class="n">py</span>
+  <span class="o">--</span><span class="n">main</span><span class="o">.</span><span class="n">py</span>
+  <span class="o">--</span><span class="n">Build_Attr</span><span class="o">.</span><span class="n">xlsx</span>
+  <span class="o">--</span><span class="n">Build_Instrument</span><span class="o">.</span><span class="n">xlsx</span>
+</pre></div>
+</div>
+<div class="section" id="riskquantlib">
+<h2>RiskQuantLib<a class="headerlink" href="#riskquantlib" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> is a dictionary holding all source files of RiskQuantLib, it looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">RiskQuantLib</span>
+  <span class="o">--</span><span class="n">Build</span>
+  <span class="o">--</span><span class="n">Company</span>
+  <span class="o">--</span><span class="n">CompanyList</span>
+  <span class="o">--</span><span class="n">DataInputAPI</span>
+  <span class="o">--</span><span class="n">Index</span>
+  <span class="o">--</span><span class="n">IndexList</span>
+  <span class="o">--</span><span class="n">InterestRate</span>
+  <span class="o">--</span><span class="n">Model</span>
+  <span class="o">--</span><span class="n">Operation</span>
+  <span class="o">--</span><span class="n">Property</span>
+  <span class="o">--</span><span class="n">Security</span>
+  <span class="o">--</span><span class="n">SecurityList</span>
+  <span class="o">--</span><span class="n">Set</span>
+  <span class="o">--</span><span class="n">Tool</span>
+  <span class="o">--</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+  <span class="o">--</span><span class="n">Module</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-instrument-xlsx">
+<h2>Build_Instrument.xlsx<a class="headerlink" href="#build-instrument-xlsx" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Build_Instrument.xlsx</span></code> is the file to tell RiskQuantLib how to generate python source code of instrument class. It looks like:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 20%" />
+<col style="width: 26%" />
+<col style="width: 14%" />
+<col style="width: 24%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>InstrumentName</p></th>
+<th class="head"><p>ParentRQLClassName</p></th>
+<th class="head"><p>ParentQuantLibClassName</p></th>
+<th class="head"><p>LibararyName</p></th>
+<th class="head"><p>DefaultInstrumentType</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>treasureBond</p></td>
+<td><p>Bond</p></td>
+<td></td>
+<td><p>numpy</p></td>
+<td><p>Treasure Bond</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <em>InstrumentName</em> column can be defined by your will, depending on your data. RiskQuantLib will create instrument class source file <code class="docutils literal notranslate"><span class="pre">treasureBond.py</span></code> under <code class="docutils literal notranslate"><span class="pre">RiskQuantLib.Security.Bond.TreasureBond</span></code>, and create list class source file <code class="docutils literal notranslate"><span class="pre">treasureBondList.py</span></code> under  <code class="docutils literal notranslate"><span class="pre">RiskQuantLib.SecurityList.BondList.TreasureBondList</span></code> after your run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">build.py</span></code>.</p>
+<p>The <em>ParentRQLClassName</em> means this new instrument will inherit from this RiskQuantLib class. It can accept key word like: <code class="docutils literal notranslate"><span class="pre">Any</span></code>, <code class="docutils literal notranslate"><span class="pre">Fund</span></code>, <code class="docutils literal notranslate"><span class="pre">Stock</span></code>, <code class="docutils literal notranslate"><span class="pre">Bond</span></code>, <code class="docutils literal notranslate"><span class="pre">Repo</span></code>, etc. However,</p>
+<p><strong>Notice: The first letter must be capitalized in ParentRQLClassName column.</strong></p>
+<p><strong>Notice: You can use the instrumentName you specified in last row to fill ParentRQLClassName column, like:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 20%" />
+<col style="width: 26%" />
+<col style="width: 14%" />
+<col style="width: 24%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>InstrumentName</p></th>
+<th class="head"><p>ParentRQLClassName</p></th>
+<th class="head"><p>ParentQuantLibClassName</p></th>
+<th class="head"><p>LibararyName</p></th>
+<th class="head"><p>DefaultInstrumentType</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>treasureBond</p></td>
+<td><p>Bond</p></td>
+<td></td>
+<td><p>numpy</p></td>
+<td><p>Treasure Bond</p></td>
+</tr>
+<tr class="row-odd"><td><p>chinaTreaBond</p></td>
+<td><p>TreasureBond</p></td>
+<td></td>
+<td></td>
+<td><p>Panda Bond</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <em>ParentQuantLibClassName</em> means this new instrument will inherit from this QuantLib class. It can accept key word like: <code class="docutils literal notranslate"><span class="pre">Instrument</span></code>, <code class="docutils literal notranslate"><span class="pre">Bond</span></code>, etc. You can refer to QuantLib document to find what class QuantLib has.</p>
+<p>The <em>LibraryName</em> is other library that you will use in instrument class source file, like numpy and pandas.</p>
+<p>The <em>DefaultInstrumentType</em> is a string to mark your new instrument class. It can be any string or blank.</p>
+</div>
+<div class="section" id="build-attr-xlsx">
+<h2>Build_Attr.xlsx<a class="headerlink" href="#build-attr-xlsx" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Build_Attr.xlsx</span></code> is the file used to tell RiskQuantLib what kind of attributes you need, when analysising your data, and which class these attributes belong to. This file looks like:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 39%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SecurityType</p></th>
+<th class="head"><p>AttrName</p></th>
+<th class="head"><p>AttrType</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Fund</p></td>
+<td><p>yourAttribute</p></td>
+<td><p>Number</p></td>
+</tr>
+<tr class="row-odd"><td><p>Stock</p></td>
+<td><p>anotherAttribute</p></td>
+<td><p>String</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <em>SecurityType</em> column can accept key word like: <code class="docutils literal notranslate"><span class="pre">Any</span></code>, <code class="docutils literal notranslate"><span class="pre">Fund</span></code>, <code class="docutils literal notranslate"><span class="pre">Stock</span></code>, <code class="docutils literal notranslate"><span class="pre">Bond</span></code>, <code class="docutils literal notranslate"><span class="pre">Repo</span></code>, etc. However,</p>
+<p><strong>Notice: The first letter must be capitalized in SecurityType column.</strong></p>
+<p>Any instrument you specify in <em>Build_Instrument.xlsx</em> can also be used here. If you want to create a class named <code class="docutils literal notranslate"><span class="pre">treasureBond</span></code> in <em>Build_Instrument.xlsx</em>, then here you can fill <code class="docutils literal notranslate"><span class="pre">TreasureBond</span></code> in <em>SecurityType</em> column.</p>
+<p>The <em>AttrType</em> column can accept key word of <code class="docutils literal notranslate"><span class="pre">Number</span></code>, <code class="docutils literal notranslate"><span class="pre">String</span></code>, <code class="docutils literal notranslate"><span class="pre">Any</span></code>, <code class="docutils literal notranslate"><span class="pre">Series</span></code>. It tells RiskQuantLib what kind of data will be stored by this attribute. If you add ‘sellPrice’ to <code class="docutils literal notranslate"><span class="pre">Stock</span></code>, this should be a <code class="docutils literal notranslate"><span class="pre">Number</span></code> attribute, while an attribute like ‘issuerName’ is a <code class="docutils literal notranslate"><span class="pre">String</span></code> kind. <code class="docutils literal notranslate"><span class="pre">Series</span></code> is used if it’s an attribute like ‘sellPriceOfPastSixMonth’.</p>
+</div>
+<div class="section" id="build-py">
+<h2>build.py<a class="headerlink" href="#build-py" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">build.py</span></code> is used to generate python source code automatically. After you specify what kind of class you want to create, how it inherit from other class in <em>Build_Instrument.xlsx</em>, and what attributes these class should have in <em>Build_Attr.xlsx</em>, you can call <em>build.py</em> by terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">build</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p><strong>Notice: Usually this build.py will only be excuted once, at the begin of your project. Do not build your project every time you run main.py, it is not necessary.</strong></p>
+</div>
+<div class="section" id="main-py">
+<h2>main.py<a class="headerlink" href="#main-py" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code> is entrance of your project. You can start your coding here, by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">RiskQuantLib.Module</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Install.html" class="btn btn-neutral float-left" title="Install" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright .
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
