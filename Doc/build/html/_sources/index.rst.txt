@@ -6,6 +6,8 @@
 
    Home page <self>
    modules.rst
+   Install.rst
+   Create_Project.rst
 
 Welcome to Use RiskQuantLib
 ===========================
