@@ -372,7 +372,7 @@ class listBase():
 
     def execFunc(self,functionName,*args):
         """
-        This function will execute instance function for every element is present RiskQuantLib list object,
+        This function will execute instance function for every element in present RiskQuantLib list object,
         given the function name. If some elements don't have the function, a Null function will be used, and
         the result will skip the execution for that element.
 
