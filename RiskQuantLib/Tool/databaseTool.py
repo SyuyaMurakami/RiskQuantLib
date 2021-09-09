@@ -106,3 +106,16 @@ class mysqlTool():
 			print("Replace Finished")
 		except Exception as e:
 			print("Replace Failed, Error:",e)
+
+class oracleTool():
+	"""
+	This is the API to connect with oracle database.
+	"""
+	def __init__(self,databaseNameString:str,hostAddress:str,port:int,userName:str,passWord:str):
+		from sqlalchemy import create_engine
+		uri = f'oracle+cx_oracle://{userName}:{passWord}@{hostAddress}:{port}/{databaseNameString}'
+		self.engine = create_engine(uri)
+
+	def readSql(self,sql:str):
+		data = pd.read_sql(sql,con=self.engine)
+		return data
