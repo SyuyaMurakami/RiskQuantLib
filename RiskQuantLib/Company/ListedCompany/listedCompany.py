@@ -9,8 +9,8 @@ class listedCompany(base,setListedCompany):
     """
     This class represents listed company.
     """
-    def __init__(self,nameString:str,codeString:str='',companyTypeString:str = 'Listed Company'):
-        super(listedCompany,self).__init__(nameString,codeString,companyTypeString)
+    def __init__(self,codeString:str,nameString:str='',companyTypeString:str = 'Listed Company'):
+        super(listedCompany,self).__init__(codeString,nameString,companyTypeString)
 
 
 

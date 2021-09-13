@@ -5,7 +5,7 @@ from QuantLib import Index
 from RiskQuantLib.Set.IndexList.base import setBase
 from RiskQuantLib.Operation.listBaseOperation import listBase
 
-class base(Index,setBase,listBase):
+class baseList(Index,setBase,listBase):
     """
     This class the list of index.
     """

@@ -2,11 +2,11 @@
 #coding = utf-8
 
 
-from RiskQuantLib.IndexList.base import base
+from RiskQuantLib.IndexList.base import baseList
 from RiskQuantLib.Index.StockIndex.stockIndex import stockIndex
 from RiskQuantLib.Set.IndexList.StockIndexList.stockIndexList import setStockIndexList
 
-class stockIndexList(base,setStockIndexList):
+class stockIndexList(baseList,setStockIndexList):
     """
     This class is the list of stock index.
     """
