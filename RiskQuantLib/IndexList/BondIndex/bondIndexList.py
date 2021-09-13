@@ -1,11 +1,11 @@
 #!/usr/bin/python
 #coding = utf-8
 
-from RiskQuantLib.IndexList.base import base
+from RiskQuantLib.IndexList.base import baseList
 from RiskQuantLib.Index.BondIndex.bondIndex import bondIndex
 from RiskQuantLib.Set.IndexList.BondIndexList.bondIndexList import setBondIndexList
 
-class bondIndexList(base,setBondIndexList):
+class bondIndexList(baseList,setBondIndexList):
     """
     This class is the list of bond index.
     """

@@ -29,9 +29,9 @@ from RiskQuantLib.SecurityList.BondList.convertibleBondList import convertibleBo
 # from RiskQuantLib.Model.Copula.copula import copula
 
 from RiskQuantLib.InterestRate.base import base as insterestRate
-from RiskQuantLib.IndexList.base import base as indexList
+from RiskQuantLib.IndexList.base import baseList as indexList
 from RiskQuantLib.IndexList.base import index
-from RiskQuantLib.CompanyList.base import base as companyList
+from RiskQuantLib.CompanyList.base import baseList as companyList
 from RiskQuantLib.CompanyList.base import company
 from RiskQuantLib.CompanyList.ListedCompanyList.listedCompanyList import listedCompanyList,listedCompany
 
