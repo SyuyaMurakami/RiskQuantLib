@@ -110,5 +110,29 @@ class pathObj():
     #-<classNameDictBegin>
     #-<classNameDictEnd>
 
+    attributeTypeDefaultList = ['Any', 'Average', 'Amount', 'Aum', 'Beta', 'Cost', 'Duration', 'Dv01', 'FaceValue',
+                         'InterestRate', 'MarketValue', 'Nav', 'Number', 'Price', 'ProfitAndLoss', 'Weight', 'Series',
+                         'String']
+    attributeTypeDict = {}
+    attributeTypeDict['Any'] = 'Property' + os.sep + 'base.py'
+    attributeTypeDict['Average'] = 'Property' + os.sep + 'average.py'
+    attributeTypeDict['Amount'] = 'Property' + os.sep + 'Amount' + os.sep + 'amount.py'
+    attributeTypeDict['Aum'] = 'Property' + os.sep + 'Aum' + os.sep + 'aum.py'
+    attributeTypeDict['Beta'] = 'Property' + os.sep + 'Beta' + os.sep + 'beta.py'
+    attributeTypeDict['Cost'] = 'Property' + os.sep + 'Cost' + os.sep + 'cost.py'
+    attributeTypeDict['Duration'] = 'Property' + os.sep + 'Duration' + os.sep + 'duration.py'
+    attributeTypeDict['Dv01'] = 'Property' + os.sep + 'Dv01' + os.sep + 'dv01.py'
+    attributeTypeDict['FaceValue'] = 'Property' + os.sep + 'FaceValue' + os.sep + 'faceValue.py'
+    attributeTypeDict['InterestRate'] = 'Property' + os.sep + 'InterestRate' + os.sep + 'interestRate.py'
+    attributeTypeDict['MarketValue'] = 'Property' + os.sep + 'MarketValue' + os.sep + 'marketValue.py'
+    attributeTypeDict['Nav'] = 'Property' + os.sep + 'Nav' + os.sep + 'nav.py'
+    attributeTypeDict['Number'] = 'Property' + os.sep + 'NumberProperty' + os.sep + 'numberProperty.py'
+    attributeTypeDict['Price'] = 'Property' + os.sep + 'Price' + os.sep + 'price.py'
+    attributeTypeDict['ProfitAndLoss'] = 'Property' + os.sep + 'ProfitAndLoss' + os.sep + 'profitAndLoss.py'
+    attributeTypeDict['Weight'] = 'Property' + os.sep + 'Weight' + os.sep + 'weight.py'
+    # build module, contents below will be automatically built and replaced, self-defined functions shouldn't be written here
+    #-<attributeTypeDictBegin>
+    #-<attributeTypeDictEnd>
+
     def __init__(self):
         pass

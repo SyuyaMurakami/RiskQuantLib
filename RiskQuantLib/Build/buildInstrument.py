@@ -633,7 +633,7 @@ def buildInstrument(instrumentNameString:str, parentRQLClassName:str = '', paren
     None
 
     """
-    pathList = buildInstrumentPath(instrumentNameString, parentRQLClassName=parentRQLClassName)
+    pathList = buildInstrumentPath(instrumentNameString, parentRQLClassName=parentRQLClassName,targetProjectPath=targetProjectPath)
     IO = buildInstrumentObj(instrumentNameString, parentRQLClassName, parentQuantLibClassName, libraryName, defaultInstrumentType)
     IOS = buildInstrumentSet(instrumentNameString, parentRQLClassName)
     IL = buildInstrumentList(instrumentNameString, parentRQLClassName,defaultInstrumentType)
@@ -641,7 +641,7 @@ def buildInstrument(instrumentNameString:str, parentRQLClassName:str = '', paren
     if targetProjectPath == '':
         [commitBuildInstrument(source, path) for path, source in zip(pathList, [IO, IOS, IL, ILS])]
     else:
-        [commitBuildInstrument(source,targetProjectPath + os.sep + path.split('RiskQuantLib')[-1]) for path,source in zip(pathList,[IO,IOS,IL,ILS])]
+        [commitBuildInstrument(source,targetProjectPath + os.sep +'RiskQuantLib'+os.sep+ path.split('RiskQuantLib')[-1]) for path,source in zip(pathList,[IO,IOS,IL,ILS])]
 
     return None
 

@@ -82,7 +82,8 @@ class propertyObj():
             self.code = buildBaseFunction(self.name)
             self.listCode = buildListSetFunction2D(self.name)
         else:
-            return
+            self.code = buildSelfDefinedTypeFunction(self.name,self.propertyType)
+            self.listCode = buildListSetFunction1D(self.name)
 
     def buildTargetSourceFile(self):
         """
