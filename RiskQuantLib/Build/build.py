@@ -26,6 +26,9 @@ def buildAttr(filePath:str, targetProjectPath:str = ''):
     import pandas as pd
     df = pd.read_excel(filePath)
     df.fillna('Any',inplace=True)
+    # Build Attr Type
+    buildPropertyType(list(set([i for i in df['AttrType'] if i not in ['Any','Number','String','Series']])),targetProjectPath=targetProjectPath)
+    # Build Attr
     from RiskQuantLib.Build.propertyList import propertyList
     plist = propertyList()
     plist.addProperty(df['AttrName'],df['SecurityType'])
@@ -66,6 +69,8 @@ def clearAttr(targetProjectPath:str = ''):
         source_path = targetProjectPath
     targetSourcePathList = [source_path + os.sep + i for i in tmpObj.pathDict.values()] + [source_path + os.sep + j for j in tmpObj.listPathDict.values()]
     [clearBuiltFunction(i) for i in targetSourcePathList]
+    from RiskQuantLib.Build.buildPropertyType import clearPropertyTypePath
+    clearPropertyTypePath(targetProjectPath)
     print("Clear Attr Finished")
 
 def buildInstrument(filePath:str, targetProjectPath:str = ''):
@@ -102,6 +107,32 @@ def buildInstrument(filePath:str, targetProjectPath:str = ''):
     ilist.setDefaultInstrumentType(df['InstrumentName'],df['DefaultInstrumentType'])
     ilist.commit(targetProjectPath)
     print("Build Instrument Finished")
+
+def buildPropertyType(propertyNameList : list, targetProjectPath:str = ''):
+    """
+    buildPropertyType(propertyNameList : list, targetProjectPath = '') is a function to automatically build propertyType classes.
+    If propertyType already exists, it will skip this propertyType.
+    Any propertyType that doesn't exist in excel file won't be built and added into RiskQuantLib path,
+    regardless of whether it used to exist in target project.
+
+    Parameters
+    ----------
+    propertyNameList : list
+        A list contains the types of variables you may use.
+    targetProjectPath : str
+        The RiskQuantLib project path where you want to build propertyTypes.
+        You can leave this parameter empty to build propertyTypes in this project.
+        Or specify a path to build propertyTypes to another RiskQuantLib project.
+
+    Returns
+    -------
+    None
+    """
+    from RiskQuantLib.Build.propertyTypeList import propertyTypeList
+    ptlist = propertyTypeList()
+    ptlist.addPropertyType(propertyNameList)
+    ptlist.commit(targetProjectPath)
+    print("Build PropertyType Finished")
 
 def clearInstrumentPath(targetProjectPath:str = ''):
     """

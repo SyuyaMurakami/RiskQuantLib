@@ -110,6 +110,52 @@ def buildBaseFunction(variableNameString:str):
     code.get_globals()
     return code
 
+def buildSelfDefinedTypeFunction(variableNameString:str, variableTypeString : str):
+    """
+    buildSelfDefinedTypeFunction(variableNameString:str, variableTypeString : str)
+    is a function to automatically build a set function,
+    given the variable type as self-defined string.
+    This function will import a property instance from RiskQuantLib.Property.selfDefinedType,
+    and returns a codeBuilder object.
+
+    Parameters
+    ----------
+    variableNameString : str
+        The variable name you want to use.
+        This name will be used as attribute name of class.
+    variableTypeString : str
+        The variable type you want to set your variable to, usually, it should be
+        'String', 'Number' or 'Any', but after defining your own type class, you
+        can use it as a variable type.
+
+    Returns
+    -------
+    code : codeBuilder Object
+    """
+    c_variableTypeString = variableTypeString[0].capitalize()+variableTypeString[1:]
+    from RiskQuantLib.Tool.codeBuilderTool import codeBuilder
+
+    code = codeBuilder(indent=4)
+
+    code.add_line("def set"+variableNameString[0].capitalize()+variableNameString[1:]+"(self, "+variableNameString+"):")
+    code.indent()
+    vars_code = code.add_section()
+    code.add_line("from RiskQuantLib.Property."+c_variableTypeString+"."+variableTypeString+" import "+variableTypeString)
+    code.add_line("if not hasattr(self, '__"+variableNameString+"'):")
+    code.indent()
+    code.add_line("self.__"+variableNameString+" = "+variableTypeString+"("+variableNameString+")")
+    code.add_line("self."+variableNameString+" = self.__"+variableNameString+".value")
+    code.dedent()
+    code.add_line("else:")
+    code.indent()
+    code.add_line("self.__"+variableNameString+".setValue("+variableNameString+")")
+    code.add_line("self."+variableNameString+" = self.__"+variableNameString+".value")
+    code.dedent()
+
+    code.dedent()
+    code.get_globals()
+    return code
+
 def commitObjectFunctionBuild(codeList:list,sourceFilePath:str):
     """
     commitObjectFunctionBuild(codeList:list,sourceFilePath:str) is a function to commit creations of variable set function.
