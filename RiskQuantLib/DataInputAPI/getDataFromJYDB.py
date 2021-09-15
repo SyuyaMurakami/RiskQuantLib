@@ -4,27 +4,28 @@
 import numpy as np
 import pandas as pd
 
+def decoratorQuery(queryFunction):
+	"""
+	This function deal with the issue that oracle can not query more than 1000 'IN' condition.
+	"""
+
+	def decoratedQueryFunction(*args):
+		lenNum = len(args[1])
+		if lenNum < 1000:
+			return queryFunction(*args)
+		else:
+			splitNum = int(lenNum / 1000) + 1
+			listSplit = [[j for index, j in enumerate(args[0]) if int(index / 1000) == i] for i in range(splitNum)]
+			args = args[1:]
+			result = [queryFunction(i, *args) for i in listSplit]
+			return pd.concat(result)
+
+	return decoratedQueryFunction
+
 class getDataFromJYDB():
 	def __init__(self,databaseNameString:str,hostAddress:str,port:int,userName:str,passWord:str):
 		from RiskQuantLib.Tool.databaseTool import oracleTool
 		self.connect = oracleTool(databaseNameString=databaseNameString,hostAddress=hostAddress,port=port,userName=userName,passWord=passWord)
-
-	@staticmethod
-	def decoratorQuery(queryFunction):
-		"""
-		This function deal with the issue that oracle can not query more than 1000 'IN' condition.
-		"""
-		def decoratedQueryFunction(*args):
-			lenNum = len(args[0])
-			if lenNum < 1000:
-				return queryFunction(*args)
-			else:
-				splitNum = int(lenNum/1000)+1
-				listSplit = [[j for index,j in enumerate(args[0]) if int(index/1000)==i] for i in range(splitNum)]
-				args = args[1:]
-				result = [queryFunction(i,*args) for i in listSplit]
-				return pd.concat(result)
-		return decoratedQueryFunction
 
 	@decoratorQuery
 	def getSwIndexClose(self,indexCode:list,date:pd.Timestamp):
