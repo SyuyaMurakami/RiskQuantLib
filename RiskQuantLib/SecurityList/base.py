@@ -10,8 +10,10 @@ class baseList(setBaseList,listBase):
     """
     This is the basic list class. Any security list class should inherit from this.
     """
+    elementClass = securityBase
     def __init__(self):
         self.all = []
+        self.listType = 'Security List'
         self.__init_get_item__()
 
     def addSecurityList(self,securityObjList):

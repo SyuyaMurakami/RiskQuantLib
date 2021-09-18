@@ -8,6 +8,7 @@ from RiskQuantLib.Set.SecurityList.DerivativeList.FutureList.bondFutureList impo
 
 
 class bondFutureList(futureList,setBondFutureList):
+    elementClass = bondFuture
     def __init__(self):
         super(bondFutureList, self).__init__()
         self.listType = 'Bond Future List'

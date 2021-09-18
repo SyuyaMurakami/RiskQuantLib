@@ -10,6 +10,7 @@ class baseList(setBase,listBase):
     """
     This class is the basic company list class.
     """
+    elementClass = company
     def __init__(self):
         self.all = []
         self.listType = 'Company List'

@@ -11,6 +11,7 @@ class bondList(baseList,setBondList):
     """
     bondList is one of the five basic list classes.
     """
+    elementClass = bond
     def __init__(self):
         super(bondList, self).__init__()
         self.listType = 'Bond List'

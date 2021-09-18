@@ -11,6 +11,7 @@ class stockList(baseList,setStockList):
     """
     stockList is one of the five basic list classes.
     """
+    elementClass = stock
     def __init__(self):
         super(stockList,self).__init__()
         self.listType = 'Stock List'

@@ -8,6 +8,7 @@ from RiskQuantLib.Set.SecurityList.DerivativeList.OptionList.optionList import s
 
 
 class optionList(derivativeList,setOptionList):
+    elementClass = option
     def __init__(self):
         super(optionList, self).__init__()
         self.listType = 'Option List'

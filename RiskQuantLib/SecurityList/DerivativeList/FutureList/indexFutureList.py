@@ -8,6 +8,7 @@ from RiskQuantLib.Set.SecurityList.DerivativeList.FutureList.indexFutureList imp
 
 
 class indexFutureList(futureList,setIndexFutureList):
+    elementClass = indexFuture
     def __init__(self):
         super(indexFutureList, self).__init__()
         self.listType = 'Index Future List'

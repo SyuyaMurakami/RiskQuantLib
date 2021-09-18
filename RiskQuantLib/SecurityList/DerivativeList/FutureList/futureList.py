@@ -8,6 +8,7 @@ from RiskQuantLib.Set.SecurityList.DerivativeList.FutureList.futureList import s
 
 
 class futureList(derivativeList,setFutureList):
+    elementClass = future
     def __init__(self):
         super(futureList, self).__init__()
         self.listType = 'Future List'

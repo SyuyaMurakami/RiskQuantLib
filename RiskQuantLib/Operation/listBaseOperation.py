@@ -689,3 +689,232 @@ class listBase():
         elif how == 'right':
             tmpObj.setAll(leftInner + rightResidual)
         return tmpObj
+
+    def fromDF(self, df : pd.DataFrame, code :str = '', name:str = ''):
+        """
+        This function will convert a dataframe to RiskQuantLib list object. If
+        there is already elements in present list, all elements will be deleted.
+
+        The column name of dataframe should be in English, and this function
+        will try to set it to element attribute if there exists the attribute
+        with the same name. That is, this function will only set value of
+        registered attribute. If not registered in current list class, it
+        will be skipped.
+
+        Parameters
+        ----------
+        df : pd.DataFrame
+            The dataframe you want to pull data from.
+        code : str
+            The column name that you want to mark as 'code' attribute.
+        name : str
+            The column name that you want to mark as 'name' attribute.
+
+        Returns
+        -------
+        RiskQuantLib List
+        """
+        if not hasattr(self,'elementClass'):
+            print("The List Must Have Attribute Named elementClass To Call This Function.")
+            return
+        else:
+            self.setAll([])
+            instrumentNameString = self.elementClass.__name__
+            c_instrumentNameString = instrumentNameString[0].capitalize() + instrumentNameString[1:]
+            if code == '' and name == '':
+                getattr(self, 'add' + c_instrumentNameString + 'Series', lambda x,y:None)(df.index,df.index)
+            elif code!='' and name!='':
+                getattr(self, 'add' + c_instrumentNameString + 'Series', lambda x, y: None)(df[code], df[name])
+            elif code!='':
+                getattr(self, 'add' + c_instrumentNameString + 'Series', lambda x, y: None)(df[code], df[code])
+            elif name!='':
+                getattr(self, 'add' + c_instrumentNameString + 'Series', lambda x, y: None)(df[name], df[name])
+            else:
+                pass
+            def trySetAttr(attrName,pdseries):
+                try:
+                    c_attrName = attrName[0].capitalize() + attrName[1:]
+                    if hasattr(self,'set'+c_attrName):
+                        getattr(self, 'set'+c_attrName, lambda x,y:None)(self['code'],pdseries)
+                    else:
+                        pass
+                except:
+                    pass
+            [trySetAttr(col,df[col]) for col in df.columns]
+            return self
+
+    def addFromDF(self, df : pd.DataFrame, code :str = '', name:str = ''):
+        """
+        This function will add elements from a dataframe. If there is already
+        elements in present list, all elements will be kept, while new elements
+        will be added.
+
+        The column name of dataframe should be in English, and this function
+        will try to set it to element attribute if there exists the attribute
+        with the same name. That is, this function will only set value of
+        registered attribute. If not registered in current list class, it
+        will be skipped.
+
+        Parameters
+        ----------
+        df : pd.DataFrame
+            The dataframe you want to pull data from.
+        code : str
+            The column name that you want to mark as 'code' attribute.
+        name : str
+            The column name that you want to mark as 'name' attribute.
+
+        Returns
+        -------
+        RiskQuantLib List
+        """
+        tmpList = self.new()
+        tmpList.fromDF(df = df, code=code,name=name)
+        self.setAll(self.all + tmpList.all)
+
+    def fromIterable(self, iterable:list, code :str = '', name:str = ''):
+        """
+        This function will convert an iterable to RiskQuantLib list object. If
+        there is already elements in present list, all elements will be deleted.
+
+        This function will only set value of registered attribute. If not
+        registered in current list class, it will be skipped.
+
+        Parameters
+        ----------
+        iterable : list
+            The iterable object you want to pull data from.
+        code : str
+            The attribute name of iterable that you want to
+            mark as 'code' in RiskQuantLib List Object.
+        name : str
+            The attribute name of iterable that you want to
+            mark as 'name' in RiskQuantLib List Object.
+
+        Returns
+        -------
+        RiskQuantLib List
+        """
+        if not hasattr(self,'elementClass'):
+            print("The List Must Have Attribute Named elementClass To Call This Function.")
+            return
+        else:
+            self.setAll([])
+            instrumentNameString = self.elementClass.__name__
+            c_instrumentNameString = instrumentNameString[0].capitalize() + instrumentNameString[1:]
+            if code == '' and name == '':
+                getattr(self, 'add' + c_instrumentNameString + 'Series', lambda x,y:None)([str(index) for index,obj in enumerate(iterable)],[str(index) for index,obj in enumerate(iterable)])
+            elif code!='' and name!='':
+                getattr(self, 'add' + c_instrumentNameString + 'Series', lambda x, y: None)([getattr(obj,code,str(index)) for index,obj in enumerate(iterable)], [getattr(obj,name,str(index)) for index,obj in enumerate(iterable)])
+            elif code!='':
+                getattr(self, 'add' + c_instrumentNameString + 'Series', lambda x, y: None)([getattr(obj,code,str(index)) for index,obj in enumerate(iterable)], [getattr(obj,code,str(index)) for index,obj in enumerate(iterable)])
+            elif name!='':
+                getattr(self, 'add' + c_instrumentNameString + 'Series', lambda x, y: None)([getattr(obj,name,str(index)) for index,obj in enumerate(iterable)], [getattr(obj,name,str(index)) for index,obj in enumerate(iterable)])
+            else:
+                pass
+            def trySetAttr(obj,attrName,attrValue):
+                try:
+                    c_attrName = attrName[0].capitalize() + attrName[1:]
+                    if hasattr(obj,'set'+c_attrName):
+                        getattr(obj, 'set'+c_attrName, lambda x:None)(attrValue)
+                    else:
+                        pass
+                except:
+                    pass
+            [[trySetAttr(instrumentObj,attr,getattr(obj,attr,np.nan)) for attr in dir(obj)] for obj,instrumentObj in zip(iterable,self.all)]
+            return self
+
+    def addFromIterable(self, iterable:list, code :str = '', name:str = ''):
+        """
+        This function will add elements from an iterable object. If there is already
+        elements in present list, all elements will be kept, while new elements
+        will be added.
+
+        This function will only set value of registered attribute. If not
+        registered in current list class, it will be skipped.
+
+        Parameters
+        ----------
+        iterable : list
+            The iterable object you want to pull data from.
+        code : str
+            The attribute name of iterable that you want to
+            mark as 'code' in RiskQuantLib List Object.
+        name : str
+            The attribute name of iterable that you want to
+            mark as 'name' in RiskQuantLib List Object.
+
+        Returns
+        -------
+        RiskQuantLib List
+        """
+        tmpList = self.new()
+        tmpList.fromIterable(iterable=iterable, code=code,name=name)
+        self.setAll(self.all + tmpList.all)
+
+    def updateAttr(self, attrName : str, codeSeries, valueSeries):
+        """
+        This function will update the attribute value of elements whose code
+        appears in given codeSeries. If code of element doesn't show in
+        codeSeries, these elements will be skipped and not changed.
+
+        Parameters
+        ----------
+        attrName : str
+            The attribute whose value is exactly what you want to update.
+        codeSeries : list
+            An iterable object that contains codes of elements whose attribute need to be updated.
+        valueSeries : list
+            An iterable object that contains new values of attributes.
+
+        Returns
+        -------
+        None
+        """
+        c_attrName = attrName[0].capitalize() + attrName[1:]
+        tmpObj = self.filter(lambda x:x.code in list(codeSeries))
+        getattr(tmpObj,'set'+c_attrName,lambda x,y:None)(codeSeries,valueSeries)
+
+    def updateAttrFromDF(self, df: pd.DataFrame, code:str = ''):
+        """
+        This function will update attribute value of current list by passed dataframe.
+        The column name of passes dataframe should be in English, and if current
+        list has registered attribute whose name is the same with column name, it will
+        be updated.
+
+        Parameters
+        ----------
+        df : pd.DataFrame
+            The dataframe that you want to update data from.
+        code : str
+            The column name of df that you used to mark rows. Elements whose code
+            is in this column will be updated, and those not in this column will
+            not be influenced. If blank, the index of df will be used as code.
+
+        Returns
+        -------
+        None
+        """
+        if code == '':
+            [self.updateAttr(col, df.index, df[col]) for col in df.columns]
+        else:
+            [self.updateAttr(col, df[code], df[col]) for col in df.columns]
+
+    def updateAttrFromDict(self, attrName : str, codeValueDict : dict):
+        """
+        This function will update attribute value of current list by passed dict.
+        The key of passes dict should be code string. If current list has registered
+        attribute whose name is in keys of codeValueDict, it will be updated.
+
+        Parameters
+        ----------
+        attrName : str
+            The attribute whose value is exactly what you want to update.
+        codeValueDict : dict
+            A dict that maps code to value.
+
+        Returns
+        -------
+        None
+        """
+        self.updateAttr(attrName,codeValueDict.keys(),codeValueDict.values())

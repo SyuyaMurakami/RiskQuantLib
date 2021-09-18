@@ -6,6 +6,7 @@ from RiskQuantLib.Security.Stock.stockIndexUnderlyingStock import stockIndexUnde
 from RiskQuantLib.Set.SecurityList.StockList.stockIndexUnderlyingStockList import setStockIndexUnderlyingStockList
 
 class stockIndexUnderlyingStockList(stockList,setStockIndexUnderlyingStockList):
+    elementClass = stockIndexUnderlyingStock
     def __init__(self):
         super(stockIndexUnderlyingStockList,self).__init__()
         self.listType = 'Stock Index Underlying Stock List'

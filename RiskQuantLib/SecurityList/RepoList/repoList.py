@@ -11,6 +11,7 @@ class repoList(baseList,setRepoList):
     """
     repoList is one of the five basic list classes.
     """
+    elementClass = repo
     def __init__(self):
         super(repoList, self).__init__()
         self.listType = 'Repo List'

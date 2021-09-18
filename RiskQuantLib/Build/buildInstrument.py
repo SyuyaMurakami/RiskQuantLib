@@ -499,10 +499,12 @@ def buildInstrumentList(instrumentNameString: str, parentRQLClassName: str = '',
     psb.setImport(setPath,'',True,'set'+c_instrumentNameString+'List')
     parentClassList.append('set'+c_instrumentNameString+'List')
     psb.startClass(instrumentNameString+'List',parentClassList)
+    psb.code.add_line("elementClass = " + RQLpathObj.classNameDict[c_instrumentNameString])
 
     if parentRQLClassName == '':# add self.__init__ to independent class
         psb.startFunction('__init__')
         psb.code.add_line('self.all = []')
+        psb.code.add_line("self.listType = '" + securityType + " List'")
         psb.endFunction()
     elif type(parentRQLClassName) == type(''):
         psb.startFunction('__init__')

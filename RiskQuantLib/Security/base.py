@@ -9,7 +9,7 @@ class base(Instrument,setBase):
     """
     This is the security basic class. Any security should inherit from this class.
     """
-    def __init__(self,codeString,nameString,securityTypeString = ''):
+    def __init__(self,codeString,nameString,securityTypeString = 'Security'):
         self.code = codeString
         self.name = nameString
         self.securityType = securityTypeString

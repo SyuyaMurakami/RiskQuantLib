@@ -7,7 +7,7 @@ class base(setBase):
     """
     This is the company base class. Any company object should be initialized with code and name.
     """
-    def __init__(self,codeString:str,nameString:str='',companyTypeString:str = ''):
+    def __init__(self,codeString:str,nameString:str='',companyTypeString:str = 'Company'):
         self.code = codeString
         self.name = nameString
         self.companyType = companyTypeString

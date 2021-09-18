@@ -11,6 +11,7 @@ class derivativeList(baseList,setDerivativeList):
     """
     derivativeList is one of the five basic list classes.
     """
+    elementClass = derivative
     def __init__(self):
         super(derivativeList, self).__init__()
         self.listType = 'Derivative List'

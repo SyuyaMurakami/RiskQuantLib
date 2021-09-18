@@ -9,6 +9,7 @@ class fundList(baseList,setFundList):
     """
     fundList is one of the five basic list classes.
     """
+    elementClass = fund
     def __init__(self):
         super(fundList,self).__init__()
         self.listType = 'Fund List'
