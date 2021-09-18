@@ -8,7 +8,7 @@ class base(Index,setBase):
     """
     This is the basic class of index.
     """
-    def __init__(self,codeString:str,nameString:str,indexTypeString:str = ''):
+    def __init__(self,codeString:str,nameString:str,indexTypeString:str = 'Index'):
         """
         Only call this function won't initialize QuantLib pricing module. iniPricingModule()
         must be called to initialize pricing module.

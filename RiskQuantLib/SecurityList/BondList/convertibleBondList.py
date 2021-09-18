@@ -8,6 +8,7 @@ from RiskQuantLib.Set.SecurityList.BondList.convertibleBondList import setConver
 
 
 class convertibleBondList(bondList,setConvertibleBondList):
+    elementClass = convertibleBond
     def __init__(self):
         super(convertibleBondList, self).__init__()
         self.listType = 'Convertible Bond List'

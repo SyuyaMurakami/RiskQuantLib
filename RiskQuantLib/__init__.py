@@ -67,6 +67,7 @@ def newProject():
     PYB.setTitle()
     PYB.setImport('os')
     PYB.setImport('sys')
+    PYB.setImport('RiskQuantLib.Module','',True,'*')
     PYB.code = codeBuilder(indent=0)
     PYB.code.add_line('path = sys.path[0]')
     PYB.code.add_line('print("Write Your Code Here : "+path+os.sep+"main.py")')

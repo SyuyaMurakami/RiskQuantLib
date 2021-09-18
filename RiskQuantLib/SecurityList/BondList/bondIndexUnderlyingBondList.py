@@ -6,6 +6,7 @@ from RiskQuantLib.Security.Bond.bondIndexUnderlyingBond import bondIndexUnderlyi
 from RiskQuantLib.Set.SecurityList.BondList.bondIndexUnderlyingBondList import setBondIndexUnderlyingBondList
 
 class bondIndexUnderlyingBondList(bondList,setBondIndexUnderlyingBondList):
+    elementClass = bondIndexUnderlyingBond
     def __init__(self):
         super(bondIndexUnderlyingBondList,self).__init__()
         self.listType = 'Bond Index Underlying Bond List'

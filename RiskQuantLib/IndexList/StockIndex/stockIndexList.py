@@ -10,6 +10,7 @@ class stockIndexList(baseList,setStockIndexList):
     """
     This class is the list of stock index.
     """
+    elementClass = stockIndex
     def __init__(self):
         super(stockIndexList, self).__init__()
         self.listType = 'Stock Index List'

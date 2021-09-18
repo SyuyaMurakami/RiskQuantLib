@@ -9,8 +9,10 @@ class baseList(Index,setBase,listBase):
     """
     This class the list of index.
     """
+    elementClass = index
     def __init__(self):
         self.all = []
+        self.listType = 'Index List'
         self.__init_get_item__()
 
     def addIndexList(self,indexObjList:list):

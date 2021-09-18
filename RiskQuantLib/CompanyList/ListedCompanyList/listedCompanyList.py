@@ -10,6 +10,7 @@ class listedCompanyList(baseList,setListedCompanyList):
     """
     This class is the list of listed company.
     """
+    elementClass = listedCompany
     def __init__(self):
         super(listedCompanyList,self).__init__()
         self.listType = 'Listed Company List'

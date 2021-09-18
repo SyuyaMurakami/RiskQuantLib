@@ -9,6 +9,7 @@ class bondIndexList(baseList,setBondIndexList):
     """
     This class is the list of bond index.
     """
+    elementClass = bondIndex
     def __init__(self):
         super(bondIndexList, self).__init__()
         self.listType = 'Bond Index List'
