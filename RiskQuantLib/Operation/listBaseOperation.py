@@ -68,7 +68,7 @@ class listBase():
         elif isinstance(item,slice) or isinstance(item,int):
             return self.all[item]
         else:
-            tmpList = [i for i in self.all if i.code in item]
+            tmpList = [i for i in self.all if hasattr(i, 'code') and i.code in item]
             if len(tmpList)!=0:
                 return tmpList
             else:
