@@ -583,6 +583,59 @@ class listBase():
         [obj.setAll(value) for obj,value in zip(valueObj,valueList)]
         [setattr(i,targetAttrName,j) for i,j in zip(self.all,valueObj)]
 
+    def connect(self, anotherList, targetAttrNameOnLeft: str, targetAttrNameOnRight: str, filterFunction = lambda x,y:True, unsymmetrical = False, filterFunctionOnLeft = lambda presentList, anotherList: True, filterFunctionOnRight=lambda presentList,anotherList: True):
+        """
+        For each element, find all elements that meet requirements from another RiskQuantLib
+        list object. The elements meeting requirement will be set as an attribute of present
+        list.
+
+        After this is down, for each element of another RiskQuantLib, find all elements that
+        meet requirements from present RiskQuantLib list object. The elements meeting requirement
+        will be set as an attribute of another list.
+
+        This function actually calls join twice, but it switch the position of two RiskQuantLib
+        list in the second call.
+
+
+        Parameters
+        ----------
+        anotherList : RiskQuantLib list or list
+            Another list object, holding elements waiting to be selected.
+        targetAttrNameOnLeft : str
+            The attribute name of present list that you want to use to mark collected elements from another list.
+        filterFunction : function
+            This function has two parameter, left and right, and must return a bool value.
+            If true is returned, the element will be added to each other. False means not added.
+        unsymmetrical : bool
+            If true, different rules will be used when join two list, where filterFunctionOnLeft will be used
+            when present list join another list, and filterFunctionOnRight will be used when another list join
+            present list.
+        filterFunctionOnLeft : function
+            This function has two parameter, presentList and anotherList, and must return a bool value.
+            If true is returned, the element from another list will be added to present list. False means not added.
+        targetAttrNameOnRight : str
+            The attribute name of another list that you want to use to mark collected elements from present list.
+        filterFunctionOnRight : function
+            This function has two parameter, presentList and anotherList, and must return a bool value.
+            If true is returned, the element from present list will be added to another list. False means not added.
+
+
+        Returns
+        -------
+        None
+        """
+        if unsymmetrical:
+            def adjustedFilterFunctionOnRight(x,y):
+                return filterFunctionOnRight(y,x)
+            self.join(anotherList,targetAttrNameOnLeft,filterFunctionOnLeft)
+            anotherList.join(self,targetAttrNameOnRight,adjustedFilterFunctionOnRight)
+        else:
+            def adjustedFilterFunctionOnRight(x,y):
+                return filterFunction(y,x)
+            self.join(anotherList,targetAttrNameOnLeft,filterFunction)
+            anotherList.join(self,targetAttrNameOnRight,adjustedFilterFunctionOnRight)
+
+
     def scale(self,attrName,targetAttrName = '',filterFunction = lambda x:True,inplace = False):
         """
         For each element, find the attribute value and calculate the portion of each element to the sum,
