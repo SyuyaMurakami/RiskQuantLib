@@ -241,7 +241,7 @@ def buildInstrumentPath(instrumentNameString:str,parentRQLClassName:str = '',tar
     middle = content.split('#-<classPathDictBegin>')[-1].split('#-<classPathDictEnd>')[0]
     ender = content.split('#-<classPathDictEnd>')[-1]
 
-    add_code = r'''    classPathDict["'''+c_instrumentNameString+'''"] = "RiskQuantLib.'''+filePath.split('RiskQuantLib')[-1].strip(os.sep).replace(os.sep,'.').strip('.py')+'''"'''
+    add_code = r'''    classPathDict["'''+c_instrumentNameString+'''"] = "RiskQuantLib.'''+filePath.split('RiskQuantLib')[-1].strip(os.sep).replace(os.sep,'.').replace('.py','')+'''"'''
     newContent = former + '#-<classPathDictBegin>\n' + middle.strip('\t').strip('    ') +add_code + '\n    #-<classPathDictEnd>' + ender
     with open(pathObjPath, 'w') as f:
         f.truncate()  # clear all contents
@@ -344,7 +344,7 @@ def buildInstrumentObj(instrumentNameString:str, parentRQLClassName:str = '', pa
         parentClassList += parentQuantLibClassName
 
     # import set module
-    setPath = 'RiskQuantLib.'+ RQLpathObj.pathDict[c_instrumentNameString].replace(os.sep,'.').strip('.py')
+    setPath = 'RiskQuantLib.'+ RQLpathObj.pathDict[c_instrumentNameString].replace(os.sep,'.').replace('.py','')
     psb.setImport(setPath,'',True,'set'+c_instrumentNameString)
     parentClassList.append('set'+c_instrumentNameString)
 
@@ -422,14 +422,14 @@ def buildInstrumentSet(instrumentNameString: str, parentRQLClassName: str = ''):
     if parentRQLClassName == '':
         pass
     elif type(parentRQLClassName) == type(''):
-        classPath = 'RiskQuantLib.' + RQLpathObj.pathDict[parentRQLClassName].replace(os.sep, '.').strip('.py')
+        classPath = 'RiskQuantLib.' + RQLpathObj.pathDict[parentRQLClassName].replace(os.sep, '.').replace('.py','')
         className = 'set' + RQLpathObj.classNameDict[parentRQLClassName][0].capitalize() + RQLpathObj.classNameDict[parentRQLClassName][1:]
         psb.setImport(classPath, '', True, className)
         if className not in parentClassList:
             parentClassList.append(className)
     else:
         for i in parentRQLClassName:
-            classPath = 'RiskQuantLib.'+RQLpathObj.pathDict[i].replace(os.sep,'.').strip('.py')
+            classPath = 'RiskQuantLib.'+RQLpathObj.pathDict[i].replace(os.sep,'.').replace('.py','')
             className = 'set'+RQLpathObj.classNameDict[i][0].capitalize()+RQLpathObj.classNameDict[i][1:]
             psb.setImport(classPath, '', True, className)
             if className not in parentClassList:
@@ -482,20 +482,20 @@ def buildInstrumentList(instrumentNameString: str, parentRQLClassName: str = '',
         if 'listBase' not in parentClassList:
             parentClassList.append('listBase')
     elif type(parentRQLClassName) == type(''):
-        classPath = 'RiskQuantLib.' + "".join([i+'.' for i in RQLpathObj.listPathDict[parentRQLClassName].split(os.sep)[1:]]).strip('.py.')
+        classPath = 'RiskQuantLib.' + "".join([i+'.' for i in RQLpathObj.listPathDict[parentRQLClassName].split(os.sep)[1:]]).replace('.py.','')
         className = RQLpathObj.classNameDict[parentRQLClassName] + 'List'
         psb.setImport(classPath, '', True, className)
         if className not in parentClassList:
             parentClassList.append(className)
     else:
         for i in parentRQLClassName:
-            classPath = 'RiskQuantLib.' + "".join([i + '.' for i in RQLpathObj.listPathDict[i].split(os.sep)[1:]]).strip('.py.')
+            classPath = 'RiskQuantLib.' + "".join([i + '.' for i in RQLpathObj.listPathDict[i].split(os.sep)[1:]]).replace('.py.','')
             className = RQLpathObj.classNameDict[i] + 'List'
             psb.setImport(classPath, '', True, className)
             if className not in parentClassList:
                 parentClassList.append(className)
 
-    setPath = 'RiskQuantLib.' + RQLpathObj.listPathDict[c_instrumentNameString].replace(os.sep,'.').strip('.py')
+    setPath = 'RiskQuantLib.' + RQLpathObj.listPathDict[c_instrumentNameString].replace(os.sep,'.').replace('.py','')
     psb.setImport(setPath,'',True,'set'+c_instrumentNameString+'List')
     parentClassList.append('set'+c_instrumentNameString+'List')
     psb.startClass(instrumentNameString+'List',parentClassList)
@@ -564,14 +564,14 @@ def buildInstrumentListSet(instrumentNameString: str, parentRQLClassName: str = 
     if parentRQLClassName == '':
         pass
     elif type(parentRQLClassName) == type(''):
-        classPath = 'RiskQuantLib.' + RQLpathObj.listPathDict[parentRQLClassName].replace(os.sep,'.').strip('.py')
+        classPath = 'RiskQuantLib.' + RQLpathObj.listPathDict[parentRQLClassName].replace(os.sep,'.').replace('.py','')
         className = 'set'+RQLpathObj.classNameDict[parentRQLClassName][0].capitalize()+RQLpathObj.classNameDict[parentRQLClassName][1:] + 'List'
         psb.setImport(classPath, '', True, className)
         if className not in parentClassList:
             parentClassList.append(className)
     else:
         for i in parentRQLClassName:
-            classPath = 'RiskQuantLib.' + RQLpathObj.listPathDict[i].replace(os.sep, '.').strip('.py')
+            classPath = 'RiskQuantLib.' + RQLpathObj.listPathDict[i].replace(os.sep, '.').replace('.py','')
             className = 'set' + RQLpathObj.classNameDict[i][0].capitalize() + RQLpathObj.classNameDict[i][1:] + 'List'
             psb.setImport(classPath, '', True, className)
             if className not in parentClassList:
