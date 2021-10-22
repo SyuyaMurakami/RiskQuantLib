@@ -3,7 +3,7 @@
 import numpy as np
 import copy
 import multiprocessing as mp
-
+from collections import Iterable
 import pandas as pd
 from joblib import Parallel,delayed
 from RiskQuantLib.Operation.loc import loc
@@ -34,7 +34,60 @@ class listBase():
         """
         self.all = List
         self.__init_get_item__()
-
+    def _tunnelingGetitem(self, attrName):
+        """
+        Find the attribute of elements in present list which meet requirements and
+        find elements of that attribute, if it is iterable. If this attribute
+        is not iterable, it returns collection of this attribute itself.
+        """
+        subIndex = None
+        if type(attrName)==type(''):
+            filter = lambda x:True
+        elif type(attrName)==type(()) and len(attrName)==2:
+            if hasattr(attrName[1],"__call__"):
+                filter = attrName[1]
+            else:
+                filter = lambda x: True
+                subIndex = attrName[1]
+            attrName = attrName[0]
+        elif type(attrName)==type(()) and len(attrName)>=3:
+            if hasattr(attrName[1],"__call__"):
+                filter = attrName[1]
+                subIndex = attrName[2]
+            else:
+                filter = attrName[2]
+                subIndex = attrName[1]
+            attrName = attrName[0]
+        else:
+            attrName = attrName[0]
+            filter = lambda x:True
+        if (not type(subIndex)==type(None)) or subIndex:
+            try:
+                tmp = [getattr(i,attrName) for i in self.all if hasattr(i, attrName)]
+                thisLayer = sorted(set(tmp),key=tmp.index)
+            except:
+                thisLayer = [getattr(i, attrName) for i in self.all if hasattr(i, attrName)]
+            if type(subIndex) == slice:
+                try:
+                    tmp = [j for i in thisLayer if hasattr(i,'__getitem__') for j in i[subIndex] if isinstance(i[subIndex],Iterable)]
+                    nextLayer = sorted(set(tmp),key=tmp.index)
+                except:
+                    nextLayer = [j for i in thisLayer if hasattr(i,'__getitem__') for j in i[subIndex] if isinstance(i[subIndex],Iterable)]
+            else:
+                nextLayer = [i[subIndex] if hasattr(i,'__getitem__') else i for i in thisLayer]
+            if len(nextLayer)==0:
+                tmp = listBase()
+                tmp.setAll([i for i in thisLayer if filter(i)])
+                return tmp
+            else:
+                tmp = listBase()
+                tmp.setAll([i for i in nextLayer if filter(i)])
+                return tmp
+        else:
+            tmp = listBase()
+            thisLayer = [getattr(i, attrName,np.nan) for i in self.all]
+            tmp.setAll([i for i in thisLayer if filter(i)])
+            return tmp
     def __getitem__(self, item):
         """
         This function makes RiqkQuantLib list object selectable. Use [] to call this function.
@@ -64,13 +117,21 @@ class listBase():
             try:
                 return [i for i in self.all if i.code == item][0]
             except Exception as e:
-                return [getattr(i,item,np.nan) for i in self.all]
-        elif isinstance(item,slice) or isinstance(item,int):
+                return self._tunnelingGetitem(item)
+        elif isinstance(item,tuple):
+            return self._tunnelingGetitem(item)
+        elif isinstance(item,int):
             return self.all[item]
+        elif isinstance(item,slice):
+            tmp = listBase()
+            tmp.setAll(self.all[item])
+            return tmp
         else:
             tmpList = [i for i in self.all if hasattr(i, 'code') and i.code in item]
             if len(tmpList)!=0:
-                return tmpList
+                tmp = listBase()
+                tmp.setAll(tmpList)
+                return tmp
             else:
                 propertyArray = [[getattr(i, j, np.nan) for i in self.all] for j in item]
                 return dict(zip(item,propertyArray))
