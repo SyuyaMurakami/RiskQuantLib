@@ -505,6 +505,7 @@ def buildInstrumentList(instrumentNameString: str, parentRQLClassName: str = '',
         psb.startFunction('__init__')
         psb.code.add_line('self.all = []')
         psb.code.add_line("self.listType = '" + securityType + " List'")
+        psb.code.add_line("self.__init_get_item__()")
         psb.endFunction()
     elif type(parentRQLClassName) == type(''):
         psb.startFunction('__init__')

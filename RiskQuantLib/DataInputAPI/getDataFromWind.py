@@ -104,6 +104,49 @@ def getStockIndustrySection(stockListString,codeType = "industry_gics",industryT
 	windData = w.wss(stockListString,codeType,"industryType="+str(industryType),usedf=True)
 	return windData[1].fillna(np.nan)
 
+def getStockListedDate(stockListString):
+	windData = w.wss(stockListString, "ipo_date", usedf=True)
+	return windData[1].fillna(np.nan)
+
+def getStockProfitNoticeDate(stockListString,dateString):
+	date = pd.Timestamp(dateString)
+	windData = w.wss(stockListString, "profitnotice_date,profitnotice_netprofitmax,profitnotice_netprofitmin", "rptDate="+date.strftime("%Y%m%d")+";unit=1",usedf=True)
+	return windData[1].fillna(np.nan)
+
+def getStockEstNetProfit(stockListString,yearString,dateString):
+	date = pd.Timestamp(dateString)
+	windData = w.wss(stockListString, "est_netprofit","unit=1;year="+yearString+";tradeDate="+date.strftime("%Y%m%d"),usedf=True)
+	return windData[1].fillna(np.nan)
+
+def getCompanyFinancialReportPredictPublishDate(stockListString,dateString):
+	date = pd.Timestamp(dateString)
+	windData = w.wss(stockListString, "stm_predict_issuingdate", "rptDate="+date.strftime("%Y%m%d")+";unit=1",usedf=True)
+	return windData[1].fillna(np.nan)
+
+def getAllStockOfSector(windSectorID = 'a001010100000000'):
+	windData = w.wst("listedsecuritygeneralview","sectorid="+windSectorID+";field=wind_code,sec_name,listing_board",usedf=True)
+	return windData[1].fillna(np.nan)
+
+def getUnlockedShareDetail(stockListString,dateString):
+	date = pd.Timestamp(dateString)
+	windData = w.wss(stockListString, "share_rtd_unlockingdate_fwd,share_tradable_current_fwd,share_tradable_sharetype_fwd", "tradeDate="+date.strftime("%Y%m%d")+";unit=1",usedf=True)
+	return windData[1].fillna(np.nan)
+
+def getAmountOfFreeTradedShare(stockListString,dateString):
+	date = pd.Timestamp(dateString)
+	windData = w.wss(stockListString, "free_float_shares", "unit=1;tradeDate="+date.strftime("%Y%m%d"),usedf=True)
+	return windData[1].fillna(np.nan)
+
+def getStockPERelativeToIndustryAverage(stockListString,dateString):
+	date = pd.Timestamp(dateString)
+	windData = w.wss(stockListString, "val_peindu_sw", "tradeDate="+date.strftime("%Y%m%d"),usedf=True)
+	return windData[1].fillna(np.nan)
+
+def getWhetherCanBeShorted(stockListString,dateString):
+	date = pd.Timestamp(dateString)
+	windData = w.wss(stockListString, "marginornot", "tradeDate="+date.strftime("%Y%m%d"),usedf=True)
+	return windData[1].fillna(np.nan)
+
 def getIndexConstituteStockWeight(indexString,baseDateString):
 	baseDate = pd.Timestamp(baseDateString)
 	windData = w.wset("indexconstituent","date="+baseDate.strftime("%Y-%m-%d")+";windcode="+indexString,usedf=True)

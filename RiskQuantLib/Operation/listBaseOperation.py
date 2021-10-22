@@ -91,16 +91,17 @@ class listBase():
     def __getitem__(self, item):
         """
         This function makes RiqkQuantLib list object selectable. Use [] to call this function.
-        Mixed index is used here. By calling [], you can index either element or attribute.
+        Mixed index is used here. By calling [], you can index either element or attribute, or
+        elements of attribute.
 
         Parameters
         ----------
-        item : str or list or slice
+        item : str or list or slice or tuple
             If a string is given, all elements will be examined, if 'code' attribute equals
             to the given string, return the first element that meets this requirement.
 
-            If no element code meets this requirement, try to return a list of attribute
-            value, whose name equals to the given string.
+            If no element code meets this requirement, try to return a listBase object,
+            holding values of attribute whose name equals to the given string.
 
             If a slice or int number is given, this function behaves like iloc, returns the
             item-th element or a collection of elements.
@@ -108,6 +109,21 @@ class listBase():
             If a list is given, return all elements whose code in the given list. If no code
             in the given list, return a 2-dimension array of attribute values, where attribute
             name is in the given list.
+
+            If a tuple is given, it returns a listBase object, but the elements of this object
+            depends on how you specify your parameter. For the first element of tuple, it must be
+            a string, specify the attribute you want to choose.
+
+            For the second element of tuple, you can pass a lambda function or any
+            function into tuple, if you do this, the function will be used to filter your results.
+
+            For the second element of tuple, you can also pass a slice. If you pass a slice into
+            tuple, RiskQuantLib will assume the attribute value is iterable, and again, get the
+            element of the attribute with this slice.
+
+            If you want to select some elements of the attribute, and do it for every element of
+            present list, and filter your result. You may pass a slice and a function at the same
+            time. In this case, your tuple has three elements.
 
         Returns
         -------

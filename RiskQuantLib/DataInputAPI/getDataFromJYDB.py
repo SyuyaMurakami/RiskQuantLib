@@ -15,9 +15,10 @@ def decoratorQuery(queryFunction):
 			return queryFunction(*args)
 		else:
 			splitNum = int(lenNum / 1000) + 1
-			listSplit = [[j for index, j in enumerate(args[0]) if int(index / 1000) == i] for i in range(splitNum)]
-			args = args[1:]
-			result = [queryFunction(i, *args) for i in listSplit]
+			listSplit = [[j for index, j in enumerate(args[1]) if int(index / 1000) == i] for i in range(splitNum)]
+			classRef = args[0]
+			args = args[2:]
+			result = [queryFunction(classRef, i, *args) for i in listSplit]
 			return pd.concat(result)
 
 	return decoratedQueryFunction
