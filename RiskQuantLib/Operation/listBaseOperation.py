@@ -466,7 +466,9 @@ class listBase():
                 result = [getattr(i,functionName,lambda x:None)(*args) for i in self.all]
             else:
                 result = Parallel(n_jobs=mp.cpu_count(),require='sharedmem')(delayed(getattr(i,functionName,lambda x:None))(*args) for i in self.all)
-            return result
+            tmp = listBase()
+            tmp.setAll(result)
+            return tmp
         except Exception as e:
             print('Execution Failed:', e)
             pass
