@@ -42,6 +42,13 @@ def dumpVariable(variable,filePath:str):
 	import pickle as pkl
 	pkl.dump(variable,open(filePath,"wb"))
 
+def loadVariable(filePath:str):
+	"""
+	Use python module pickle to load variable.
+	"""
+	import pickle as pkl
+	return pkl.load(open(filePath,"rb"))
+
 def dumpDictToJson(dictVariable:dict,filePath:str):
 	"""
 	Dump dict to json file.
