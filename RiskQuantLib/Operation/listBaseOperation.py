@@ -346,7 +346,10 @@ class listBase():
         Default settings will leave any change to element out. Your change to elements won't
         be kept. Only the result of applyFunction is returned.
         """
-        return Parallel(n_jobs=mp.cpu_count())(delayed(applyFunction)(i,*args) for i in self.all)
+        result = Parallel(n_jobs=mp.cpu_count())(delayed(applyFunction)(i,*args) for i in self.all)
+        tmp = listBase()
+        tmp.setAll(result)
+        return tmp
 
     def groupBy(self, attrName:str, useObj = True, inplace = True):
         """
