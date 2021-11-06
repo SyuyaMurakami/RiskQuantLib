@@ -123,9 +123,23 @@ def getCompanyFinancialReportPredictPublishDate(stockListString,dateString):
 	windData = w.wss(stockListString, "stm_predict_issuingdate", "rptDate="+date.strftime("%Y%m%d")+";unit=1",usedf=True)
 	return windData[1].fillna(np.nan)
 
-def getAllStockOfSector(windSectorID = 'a001010100000000'):
-	windData = w.wst("listedsecuritygeneralview","sectorid="+windSectorID+";field=wind_code,sec_name,listing_board",usedf=True)
+def getAllStockOfSector(dateString,windSectorID = 'a001010100000000'):
+	date = pd.Timestamp(dateString)
+	windData = w.wset("sectorconstituent","date="+date.strftime("%Y-%m-%d")+";sectorid="+windSectorID,usedf=True)
 	return windData[1].fillna(np.nan)
+
+def getStockTotalMarketValue(stockString,startDateString,endDateString):
+	startDate = pd.Timestamp(startDateString)
+	endDate = pd.Timestamp(endDateString)
+	windData = w.wsd(stockString,"ev",startDate.strftime("%Y-%m-%d"),endDate.strftime("%Y-%m-%d"),"unit=1",usedf=True)
+	return windData[1].fillna(np.nan)
+
+def getStockDailyTradingAmount(stockString,startDateString,endDateString):
+	startDate = pd.Timestamp(startDateString)
+	endDate = pd.Timestamp(endDateString)
+	windData = w.wsd(stockString,"amt",startDate.strftime("%Y-%m-%d"),endDate.strftime("%Y-%m-%d"),"",usedf=True)
+	return windData[1].fillna(np.nan)
+
 
 def getUnlockedShareDetail(stockListString,dateString):
 	date = pd.Timestamp(dateString)
