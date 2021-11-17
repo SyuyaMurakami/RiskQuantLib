@@ -2,10 +2,8 @@
 #coding = utf-8
 import numpy as np
 import copy
-import multiprocessing as mp
 from collections import Iterable
 import pandas as pd
-from joblib import Parallel,delayed
 from RiskQuantLib.Operation.loc import loc
 from RiskQuantLib.Tool.strTool import changeSecurityListToStr
 
@@ -346,7 +344,7 @@ class listBase():
         Default settings will leave any change to element out. Your change to elements won't
         be kept. Only the result of applyFunction is returned.
         """
-        result = Parallel(n_jobs=mp.cpu_count())(delayed(applyFunction)(i,*args) for i in self.all)
+        result = [applyFunction(i,*args) for i in self.all]
         tmp = listBase()
         tmp.setAll(result)
         return tmp
@@ -465,10 +463,7 @@ class listBase():
             The function that element has, and you want to call.
         """
         try:
-            if len(self.all)<1000:
-                result = [getattr(i,functionName,lambda x:None)(*args) for i in self.all]
-            else:
-                result = Parallel(n_jobs=mp.cpu_count(),require='sharedmem')(delayed(getattr(i,functionName,lambda x:None))(*args) for i in self.all)
+            result = [getattr(i,functionName,lambda x:None)(*args) for i in self.all]
             tmp = listBase()
             tmp.setAll(result)
             return tmp
