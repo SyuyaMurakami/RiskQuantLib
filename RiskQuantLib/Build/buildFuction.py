@@ -211,27 +211,42 @@ def buildListSetFunction1D(variableNameString:str,variableType:str = 'Base'):
     -------
     code : codeBuilder object
     """
-    from RiskQuantLib.Tool.codeBuilderTool import codeBuilder
-
-    code = codeBuilder(indent=4)
-
-    code.add_line("def set"+variableNameString[0].capitalize()+variableNameString[1:]+"(self,codeSeries,"+variableNameString+"Series):")
-    code.indent()
-    vars_code = code.add_section()
-    code.add_line(variableNameString+"Dict = dict(zip(codeSeries,"+variableNameString+"Series))")
-    if variableType == 'Str':
-        code.add_line("[i.set"+variableNameString[0].capitalize()+variableNameString[1:]+"("+variableNameString+"Dict[i.code]) if i.code in "+variableNameString+"Dict.keys() else i.set"+variableNameString[0].capitalize() + variableNameString[1:]+"('') for i in self.all]")
-    elif variableType == 'Num':
-        code.add_line("import numpy as np")
-        code.add_line("[i.set" + variableNameString[0].capitalize() + variableNameString[1:] + "(" + variableNameString + "Dict[i.code]) if i.code in " + variableNameString + "Dict.keys() else i.set" + variableNameString[0].capitalize() + variableNameString[1:] + "(np.nan) for i in self.all]")
-    elif variableType == 'Base':
-        code.add_line("[i.set" + variableNameString[0].capitalize() + variableNameString[1:] + "(" + variableNameString + "Dict[i.code]) if i.code in " + variableNameString + "Dict.keys() else i.set" + variableNameString[0].capitalize() + variableNameString[1:] + "(np.nan) for i in self.all]")
-    else:
+    defaultValueDict = {
+        "Str":"''",
+        "Num":"np.nan",
+        "Base":"np.nan"
+    }
+    if variableType not in defaultValueDict.keys():
         print("Variable type must be set as 'Str', 'Num' or 'Base'")
         exit(-1)
-    code.dedent()
-    code.get_globals()
-    return code
+    else:
+        from RiskQuantLib.Tool.codeBuilderTool import codeBuilder
+
+        code = codeBuilder(indent=4)
+
+        code.add_line("def set"+variableNameString[0].capitalize()+variableNameString[1:]+"(self,codeSeries,"+variableNameString+"Series,byAttr='code',update=False):")
+        code.indent()
+        vars_code = code.add_section()
+        code.add_line(variableNameString+"Dict = dict(zip(codeSeries,"+variableNameString+"Series))")
+
+        code.add_line("if byAttr=='code' and not update:")
+        code.indent()
+        code.add_line("[i.set"+variableNameString[0].capitalize()+variableNameString[1:]+"("+variableNameString+"Dict[i.code]) if i.code in "+variableNameString+"Dict.keys() else i.set"+variableNameString[0].capitalize() + variableNameString[1:]+"("+defaultValueDict[variableType]+") for i in self.all]")
+        code.dedent()
+
+        code.add_line("elif not update:")
+        code.indent()
+        code.add_line("[i.set"+variableNameString[0].capitalize()+variableNameString[1:]+"("+variableNameString+"Dict[getattr(i,byAttr)]) if hasattr(i,byAttr) and getattr(i,byAttr) in "+variableNameString+"Dict.keys() else i.set"+variableNameString[0].capitalize() + variableNameString[1:]+"("+defaultValueDict[variableType]+") for i in self.all]")
+        code.dedent()
+
+        code.add_line("else:")
+        code.indent()
+        code.add_line("[i.set"+variableNameString[0].capitalize()+variableNameString[1:]+"("+variableNameString+"Dict[getattr(i,byAttr)]) if hasattr(i,byAttr) and getattr(i,byAttr) in "+variableNameString+"Dict.keys() else None for i in self.all]")
+        code.dedent()
+
+        code.dedent()
+        code.get_globals()
+        return code
 
 def buildListSetFunction2D(variableNameString:str):
     """
@@ -253,12 +268,27 @@ def buildListSetFunction2D(variableNameString:str):
 
     code = codeBuilder(indent=4)
 
-    code.add_line("def set"+variableNameString[0].capitalize()+variableNameString[1:]+"(self,"+variableNameString+"DataFrame):")
+    code.add_line("def set"+variableNameString[0].capitalize()+variableNameString[1:]+"(self,"+variableNameString+"DataFrame,byAttr='code',update=False):")
     code.indent()
     vars_code = code.add_section()
     code.add_line("import pandas as pd")
     code.add_line(variableNameString+"CodeList = "+variableNameString+"DataFrame.columns.to_list()")
+
+    code.add_line("if byAttr=='code' and not update:")
+    code.indent()
     code.add_line("[i.set"+variableNameString[0].capitalize()+variableNameString[1:]+"("+variableNameString+"DataFrame[i.code]) if hasattr(i,'code') and i.code in "+variableNameString+"CodeList else i.set"+variableNameString[0].capitalize()+variableNameString[1:]+"(pd.Series()) for i in self.all]")
+    code.dedent()
+
+    code.add_line("elif not update:")
+    code.indent()
+    code.add_line("[i.set" + variableNameString[0].capitalize() + variableNameString[1:] + "(" + variableNameString + "DataFrame[getattr(i,byAttr)]) if hasattr(i,byAttr) and getattr(i,byAttr) in " + variableNameString + "CodeList else i.set" +variableNameString[0].capitalize() + variableNameString[1:] + "(pd.Series()) for i in self.all]")
+    code.dedent()
+
+    code.add_line("else:")
+    code.indent()
+    code.add_line("[i.set" + variableNameString[0].capitalize() + variableNameString[1:] + "(" + variableNameString + "DataFrame[getattr(i,byAttr)]) if hasattr(i,byAttr) and getattr(i,byAttr) in " + variableNameString + "CodeList else None for i in self.all]")
+    code.dedent()
+
     code.dedent()
     code.get_globals()
     return code

@@ -71,19 +71,19 @@ class propertyObj():
         """
         if self.propertyType == 'String':
             self.code = buildStringFunction(self.name)
-            self.listCode = buildListSetFunction1D(self.name)
+            self.listCode = buildListSetFunction1D(self.name,variableType='Str')
         elif self.propertyType == 'Number':
             self.code = buildNumberFunction(self.name)
-            self.listCode = buildListSetFunction1D(self.name)
+            self.listCode = buildListSetFunction1D(self.name,variableType='Num')
         elif self.propertyType == 'Any':
             self.code = buildBaseFunction(self.name)
-            self.listCode = buildListSetFunction1D(self.name)
+            self.listCode = buildListSetFunction1D(self.name,variableType='Base')
         elif self.propertyType == 'Series':
             self.code = buildBaseFunction(self.name)
             self.listCode = buildListSetFunction2D(self.name)
         else:
             self.code = buildSelfDefinedTypeFunction(self.name,self.propertyType)
-            self.listCode = buildListSetFunction1D(self.name)
+            self.listCode = buildListSetFunction1D(self.name,variableType='Base')
 
     def buildTargetSourceFile(self):
         """
