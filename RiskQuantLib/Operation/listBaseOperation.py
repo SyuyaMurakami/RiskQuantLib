@@ -454,9 +454,6 @@ class listBase():
         given the function name. If some elements don't have the function, a Null function will be used, and
         the result will skip the execution for that element.
 
-        If the length of present list is not long, list comprehension will be used. If it's a long
-        list, joblib will be used to establish multiple threads.
-
         Parameters
         ----------
         functionName : str
