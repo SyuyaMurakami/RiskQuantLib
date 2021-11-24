@@ -151,16 +151,14 @@ class listBase():
                 return dict(zip(item,propertyArray))
 
     def __iter__(self):
-        self.__iterNum = 0
-        return self
-
-    def __next__(self):
+        i = 0
         try:
-            target = self.all[self.__iterNum]
-            self.__iterNum += 1
-            return target
-        except:
-            raise StopIteration
+            while True:
+                v = self.all[i]
+                yield v
+                i += 1
+        except IndexError:
+            return
 
     def __add__(self, other, useObj = True):
         """
