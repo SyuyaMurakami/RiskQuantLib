@@ -108,7 +108,8 @@ def packProject():
             name = "".join(nameList[0:-1])
         else:
             name = nameList[0]
-    shutil.make_archive(projectPath+os.sep+name,"zip",projectPath)
+    parentProjectPath = os.path.dirname(projectPath)
+    shutil.make_archive(parentProjectPath+os.sep+name,"zip",projectPath)
     print('RiskQuantLib Project Packaged!')
 
 def addProjectTemplate():
@@ -129,12 +130,13 @@ def addProjectTemplate():
     -------
     None
     """
-    projectPackPath = sys.argv[1]
+    import os, shutil
+    projectPackPath = os.path.splitext(sys.argv[1])[0]
     try:
         name = sys.argv[2]
     except:
         name = ''
-    import os, shutil
+
     if name=='':
         name = projectPackPath.split(os.sep)[-1]
     else:
@@ -149,7 +151,9 @@ def addProjectTemplate():
         pass
     else:
         os.makedirs(source_path)
-    shutil.copy(projectPackPath+os.sep+name+'.zip',source_path+os.sep+name+'.zip')
+    parentProjectPath = os.path.dirname(projectPackPath)
+    shutil.copy(parentProjectPath+os.sep+name+'.zip',source_path+os.sep+name+'.zip')
+    os.remove(parentProjectPath+os.sep+name+'.zip')
     print('RiskQuantLib Project Template added!')
 
 def saveProject():
