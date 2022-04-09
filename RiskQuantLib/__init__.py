@@ -285,3 +285,20 @@ def clearAllProjectTemplate():
         [os.remove(source_path+os.sep+targetName+'.zip') for targetName in projectNameList]
         print("Delete All RiskQuantLib Project Templates Finished! ")
 
+def addProjectTemplateFromGithub():
+    """
+    addProjectTemplateFromGithub() is a function to download template from Github to local disk.
+    Use terminal command 'getRQL' to use this function.
+    After this function is called, the target repository will be saved as template project.
+
+    Returns
+    -------
+    None
+    """
+    import os
+    name = sys.argv[1]
+    RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
+    source_path = os.path.abspath(RiskQuantLibDictionary) + os.sep + r'RQLTemplate'
+    from RiskQuantLib.Tool.githubTool import Github
+    link = Github()
+    link.downloadRepositories(name,source_path)
