@@ -300,7 +300,9 @@ class listBase():
             self.setAll([[j for j in self.all if j.code == i][keepIndex] for i in codeList])
             return None
         else:
-            return [[j for j in self.all if j.code == i][keepIndex] for i in codeList]
+            result = self.new()
+            result.setAll([[j for j in self.all if j.code == i][keepIndex] for i in codeList])
+            return result
 
     def uniqueAttr(self,attrNameString:str,inplace = False, keep = 'First'):
         """
@@ -334,7 +336,9 @@ class listBase():
             self.setAll([[j for j in self.all if getattr(j,attrNameString) == i][keepIndex] for i in propertyValueList])
             return None
         else:
-            return [[j for j in self.all if getattr(j,attrNameString) == i][keepIndex] for i in propertyValueList]
+            result = self.new()
+            result.setAll([[j for j in self.all if getattr(j,attrNameString) == i][keepIndex] for i in propertyValueList])
+            return result
 
     def apply(self,applyFunction,*args):
         """
@@ -489,15 +493,27 @@ class listBase():
             self._sortPropertyList = [propertyList]
         else:
             self._sortPropertyList = propertyList
+
         if inplace:
-            self.setAll(sorted(self.all,key=self._sortIterator,reverse=reverse))
+            sortBy = pd.DataFrame(self[self._sortPropertyList])
+            sortBy['obj'] = self.all
+            df = sortBy.sort_values(by=self._sortPropertyList, ascending=not reverse)
+            sortedList = df['obj'].to_list()
+            self.setAll(sortedList)
             return None
         elif useObj:
             tmpObj = copy.deepcopy(self)
-            tmpObj.setAll(sorted(self.all,key=self._sortIterator,reverse=reverse))
+            sortBy = pd.DataFrame(tmpObj[self._sortPropertyList])
+            sortBy['obj'] = tmpObj.all
+            df = sortBy.sort_values(by=self._sortPropertyList, ascending=not reverse)
+            sortedList = df['obj'].to_list()
+            tmpObj.setAll(sortedList)
             return tmpObj
         else:
-            return sorted(self.all,key=self._sortIterator,reverse=reverse)
+            sortBy = pd.DataFrame(self[self._sortPropertyList])
+            sortBy['obj'] = self.all
+            df = sortBy.sort_values(by=self._sortPropertyList, ascending=not reverse)
+            return df['obj'].to_list()
 
     def fillna(self, propertyList:list, value, inplace=False, useObj = True):
         """
