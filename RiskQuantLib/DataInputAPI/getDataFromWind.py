@@ -3,6 +3,7 @@
 
 import numpy as np
 import pandas as pd
+from windget import *
 from WindPy import w
 
 w.start(waitTime=60)
