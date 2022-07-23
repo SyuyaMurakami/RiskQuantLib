@@ -22,7 +22,7 @@ class listedCompanyList(baseList,setListedCompanyList):
         tmpList = self.all + [listedCompany(codeString, nameString, companyTypeString)]
         self.setAll(tmpList)
 
-    def addListedCompanySeries(self, listedCompanyCodeSeries, listedCompanyNameSeries = pd.Series(), companyTypeString = 'Listed Company'):
+    def addListedCompanySeries(self, listedCompanyCodeSeries, listedCompanyNameSeries = pd.Series(dtype=float), companyTypeString = 'Listed Company'):
         """
         Add lots of companies into list.
         """

@@ -6,7 +6,7 @@ from RiskQuantLib.Set.CompanyList.base import setBase
 
 class setListedCompanyList(setBase):
 
-    def calKMV(self, companyNameSeries, riskFreeRateSeries, tenorSeries, debtSeries, equitySeries, equitySigmaSeries, shortTermDebtSeries, longTermDebtSeries, mixedRatioSeries = pd.Series()):
+    def calKMV(self, companyNameSeries, riskFreeRateSeries, tenorSeries, debtSeries, equitySeries, equitySigmaSeries, shortTermDebtSeries, longTermDebtSeries, mixedRatioSeries = pd.Series(dtype=float)):
         if mixedRatioSeries.empty:
             mixedRatioDict = dict(zip(companyNameSeries,[0.5 for i in range(len(companyNameSeries))]))
         else:

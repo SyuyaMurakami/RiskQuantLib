@@ -112,6 +112,16 @@ def packProject():
     shutil.make_archive(parentProjectPath+os.sep+name,"zip",projectPath)
     print('RiskQuantLib Project Packaged!')
 
+def checkAndCreateTemplatePath():
+    import os
+    RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
+    source_path = os.path.abspath(RiskQuantLibDictionary) + os.sep + r'RQLTemplate'
+    if os.path.exists(source_path):
+        pass
+    else:
+        os.makedirs(source_path)
+    return source_path
+
 def addProjectTemplate():
     """
     addProjectTemplate() is a function to add a RiskQuantLib project '.zip' file to library.
@@ -145,12 +155,7 @@ def addProjectTemplate():
             name = "".join(nameList[0:-1])
         else:
             name = nameList[0]
-    RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
-    source_path = os.path.abspath(RiskQuantLibDictionary) + os.sep + r'RQLTemplate'
-    if os.path.exists(source_path):
-        pass
-    else:
-        os.makedirs(source_path)
+    source_path = checkAndCreateTemplatePath()
     parentProjectPath = os.path.dirname(projectPackPath)
     shutil.copy(parentProjectPath+os.sep+name+'.zip',source_path+os.sep+name+'.zip')
     os.remove(parentProjectPath+os.sep+name+'.zip')
@@ -227,8 +232,7 @@ def listProjectTemplate():
     None
     """
     import os
-    RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
-    source_path = os.path.abspath(RiskQuantLibDictionary)+os.sep+r'RQLTemplate'
+    source_path = checkAndCreateTemplatePath()
     projectNameList = [i.replace('.zip','') for i in os.listdir(source_path)]
     hints = "Show All RiskQuantLib Template Projects:"
     print(hints,'\n',"".join(['-' for i in range(len(hints))]))
@@ -253,8 +257,7 @@ def delProjectTemplate():
     None
     """
     import os
-    RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
-    source_path = os.path.abspath(RiskQuantLibDictionary)+os.sep+r'RQLTemplate'
+    source_path = checkAndCreateTemplatePath()
     projectNameList = [i.replace('.zip','') for i in os.listdir(source_path)]
     targetName = sys.argv[1]
     if targetName in projectNameList:
@@ -279,8 +282,7 @@ def clearAllProjectTemplate():
         return None
     else:
         import os
-        RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
-        source_path = os.path.abspath(RiskQuantLibDictionary)+os.sep+r'RQLTemplate'
+        source_path = checkAndCreateTemplatePath()
         projectNameList = [i.replace('.zip','') for i in os.listdir(source_path)]
         [os.remove(source_path+os.sep+targetName+'.zip') for targetName in projectNameList]
         print("Delete All RiskQuantLib Project Templates Finished! ")
@@ -297,8 +299,7 @@ def addProjectTemplateFromGithub():
     """
     import os
     name = sys.argv[1]
-    RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
-    source_path = os.path.abspath(RiskQuantLibDictionary) + os.sep + r'RQLTemplate'
+    source_path = checkAndCreateTemplatePath()
     from RiskQuantLib.Tool.githubTool import Github
     link = Github()
     link.downloadRepositories(name,source_path)

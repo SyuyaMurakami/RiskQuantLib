@@ -12,7 +12,7 @@ class setFundList(setBaseList):
     def setNavSeries(self,navDataFrame):
         import pandas as pd
         fundCodeList = navDataFrame.columns.to_list()
-        [i.setNavSeries(navDataFrame[i.code]) if i.code in fundCodeList else i.setNavSeries(pd.Series()) for i in self.all]
+        [i.setNavSeries(navDataFrame[i.code]) if i.code in fundCodeList else i.setNavSeries(pd.Series(dtype=float)) for i in self.all]
 
     def setStrategyType(self,codeSeries,strategyTypeSeries):
         strategyTypeDict = dict(zip(codeSeries,strategyTypeSeries))

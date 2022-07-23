@@ -276,12 +276,12 @@ def buildListSetFunction2D(variableNameString:str):
 
     code.add_line("if byAttr=='code' and not update:")
     code.indent()
-    code.add_line("[i.set"+variableNameString[0].capitalize()+variableNameString[1:]+"("+variableNameString+"DataFrame[i.code]) if hasattr(i,'code') and i.code in "+variableNameString+"CodeList else i.set"+variableNameString[0].capitalize()+variableNameString[1:]+"(pd.Series()) for i in self.all]")
+    code.add_line("[i.set"+variableNameString[0].capitalize()+variableNameString[1:]+"("+variableNameString+"DataFrame[i.code]) if hasattr(i,'code') and i.code in "+variableNameString+"CodeList else i.set"+variableNameString[0].capitalize()+variableNameString[1:]+"(pd.Series(dtype=float)) for i in self.all]")
     code.dedent()
 
     code.add_line("elif not update:")
     code.indent()
-    code.add_line("[i.set" + variableNameString[0].capitalize() + variableNameString[1:] + "(" + variableNameString + "DataFrame[getattr(i,byAttr)]) if hasattr(i,byAttr) and getattr(i,byAttr) in " + variableNameString + "CodeList else i.set" +variableNameString[0].capitalize() + variableNameString[1:] + "(pd.Series()) for i in self.all]")
+    code.add_line("[i.set" + variableNameString[0].capitalize() + variableNameString[1:] + "(" + variableNameString + "DataFrame[getattr(i,byAttr)]) if hasattr(i,byAttr) and getattr(i,byAttr) in " + variableNameString + "CodeList else i.set" +variableNameString[0].capitalize() + variableNameString[1:] + "(pd.Series(dtype=float)) for i in self.all]")
     code.dedent()
 
     code.add_line("else:")

@@ -24,7 +24,7 @@ class baseList(setBase,listBase):
         self.setAll(tmpList)
 
 
-    def addCompanySeries(self, CompanyCodeSeries, CompanyNameSeries = pd.Series(), companyTypeString = 'Company'):
+    def addCompanySeries(self, CompanyCodeSeries, CompanyNameSeries = pd.Series(dtype=float), companyTypeString = 'Company'):
         """
         Add lots of company objects to company list.
         """

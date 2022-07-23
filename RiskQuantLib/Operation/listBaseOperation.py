@@ -245,7 +245,7 @@ class listBase():
 
     def _sortIterator(self,sortObj):
         import pandas as pd
-        sortList = [getattr(sortObj,i) if type(getattr(sortObj,i))!=type(pd.Series()) else len(getattr(sortObj,i)) for i in self._sortPropertyList]
+        sortList = [getattr(sortObj,i) if type(getattr(sortObj,i))!=type(pd.Series(dtype=float)) else len(getattr(sortObj,i)) for i in self._sortPropertyList]
         return tuple(sortList)
 
     def add(self,other, useObj = True):
