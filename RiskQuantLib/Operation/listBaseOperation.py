@@ -831,7 +831,150 @@ class listBase():
             tmpObj.setAll(leftInner + rightResidual)
         return tmpObj
 
-    def fromDF(self, df : pd.DataFrame, code :str = '', name:str = ''):
+    def zip(self, attrNameList : list, *args):
+        """
+        This function will convert the values of given attribute into a zip object.
+        If you also pass an external list or other iterable object, it will zip that
+        list with the value of given internal attribute.
+
+        Parameters
+        ----------
+        attrNameList : str or list
+            The attribute name whose values you want to zip.
+        args : list or iterable
+            External iterable object, whose value is zipped with internal attribute values.
+
+        Returns
+        -------
+        zip object
+        """
+        argsMerged = tuple([self[attrName] for attrName in attrNameList] + [i for i in args])
+        return zip(*argsMerged)
+
+    def toDict(self, attrNameAsKey : str, attrNameAsValue : str):
+        """
+        This function will return a dict, given the attribute name whose values are used as dict key,
+        and attribute name whose values are used as dict value.
+
+        Parameters
+        ----------
+        attrNameAsKey : str
+            The attribute name whose values you want to use as dict keys.
+        attrNameAsValue : str
+            The attribute name whose values you want to use as dict values.
+
+        Returns
+        -------
+        dict
+        """
+        return dict(self.zip([attrNameAsKey, attrNameAsValue]))
+
+    def toSeries(self, attrNameAsValue : str = '', attrNameAsIndex : str = '', nameString : str = ''):
+        """
+        This function will return a pandas.Series object, given the attribute name whose values are used as series
+        value, and attribute name whose values are used as series index. You can also pass a string to identify the
+        name of series.
+
+        If you don't pass any attribute name, this function will use all elements themselves in this list to form
+        a Series.
+
+        Parameters
+        ----------
+        attrNameAsValue : str
+            The attribute name whose values you want to use as series value.
+        attrNameAsIndex : str
+            The attribute name whose values you want to use as series index.
+        nameString : str
+            The name of series.
+
+        Returns
+        -------
+        pd.Series
+        """
+        if attrNameAsValue == '':
+            return pd.Series(self.all)
+        elif attrNameAsIndex == '':
+            return pd.Series(self[attrNameAsValue], name=nameString)
+        else:
+            return pd.Series(self[attrNameAsValue], index = self[attrNameAsIndex], name = nameString)
+
+    def toDF(self, attrNameList : str or list = '', attrNameAsIndex : str = ''):
+        """
+        This function will return a pandas.DataFrame object, given the attribute name whose values are used as dataframe
+        value, and attribute name whose values are used as dataframe index.
+
+        If you don't pass any attribute name, this function will use all elements themselves in this list to form
+        a dataframe.
+
+        Parameters
+        ----------
+        attrNameList : str or list
+            The attribute name whose values you want to use as dataframe value.
+        attrNameAsIndex : str
+            The attribute name whose values you want to use as dataframe index.
+
+        Returns
+        -------
+        pd.DataFrame
+        """
+        if attrNameList == '':
+            return pd.DataFrame(self.all)
+        elif type(attrNameList) == str:
+            attrNameList = [attrNameList]
+        if attrNameAsIndex == '':
+            return pd.DataFrame(self[attrNameList])
+        else:
+            df = pd.DataFrame(self[attrNameList])
+            df.index = self[attrNameAsIndex]
+            return df
+
+    def toArray(self, attrNameList : str or list = ''):
+        """
+        This function will return a numpy.ndarray object, given the attribute name whose values are used as array
+        value.
+
+        If you don't pass any attribute name, this function will use all elements themselves in this list to form
+        an array.
+
+        Parameters
+        ----------
+        attrNameList : str or list
+            The attribute name whose values you want to use as array value.
+
+        Returns
+        -------
+        np.ndarray
+        """
+        if attrNameList == '':
+            return np.array(self.all)
+        elif type(attrNameList) == str:
+            attrNameList = [attrNameList]
+        return self.toDF(attrNameList).values
+
+    def toList(self, attrNameList: str or list = ''):
+        """
+        This function will return a list object, given the attribute name whose values are used as list
+        value.
+
+        If you don't pass any attribute name, this function will use all elements themselves in this list to form
+        a new list.
+
+        Parameters
+        ----------
+        attrNameList : str or list
+            The attribute name whose values you want to use as list value.
+
+        Returns
+        -------
+        list
+        """
+        if attrNameList == '':
+            return self.all
+        elif type(attrNameList) == str:
+            attrNameList = [attrNameList]
+        return [[getattr(ele,attr,np.nan) for attr in attrNameList] for ele in self]
+
+    def fromDF(self, df: pd.DataFrame, code: str = '', name: str = ''):
         """
         This function will convert a dataframe to RiskQuantLib list object. If
         there is already elements in present list, all elements will be deleted.
