@@ -1136,11 +1136,13 @@ class listBase():
         tmpList.fromIterable(iterable=iterable, code=code,name=name)
         self.setAll(self.all + tmpList.all)
 
-    def updateAttr(self, attrName : str, codeSeries, valueSeries):
+    def updateAttr(self, attrName : str, codeSeries, valueSeries, byAttr = 'code'):
         """
         This function will update the attribute value of elements whose code
         appears in given codeSeries. If code of element doesn't show in
         codeSeries, these elements will be skipped and not changed.
+
+        If the attribute is not registered, it will be created.
 
         Parameters
         ----------
@@ -1150,21 +1152,31 @@ class listBase():
             An iterable object that contains codes of elements whose attribute need to be updated.
         valueSeries : list
             An iterable object that contains new values of attributes.
+        byAttr : str
+            The attribute that is used to index element in this list. By default, this attribute is code.
+            But you can specify another attribute A, if you do it, this function will update the attribute
+            value of elements whose attribute A appears in given codeSeries.
 
         Returns
         -------
         None
         """
+        def setAttr(totalList,attrNameNotRegistered,codeSeriesNotRegistered,valueSeriesNotRegistered,byAttrNotRegistered):
+            index = set(codeSeriesNotRegistered)
+            updateList = totalList.filter(lambda x: getattr(x, byAttrNotRegistered, np.nan) in index)
+            setDict = dict(zip(codeSeriesNotRegistered,valueSeriesNotRegistered))
+            [setattr(i,attrNameNotRegistered,setDict[getattr(i,byAttrNotRegistered,np.nan)]) for i in updateList]
+            newCreated = totalList.filter(lambda x:not hasattr(x,attrNameNotRegistered))
+            [setattr(i,attrNameNotRegistered,np.nan) for i in newCreated]
         c_attrName = attrName[0].capitalize() + attrName[1:]
-        tmpObj = self.filter(lambda x:x.code in list(codeSeries))
-        getattr(tmpObj,'set'+c_attrName,lambda x,y:None)(codeSeries,valueSeries)
+        getattr(self,'set'+c_attrName,lambda x,y,z,k:setAttr(self,attrName,x,y,z))(codeSeries,valueSeries,byAttr,True)
 
-    def updateAttrFromDF(self, df: pd.DataFrame, code:str = ''):
+    def updateAttrFromDF(self, df: pd.DataFrame, code:str = '', byAttr = 'code'):
         """
         This function will update attribute value of current list by passed dataframe.
         The column name of passes dataframe should be in English, and if current
         list has registered attribute whose name is the same with column name, it will
-        be updated.
+        be updated. If the attribute is not registered, it will be created.
 
         Parameters
         ----------
@@ -1174,21 +1186,60 @@ class listBase():
             The column name of df that you used to mark rows. Elements whose code
             is in this column will be updated, and those not in this column will
             not be influenced. If blank, the index of df will be used as code.
+        byAttr : str
+            The attribute that is used to index element in this list. By default, this attribute is code.
+            But you can specify another attribute A, if you do it, this function will update the attribute
+            value of elements whose attribute A appears in df[code] or df.index.
 
         Returns
         -------
         None
         """
         if code == '':
-            [self.updateAttr(col, df.index, df[col]) for col in df.columns]
+            [self.updateAttr(col, df.index, df[col], byAttr=byAttr) for col in df.columns]
         else:
-            [self.updateAttr(col, df[code], df[col]) for col in df.columns]
+            [self.updateAttr(col, df[code], df[col], byAttr=byAttr) for col in df.columns]
 
-    def updateAttrFromDict(self, attrName : str, codeValueDict : dict):
+    def updateAttrFromArray(self, array: np.ndarray, codeList: list, attributeNameList: str or list, byAttr = 'code'):
+        """
+        This function will update attribute value of current list by passed array.
+        You have to identify that each column of array belongs to which attribute, and
+        each row of array represents which element.
+
+        The row number of passed array must equal to length of codeList, and the column
+        number of passed array must equal to length of attributeNameList.
+
+        If the attribute are not registered, the attribute will be created.
+
+        Parameters
+        ----------
+        array : np.ndarray
+            The array you which want to update this list from.
+        codeList : list
+            The code of element whose attribute will be updated by this function. Those whose code
+            is not specified in this list will not be influenced. The length of this list must equal
+            to the row number of passed array.
+        attributeNameList : str or list
+            The attribute that you want to update. Those attribute in this list will be updated, and those
+            are not in this list will not be influenced.
+        byAttr : str
+            The attribute that is used to index element in this list. By default, this attribute is code.
+            But you can specify another attribute A, if you do it, this function will update the attribute
+            value of elements whose attribute A appears in given codeList.
+
+        Returns
+        -------
+        None
+        """
+        attributeNameList = [attributeNameList] if type(attributeNameList)==str else attributeNameList
+        [self.updateAttr(attr, codeList, array[:,index], byAttr=byAttr) for index,attr in enumerate(attributeNameList)]
+
+    def updateAttrFromDict(self, attrName : str, codeValueDict : dict, byAttr = 'code'):
         """
         This function will update attribute value of current list by passed dict.
         The key of passes dict should be code string. If current list has registered
-        attribute whose name is in keys of codeValueDict, it will be updated.
+        attribute whose name is in keys of codeValueDict, it will be updated. If the attribute
+        is not registered, it will be created.
 
         Parameters
         ----------
@@ -1196,9 +1247,13 @@ class listBase():
             The attribute whose value is exactly what you want to update.
         codeValueDict : dict
             A dict that maps code to value.
+        byAttr : str
+            The attribute that is used to index element in this list. By default, this attribute is code.
+            But you can specify another attribute A, if you do it, this function will update the attribute
+            value of elements whose attribute A appears in given codeValueDict.
 
         Returns
         -------
         None
         """
-        self.updateAttr(attrName,codeValueDict.keys(),codeValueDict.values())
+        self.updateAttr(attrName,codeValueDict.keys(),codeValueDict.values(), byAttr=byAttr)
