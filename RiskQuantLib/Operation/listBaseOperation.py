@@ -393,6 +393,47 @@ class listBase():
         else:
             return dict(zip(attrValueList,securityList))
 
+    def groupByFunc(self, func, useObj = True, inplace = True):
+        """
+        This function use pandas.DataFrame.groupby as engine. Its behavior is totally
+        the same with pandas.
+
+        Parameters
+        ----------
+        func : function
+            Elements will be divided into groups by the return values of this function.
+        useObj : bool
+            If true, return a RiskQuantLib list object, each element of which is also a
+            RiskQuantLib list object. Each element will be marked by setting the attribute
+            as the common value.
+        inplace : bool
+            If true, operation will be done in present RiskQuantLib list object.
+        """
+        attrValue = self.apply(func)
+        groupBy = attrValue.toDF()
+        groupBy.columns = [i if type(i)==str else "groupByAttr"+str(i) for i in groupBy.columns]
+        attrName = groupBy.columns.to_list()
+        groupBy['index'] = self['index']
+        groupBy['obj'] = self.all
+        df = groupBy.groupby(attrName)['obj']
+
+        attrValueList = [[j for j in i] if type(i)==type(tuple()) else [i] for i in df.groups.keys()]
+        securityList = [df.get_group(i).to_list() for i in df.groups.keys()]
+        if useObj:
+            if inplace:
+                objList = [self.__new__(type(self)) for i in attrValueList]
+                [i.__init__() for i in objList]
+            else:
+                objList = [self.copy(deep=True) for i in attrValueList]
+            [i.setAll(j) for i,j in zip(objList,securityList)]
+            [[setattr(j,attrName[q],i[q]) for q in range(len(attrName))] for i,j in zip(attrValueList,objList)]
+            returnObj = self.__new__(type(self))
+            returnObj.__init__()
+            returnObj.setAll(objList)
+            return returnObj
+        else:
+            return dict(zip(attrValueList,securityList))
+
     def sum(self,attrName:str,inplace = False):
         """
         This function will sum the value of each element, given the attribute name.
@@ -869,7 +910,7 @@ class listBase():
         """
         return dict(self.zip([attrNameAsKey, attrNameAsValue]))
 
-    def toSeries(self, attrNameAsValue : str = '', attrNameAsIndex : str = '', nameString : str = ''):
+    def toSeries(self, attrNameAsValue : str = '', attrNameAsIndex : str = '', nameString : str = '', index = None):
         """
         This function will return a pandas.Series object, given the attribute name whose values are used as series
         value, and attribute name whose values are used as series index. You can also pass a string to identify the
@@ -886,19 +927,24 @@ class listBase():
             The attribute name whose values you want to use as series index.
         nameString : str
             The name of series.
+        index : list or listBase
+            The index list. If you do not specify the attribute name used as index, you can pass a list as index manually.
 
         Returns
         -------
         pd.Series
         """
+        if len(self)==0:
+            return pd.Series(dtype=float, name=nameString)
         if attrNameAsValue == '':
-            return pd.Series(self.all)
+            result = pd.Series(self.all, index=index, name=nameString) if index else pd.Series(self.all, name=nameString)
         elif attrNameAsIndex == '':
-            return pd.Series(self[attrNameAsValue], name=nameString)
+            result = pd.Series(self[attrNameAsValue], name=nameString, index=index) if index else pd.Series(self[attrNameAsValue], name=nameString)
         else:
-            return pd.Series(self[attrNameAsValue], index = self[attrNameAsIndex], name = nameString)
+            result = pd.Series(self[attrNameAsValue], index = self[attrNameAsIndex], name = nameString)
+        return result
 
-    def toDF(self, attrNameList : str or list = '', attrNameAsIndex : str = ''):
+    def toDF(self, attrNameList : str or list = '', attrNameAsIndex : str = '', index = None):
         """
         This function will return a pandas.DataFrame object, given the attribute name whose values are used as dataframe
         value, and attribute name whose values are used as dataframe index.
@@ -912,21 +958,26 @@ class listBase():
             The attribute name whose values you want to use as dataframe value.
         attrNameAsIndex : str
             The attribute name whose values you want to use as dataframe index.
+        index : list or listBase
+            The index list. If you do not specify the attribute name used as index, you can pass a list as index manually.
 
         Returns
         -------
         pd.DataFrame
         """
         if attrNameList == '':
-            return pd.DataFrame(self.all)
+            result = pd.DataFrame(self.all, index=index) if index else pd.DataFrame(self.all)
+            return result
         elif type(attrNameList) == str:
             attrNameList = [attrNameList]
+        result = pd.DataFrame(self[attrNameList])
         if attrNameAsIndex == '':
-            return pd.DataFrame(self[attrNameList])
+            dfIndex = index if index else result.index
         else:
-            df = pd.DataFrame(self[attrNameList])
-            df.index = self[attrNameAsIndex]
-            return df
+            dfIndex = self[attrNameAsIndex]
+        result.index = dfIndex
+        return result
+
 
     def toArray(self, attrNameList : str or list = ''):
         """
@@ -1171,6 +1222,35 @@ class listBase():
         c_attrName = attrName[0].capitalize() + attrName[1:]
         getattr(self,'set'+c_attrName,lambda x,y,z,k:setAttr(self,attrName,x,y,z))(codeSeries,valueSeries,byAttr,True)
 
+
+    def updateAttrFromSeries(self, sr: pd.Series, attrName = '', byAttr = 'code'):
+        """
+        This function will update attribute value of current list by passed series.
+        The name of passes series should be in English, and if current
+        list has registered attribute whose name is the same with column name, it will
+        be updated. If the attribute is not registered, it will be created.
+
+        Parameters
+        ----------
+        sr : pd.Series
+            The series that you want to update data from.
+        attrName : str
+            The attribute whose value is exactly what you want to update.
+        byAttr : str
+            The attribute that is used to index element in this list. By default, this attribute is code.
+            But you can specify another attribute A, if you do it, this function will update the attribute
+            value of elements whose attribute A appears in df[code] or df.index.
+
+        Returns
+        -------
+        None
+        """
+        attrName = sr.name if attrName=='' else attrName
+        if attrName:
+            self.updateAttr(attrName, sr.index, sr.values, byAttr=byAttr)
+        else:
+            raise ValueError("Can not update from a series without name if you don't pass an attrName.")
+
     def updateAttrFromDF(self, df: pd.DataFrame, code:str = '', byAttr = 'code'):
         """
         This function will update attribute value of current list by passed dataframe.
@@ -1183,7 +1263,7 @@ class listBase():
         df : pd.DataFrame
             The dataframe that you want to update data from.
         code : str
-            The column name of df that you used to mark rows. Elements whose code
+            A column name of df that you used to mark rows. Elements whose code
             is in this column will be updated, and those not in this column will
             not be influenced. If blank, the index of df will be used as code.
         byAttr : str
