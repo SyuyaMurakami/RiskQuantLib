@@ -234,6 +234,177 @@ def compressExcel(filePathString:str, outputPathString:str, subDictionary:bool =
 		result.reset_index(drop=True,inplace=True)
 		result[['PATH','FILE','COLUMN','ROW','VALUE']].to_excel(outputPathString,index=0)
 
+class fileReceiver:
+	def __init__(self, targetFilePath):
+		import socket
+		self.broadcast = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		self.broadcast.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+		self.broadcast.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+		self.listen = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		self.listen.settimeout(1)
+		self.listen.bind(('',9004))
+		self.hostname = socket.gethostname()
+		self.fileAlreadyReceived = []
+		self.fileNeglected = []
+		self.fileReceiveFinished = False
+		self.targetFilePath = targetFilePath
+
+	def __del__(self):
+		self.broadcast.close()
+		self.listen.close()
+
+	def sendOnLineInfo(self):
+		self.broadcast.sendto(('OnLine->'+self.hostname).encode('utf-8'), ('255.255.255.255', 9003))
+
+	def sendIPInfo(self):
+		self.broadcast.sendto(('IPInfo->' + self.hostname).encode('utf-8'), ('255.255.255.255', 9006))
+
+	def receiveFileInfo(self):
+		try:
+			fileInfo, address = self.listen.recvfrom(1024)
+		except:
+			fileInfo = None
+			address = None
+
+		if fileInfo and address:
+			fileInfo = fileInfo.decode("utf-8")
+			fileInfoList = fileInfo.split('->')
+			senderName = fileInfoList[1]
+			fileName = fileInfoList[2]
+			fileSize = int(fileInfoList[3])
+			return address,senderName,fileName,fileSize
+		else:
+			return '','','',0
+
+	def receiveFileContent(self,address,fileName,fileSize):
+		import socket
+		self.receive = socket.socket()
+		self.receive.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+		self.receive.settimeout(15)
+		self.receive.bind(('', 9005))
+		self.receive.listen(5)
+		connectEstablished = False
+		while not connectEstablished:
+			self.sendIPInfo()
+			connect, _ = self.receive.accept()
+			connectEstablished = True if connect else False
+		totalFileSize = fileSize
+		with open(self.targetFilePath+os.sep+fileName, 'wb') as targetFile:
+			chunkSize = 4096
+			while fileSize > 0:
+				if fileSize < chunkSize:
+					chunkSize = fileSize
+				data = connect.recv(chunkSize)
+				targetFile.write(data)
+				fileSize -= len(data)
+				percentage = min(1 - fileSize / totalFileSize, 1)
+				print("\r"+"Download "+fileName+": "+"".join(["=" for i in range(int(50*percentage))])+">"+str(int(100*percentage))+"%",end="")
+			print("")
+		if os.path.exists(self.targetFilePath+os.sep+fileName) and os.path.getsize(self.targetFilePath+os.sep+fileName)!=0:
+			print('File Received Successfully')
+			self.fileReceiveFinished = True
+			self.fileAlreadyReceived.append((address,fileName))
+		else:
+			print('File Received Failed')
+		self.receive.close()
+
+	def receiveFile(self):
+		address, senderName, fileName, fileSize = self.receiveFileInfo()
+		if address and senderName and fileName and fileSize and senderName!=self.hostname and ((address[0],fileName) not in self.fileAlreadyReceived + self.fileNeglected):
+			receiveFile = input("Do you want to receive " + fileName + " from " + senderName + " ? (Y/N)")
+			if receiveFile.lower() == 'y' or receiveFile == '':
+				print("Preparing File, This May Take A While, Please Wait Until All Processes Finish...")
+				self.receiveFileContent(address[0], fileName, fileSize)
+			else:
+				self.fileNeglected.append((address[0],fileName))
+
+	def run(self, timeOut = 100):
+		print("Start Receiving File")
+		startTime = time.time()
+		while time.time() - startTime <= timeOut and not self.fileReceiveFinished:
+			try:
+				self.receiveFile()
+			except:
+				pass
+		if len(self.fileNeglected)+len(self.fileAlreadyReceived)==0:
+			print("Can Not Find Any Sender")
+
+class fileSender:
+	def __init__(self, fileName):
+		import socket
+		self.broadcast = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		self.broadcast.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+		self.broadcast.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+		self.listen = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		self.listen.settimeout(1)
+		self.listen.bind(('',9006))
+		self.hostname = socket.gethostname()
+		self.filePath = fileName
+		self.fileName = os.path.basename(fileName)
+		self.fileSize = os.path.getsize(fileName)
+		self.fileAlreadySent = []
+		self.fileNeglected = []
+		self.fileSendFinished = False
+
+	def __del__(self):
+		self.broadcast.close()
+		self.listen.close()
+
+	def sendOnLineInfo(self):
+		self.broadcast.sendto(('OnLine->'+self.hostname).encode('utf-8'), ('255.255.255.255', 9003))
+
+	def receiveIPInfo(self):
+		try:
+			IPInfo, address = self.listen.recvfrom(1024)
+		except:
+			IPInfo = None
+			address = None
+
+		if IPInfo and address:
+			IPInfo = IPInfo.decode("utf-8")
+			IPInfoList = IPInfo.split('->')
+			receiverName = IPInfoList[1]
+			return address,receiverName
+		else:
+			return '',''
+
+	def sendFileInfo(self):
+		self.broadcast.sendto(('FileInfo->'+self.hostname+'->'+self.fileName+'->'+str(self.fileSize)).encode('utf-8'),('255.255.255.255', 9004))
+
+	def sendFileContent(self,address):
+		import socket
+		self.send = socket.socket()
+		self.send.connect((address, 9005))
+		with open(self.filePath, 'rb') as targetFile:
+			line = targetFile.read()
+			self.send.sendall(line)
+		print('File Sent: ' + self.fileName)
+		self.fileSendFinished = True
+		self.fileAlreadySent.append((address,self.fileName))
+		self.send.close()
+
+
+	def sendFile(self):
+		self.sendFileInfo()
+		address,receiverName = self.receiveIPInfo()
+		if address and receiverName and receiverName!=self.hostname and ((address[0],self.fileName) not in self.fileAlreadySent + self.fileNeglected):
+			sendFile = input("Do you confirm to send " + self.fileName + " to " + receiverName + " ? (Y/N)")
+			if sendFile.lower() == 'y' or sendFile == '':
+				print("Preparing File, This May Take A While, Please Wait Until Receiver Has Finished All Processes...")
+				self.sendFileContent(address[0])
+			else:
+				self.fileNeglected.append((address[0],self.fileName))
+
+	def run(self, timeOut = 100):
+		print("Start Sending File")
+		startTime = time.time()
+		while time.time() - startTime <= timeOut and not self.fileSendFinished:
+			try:
+				self.sendFile()
+			except:
+				pass
+		if len(self.fileNeglected)+len(self.fileAlreadySent)==0:
+			print("Can Not Find Any Receiver")
 
 
 

@@ -303,3 +303,65 @@ def addProjectTemplateFromGithub():
     from RiskQuantLib.Tool.githubTool import Github
     link = Github()
     link.downloadRepositories(name,source_path)
+
+def receiveProjectTemplate():
+    """
+    receiveProjectTemplate() is a function to receive any file or dictionary from your friend by
+    LOCAL AREA NETWORK (LAN).
+
+    Use terminal command 'recvRQL' to use this function. You can also specify a path where your want to
+    save the shared file or dictionary, like 'recvRQL targetPath'. If you do not give a path, the file will
+    be stored in current working dictionary.
+
+    After this function is called, you can receive the file shared from your friend, who is also in the
+    same LAN. You can not receive files or project from people outside your local network by this function. If you
+    want to share with friends who is across ocean, maybe you should use Github and getRQL command.
+
+    Returns
+    -------
+    None
+    """
+    import os
+    numberOfArgv = len(sys.argv)
+    if numberOfArgv == 1:
+        targetPath = os.getcwd()
+    else:
+        targetPath = sys.argv[1]
+    from RiskQuantLib.Tool.fileTool import fileReceiver
+    receive = fileReceiver(targetPath)
+    receive.run()
+
+def sendProjectTemplate():
+    """
+    sendProjectTemplate() is a function to send any file or dictionary to your friend by
+    LOCAL AREA NETWORK (LAN).
+
+    Use terminal command 'sendRQL targetProjectPath' or 'sendRQL targetFilePath' to use this function. If
+    you send a dictionary, it will be packed into a zip file at first, and sent to your friend.
+
+    After this function is called, you can send to your friend who is also in the same LAN.
+    You can not send files or project to people outside your local network by this function. If you
+    want to share with friends who is across ocean, maybe you should use Github and getRQL command.
+
+    Returns
+    -------
+    None
+    """
+    import os
+    from RiskQuantLib.Tool.fileTool import fileSender
+    numberOfArgv = len(sys.argv)
+    targetPath = sys.argv[1]
+    if os.path.isdir(targetPath):
+        packProject()
+        name = targetPath.split(os.sep)[-1]
+        parentProjectPath = os.path.dirname(targetPath)
+        filePath = parentProjectPath + os.sep + name + ".zip"
+        send = fileSender(filePath)
+        send.run()
+        os.remove(parentProjectPath + os.sep + name + '.zip')
+    else:
+        filePath = targetPath
+        send = fileSender(filePath)
+        send.run()
+
+
