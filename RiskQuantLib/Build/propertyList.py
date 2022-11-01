@@ -15,7 +15,7 @@ class propertyList():
         """
         self.all = []
 
-    def addProperty(self,propertyNameSeries,belongToSeries):
+    def addProperty(self,propertyNameSeries,belongToSeries,targetProjectPath = ''):
         """
         addProperty(self,propertyNameSeries,belongToSeries) is a function to add new attribute registrations.
 
@@ -35,7 +35,7 @@ class propertyList():
         None
         """
         from RiskQuantLib.Build.propertyObj import propertyObj
-        self.all += [propertyObj(i) for i in propertyNameSeries]
+        self.all += [propertyObj(i,targetProjectPath) for i in propertyNameSeries]
 
         indexNameSeries = [str(nameIndex)+name for nameIndex,name in enumerate(propertyNameSeries)]
         belongToDict = dict(zip(indexNameSeries,belongToSeries))

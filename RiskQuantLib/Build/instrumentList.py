@@ -142,7 +142,7 @@ class instrumentList():
         clearInstrumentPath(targetProjectPath)
         [i.commit(targetProjectPath) for i in self.all]
         clearShortcut(targetProjectPath)
-        shortcut = buildShortcut([i.name for i in self.all])
+        shortcut = buildShortcut([i.name for i in self.all],targetProjectPath)
         commitShortcut(shortcut,targetProjectPath)
 
 

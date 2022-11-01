@@ -22,6 +22,49 @@ def convertPathToImportPath(pathString:str):
     classImportPath = 'RiskQuantLib.'+"".join([i+'.' for i in listPathDict[1:-1]])+className
     return classImportPath
 
+def persistShortcut(targetProjectPath:str=''):
+    """
+    persistShortcut(targetProjectPath:str='') is a function to persist all registration of class paths.
+    To simplify usage of class, a shortcut will be inserted to RiskQuantLib.module for every auto-built instrument class.
+    After calling this function, these shortcuts will be changed into permanent, it can not be removed automatically by build.py.
+
+    After calling this function, even if you delete the item in Build_Attr.xlsx and Build_Instrument.xlsx and rebuild the
+    whole project, the existing instrument will remain exist.
+
+    This function should only be used when you want to distribute your project to someone else, but you do not want him to
+    change your project structure.
+
+    This function can not be cancelled or undone.
+
+    Parameters
+    ----------
+    targetProjectPath :str
+        The RiskQuantLib project path where you want to persist all instrument class shortcuts.
+
+    Returns
+    -------
+    None
+    """
+    projectPath = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'Build'+os.sep+'buildShortcut.py')[0]
+    if targetProjectPath == '':
+        path = projectPath + os.sep + 'RiskQuantLib' + os.sep + 'Module.py'
+    else:
+        path = targetProjectPath + os.sep + 'RiskQuantLib' + os.sep + 'Module.py'
+    # write shortcut path
+    with open(path, 'r') as f:
+        content = f.read()
+
+    if content.find('#-<moduleImportBegin>') == -1 or content.find('#-<moduleImportEnd>') == -1:
+        print("Source file must have a #-<Begin> and #-<End> tag to be built")
+        exit(-1)
+
+    former = content.split('#-<moduleImportBegin>')[0]
+    middle = content.split('#-<moduleImportBegin>')[-1].split('#-<moduleImportEnd>')[0]
+    ender = content.split('#-<moduleImportEnd>')[-1]
+    newContent = former.strip('\n    ') + middle + '#-<moduleImportBegin>\n#-<moduleImportEnd>' + ender
+    with open(path, 'w') as f:
+        f.truncate()  # clear all contents
+        f.write(newContent.strip(' ').strip('\t\n'))
 
 def clearShortcut(targetProjectPath:str=''):
     """
@@ -94,7 +137,7 @@ def commitShortcut(psb:pythonScriptBuilder,targetProjectPath:str):
         f.truncate()  # clear all contents
         f.write(newContent.strip(' ').strip('\t\n'))
 
-def buildShortcut(instrumentNameList:list):
+def buildShortcut(instrumentNameList:list,targetProjectPath = ''):
     """
     buildShortcut(instrumentNameList:list) is the function to generate source code of shortcut map.
     It joins class name to class import path, making it easy to use instrument class.
@@ -110,9 +153,17 @@ def buildShortcut(instrumentNameList:list):
         A pythonScriptBuilder object contains map relation from instrument name to import path.
     """
     c_instrumentNameList = [i[0].capitalize()+i[1:] for i in instrumentNameList]
+    if targetProjectPath == '':
+        targetProjectPath = sys.path[0] + os.sep + 'RiskQuantLib'
+    else:
+        targetProjectPath = targetProjectPath + os.sep + 'RiskQuantLib'
+
+    spec = importlib.util.spec_from_file_location('pathObj', targetProjectPath + os.sep + "Build" + os.sep + "pathObj.py")
+    POJ = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(POJ)
     psb = pythonScriptBuilder()
-    import RiskQuantLib.Build.pathObj as POJ
-    importlib.reload(POJ)
+    sys.modules[POJ.__name__] = POJ
+    importlib._bootstrap._exec(spec, POJ)
     RQLpathObj = POJ.pathObj()
     pathWaitedToBeAdded = [convertPathToImportPath(RQLpathObj.listPathDict[i]) for i in c_instrumentNameList]
     [psb.setImport(classPath,'',True,className+'List,'+className) for classPath,className in zip(pathWaitedToBeAdded,instrumentNameList)]

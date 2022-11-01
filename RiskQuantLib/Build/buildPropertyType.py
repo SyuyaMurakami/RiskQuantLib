@@ -3,6 +3,45 @@
 import sys,os,importlib
 from RiskQuantLib.Tool.codeBuilderTool import pythonScriptBuilder
 
+def persistPropertyTypePath(targetProjectPath:str = ''):
+    """
+    persistPropertyTypePath(targetProjectPath:str = '') is a function to persist all propertyType path registration
+    of RiskQuantLib.
+    This function will turn all propertyType path into permanent, after calling this function, the persisted propertyType
+    will not be influenced by build.py any more.
+
+    This function can not be cancelled or undone.
+
+    Parameters
+    ----------
+    targetProjectPath : str
+        The location of RiskQuantLib project where you want to persist all propertyType registration.
+
+    Returns
+    -------
+    None
+    """
+    # add path to pathObj
+    if targetProjectPath == '':
+        pathObjPath = sys.path[0]+os.sep+'RiskQuantLib'+os.sep+'Build'+os.sep+'pathObj.py'
+    else:
+        pathObjPath = targetProjectPath + os.sep+'RiskQuantLib' + os.sep + 'Build' + os.sep + 'pathObj.py'
+    # write file path
+    with open(pathObjPath, 'r') as f:
+        content = f.read()
+
+    if content.find('#-<attributeTypeDictBegin>') == -1 or content.find('#-<attributeTypeDictEnd>') == -1:
+        print("Source file must have a #-<Begin> and #-<End> tag to be built")
+        exit(-1)
+
+    former = content.split('#-<attributeTypeDictBegin>')[0]
+    middle = content.split('#-<attributeTypeDictBegin>')[-1].split('#-<attributeTypeDictEnd>')[0]
+    ender = content.split('#-<attributeTypeDictEnd>')[-1]
+
+    newContent = former.strip('\n    ') + middle + '#-<attributeTypeDictBegin>\n    #-<attributeTypeDictEnd>' + ender
+    with open(pathObjPath, 'w') as f:
+        f.truncate()  # clear all contents
+        f.write(newContent.strip(' ').strip('\t\n'))
 
 def clearPropertyTypePath(targetProjectPath:str = ''):
     """
@@ -26,7 +65,7 @@ def clearPropertyTypePath(targetProjectPath:str = ''):
     if targetProjectPath == '':
         pathObjPath = sys.path[0]+os.sep+'RiskQuantLib'+os.sep+'Build'+os.sep+'pathObj.py'
     else:
-        pathObjPath = targetProjectPath + os.sep + 'Build' + os.sep + 'pathObj.py'
+        pathObjPath = targetProjectPath + os.sep + 'RiskQuantLib' + os.sep + 'Build' + os.sep + 'pathObj.py'
     # write file path
     with open(pathObjPath, 'r') as f:
         content = f.read()
@@ -66,7 +105,7 @@ def buildPropertyTypePath(propertyTypeNameString:str,targetProjectPath:str = '')
     if targetProjectPath == '':
         targetProjectPath = sys.path[0]+os.sep+'RiskQuantLib'
     else:
-        pass
+        targetProjectPath = targetProjectPath+os.sep+'RiskQuantLib'
 
     # find type class path
     filePath = targetProjectPath+os.sep+'Property'+os.sep+c_propertyTypeNameString+os.sep+propertyTypeNameString+'.py'
@@ -194,10 +233,7 @@ def buildPropertyType(propertyTypeNameString:str, libraryName:str = '', targetPr
     """
     path = buildPropertyTypePath(propertyTypeNameString, targetProjectPath=targetProjectPath)
     TO = buildPropertyTypeObj(propertyTypeNameString, libraryName)
-    if targetProjectPath == '':
-        commitBuildPropertyType(TO, path)
-    else:
-        commitBuildPropertyType(TO,targetProjectPath + os.sep+'RiskQuantLib'+os.sep + path.split('RiskQuantLib')[-1])
+    commitBuildPropertyType(TO, path)
     return None
 
 

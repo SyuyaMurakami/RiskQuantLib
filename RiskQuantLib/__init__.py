@@ -364,4 +364,109 @@ def sendProjectTemplate():
         send = fileSender(filePath)
         send.run()
 
+def buildProject():
+    """
+    buildProject() is a function to build RiskQuantLib project.
 
+    Use terminal command 'bldRQL targetProjectPath' to use this function. The project
+    will be built according to the Build_Instrument.xlsx and Build_Attr.xlsx in
+    the targetProjectPath.
+
+    After this function is called, the instrument class file and attribute API will be
+    automatically generated.
+
+    For old version user of RiskQuantLib, this function is totally the same as
+    command 'python build.py' in terminal with working dictionary as targetProjectPath.
+
+    Returns
+    -------
+    None
+    """
+    import os,time
+    targetPath = sys.argv[1]
+    rqlPath = targetPath+os.sep+"RiskQuantLib"
+    instrumentFilePath = targetPath + os.sep + "Build_Instrument.xlsx"
+    attrFilePath = targetPath + os.sep + "Build_Attr.xlsx"
+    if os.path.exists(rqlPath) and os.path.isdir(rqlPath) and os.path.exists(instrumentFilePath) and os.path.exists(attrFilePath):
+        from RiskQuantLib.Build.build import buildInstrument,buildAttr
+        buildInstrument(instrumentFilePath,targetPath)
+        time.sleep(2)
+        buildAttr(attrFilePath,targetPath)
+    else:
+        raise Exception("The Target Dictionary Should Be A RiskQuantLib Project, With Build_Instrument.xlsx And Build_Attr.xlsx In It.")
+
+def unBuildProject():
+    """
+    unBuildProject() is a function to un-build RiskQuantLib project.
+
+    Use terminal command 'ubldRQL targetProjectPath' to use this function. The project
+    will be un-built and return to the initial status.
+
+    After this function is called, the attribute API will be automatically removed, any all registration
+    of instrument will be deleted. But, python source file will not be deleted until you do it by yourself.
+
+    After a project is un-built, you can not use instrument directly in main.py or create new instrument
+    inherited from those un-registered instrument. The file Build_Instrument.xlsx and Build_Attr.xlsx will not be
+    changed after you call this function.
+
+    Returns
+    -------
+    None
+    """
+    import os,time
+    targetPath = sys.argv[1]
+    rqlPath = targetPath+os.sep+"RiskQuantLib"
+    if os.path.exists(rqlPath) and os.path.isdir(rqlPath):
+        from RiskQuantLib.Build.build import clearInstrumentPath,clearAttr
+        clearAttr(targetPath)
+        time.sleep(2)
+        clearInstrumentPath(targetPath)
+    else:
+        raise Exception("The Target Dictionary Should Be A RiskQuantLib Project.")
+
+def persistProject():
+    """
+    persistProject() is a function to persist RiskQuantLib project.
+
+    Use terminal command 'pstRQL targetProjectPath' to use this function. The project
+    will be changed into a permanent project, where all current attribute APIs and instrument registrations
+    will not be influenced by build.py anymore.
+
+    This function is like a snapshot of your project, it freezes all effective APIs into permanent ones.
+
+    Surely, you can still build the persisted project with new Build_Instrument.xlsx and Build_Attr.xlsx file.
+    Just remember, no matter how many times you build it, the persisted API will remain effective and will not be influenced.
+
+    This command is used when you want to distribute your project to someone else, but you do not want him to change your
+    current API. Or this command is used when you are quite sure your current code is stable and can be settled down so that
+    you can move on to next stage.
+
+    This function will remove the file Build_Instrument.xlsx and Build_Attr.xlsx and replace them with new ones.
+
+    This command can not be cancelled or un-done, use it carefully.
+
+    Returns
+    -------
+    None
+    """
+    import os,time
+    import pandas as pd
+    targetPath = sys.argv[1]
+    rqlPath = targetPath+os.sep+"RiskQuantLib"
+    instrumentFilePath = targetPath + os.sep + "Build_Instrument.xlsx"
+    attrFilePath = targetPath + os.sep + "Build_Attr.xlsx"
+    if (not os.path.exists(rqlPath)) or (not os.path.isdir(rqlPath)):
+        raise Exception("The Target Dictionary Should Be A RiskQuantLib Project.")
+    else:
+        confirm = input("This Action Can Not Be Un-Done Or Cancelled, Do You Confirm To Continue? (y/n)")
+        if confirm.lower()=='y':
+            from RiskQuantLib.Build.build import persistInstrumentPath,persistAttr
+            persistInstrumentPath(targetPath)
+            time.sleep(2)
+            persistAttr(targetPath)
+            df_attr = pd.DataFrame(index=['SecurityType', 'AttrName', 'AttrType']).T
+            df_instrument = pd.DataFrame(index=['InstrumentName', 'ParentRQLClassName', 'ParentQuantLibClassName', 'LibraryName','DefaultInstrumentType']).T
+            df_attr.to_excel(attrFilePath, index=0)
+            df_instrument.to_excel(instrumentFilePath, index=0)
+        else:
+            print("Action Cancelled, Nothing Changed.")

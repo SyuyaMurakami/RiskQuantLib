@@ -31,7 +31,7 @@ def buildAttr(filePath:str, targetProjectPath:str = ''):
     # Build Attr
     from RiskQuantLib.Build.propertyList import propertyList
     plist = propertyList()
-    plist.addProperty(df['AttrName'],df['SecurityType'])
+    plist.addProperty(df['AttrName'],df['SecurityType'],targetProjectPath)
     plist.setPropertyType(df['AttrName'],df['SecurityType'],df['AttrType'])
     plist.buildFunction()
     plist.buildTargetSourceFile()
@@ -40,8 +40,47 @@ def buildAttr(filePath:str, targetProjectPath:str = ''):
         source_path = os.path.abspath(RiskQuantLibDictionary) + os.sep + r'RiskQuantLib'
         plist.commit(source_path)
     else:
-        plist.commit(targetProjectPath)
+        plist.commit(targetProjectPath + os.sep + r'RiskQuantLib')
     print("Build Attr Finished")
+
+def persistAttr(targetProjectPath:str = ''):
+    """
+    persistAttr(targetProjectPath = '') is a function to automatically persist all attributes API of all instrument classes.
+    After calling this function, the attributes that are already registered will be changed into permanent attributes.
+    Permanent attributes will not be influenced by build.py any more, and they perform totally like ones that you defined by
+    your own hand.
+
+    This function should only be called when you want to distribute your project to someone else, but you want to keep your
+    current project structure and stop him from changing your current attribute API.
+
+    This function can not be cancelled or undone, use it carefully.
+
+    Parameters
+    ----------
+    targetProjectPath : str
+        The RiskQuantLib project path where you want to persist attributes.
+        You can leave this parameter empty to persist attributes in this project.
+        Or specify a path to persist attributes to another RiskQuantLib project.
+
+    Returns
+    -------
+    None
+    """
+    from RiskQuantLib.Build.buildFuction import persistBuiltFunction
+    import importlib
+    if targetProjectPath == '':
+        RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib' + os.sep + 'Build')[0]
+        source_path = os.path.abspath(RiskQuantLibDictionary) + os.sep + r'RiskQuantLib'
+    else:
+        source_path = targetProjectPath + os.sep + r'RiskQuantLib'
+    spec = importlib.util.spec_from_file_location('pathObj', source_path + os.sep + "Build" + os.sep + "pathObj.py")
+    PO = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(PO)
+    targetSourcePathList = [source_path + os.sep + i for i in PO.pathObj.pathDict.values()] + [source_path + os.sep + j for j in PO.pathObj.listPathDict.values()]
+    [persistBuiltFunction(i) for i in targetSourcePathList]
+    from RiskQuantLib.Build.buildPropertyType import persistPropertyTypePath
+    persistPropertyTypePath(targetProjectPath)
+    print("Persist Attr Finished")
 
 def clearAttr(targetProjectPath:str = ''):
     """
@@ -60,14 +99,16 @@ def clearAttr(targetProjectPath:str = ''):
     None
     """
     from RiskQuantLib.Build.buildFuction import clearBuiltFunction
-    from RiskQuantLib.Build.propertyObj import propertyObj
-    tmpObj = propertyObj('Tmp')
+    import importlib
     if targetProjectPath == '':
         RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib' + os.sep + 'Build')[0]
         source_path = os.path.abspath(RiskQuantLibDictionary) + os.sep + r'RiskQuantLib'
     else:
-        source_path = targetProjectPath
-    targetSourcePathList = [source_path + os.sep + i for i in tmpObj.pathDict.values()] + [source_path + os.sep + j for j in tmpObj.listPathDict.values()]
+        source_path = targetProjectPath + os.sep + r'RiskQuantLib'
+    spec = importlib.util.spec_from_file_location('pathObj', source_path + os.sep + "Build" + os.sep + "pathObj.py")
+    PO = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(PO)
+    targetSourcePathList = [source_path + os.sep + i for i in PO.pathObj.pathDict.values()] + [source_path + os.sep + j for j in PO.pathObj.listPathDict.values()]
     [clearBuiltFunction(i) for i in targetSourcePathList]
     from RiskQuantLib.Build.buildPropertyType import clearPropertyTypePath
     clearPropertyTypePath(targetProjectPath)
@@ -130,7 +171,7 @@ def buildPropertyType(propertyNameList : list, targetProjectPath:str = ''):
     """
     from RiskQuantLib.Build.propertyTypeList import propertyTypeList
     ptlist = propertyTypeList()
-    ptlist.addPropertyType(propertyNameList)
+    ptlist.addPropertyType(propertyNameList,targetProjectPath)
     ptlist.commit(targetProjectPath)
     print("Build PropertyType Finished")
 
@@ -157,7 +198,28 @@ def clearInstrumentPath(targetProjectPath:str = ''):
     clearShortcut(targetProjectPath)
     print('Clear Instrument Path Finished')
 
+def persistInstrumentPath(targetProjectPath:str = ''):
+    """
+    clearInstrumentPath(targetProjectPath:str = '') is a function to automatically clear instrument path.
+    This function won't clear instrument class files. It only remove instrument path from RiskQuantLib project,
+    so that you can't use these instruments class directly any more.
 
+    Parameters
+    ----------
+    targetProjectPath : str
+        The RiskQuantLib project path where you want to clear instrument paths.
+        You can leave this parameter empty to clear instrument paths in this project.
+        Or specify a path to clear instrument paths of another RiskQuantLib project.
+
+    Returns
+    -------
+    None
+    """
+    from RiskQuantLib.Build.buildInstrument import persistInstrumentPath
+    from RiskQuantLib.Build.buildShortcut import persistShortcut
+    persistInstrumentPath(targetProjectPath)
+    persistShortcut(targetProjectPath)
+    print('Persist Instrument Path Finished')
 
 
 

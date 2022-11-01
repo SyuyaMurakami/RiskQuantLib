@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #coding = utf-8
-import os,importlib
+import os,importlib,sys
 
 class propertyTypeList():
     """
@@ -14,7 +14,7 @@ class propertyTypeList():
         """
         self.all = []
 
-    def addPropertyType(self,propertyTypeNameSeries):
+    def addPropertyType(self,propertyTypeNameSeries,targetProjectPath = ''):
         """
         addPropertyType(self,propertyTypeNameSeries) is a function to add new propertyType registrations.
 
@@ -28,8 +28,16 @@ class propertyTypeList():
         -------
         None
         """
-        import RiskQuantLib.Build.pathObj as POJ
-        importlib.reload(POJ)
+        if targetProjectPath == '':
+            targetProjectPath = sys.path[0] + os.sep + 'RiskQuantLib'
+        else:
+            targetProjectPath = targetProjectPath + os.sep + 'RiskQuantLib'
+
+        spec = importlib.util.spec_from_file_location('pathObj', targetProjectPath + os.sep + "Build" + os.sep + "pathObj.py")
+        POJ = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(POJ)
+        sys.modules[POJ.__name__] = POJ
+        importlib._bootstrap._exec(spec, POJ)
         RQLpathObj = POJ.pathObj()
         from RiskQuantLib.Build.propertyTypeObj import propertyTypeObj
         self.all += [propertyTypeObj(i) for i in propertyTypeNameSeries if i[0].capitalize()+i[1:] not in RQLpathObj.attributeTypeDefaultList]

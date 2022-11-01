@@ -328,6 +328,36 @@ def commitListFunctionBuild(codeList:list,sourceFilePath:str):
         f.truncate()  # clear all contents of file
         f.write(newContent.strip(' ').strip('\t\n'))
 
+def persistBuiltFunction(sourceFilePath:str):
+    """
+    persistBuiltFunction(sourceFilePath:str) is a function to persist set function
+    of both RiskQuantLib instrument class object and instrument list class object.
+    This function persist any contents between '#-<Begin>' and '#-<End>',
+
+    Parameters
+    ----------
+    sourceFilePath : str
+        The file where your want to persist all set functions.
+
+    Returns
+    -------
+    None
+    """
+    with open(sourceFilePath, 'r') as f:
+        content = f.read()
+
+    if content.find('#-<Begin>') == -1 or content.find('#-<End>') == -1:
+        print("Source file must have a #-<Begin> and #-<End> tag to be built")
+        exit(-1)
+
+    former = content.split('#-<Begin>')[0]
+    middle = content.split('#-<Begin>')[-1].split('#-<End>')[0]
+    ender = content.split('#-<End>')[-1]
+    newContent = former.strip('\n    ') + middle + '#-<Begin>\n    #-<End>\n\t' + ender
+    with open(sourceFilePath, 'w') as f:
+        f.truncate()  # clear all contents of file
+        f.write(newContent.strip(' ').strip('\t\n'))
+
 def clearBuiltFunction(sourceFilePath:str):
     """
     clearBuiltFunction(sourceFilePath:str) is a function to clear creations of set function

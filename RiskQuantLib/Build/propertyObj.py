@@ -1,22 +1,29 @@
 #!/usr/bin/python
 #coding = utf-8
-import os
+import os,importlib
+import sys
 from RiskQuantLib.Build.buildFuction import *
-from RiskQuantLib.Build.pathObj import pathObj as PO
 
 class propertyObj():
     """
     propertyObj() is a class that store attribute building information and commit buildings.
     """
-    pathObj = PO()
-    pathDict = pathObj.pathDict
-    listPathDict = pathObj.listPathDict
+    pathObj = None
+    pathDict = None
+    listPathDict = None
 
-    def __init__(self,propertyNameString:str):
+    def __init__(self,propertyNameString:str,targetProjectPath = ''):
         """
         Any attribute should have a name.
         """
         self.name = propertyNameString
+        targetProjectPath = sys.path[0] if targetProjectPath == '' else targetProjectPath
+        spec = importlib.util.spec_from_file_location('pathObj', targetProjectPath + os.sep + 'RiskQuantLib' + os.sep + "Build" + os.sep + "pathObj.py")
+        PO = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(PO)
+        self.pathObj = PO.pathObj()
+        self.pathDict = self.pathObj.pathDict
+        self.listPathDict = self.pathObj.listPathDict
 
     def setPropertyName(self,propertyNameString:str):
         """

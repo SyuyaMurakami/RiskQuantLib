@@ -3,6 +3,97 @@
 import sys,os,importlib
 from RiskQuantLib.Tool.codeBuilderTool import pythonScriptBuilder
 
+def persistInstrumentPath(targetProjectPath:str = ''):
+    """
+    persistInstrumentPath(targetProjectPath:str = '') is a function to persist all instrument path registration
+    of RiskQuantLib.
+    This function turns path registration into permanent,
+    so that nobody can change the registration any more.
+    This function should only be used when you want to distribute your
+    project to someone else, but you want to stop him from modifying
+    your current project API.
+
+    Parameters
+    ----------
+    targetProjectPath : str
+        The location of RiskQuantLib project where you want to persist all instrument registration.
+
+    Returns
+    -------
+    None
+    """
+    # add path to pathObj
+    if targetProjectPath == '':
+        pathObjPath = sys.path[0]+os.sep+'RiskQuantLib'+os.sep+'Build'+os.sep+'pathObj.py'
+    else:
+        pathObjPath = targetProjectPath + os.sep + 'RiskQuantLib' + os.sep + 'Build' + os.sep + 'pathObj.py'
+    # write file path
+    with open(pathObjPath, 'r') as f:
+        content = f.read()
+
+    if content.find('#-<pathDictBegin>') == -1 or content.find('#-<pathDictEnd>') == -1:
+        print("Source file must have a #-<Begin> and #-<End> tag to be built")
+        exit(-1)
+
+    former = content.split('#-<pathDictBegin>')[0]
+    middle = content.split('#-<pathDictBegin>')[-1].split('#-<pathDictEnd>')[0]
+    ender = content.split('#-<pathDictEnd>')[-1]
+
+    newContent = former.strip('\n    ') + middle + '#-<pathDictBegin>\n    #-<pathDictEnd>' + ender
+    with open(pathObjPath, 'w') as f:
+        f.truncate()  # clear all contents
+        f.write(newContent.strip(' ').strip('\t\n'))
+
+    # write list file path
+    with open(pathObjPath, 'r') as f:
+        content = f.read()
+
+    if content.find('#-<listPathDictBegin>') == -1 or content.find('#-<listPathDictEnd>') == -1:
+        print("Source file must have a #-<Begin> and #-<End> tag to be built")
+        exit(-1)
+
+    former = content.split('#-<listPathDictBegin>')[0]
+    middle = content.split('#-<listPathDictBegin>')[-1].split('#-<listPathDictEnd>')[0]
+    ender = content.split('#-<listPathDictEnd>')[-1]
+
+    newContent = former.strip('\n    ') + middle + '#-<listPathDictBegin>\n    #-<listPathDictEnd>' + ender
+    with open(pathObjPath, 'w') as f:
+        f.truncate()  # clear all contents
+        f.write(newContent.strip(' ').strip('\t\n'))
+
+    # write class import path
+    with open(pathObjPath, 'r') as f:
+        content = f.read()
+
+    if content.find('#-<classPathDictBegin>') == -1 or content.find('#-<classPathDictEnd>') == -1:
+        print("Source file must have a #-<Begin> and #-<End> tag to be built")
+        exit(-1)
+
+    former = content.split('#-<classPathDictBegin>')[0]
+    middle = content.split('#-<classPathDictBegin>')[-1].split('#-<classPathDictEnd>')[0]
+    ender = content.split('#-<classPathDictEnd>')[-1]
+
+    newContent = former.strip('\n    ') + middle + '#-<classPathDictBegin>\n    #-<classPathDictEnd>' + ender
+    with open(pathObjPath, 'w') as f:
+        f.truncate()  # clear all contents
+        f.write(newContent.strip(' ').strip('\t\n'))
+
+    # write class name path
+    with open(pathObjPath, 'r') as f:
+        content = f.read()
+
+    if content.find('#-<classNameDictBegin>') == -1 or content.find('#-<classNameDictEnd>') == -1:
+        print("Source file must have a #-<Begin> and #-<End> tag to be built")
+        exit(-1)
+
+    former = content.split('#-<classNameDictBegin>')[0]
+    middle = content.split('#-<classNameDictBegin>')[-1].split('#-<classNameDictEnd>')[0]
+    ender = content.split('#-<classNameDictEnd>')[-1]
+
+    newContent = former.strip('\n    ') + middle + '#-<classNameDictBegin>\n    #-<classNameDictEnd>' + ender
+    with open(pathObjPath, 'w') as f:
+        f.truncate()  # clear all contents
+        f.write(newContent.strip(' ').strip('\t\n'))
 
 def clearInstrumentPath(targetProjectPath:str = ''):
     """
@@ -26,7 +117,7 @@ def clearInstrumentPath(targetProjectPath:str = ''):
     if targetProjectPath == '':
         pathObjPath = sys.path[0]+os.sep+'RiskQuantLib'+os.sep+'Build'+os.sep+'pathObj.py'
     else:
-        pathObjPath = targetProjectPath + os.sep + 'Build' + os.sep + 'pathObj.py'
+        pathObjPath = targetProjectPath + os.sep+'RiskQuantLib' + os.sep + 'Build' + os.sep + 'pathObj.py'
     # write file path
     with open(pathObjPath, 'r') as f:
         content = f.read()
@@ -116,7 +207,7 @@ def buildInstrumentPath(instrumentNameString:str,parentRQLClassName:str = '',tar
     if targetProjectPath == '':
         targetProjectPath = sys.path[0]+os.sep+'RiskQuantLib'
     else:
-        pass
+        targetProjectPath = targetProjectPath+os.sep+'RiskQuantLib'
 
     # find security path
     if parentRQLClassName == '':
@@ -125,8 +216,11 @@ def buildInstrumentPath(instrumentNameString:str,parentRQLClassName:str = '',tar
         listFilePath = targetProjectPath+os.sep+c_instrumentNameString+'List'+os.sep+instrumentNameString+'List'+'.py'
         setListFilePath = targetProjectPath+os.sep+'Set'+os.sep+c_instrumentNameString+'List'+os.sep+instrumentNameString+'List'+'.py'
     elif type(parentRQLClassName)==type(''):
-        import RiskQuantLib.Build.pathObj as POJ
-        importlib.reload(POJ)
+        spec = importlib.util.spec_from_file_location('pathObj', targetProjectPath + os.sep + "Build" + os.sep + "pathObj.py")
+        POJ = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(POJ)
+        sys.modules[POJ.__name__] = POJ
+        importlib._bootstrap._exec(spec, POJ)
         RQLpathObj = POJ.pathObj()
         parentSetFilePath = "".join([i+os.sep for i in RQLpathObj.pathDict[parentRQLClassName].split(os.sep)[:-1]]).strip(os.sep)
         parentFilePath = "".join([i+os.sep for i in parentSetFilePath.split(os.sep)[1:]]).strip(os.sep)
@@ -139,8 +233,11 @@ def buildInstrumentPath(instrumentNameString:str,parentRQLClassName:str = '',tar
         setListFilePath = targetProjectPath+os.sep + parentListSetFilePath + os.sep+c_instrumentNameString+'List'+os.sep+instrumentNameString+'List'+'.py'
         del RQLpathObj
     else:
-        import RiskQuantLib.Build.pathObj as POJ
-        importlib.reload(POJ)
+        spec = importlib.util.spec_from_file_location('pathObj',targetProjectPath + os.sep + "Build" + os.sep + "pathObj.py")
+        POJ = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(POJ)
+        sys.modules[POJ.__name__] = POJ
+        importlib._bootstrap._exec(spec, POJ)
         RQLpathObj = POJ.pathObj()
         parentSetFilePath = "".join([i + os.sep for i in RQLpathObj.pathDict[parentRQLClassName[0]].split(os.sep)[:-1]]).strip(os.sep)
         parentFilePath = "".join([i + os.sep for i in parentSetFilePath.split(os.sep)[1:]]).strip(os.sep)
@@ -268,7 +365,7 @@ def buildInstrumentPath(instrumentNameString:str,parentRQLClassName:str = '',tar
     return [filePath,setFilePath,listFilePath,setListFilePath]
 
 
-def buildInstrumentObj(instrumentNameString:str, parentRQLClassName:str = '', parentQuantLibClassName:str = '', libraryName:str = '', defaultInstrumentType:str = ''):
+def buildInstrumentObj(instrumentNameString:str, parentRQLClassName:str = '', parentQuantLibClassName:str = '', libraryName:str = '', defaultInstrumentType:str = '',targetProjectPath = ''):
     """
     buildInstrumentObj(instrumentNameString:str, parentRQLClassName:str = '',
     parentQuantLibClassName:str = '', libraryName:str = '', defaultInstrumentType:str = '')
@@ -299,8 +396,16 @@ def buildInstrumentObj(instrumentNameString:str, parentRQLClassName:str = '', pa
 
     """
     c_instrumentNameString = instrumentNameString[0].capitalize() + instrumentNameString[1:]
-    import RiskQuantLib.Build.pathObj as POJ
-    importlib.reload(POJ)
+    if targetProjectPath == '':
+        targetProjectPath = sys.path[0]+os.sep+'RiskQuantLib'
+    else:
+        targetProjectPath = targetProjectPath+os.sep+'RiskQuantLib'
+
+    spec = importlib.util.spec_from_file_location('pathObj',targetProjectPath + os.sep + "Build" + os.sep + "pathObj.py")
+    POJ = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(POJ)
+    sys.modules[POJ.__name__] = POJ
+    importlib._bootstrap._exec(spec, POJ)
     RQLpathObj = POJ.pathObj()
 
 
@@ -387,7 +492,7 @@ def buildInstrumentObj(instrumentNameString:str, parentRQLClassName:str = '', pa
     return psb
 
 
-def buildInstrumentSet(instrumentNameString: str, parentRQLClassName: str = ''):
+def buildInstrumentSet(instrumentNameString: str, parentRQLClassName: str = '',targetProjectPath = ''):
     """
     buildInstrumentSet(instrumentNameString: str, parentRQLClassName: str = '')
     is a function to generate code of instrument set class, given instrument name
@@ -406,8 +511,16 @@ def buildInstrumentSet(instrumentNameString: str, parentRQLClassName: str = ''):
         A python ScriptBuilder object
     """
     c_instrumentNameString = instrumentNameString[0].capitalize() + instrumentNameString[1:]
-    import RiskQuantLib.Build.pathObj as POJ
-    importlib.reload(POJ)
+    if targetProjectPath == '':
+        targetProjectPath = sys.path[0] + os.sep + 'RiskQuantLib'
+    else:
+        targetProjectPath = targetProjectPath + os.sep + 'RiskQuantLib'
+
+    spec = importlib.util.spec_from_file_location('pathObj', targetProjectPath + os.sep + "Build" + os.sep + "pathObj.py")
+    POJ = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(POJ)
+    sys.modules[POJ.__name__] = POJ
+    importlib._bootstrap._exec(spec, POJ)
     RQLpathObj = POJ.pathObj()
 
     psb = pythonScriptBuilder()
@@ -442,7 +555,7 @@ def buildInstrumentSet(instrumentNameString: str, parentRQLClassName: str = ''):
     psb.code.add_line(r'''    #-<End>''')
     return psb
 
-def buildInstrumentList(instrumentNameString: str, parentRQLClassName: str = '',securityType: str = ''):
+def buildInstrumentList(instrumentNameString: str, parentRQLClassName: str = '',securityType: str = '',targetProjectPath = ''):
     """
     buildInstrumentList(instrumentNameString: str, parentRQLClassName: str = '',securityType: str = '')
     is a function to generate code of instrument list class, given instrument name
@@ -463,8 +576,16 @@ def buildInstrumentList(instrumentNameString: str, parentRQLClassName: str = '',
         A python ScriptBuilder object
     """
     c_instrumentNameString = instrumentNameString[0].capitalize() + instrumentNameString[1:]
-    import RiskQuantLib.Build.pathObj as POJ
-    importlib.reload(POJ)
+    if targetProjectPath == '':
+        targetProjectPath = sys.path[0] + os.sep + 'RiskQuantLib'
+    else:
+        targetProjectPath = targetProjectPath + os.sep + 'RiskQuantLib'
+
+    spec = importlib.util.spec_from_file_location('pathObj', targetProjectPath + os.sep + "Build" + os.sep + "pathObj.py")
+    POJ = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(POJ)
+    sys.modules[POJ.__name__] = POJ
+    importlib._bootstrap._exec(spec, POJ)
     RQLpathObj = POJ.pathObj()
 
     psb = pythonScriptBuilder()
@@ -529,7 +650,7 @@ def buildInstrumentList(instrumentNameString: str, parentRQLClassName: str = '',
     psb.endClass()
     return psb
 
-def buildInstrumentListSet(instrumentNameString: str, parentRQLClassName: str = ''):
+def buildInstrumentListSet(instrumentNameString: str, parentRQLClassName: str = '',targetProjectPath = ''):
     """
     buildInstrumentListSet(instrumentNameString: str, parentRQLClassName: str = '')
     is a function to generate code of instrument list set class, given instrument name
@@ -549,8 +670,16 @@ def buildInstrumentListSet(instrumentNameString: str, parentRQLClassName: str = 
 
     """
     c_instrumentNameString = instrumentNameString[0].capitalize() + instrumentNameString[1:]
-    import RiskQuantLib.Build.pathObj as POJ
-    importlib.reload(POJ)
+    if targetProjectPath == '':
+        targetProjectPath = sys.path[0] + os.sep + 'RiskQuantLib'
+    else:
+        targetProjectPath = targetProjectPath + os.sep + 'RiskQuantLib'
+
+    spec = importlib.util.spec_from_file_location('pathObj', targetProjectPath + os.sep + "Build" + os.sep + "pathObj.py")
+    POJ = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(POJ)
+    sys.modules[POJ.__name__] = POJ
+    importlib._bootstrap._exec(spec, POJ)
     RQLpathObj = POJ.pathObj()
 
     psb = pythonScriptBuilder()
@@ -637,15 +766,11 @@ def buildInstrument(instrumentNameString:str, parentRQLClassName:str = '', paren
 
     """
     pathList = buildInstrumentPath(instrumentNameString, parentRQLClassName=parentRQLClassName,targetProjectPath=targetProjectPath)
-    IO = buildInstrumentObj(instrumentNameString, parentRQLClassName, parentQuantLibClassName, libraryName, defaultInstrumentType)
-    IOS = buildInstrumentSet(instrumentNameString, parentRQLClassName)
-    IL = buildInstrumentList(instrumentNameString, parentRQLClassName,defaultInstrumentType)
-    ILS = buildInstrumentListSet(instrumentNameString, parentRQLClassName)
-    if targetProjectPath == '':
-        [commitBuildInstrument(source, path) for path, source in zip(pathList, [IO, IOS, IL, ILS])]
-    else:
-        [commitBuildInstrument(source,targetProjectPath + os.sep +'RiskQuantLib'+os.sep+ path.split('RiskQuantLib')[-1]) for path,source in zip(pathList,[IO,IOS,IL,ILS])]
-
+    IO = buildInstrumentObj(instrumentNameString, parentRQLClassName, parentQuantLibClassName, libraryName, defaultInstrumentType,targetProjectPath)
+    IOS = buildInstrumentSet(instrumentNameString, parentRQLClassName,targetProjectPath)
+    IL = buildInstrumentList(instrumentNameString, parentRQLClassName,defaultInstrumentType,targetProjectPath)
+    ILS = buildInstrumentListSet(instrumentNameString, parentRQLClassName,targetProjectPath)
+    [commitBuildInstrument(source, path) for path, source in zip(pathList, [IO, IOS, IL, ILS])]
     return None
 
 
