@@ -2,7 +2,7 @@
 #coding = utf-8
 import numpy as np
 import copy
-from collections import Iterable
+from collections.abc import Iterable
 import pandas as pd
 from RiskQuantLib.Operation.loc import loc
 from RiskQuantLib.Tool.strTool import changeSecurityListToStr
