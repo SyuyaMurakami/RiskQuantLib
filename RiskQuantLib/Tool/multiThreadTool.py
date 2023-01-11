@@ -2,6 +2,8 @@
 #coding = utf-8
 
 import threading
+#<import>
+#</import>
 
 exitFlag = 0
 

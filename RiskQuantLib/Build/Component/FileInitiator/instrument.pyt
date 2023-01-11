@@ -16,6 +16,7 @@
 #%- for parentQuantLibInstrumentName in parentQuantLibInstrumentNameSeries %#
 {{ macro.importModule(moduleName = 'QuantLib', submoduleName = parentQuantLibInstrumentName) }}
 #%- endfor %#
+{{ macro.tag(tagName = "import", indentNum = 0) }}
 
 {{ macro.classStart(className = macro.instrumentClassName(instrumentName), inheritList = var.parentClassNameList + parentQuantLibInstrumentNameSeries + [macro.instrumentAutoClassName(instrumentName)], nullElement = False) }}
 {{ macro.indent(1) }}"""

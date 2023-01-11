@@ -2,6 +2,8 @@
 #coding = utf-8
 
 import numpy as np
+#<import>
+#</import>
 
 def percentageOfSeries(dataList:list,percentage:float):
     """

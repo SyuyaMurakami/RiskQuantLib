@@ -2,6 +2,8 @@
 #coding = utf-8
 import numpy as np
 from numbers import Integral
+#<import>
+#</import>
 
 class loc():
     """
@@ -9,12 +11,15 @@ class loc():
     that in pandas. Use it by calling stockList.loc[index]. It returns the element in
     that list whose index equals given value.
     """
+    #<init>
     def __init__(self,dataList:list):
         """
         Passing a list to initialize loc object.
         """
         self.all = dataList
+    #</init>
 
+    #<getitem>
     def __getitem__(self, item):
         """
         Return the element whose index equals given value. If item is a Slice object, return a list
@@ -27,6 +32,6 @@ class loc():
                 return [[j for j in self.all if hasattr(j, 'index') and j.index == i][0] for i in item]
             except:
                 return []
-
+    #</getitem>
     #<loc>
     #</loc>

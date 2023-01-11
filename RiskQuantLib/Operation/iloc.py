@@ -2,6 +2,8 @@
 #coding = utf-8
 import numpy as np
 from numbers import Integral
+#<import>
+#</import>
 
 class iloc():
     """
@@ -9,12 +11,16 @@ class iloc():
     that in pandas. Use it by calling stockList.iloc[number]. It returns the number-th element in
     that list.
     """
+
+    #<init>
     def __init__(self,dataList:list):
         """
         Passing a list to initialize iloc object.
         """
         self.all = dataList
+    #</init>
 
+    #<getitem>
     def __getitem__(self, item):
         """
         Return the item-th element. If item is a Slice object, return a list collection of elements.
@@ -31,6 +37,6 @@ class iloc():
                 return self.all[item]
             else:
                 return []
-
+    #</getitem>
     #<iloc>
     #</iloc>

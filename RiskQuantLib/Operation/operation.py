@@ -6,6 +6,8 @@ from collections.abc import Iterable
 import pandas as pd
 from RiskQuantLib.Operation.loc import loc
 from RiskQuantLib.Tool.strTool import changeSecurityListToStr
+#<import>
+#</import>
 
 class operation(object):
     """

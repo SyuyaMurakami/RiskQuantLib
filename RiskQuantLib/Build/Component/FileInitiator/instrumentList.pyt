@@ -14,6 +14,7 @@
 #%- endfor %#
 {{ macro.importModule(moduleName = macro.instrumentClassPath(instrumentName,inheritList),submoduleName = macro.instrumentClassName(instrumentName)) }}
 {{ macro.importModule(moduleName = macro.instrumentListAutoClassPath(instrumentName,inheritList),submoduleName = macro.instrumentListAutoClassName(instrumentName)) }}
+{{ macro.tag(tagName = "import", indentNum = 0) }}
 
 {{ macro.classStart(className = macro.instrumentListClassName(instrumentName), inheritList = var.parentListClassNameList + [macro.instrumentListAutoClassName(instrumentName)], nullElement = False) }}
 {{ macro.indent(1) }}"""

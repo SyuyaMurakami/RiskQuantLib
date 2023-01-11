@@ -4,12 +4,15 @@ import numpy as np
 from scipy.optimize import fsolve
 from scipy.stats import norm
 from RiskQuantLib.Model.model import model
+#<import>
+#</import>
 
 class kmv(model):
     """
     kmv(base) is a class to calculate KMV relative parameters, including Asset Volatility, Asset Value,
     Distance to Default.
     """
+    #<init>
     def __init__(self, riskFreeRateNum:float, tenorNum:float, debtNum:float, equityNum:float, equitySigmaNum:float):
         """
         You must specify risk free rate, tenor, debt value, equity value and equity volatility to
@@ -21,6 +24,7 @@ class kmv(model):
         self.debt = debtNum
         self.equity = equityNum
         self.equitySigma = equitySigmaNum
+    #</init>
 
     def BSfunction(self, i):
         """

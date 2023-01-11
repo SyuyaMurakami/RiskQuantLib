@@ -1,10 +1,11 @@
 #!/usr/bin/python
 #coding = utf-8
 
-
 import os,re
 from win32com import client as win32  # outlook control module
 from win32com.client.gencache import EnsureDispatch as Dispatch  # read mail module
+#<import>
+#</import>
 
 class readMailFromOutlook(object):
     """

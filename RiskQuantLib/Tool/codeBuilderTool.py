@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # coding = utf-8
 
+#<import>
+#</import>
+
 class codeBuilder(object):
     """
     This class is the basic class used to generate source code of any language.

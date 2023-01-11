@@ -2,6 +2,8 @@
 #coding = utf-8
 
 from tkinter import *
+#<import>
+#</import>
 
 LOG_LINE_NUM = 0
 

@@ -186,30 +186,42 @@ RiskQuantLib.Property.{{ capJoin(inheritTree, ".") }}{{ cap(propertyName)+"." if
 {{ importModule(moduleName = instrumentListClassPath(instrumentName, inheritTree), submoduleName = instrumentClassName(instrumentName)+', '+instrumentListClassName(instrumentName)) }}
 #%- endmacro %#
 
+#: This is the template of shortcut of property :#
+#% macro shortcutProperty(propertyName, inheritTree) -%#
+{{ importModule(moduleName = propertyClassPath(propertyName, inheritTree), submoduleName = propertyClassName(propertyName)) }}
+#%- endmacro %#
+
 #: This is the __init__ function template of instrument list class :#
 #% macro instrumentListClassInit(instrumentName, instrumentType = '', indentNum = 1) -%#
+{{ indent(indentNum) }}#<init>
 {{ indent(indentNum) }}def __init__(self):
 {{ indent(indentNum) }}    super({{ instrumentListClassName(instrumentName) }},self).__init__()
 {{ indent(indentNum) }}    self.listType = '{{ instrumentType }}{{ ' ' if instrumentType else '' }}List'
+{{ indent(indentNum) }}#</init>
 #%- endmacro %#
 
 #: This is the addInstrument function template of instrument list class :#
 #% macro instrumentListClassAdd(instrumentName, instrumentType = '', indentNum = 1) -%#
+{{ indent(indentNum) }}#<add>
 {{ indent(indentNum) }}def add{{ cap(instrumentName) }}(self,codeString,nameString,instrumentTypeString = '{{ instrumentType }}'):
 {{ indent(indentNum) }}    tmpList = self.all+[{{ instrumentName }}(codeString,nameString,instrumentTypeString)]
 {{ indent(indentNum) }}    self.setAll(tmpList)
+{{ indent(indentNum) }}#</add>
 #%- endmacro %#
 
 #: This is the addInstrument function template of instrument list class :#
 #% macro instrumentListClassAddSeries(instrumentName, instrumentType = '', indentNum = 1) -%#
+{{ indent(indentNum) }}#<addSeries>
 {{ indent(indentNum) }}def add{{ cap(instrumentName) }}Series(self,{{ instrumentName }}CodeSeries,{{ instrumentName }}NameSeries,instrumentTypeString = '{{ instrumentType }}'):
 {{ indent(indentNum) }}    {{ instrumentName }}Series = [{{ instrumentClassName(instrumentName) }}(i,j,instrumentTypeString) for i,j in zip({{ instrumentName }}CodeSeries,{{ instrumentName }}NameSeries)]
 {{ indent(indentNum) }}    tmpList = self.all + {{ instrumentName }}Series
 {{ indent(indentNum) }}    self.setAll(tmpList)
+{{ indent(indentNum) }}#</addSeries>
 #%- endmacro %#
 
 #: This is the __init__ function template of instrument class :#
 #% macro instrumentClassInit(instrumentName, super = True ,parentInstrumentNameList = [], instrumentType = '', indentNum = 1) -%#
+{{ indent(indentNum) }}#<init>
 {{ indent(indentNum) }}def __init__(self,codeString,nameString,instrumentTypeString = '{{ instrumentType }}'):
 #%- if super %#
 {{ indent(indentNum) }}    super({{ instrumentClassName(instrumentName) }},self).__init__(codeString,nameString,instrumentTypeString)
@@ -218,18 +230,23 @@ RiskQuantLib.Property.{{ capJoin(inheritTree, ".") }}{{ cap(propertyName)+"." if
 {{ indent(indentNum) }}    {{ parentInstrumentName }}.__init__(self,codeString,nameString,instrumentTypeString)
 #%- endfor %#
 #%- endif %#
+{{ indent(indentNum) }}#</init>
 #%- endmacro %#
 
 #: This is function template of instrument class to initialize QuantLib pricing module :#
 #% macro instrumentClassQuantLibInit(QuantLibInstrumentNameList, indentNum = 1) -%#
+{{ indent(indentNum) }}#<initQuantLib>
 {{ indent(indentNum) }}def iniPricingModule(self,*args):
 #%- for QuantLibInstrumentName in QuantLibInstrumentNameList %#
 {{ indent(indentNum) }}    {{ QuantLibInstrumentName }}.__init__(self,*args)
 #%- endfor %#
+{{ indent(indentNum) }}#</initQuantLib>
 #%- endmacro %#
 
 #: This is __init__ function template of property class :#
 #% macro propertyInit(propertyName, indentNum = 1) -%#
+{{ indent(indentNum) }}#<init>
 {{ indent(indentNum) }}def __init__(self, value):
 {{ indent(indentNum) }}    super({{ propertyName }},self).__init__(value)
+{{ indent(indentNum) }}#</init>
 #%- endmacro %#

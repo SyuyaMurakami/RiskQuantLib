@@ -5,6 +5,8 @@ import pandas as pd
 from RiskQuantLib.Tool.wordTool import replaceParagraphContent
 import pptx
 from pptx import Presentation
+#<import>
+#</import>
 
 def replaceTableContent(shape:pptx.shapes.graphfrm.GraphicFrame, dfInput:pd.DataFrame):
     """

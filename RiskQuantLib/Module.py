@@ -1,6 +1,9 @@
 #!/usr/bin/python
 #coding = utf-8
 import QuantLib as ql
+#<import>
+#</import>
+
 from RiskQuantLib.Tool import mathTool
 from RiskQuantLib.Tool import fileTool
 from RiskQuantLib.Tool import plotTool

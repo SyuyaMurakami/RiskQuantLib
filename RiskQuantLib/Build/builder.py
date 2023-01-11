@@ -176,7 +176,7 @@ class builder(object):
         self.propertyTree.addNode('string').inheritFrom('')
         self.propertyTree.addNode('series').inheritFrom('')
         self.propertyTree.addNode('number').inheritFrom('')
-        self.propertyTree.addNode('time').inheritFrom('')
+        self.propertyTree.addNode('day').inheritFrom('')
 
     def initiateProject(self):
         """
@@ -408,7 +408,10 @@ class builder(object):
                                            propertyNameList=list(self.attributeToPropertyDict[idx].values()),
                                            defaultValueList=['pd.Series(dtype=float)' if prop=='series' else 'np.nan' for prop in self.attributeToPropertyDict[idx].values()]) for
                         idx, name in enumerate(self.instrumentNameList)]
-        shortcutAutoImport = [self.render.render('module.pyt',instrumentNameList = self.instrumentNameList, instrumentInheritTreeSeries=self.instrumentInheritTreeSeries)]
+        shortcutAutoImport = [self.render.render('module.pyt',instrumentNameList = self.instrumentNameList,
+                                                 instrumentInheritTreeSeries=self.instrumentInheritTreeSeries,
+                                                 propertyNameList = self.propertyNameList,
+                                                 propertyInheritTreeSeries = self.propertyInheritTreeSeries)]
         sourceCodeToBeInjected = "\n".join([i for i in setAttribute+setAttributeList+shortcutAutoImport if i!=''])
         self.bindContent(sourceCodeToBeInjected, bindType="setAttribute",persist=persist)
 
@@ -441,7 +444,8 @@ class builder(object):
         alreadyBoundTag = self.bindType[bindType] if bindType in self.bindType else set()
         aliveRenderTag = set([(file, tag) for file in injectDict for tag in injectDict[file]])
         deprecatedRenderTag = alreadyBoundTag - aliveRenderTag
-        deprecatedInjectDict = pd.DataFrame([(i[0],i[1],'') for i in deprecatedRenderTag],columns=['file','tag','content']).groupby('file').apply(lambda x:dict(zip(x['tag'],x['content']))).to_dict()
+        deprecatedRenderTagDF = pd.DataFrame([(i[0],i[1],'') for i in deprecatedRenderTag],columns=['file','tag','content'])
+        deprecatedInjectDict = deprecatedRenderTagDF.groupby('file').apply(lambda x:dict(zip(x['tag'],x['content']))).to_dict() if deprecatedRenderTagDF.shape[0]!=0 else {}
         [injectDict[file].update(deprecatedInjectDict[file]) for file in injectDict if file in deprecatedInjectDict]
         [injectDict.update({file:deprecatedInjectDict[file]}) for file in deprecatedInjectDict if file not in injectDict]
         self.bindType[bindType] = set() if persist else aliveRenderTag
