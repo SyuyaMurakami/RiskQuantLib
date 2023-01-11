@@ -27,3 +27,6 @@ class loc():
                 return [[j for j in self.all if hasattr(j, 'index') and j.index == i][0] for i in item]
             except:
                 return []
+
+    #<loc>
+    #</loc>

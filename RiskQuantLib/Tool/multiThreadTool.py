@@ -21,6 +21,9 @@ class functionMultiThread(threading.Thread):
         self.function()
         print("Exiting "+self.name)
 
+    #<functionMultiThread>
+    #</functionMultiThread>
+
 def multiThread(functionList:list):
     """
     This function will run all functions in the given functionList by multiple threads.
@@ -36,7 +39,8 @@ def multiThread(functionList:list):
     [i.join() for i in threadList]
     return 0
 
-
+#<multiThreadTool>
+#</multiThreadTool>
 
 
 

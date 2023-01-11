@@ -3,9 +3,9 @@
 import numpy as np
 from scipy.optimize import fsolve
 from scipy.stats import norm
-from RiskQuantLib.Model.base import base
+from RiskQuantLib.Model.model import model
 
-class kmv(base):
+class kmv(model):
     """
     kmv(base) is a class to calculate KMV relative parameters, including Asset Volatility, Asset Value,
     Distance to Default.
@@ -47,7 +47,8 @@ class kmv(base):
         self.defaultPoint = shortTermDebtNum + mixedRatioNum * longTermDebtNum
         self.defaultDistance = (self.asset - self.defaultPoint)/(self.asset * self.assetSigma)
 
-
+    #<kmv>
+    #</kmv>
 
 
 

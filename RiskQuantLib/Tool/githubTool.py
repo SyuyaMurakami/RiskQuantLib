@@ -29,8 +29,10 @@ def downloadRepo(url:str, targetPath:str, name:str = ''):
     else:
         print("Failed to Install " + name)
 
+#<githubTool>
+#</githubTool>
 
-class Github():
+class Github(object):
     """
     This class is used to do operations of Github with github api.
     """
@@ -117,7 +119,8 @@ class Github():
                     name = list(self.data.keys())[int(answer)]
                     downloadRepo(self.data[name][5], targetPath + os.sep+ name + '.zip', name)
 
-
+    #<Github>
+    #</Github>
 
 
 

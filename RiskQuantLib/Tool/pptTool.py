@@ -6,9 +6,6 @@ from RiskQuantLib.Tool.wordTool import replaceParagraphContent
 import pptx
 from pptx import Presentation
 
-
-
-
 def replaceTableContent(shape:pptx.shapes.graphfrm.GraphicFrame, dfInput:pd.DataFrame):
     """
     This function will replace the content of table into given dataframe. If two tables have different
@@ -224,3 +221,6 @@ def formatPpt(filePath:str,targetPath:str,tableDict:dict={},textDict:dict={},gra
     else:
         [formatSlide(i,tableDict,textDict,graphDict) for i in prs.slides]
     prs.save(targetPath)
+
+#<pptTool>
+#</pptTool>

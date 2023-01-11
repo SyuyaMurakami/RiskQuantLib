@@ -31,3 +31,6 @@ class iloc():
                 return self.all[item]
             else:
                 return []
+
+    #<iloc>
+    #</iloc>

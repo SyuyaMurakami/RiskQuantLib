@@ -142,7 +142,8 @@ def formatTableWithTemplate(targetFilePath:str,tableIndex:int,dfInput:pd.DataFra
                     print(e)
     document.save(targetFilePath)
 
-
+#<wordTool>
+#</wordTool>
 
 
 

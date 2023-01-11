@@ -7,50 +7,54 @@ class codeBuilder(object):
     """
     # Build source code conveniently
 
-    def __init__(self, indent = 0, global_indent_step = 0):
+    def __init__(self, indent = 0, globalIndentStep = 0):
         self.INDENT_STEP = 4
         self.code = []
-        self.indent_level = indent
-        self.ini_indent_level = indent
-        self.global_indent_step = global_indent_step
+        self.indentLevel = indent
+        self.iniIndentLevel = indent
+        self.globalIndentStep = globalIndentStep
+        self.pythonSource = ''
 
     def __str__(self):
         return ''.join(str(c) for c in self.code)
 
-    def get_globals(self, execute = False):
+    def getGlobals(self, execute = False):
         # Execute the code, and return a dict of globals if defined
 
         # A check that caller really finished all the blocks
-        assert self.indent_level == self.ini_indent_level
+        assert self.indentLevel == self.iniIndentLevel
         # Get the Python source as a single string
-        self.python_source = str(self)
+        self.pythonSource = str(self)
         if execute:
             # Execute the source, defining globals, and return them.
-            global_namespace = {}
-            if self.ini_indent_level == 0:
-                exec(self.python_source, global_namespace)
-            return global_namespace
+            globalNameSpace = {}
+            if self.iniIndentLevel == 0:
+                exec(self.pythonSource, globalNameSpace)
+            return globalNameSpace
 
-    def add_line(self, line:str):
+    def addLine(self, line:str):
         # Add a line of source to the code.
         # Indentation and new line will be added for you, don't provide them.
-        self.code.extend([" " * self.indent_level*(self.global_indent_step+1), line, "\n"])
+        self.code.extend([" " * self.indentLevel*(self.globalIndentStep+1), line, "\n"])
 
     def indent(self):
         # Increase the current indent for following lines
-        self.indent_level += self.INDENT_STEP
+        self.indentLevel += self.INDENT_STEP
 
     def dedent(self):
         # Decrease the current indent for following lines
-        self.indent_level -= self.INDENT_STEP
+        self.indentLevel -= self.INDENT_STEP
 
-    def add_section(self):
-        # Add a secton, a sub-CodeBuilder
-        section = codeBuilder(self.indent_level)
+    def addSection(self):
+        # Add a section, a sub-CodeBuilder
+        section = codeBuilder(self.indentLevel)
         self.code.append(section)
         return section
 
-class pythonScriptBuilder():
+    #<codeBuilder>
+    #</codeBuilder>
+
+class pythonScriptBuilder(object):
     """
     This class is the python source code builder, used to generate python
     source code automatically.
@@ -108,18 +112,18 @@ class pythonScriptBuilder():
         self.code = codeBuilder(indent=0)
 
         if parentClassName == '':
-            self.code.add_line('''class '''+self.classNameString+'''():''')
+            self.code.addLine('''class '''+self.classNameString+'''():''')
         elif type(parentClassName)==type(''):
-            self.code.add_line('''class ''' + self.classNameString + '''('''+parentClassName+'''):''')
+            self.code.addLine('''class ''' + self.classNameString + '''('''+parentClassName+'''):''')
         else:
             parentClassNameList = "".join([i+',' for i in parentClassName]).strip(',')
-            self.code.add_line('''class ''' + self.classNameString + '''(''' + parentClassNameList + '''):''')
+            self.code.addLine('''class ''' + self.classNameString + '''(''' + parentClassNameList + '''):''')
         self.code.indent()
 
-        vars_code = self.code.add_section()
-        self.code.add_line("def __nullFunction__(self):")
+        varsCode = self.code.addSection()
+        self.code.addLine("def __nullFunction__(self):")
         self.code.indent()
-        self.code.add_line("pass")
+        self.code.addLine("pass")
         self.code.dedent()
         return self.code
 
@@ -130,12 +134,12 @@ class pythonScriptBuilder():
         self.functionName = functionName
 
         if variableName == '':
-            self.code.add_line("def " + self.functionName + "(self):")
+            self.code.addLine("def " + self.functionName + "(self):")
         elif type(variableName)==type(''):
-            self.code.add_line("def " + self.functionName + "(self, "+variableName+"):")
+            self.code.addLine("def " + self.functionName + "(self, "+variableName+"):")
         else:
             variableNameList = "".join([i+',' for i in variableName]).strip(',')
-            self.code.add_line("def " + self.functionName + "(self, "+variableNameList+"):")
+            self.code.addLine("def " + self.functionName + "(self, "+variableNameList+"):")
         self.code.indent()
 
     def endFunction(self):
@@ -157,9 +161,14 @@ class pythonScriptBuilder():
         """
         Output the source code to a file, use mode 'w+'.
         """
-        self.code.get_globals()
-        content = self.title+self.importLibrary+self.code.python_source
+        self.code.getGlobals()
+        content = self.title+self.importLibrary+self.code.pythonSource
         with open(filePathString, 'w+',encoding="utf-8") as f:
             f.truncate()  # clear all contents
             f.write(content.strip(' ').strip('\t\n'))
 
+    #<pythonScriptBuilder>
+    #</pythonScriptBuilder>
+
+#<codeBuilderTool>
+#</codeBuilderTool>
