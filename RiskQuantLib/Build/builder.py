@@ -176,7 +176,6 @@ class builder(object):
         self.propertyTree.addNode('string').inheritFrom('')
         self.propertyTree.addNode('series').inheritFrom('')
         self.propertyTree.addNode('number').inheritFrom('')
-        self.propertyTree.addNode('day').inheritFrom('')
 
     def initiateProject(self):
         """
