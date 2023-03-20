@@ -177,7 +177,7 @@ class router(object):
         injectInfoList = [pd.DataFrame([(j[0],j[1],contentId) for j in pathTag]) for contentId,pathTag in enumerate(targetPathAndTargetTag)]
         injectInfo = pd.concat(injectInfoList).rename(columns = {0:'path',1:'tag',2:'contentId'}) if len(injectInfoList)!=0 else pd.DataFrame(columns = ['path','tag','contentId'])
         injectInfo = injectInfo[injectInfo['path']!='']
-        injectContentAfterMerge = injectInfo.groupby(by=['path','tag']).apply(lambda x:"".join([content[id] for id in x['contentId']]))
+        injectContentAfterMerge = injectInfo.groupby(by=['path','tag'], group_keys=False).apply(lambda x:"".join([content[id] for id in x['contentId']]))
         if injectContentAfterMerge.empty:
             return {}
         else:

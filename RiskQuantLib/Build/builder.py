@@ -55,6 +55,13 @@ class builder(object):
                 f.write(content)
 
     @staticmethod
+    def formatWarning(message:str, category, filename, lineno, file=None, line=None):
+        """
+        Make the warning message more readable and neglect the redundant line.
+        """
+        return '%s:%s: %s: %s\n' % (filename, lineno, category.__name__, message)
+
+    @staticmethod
     def loadInfo(savePath:str = ''):
         """
         Load building cache from a RiskQuantLib project or a .pkl file. If there is not building cache
@@ -78,6 +85,7 @@ class builder(object):
         if os.path.exists(filePath):
             from RiskQuantLib.Tool.fileTool import loadVariable
             cachedBuilder = loadVariable(filePath)
+            cachedBuilder.checkPath() if hasattr(cachedBuilder, 'checkPath') else None
             cachedBuilder.checkRender() if hasattr(cachedBuilder,'checkRender') else None
             return cachedBuilder
         else:
@@ -211,6 +219,33 @@ class builder(object):
         self.buildFile()
         self.buildContent()
         self.dumpInfo()
+
+    def checkPath(self):
+        """
+        In old versions of RiskQuantLib, if the project and built, and then, the project dir name is changed,
+        the builder can not recognize the new project path and will raise an error when you build it again. This function
+        is used to check whether the path has been changed. If changed, it will replace the old path into
+        the default project path.
+
+        This is the default behavior of RiskQuantLib, if your project does not use many guardians, this default
+        setting will be helpful and make it convenient to change project location or run your old project in
+        a new computer.
+
+        However, it may cause problem when you use guardian projects. The best way is always un-build a project
+        when you want to change its location or rename it, and build it again when rename action is finished. It is
+        safer.
+        """
+        import warnings
+        warnings.formatwarning = builder.formatWarning
+        pathName = ['Project_Path', 'Target_Path', 'Build_From_Path', 'Template_Path']
+        pathAttr = ['projectPath', 'targetPath', 'buildFromPath', 'templatePath']
+        pathToBeCheck = [self.projectPath, self.targetPath, self.buildFromPath, self.templatePath]
+        pathAlternative = [os.path.abspath(__file__).split(os.sep+'RiskQuantLib' + os.sep + 'Build')[0],
+                           os.path.abspath(__file__).split(os.sep+'RiskQuantLib' + os.sep + 'Build')[0] + os.sep + r'RiskQuantLib',
+                           os.path.abspath(__file__).split(os.sep + os.path.basename(__file__))[0],
+                           os.path.abspath(__file__).split(os.sep + os.path.basename(__file__))[0] + os.sep + "Component"]
+        [None if os.path.exists(ptc) else (warnings.warn("\n"+pn+" does NOT exist, it is changed from " + ptc + " into : "+pa), setattr(self, pan, pa)) for pn, ptc, pa, pan in zip(pathName, pathToBeCheck, pathAlternative, pathAttr)]
+        self.bindType = {bindType:{pair if os.path.exists(pair[0]) else (self.targetPath+os.sep+pair[0].split(os.sep+'RiskQuantLib'+os.sep)[-1],pair[1]) for pair in self.bindType[bindType]} for bindType in self.bindType}
 
     def updateRender(self, templateSearchPath:str = ''):
         """
