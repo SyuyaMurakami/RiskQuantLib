@@ -690,6 +690,51 @@ class operation(object):
         else:
             return resultList
 
+    def head(self, numberOfElement:int):
+        """
+        Get the first numberOfElement elements of the list.
+        """
+        return self[:numberOfElement]
+
+    def tail(self, numberOfElement:int):
+        """
+        Get the last numberOfElement elements of the list.
+        """
+        return self[(-1 * numberOfElement):]
+
+    def haveAttr(self, attrName):
+        """
+        Get the elements which have certain attributes, if passed a list, the elements which have all
+        attributes in the list will be returned, otherwise an empty list will be returned.
+        """
+        if type(attrName)==str:
+            return self.filter(lambda x:hasattr(x, attrName))
+        elif type(attrName)==list:
+            return self.filter(lambda x:sum([hasattr(x, i) for i in attrName])==len(attrName))
+        else:
+            return self.filter(lambda x:False)
+
+    def isIn(self, anotherList):
+        """
+        Find the elements which are also in the given list. Use these elements to generate a
+        new RiskQuantLib list and return it. anotherList can be any iterable object.
+        """
+        return self.filter(lambda x: x in set(anotherList))
+
+    def isNotIn(self, anotherList):
+        """
+        Find the elements which are not in the given list. Use these elements to generate a
+        new RiskQuantLib list and return it. anotherList can be any iterable object.
+        """
+        return self.filter(lambda x: x not in set(anotherList))
+
+    def union(self, anotherList):
+        """
+        Find the elements which are in the given list or in the current list. Use these elements
+        to generate a new RiskQuantLib list and return it. anotherList can be any iterable object.
+        """
+        return self.isNotIn(anotherList) + anotherList
+
     def join(self,anotherList,targetAttrName : str,filterFunction = lambda x,y:True):
         """
         For each element, find all elements that meet requirements from another RiskQuantLib
