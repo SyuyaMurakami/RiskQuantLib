@@ -253,7 +253,7 @@ def packProject(targetPath:str = '', targetName:str = ''):
         targetPath = args.target
         targetName = args.name if args.name else ''
 
-    import os, shutil
+    import os, shutil, logging
     if targetName=='':
         name = targetPath.split(os.sep)[-1]
     else:
@@ -263,7 +263,13 @@ def packProject(targetPath:str = '', targetName:str = ''):
         else:
             name = nameList[0]
     parentProjectPath = os.path.dirname(targetPath)
-    shutil.make_archive(parentProjectPath+os.sep+name,"zip",targetPath)
+    logger = logging.getLogger("nameOfTheLogger")
+    ConsoleOutputHandler = logging.StreamHandler()
+    formatter = logging.Formatter('%(asctime)s - %(message)s')
+    ConsoleOutputHandler.setFormatter(formatter)
+    logger.addHandler(ConsoleOutputHandler)
+    logger.setLevel(logging.INFO)
+    shutil.make_archive(parentProjectPath + os.sep + name, "zip", targetPath, logger=logger)
     print('RiskQuantLib project packaged!')
 
 def checkAndCreateTemplatePath():
