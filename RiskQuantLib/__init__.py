@@ -405,6 +405,14 @@ def unpackProject(templateName:str = '', targetPath:str = ''):
         templateName = args.template
         targetPath = args.target
 
+    # use index number to locate template
+    if str.isdigit(templateName):
+        import os
+        sourcePath = checkAndCreateTemplatePath()
+        projectNameDict = {idx:i.replace('.zip', '') for idx, i in enumerate(os.listdir(sourcePath))}
+        templateIndex = int(templateName)
+        templateName = projectNameDict[templateIndex] if templateIndex in projectNameDict else templateName
+
     import sys,os,shutil
     RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
     sourcePath = os.path.abspath(RiskQuantLibDictionary)+os.sep+r'RQLTemplate'
@@ -427,7 +435,8 @@ def listProjectTemplate():
     sourcePath = checkAndCreateTemplatePath()
     projectNameList = [i.replace('.zip','') for i in os.listdir(sourcePath)]
     hints = "Show all RiskQuantLib template projects:"
-    print(hints,'\n',"".join(['-' for i in range(len(hints))]))
+    print(hints)
+    print("".join(['-' for i in range(len(hints))]))
     [print(index,"->",name) for index,name in enumerate(projectNameList)]
 
 def delProjectTemplate(targetName:str = ''):

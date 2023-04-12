@@ -129,6 +129,22 @@ class oracleTool(object):
     #<oracleTool>
     #</oracleTool>
 
+class sqlServerTool(object):
+    """
+    This is the API to connect with sql server database.
+    """
+    def __init__(self,databaseNameString:str,hostAddress:str,userName:str,passWord:str):
+        import pymssql
+        self.engine = pymssql.connect(hostAddress,userName,passWord,databaseNameString,charset='cp936')
+        self.cursor = self.engine.cursor()
+
+    def readSql(self,sql:str):
+        data = pd.read_sql(sql,con=self.engine)
+        return data
+
+    #<sqlServerTool>
+    #</sqlServerTool>
+
 class neo4jTool(object):
     """
     This is the API to connect with neo4j database.
