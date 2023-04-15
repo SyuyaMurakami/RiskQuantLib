@@ -27,11 +27,12 @@ def initiateBuildFile():
     PYB.code.addLine(r'parser.add_argument("-t", "--targetPath", type=str, help="the RiskQuantLib project you want to build")')
     PYB.code.addLine(r'parser.add_argument("-r", "--renderFromPath", type=str, help="the dictionary of source code where the template code exists")')
     PYB.code.addLine(r'parser.add_argument("-c", "--channel", type=str, help="if given a channel name, render action in this channel will not delete the result of render in other channel unless it is overwritten by current render")')
+    PYB.code.addLine(r'parser.add_argument("-d", "--debug", help="use debug mode, break point in Src will start to effect", action="store_true")')
     PYB.code.addLine(r'args = parser.parse_args()')
     PYB.code.addLine(r'targetPath = args.targetPath if args.targetPath else path')
     PYB.code.addLine(r'renderFromPath = args.renderFromPath if args.renderFromPath else targetPath+os.sep+"Src"')
     PYB.code.addLine(r'bindType = args.channel if args.channel else "renderedSourceCode"')
-    PYB.code.addLine(r'autoBuildProject(targetPath,renderFromPath,bindType) if args.auto else buildProject(targetPath,renderFromPath,bindType)')
+    PYB.code.addLine(r'autoBuildProject(targetPath,renderFromPath,bindType,args.debug) if args.auto else buildProject(targetPath,renderFromPath,bindType,args.debug)')
     return PYB
 
 def initiateMainFile():
@@ -125,7 +126,7 @@ def parseBuildPath(targetPath: str, checkExist:bool = False):
     return rqlPath, instrumentExcelPath, attributeExcelPath, buildCachePath
 
 def buildProjectFromExcel(targetPath: str, buildCachePath: str, instrumentExcelPath: str, attributeExcelPath: str,
-                          renderFromPath: str, bindType: str = 'renderedSourceCode'):
+                          renderFromPath: str, bindType: str = 'renderedSourceCode', debug: bool = False):
     """
     buildProjectFromExcel() is a function to build project according to excel declaration.
 
@@ -147,6 +148,13 @@ def buildProjectFromExcel(targetPath: str, buildCachePath: str, instrumentExcelP
         the content of tag is overwritten by code in channel B. This is used when you have several builders and
         you want them to build into the same project. In this case, you should give a bindType for each render action
         to make sure they do not conflict with each other.
+    debug : bool
+        If false, the break point in Src will not be effective, only break point within instrument class will effect.
+        If true, the class method defined in Src directory will be dynamically bound to instrument node class.
+        Then the program will take .py file under .Src directory as a module and import it, bind the class method into
+        specified class. This mode is useful when your code is still under development. You will not have to change between
+        ./Src/somecode.py and target instrument class .py file to edit any code error. The break point will stop right
+        under ./Src/somecode.py.
 
     Returns
     -------
@@ -160,7 +168,7 @@ def buildProjectFromExcel(targetPath: str, buildCachePath: str, instrumentExcelP
     else:
         buildObj = excelBuilder(targetProjectPath=targetPath)
     buildObj.buildProject(instrumentExcelPath=instrumentExcelPath, attributeExcelPath=attributeExcelPath)
-    buildObj.renderProject(renderFromPath,bindType,persist=False)
+    buildObj.renderProject(renderFromPath,bindType,persist=False, debug=debug)
     print("Build Project Finished")
 
 def newProject(targetPath:str = ''):
@@ -595,7 +603,7 @@ def sendProjectTemplate(targetPath:str = ''):
         send.run()
 
 
-def buildProject(targetPath:str = '', renderFromPath:str = '', channel:str = ''):
+def buildProject(targetPath:str = '', renderFromPath:str = '', channel:str = '', debug:bool = False):
     """
     buildProject() is a function to build RiskQuantLib project.
 
@@ -618,6 +626,13 @@ def buildProject(targetPath:str = '', renderFromPath:str = '', channel:str = '')
     channel : str
         render action in this channel will not delete the result of render in other channel
         unless it is overwritten by current render.
+    debug : bool
+        If false, the break point in Src will not be effective, only break point within instrument class will effect.
+        If true, the class method defined in Src directory will be dynamically bound to instrument node class.
+        Then the program will take .py file under .Src directory as a module and import it, bind the class method into
+        specified class. This mode is useful when your code is still under development. You will not have to change between
+        ./Src/somecode.py and target instrument class .py file to edit any code error. The break point will stop right
+        under ./Src/somecode.py.
 
     Returns
     -------
@@ -629,18 +644,20 @@ def buildProject(targetPath:str = '', renderFromPath:str = '', channel:str = '')
         parser.add_argument("targetPath", type=str, help="the RiskQuantLib project you want to build")
         parser.add_argument("-r","--renderFromPath", type=str, help="the dictionary of source code where the template code exists")
         parser.add_argument("-c", "--channel", type=str, help="if given a channel name, render action in this channel will not delete the result of render in other channel unless it is overwritten by current render")
+        parser.add_argument("-d", "--debug", help="use debug mode, break point in Src will start to effect", action="store_true")
         args = parser.parse_args()
         targetPath = args.targetPath
         renderFromPath = args.renderFromPath
         channel = args.channel
+        debug = args.debug
 
     import os
     renderFromPath = renderFromPath if renderFromPath else (targetPath + os.sep + "Src")
     bindType = channel if channel else 'renderedSourceCode'
     rqlPath,instrumentExcelPath,attributeExcelPath,buildCachePath = parseBuildPath(targetPath, checkExist=True)
-    buildProjectFromExcel(targetPath, buildCachePath,instrumentExcelPath,attributeExcelPath, renderFromPath, bindType)
+    buildProjectFromExcel(targetPath, buildCachePath,instrumentExcelPath,attributeExcelPath, renderFromPath, bindType, debug)
 
-def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str = ''):
+def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str = '', debug:bool = False):
     """
     autoBuildProject() is a function to build RiskQuantLib project. This function keeps
     running until catch a KeyboardInterrupt Exception.
@@ -661,6 +678,13 @@ def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str =
     channel : str
         render action in this channel will not delete the result of render in other channel
         unless it is overwritten by current render.
+    debug : bool
+        If false, the break point in Src will not be effective, only break point within instrument class will effect.
+        If true, the class method defined in Src directory will be dynamically bound to instrument node class.
+        Then the program will take .py file under .Src directory as a module and import it, bind the class method into
+        specified class. This mode is useful when your code is still under development. You will not have to change between
+        ./Src/somecode.py and target instrument class .py file to edit any code error. The break point will stop right
+        under ./Src/somecode.py.
 
     Returns
     -------
@@ -671,10 +695,12 @@ def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str =
         parser.add_argument("targetPath", type=str, help="the RiskQuantLib project you want to build automatically")
         parser.add_argument("-r", "--renderFromPath", type=str, help="the dictionary of source code where the template code exists")
         parser.add_argument("-c", "--channel", type=str, help="if given a channel name, render action in this channel will not delete the result of render in other channel unless it is overwritten by current render")
+        parser.add_argument("-d", "--debug", help="use debug mode, break point in Src will start to effect", action="store_true")
         args = parser.parse_args()
         targetPath = args.targetPath
         renderFromPath = args.renderFromPath
         channel = args.channel
+        debug = args.debug
 
     import os
     renderFromPath = renderFromPath if renderFromPath else (targetPath + os.sep + "Src")
@@ -683,7 +709,7 @@ def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str =
 
     # The call back function must be a single parameter function
     def build(projectPath=targetPath):
-        buildProjectFromExcel(targetPath,buildCachePath,instrumentExcelPath,attributeExcelPath, renderFromPath, bindType)
+        buildProjectFromExcel(targetPath,buildCachePath,instrumentExcelPath,attributeExcelPath, renderFromPath, bindType, debug)
 
     from RiskQuantLib.Tool.fileTool import systemWatcher
     watchObj = systemWatcher([instrumentExcelPath, attributeExcelPath, renderFromPath], call_back_function_on_any_change=build)

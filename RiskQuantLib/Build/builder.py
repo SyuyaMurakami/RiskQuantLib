@@ -486,7 +486,7 @@ class builder(object):
 
         [router.persistToFile(file, **(injectDict[file])) if persist else router.injectToFile(file, **(injectDict[file])) for file in injectDict]
 
-    def renderProject(self, sourceCodeDirPath: str = '', bindType: str = 'renderedSourceCode', persist: bool = False, **kwargs):
+    def renderProject(self, sourceCodeDirPath: str = '', bindType: str = 'renderedSourceCode', persist: bool = False, debug: bool = False, **kwargs):
         """
         Render and inject source code into target project.
 
@@ -504,20 +504,29 @@ class builder(object):
         persist : bool
             If true, the current source code will be saved as permanent source code. It will not
             be influenced by building action any more. This action can not be cancelled.
+        debug : bool
+            If false, the break point in Src will not be effective, only break point within instrument class will effect.
+            If true, the class method defined in Src directory will be dynamically bound to instrument node class.
+            Then the program will take .py file under .Src directory as a module and import it, bind the class method into
+            specified class. This mode is useful when your code is still under development. You will not have to change between
+            ./Src/somecode.py and target instrument class .py file to edit any code error. The break point will stop right
+            under ./Src/somecode.py.
 
         Returns
         -------
         None
         """
+        self.checkRender()
         sourceCodeDirPath = self.projectPath+os.sep+"Src" if sourceCodeDirPath == '' else sourceCodeDirPath
         if os.path.isdir(sourceCodeDirPath):
             from RiskQuantLib.Build.render import render
             from RiskQuantLib.Build.router import router
+            from RiskQuantLib.Build.debugger import debugger
             sourceCodeRender = render(sourceCodeDirPath)
             content = []
             for root, dirs, files in os.walk(sourceCodeDirPath):
                 contentAndType = [(router.readContent(root+os.sep+file), file, os.path.splitext(file)[-1]) for file in files]
-                contentRendered = [sourceCodeRender.render(file,**kwargs) if ext == '.pyt' else content for content, file, ext in contentAndType]
+                contentRendered = [sourceCodeRender.render(file,**kwargs) if ext == '.pyt' else self.render.render('sourceCodeDebugger.pyt',srcPath=root+os.sep+file, **(debugger.splitSrcByChunkAndFindThoseCanBeDebugged(content))) if debug else content for content, file, ext in contentAndType]
                 contentMerged = "#-><FileStart>\n"+"\n#-><FileEnd>\n#-><FileStart>\n".join(contentRendered)+"\n#-><FileEnd>"
                 content.append(contentMerged)
             self.bindContent("\n".join(content), bindType=bindType, persist=persist)
