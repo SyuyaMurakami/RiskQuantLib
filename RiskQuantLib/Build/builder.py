@@ -525,7 +525,7 @@ class builder(object):
             sourceCodeRender = render(sourceCodeDirPath)
             content = []
             for root, dirs, files in os.walk(sourceCodeDirPath):
-                contentAndType = [(router.readContent(root+os.sep+file), file, os.path.splitext(file)[-1]) for file in files]
+                contentAndType = [(router.readContent(root+os.sep+file), file, os.path.splitext(file)[-1]) for file in files if os.path.splitext(file)[-1] in {'.pyt','.py'}]
                 contentRendered = [sourceCodeRender.render(file,**kwargs) if ext == '.pyt' else self.render.render('sourceCodeDebugger.pyt',srcPath=root+os.sep+file, **(debugger.splitSrcByChunkAndFindThoseCanBeDebugged(content))) if debug else content for content, file, ext in contentAndType]
                 contentMerged = "#-><FileStart>\n"+"\n#-><FileEnd>\n#-><FileStart>\n".join(contentRendered)+"\n#-><FileEnd>"
                 content.append(contentMerged)
