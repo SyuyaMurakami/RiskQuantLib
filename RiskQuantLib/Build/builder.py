@@ -31,7 +31,7 @@ class builder(object):
     @staticmethod
     def checkAndMakeDir(dir:str):
         """
-        Make dictionary recursively if it does not exist.
+        Make directory recursively if it does not exist.
         """
         if not os.path.exists(dir):
             os.makedirs(dir)
@@ -39,7 +39,7 @@ class builder(object):
     @staticmethod
     def checkAndMakeDirAndInitiate(dir:str):
         """
-        Make dictionary recursively if it does not exist, then add an __init__.py file in it.
+        Make directory recursively if it does not exist, then add an __init__.py file in it.
         """
         builder.checkAndMakeDir(dir)
         builder.checkAndMakeFile(dir+os.sep+'__init__.py','')
@@ -99,12 +99,12 @@ class builder(object):
         Parameters
         ----------
         buildFromProjectPath : str
-            The path of builder class, default as Build dictionary in current project.
+            The path of builder class, default as Build directory in current project.
         targetProjectPath : str
             The path of target RiskQuantLib project which will be changed according to build information,
             default as current project.
         templateSearchPath : str
-            The path of dictionary where .pyt file for building exists, default as Build/Component in
+            The path of directory where .pyt file for building exists, default as Build/Component in
             current project. If buildFromProjectPath is specified, the default will be
             buildFromProjectPath/Build/Component.
 
@@ -205,7 +205,7 @@ class builder(object):
     def buildProject(self):
         """
         Trigger of building. Call this function will parse instrument inherit tree into validated
-        building information, create dictionary that is needed but does not exist yet, create file that
+        building information, create directory that is needed but does not exist yet, create file that
         is needed but does not exist yet. Generate set attribute function and write them into related
         instrument. And finally, write these change into building cache .pkl file.
 
@@ -255,7 +255,7 @@ class builder(object):
         Parameters
         ----------
         templateSearchPath : str
-            The path of dictionary where .pyt file for building exists, default as Build/Component in
+            The path of directory where .pyt file for building exists, default as Build/Component in
             current project. If buildFromProjectPath is specified, the default will be
             buildFromProjectPath/Build/Component.
 
@@ -275,7 +275,7 @@ class builder(object):
         Parameters
         ----------
         templateSearchPath : str
-            The path of dictionary where .pyt file for building exists, default as Build/Component in
+            The path of directory where .pyt file for building exists, default as Build/Component in
             current project. If buildFromProjectPath is specified, the default will be
             buildFromProjectPath/Build/Component.
 
@@ -331,7 +331,7 @@ class builder(object):
 
     def buildDir(self):
         """
-        Iterate through all instrument and make dictionary that does not exist yet, then add __init__.py into it.
+        Iterate through all instrument and make directory that does not exist yet, then add __init__.py into it.
 
         Returns
         -------
@@ -493,7 +493,7 @@ class builder(object):
         Parameters
         ----------
         sourceCodeDirPath : str
-            The path of dictionary where source code exist. Any sub file in this folder or sub-folder
+            The path of directory where source code exist. Any sub file in this folder or sub-folder
             will be rendered and parsed.
         bindType : str
             The channel of binding action. Source code are rendered and injected into project by different channels,
@@ -552,7 +552,7 @@ class builder(object):
         Parameters
         ----------
         sourceCodeDirPath : str
-            The path of dictionary where source code exist. Any sub file in this folder or sub-folder
+            The path of directory where source code exist. Any sub file in this folder or sub-folder
             will be rendered and parsed and injected to target project.
         bindType : str
             The channel of binding action. Source code are rendered and injected into project by different channels,

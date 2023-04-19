@@ -25,7 +25,7 @@ def initiateBuildFile():
     PYB.code.addLine(r'parser = argparse.ArgumentParser()')
     PYB.code.addLine(r'parser.add_argument("-a","--auto", help="use auto build model to build project dynamically", action="store_true")')
     PYB.code.addLine(r'parser.add_argument("-t", "--targetPath", type=str, help="the RiskQuantLib project you want to build")')
-    PYB.code.addLine(r'parser.add_argument("-r", "--renderFromPath", type=str, help="the dictionary of source code where the template code exists")')
+    PYB.code.addLine(r'parser.add_argument("-r", "--renderFromPath", type=str, help="the directory of source code where the template code exists")')
     PYB.code.addLine(r'parser.add_argument("-c", "--channel", type=str, help="if given a channel name, render action in this channel will not delete the result of render in other channel unless it is overwritten by current render")')
     PYB.code.addLine(r'parser.add_argument("-d", "--debug", help="use debug mode, break point in Src will start to effect", action="store_true")')
     PYB.code.addLine(r'args = parser.parse_args()')
@@ -98,7 +98,7 @@ def parseBuildPath(targetPath: str, checkExist:bool = False):
     Parameters
     ----------
     targetPath : str
-        The path of target RiskQuantLib project dictionary.
+        The path of target RiskQuantLib project directory.
     checkExist : bool
         If true, this function will check the existence of related path of
         target project. It will raise exception iin case of absence.
@@ -107,7 +107,7 @@ def parseBuildPath(targetPath: str, checkExist:bool = False):
     Returns
     -------
     rqlPath : str
-        the path of RiskQuantLib dictionary
+        the path of RiskQuantLib directory
     instrumentExcelPath : str
         the path of instrument declaration file
     attributeExcelPath : str
@@ -122,7 +122,7 @@ def parseBuildPath(targetPath: str, checkExist:bool = False):
     attributeExcelPath = targetPath + os.sep + "Build_Attr.xlsx"
     buildCachePath = rqlPath + os.sep + "Build" + os.sep + "buildInfo.pkl"
     if checkExist and (not os.path.isdir(rqlPath) or not os.path.exists(instrumentExcelPath) or not os.path.exists(attributeExcelPath)):
-        raise Exception("The target dictionary should be a RiskQuantLib project, with Build_Instrument.xlsx and Build_Attr.xlsx in it!")
+        raise Exception("The target directory should be a RiskQuantLib project, with Build_Instrument.xlsx and Build_Attr.xlsx in it!")
     return rqlPath, instrumentExcelPath, attributeExcelPath, buildCachePath
 
 def buildProjectFromExcel(targetPath: str, buildCachePath: str, instrumentExcelPath: str, attributeExcelPath: str,
@@ -133,7 +133,7 @@ def buildProjectFromExcel(targetPath: str, buildCachePath: str, instrumentExcelP
     Parameters
     ----------
     targetPath : str
-        The path of target RiskQuantLib project dictionary.
+        The path of target RiskQuantLib project directory.
     buildCachePath : str
         The path of building cache.
     instrumentExcelPath : str
@@ -141,7 +141,7 @@ def buildProjectFromExcel(targetPath: str, buildCachePath: str, instrumentExcelP
     attributeExcelPath : str
         The path of Build_Attr.xlsx
     renderFromPath : str
-        The path of source code dictionary
+        The path of source code directory
     bindType : str
         The channel of binding action. Source code are rendered and injected into project by different channels,
         The source code injected by channel A will be not influenced by source code injected by channel B, unless
@@ -191,14 +191,14 @@ def newProject(targetPath:str = ''):
     """
     if targetPath == '':
         parser = argparse.ArgumentParser()
-        parser.add_argument("target", type=str, help="the target dictionary where you want to create a RiskQuantLib project")
+        parser.add_argument("target", type=str, help="the target directory where you want to create a RiskQuantLib project")
         args = parser.parse_args()
         targetPath = args.target
 
     import os,shutil
 
-    RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
-    sourcePath = os.path.abspath(RiskQuantLibDictionary)+os.sep+r'RiskQuantLib'
+    RiskQuantLibDirectory = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
+    sourcePath = os.path.abspath(RiskQuantLibDirectory)+os.sep+r'RiskQuantLib'
     rqlPath, instrumentExcelPath, attributeExcelPath, buildCachePath = parseBuildPath(targetPath)
 
     if not os.path.exists(rqlPath):
@@ -226,7 +226,7 @@ def newProject(targetPath:str = ''):
     PYB = initiateMainFile()
     PYB.writeToFile(targetPath+os.sep+'main.py')
 
-    # create python source file dictionary
+    # create python source file directory
     renderFromPath = targetPath+os.sep+'Src'
     os.makedirs(renderFromPath) if not os.path.exists(renderFromPath) else None
 
@@ -240,7 +240,7 @@ def packProject(targetPath:str = '', targetName:str = ''):
     Use terminal command 'pkgRQL' to use this function.
     The terminal command 'pkgRQL' accept a parameter 'targetPathString',
     which is the RiskQuantLib project path that you want to package.
-    It doesn't need to have a dictionary named 'RiskQuantLib' to be packaged.
+    It doesn't need to have a directory named 'RiskQuantLib' to be packaged.
 
     Parameters
     ----------
@@ -287,11 +287,11 @@ def checkAndCreateTemplatePath():
     Returns
     -------
     sourcePath : str
-        The path of RiskQuantLib template dictionary.
+        The path of RiskQuantLib template directory.
     """
     import os
-    RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
-    sourcePath = os.path.abspath(RiskQuantLibDictionary) + os.sep + r'RQLTemplate'
+    RiskQuantLibDirectory = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
+    sourcePath = os.path.abspath(RiskQuantLibDirectory) + os.sep + r'RQLTemplate'
     if os.path.exists(sourcePath):
         pass
     else:
@@ -351,7 +351,7 @@ def saveProject(targetPath:str = '', targetName:str = ''):
     which is the RiskQuantLib project path that you want to save,
     and an optional parameter 'projectName',
     which is the name you want to give to this project.
-    After calling this function, a '.zip' file will be created in RiskQuantLib project dictionary,
+    After calling this function, a '.zip' file will be created in RiskQuantLib project directory,
     and this project will be stored as a template.
 
     Parameters
@@ -422,8 +422,8 @@ def unpackProject(templateName:str = '', targetPath:str = ''):
         templateName = projectNameDict[templateIndex] if templateIndex in projectNameDict else templateName
 
     import sys,os,shutil
-    RiskQuantLibDictionary = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
-    sourcePath = os.path.abspath(RiskQuantLibDictionary)+os.sep+r'RQLTemplate'
+    RiskQuantLibDirectory = os.path.abspath(__file__).split('RiskQuantLib'+os.sep+'__init__')[0]
+    sourcePath = os.path.abspath(RiskQuantLibDirectory)+os.sep+r'RQLTemplate'
     shutil.unpack_archive(sourcePath+os.sep+templateName+'.zip',targetPath,"zip")
     if os.path.exists(targetPath+os.sep+templateName+'.zip'):
         os.remove(targetPath+os.sep+templateName+'.zip')
@@ -529,12 +529,12 @@ def addProjectTemplateFromGithub(targetGithub:str = ''):
 
 def receiveProjectTemplate(targetPath:str = ''):
     """
-    receiveProjectTemplate() is a function to receive any file or dictionary from your friend by
+    receiveProjectTemplate() is a function to receive any file or directory from your friend by
     LOCAL AREA NETWORK (LAN).
 
     Use terminal command 'recvRQL' to use this function. You can also specify a path where your want to
-    save the shared file or dictionary, like 'recvRQL targetPath'. If you do not give a path, the file will
-    be stored in current working dictionary.
+    save the shared file or directory, like 'recvRQL targetPath'. If you do not give a path, the file will
+    be stored in current working directory.
 
     After this function is called, you can receive the file shared from your friend, who is also in the
     same LAN. You can not receive files or project from people outside your local network by this function. If you
@@ -552,7 +552,7 @@ def receiveProjectTemplate(targetPath:str = ''):
     import os
     if targetPath == '':
         parser = argparse.ArgumentParser()
-        parser.add_argument("-t","--targetPath", type=str, help="the path where you want to save the received files into, default as current working dictionary")
+        parser.add_argument("-t","--targetPath", type=str, help="the path where you want to save the received files into, default as current working directory")
         args = parser.parse_args()
         targetPath = args.targetPath if args.targetPath else os.getcwd()
 
@@ -562,11 +562,11 @@ def receiveProjectTemplate(targetPath:str = ''):
 
 def sendProjectTemplate(targetPath:str = ''):
     """
-    sendProjectTemplate() is a function to send any file or dictionary to your friend by
+    sendProjectTemplate() is a function to send any file or directory to your friend by
     LOCAL AREA NETWORK (LAN).
 
     Use terminal command 'sendRQL targetProjectPath' or 'sendRQL targetFilePath' to use this function. If
-    you send a dictionary, it will be packed into a zip file at first, and sent to your friend.
+    you send a directory, it will be packed into a zip file at first, and sent to your friend.
 
     After this function is called, you can send to your friend who is also in the same LAN.
     You can not send files or project to people outside your local network by this function. If you
@@ -575,7 +575,7 @@ def sendProjectTemplate(targetPath:str = ''):
     Parameters
     ----------
     targetPath : str
-        A terminal command parameter, specify the path of file or dictionary you want to send.
+        A terminal command parameter, specify the path of file or directory you want to send.
 
     Returns
     -------
@@ -583,7 +583,7 @@ def sendProjectTemplate(targetPath:str = ''):
     """
     if targetPath == '':
         parser = argparse.ArgumentParser()
-        parser.add_argument("targetPath", type=str, help="the path of dictionary or file you want to send, if it's a dictionary, it will be packaged into a zip file first")
+        parser.add_argument("targetPath", type=str, help="the path of directory or file you want to send, if it's a directory, it will be packaged into a zip file first")
         args = parser.parse_args()
         targetPath = args.targetPath
 
@@ -615,14 +615,14 @@ def buildProject(targetPath:str = '', renderFromPath:str = '', channel:str = '',
     automatically generated.
 
     For old version user of RiskQuantLib, this function is totally the same as
-    command 'python build.py' in terminal with working dictionary as targetProjectPath.
+    command 'python build.py' in terminal with working directory as targetProjectPath.
 
     Parameters
     ----------
     targetPath : str
         A terminal command parameter, specify the RiskQuantLib project path you want to build and render.
     renderFromPath : str
-        The path of dictionary of source file used to render target project.
+        The path of directory of source file used to render target project.
     channel : str
         render action in this channel will not delete the result of render in other channel
         unless it is overwritten by current render.
@@ -642,7 +642,7 @@ def buildProject(targetPath:str = '', renderFromPath:str = '', channel:str = '',
     if targetPath == '' and renderFromPath == '':
         parser = argparse.ArgumentParser()
         parser.add_argument("targetPath", type=str, help="the RiskQuantLib project you want to build")
-        parser.add_argument("-r","--renderFromPath", type=str, help="the dictionary of source code where the template code exists")
+        parser.add_argument("-r","--renderFromPath", type=str, help="the directory of source code where the template code exists")
         parser.add_argument("-c", "--channel", type=str, help="if given a channel name, render action in this channel will not delete the result of render in other channel unless it is overwritten by current render")
         parser.add_argument("-d", "--debug", help="use debug mode, break point in Src will start to effect", action="store_true")
         args = parser.parse_args()
@@ -674,7 +674,7 @@ def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str =
     targetPath : str
         A terminal command parameter, specify the RiskQuantLib project path you want to build and render.
     renderFromPath : str
-        The path of dictionary of source file used to render target project.
+        The path of directory of source file used to render target project.
     channel : str
         render action in this channel will not delete the result of render in other channel
         unless it is overwritten by current render.
@@ -693,7 +693,7 @@ def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str =
     if targetPath == '' and renderFromPath == '':
         parser = argparse.ArgumentParser()
         parser.add_argument("targetPath", type=str, help="the RiskQuantLib project you want to build automatically")
-        parser.add_argument("-r", "--renderFromPath", type=str, help="the dictionary of source code where the template code exists")
+        parser.add_argument("-r", "--renderFromPath", type=str, help="the directory of source code where the template code exists")
         parser.add_argument("-c", "--channel", type=str, help="if given a channel name, render action in this channel will not delete the result of render in other channel unless it is overwritten by current render")
         parser.add_argument("-d", "--debug", help="use debug mode, break point in Src will start to effect", action="store_true")
         args = parser.parse_args()
@@ -781,7 +781,7 @@ def persistProject(targetPath:str = '', renderFromPath:str = '', channel:str = '
     targetPath : str
         A terminal command parameter, specify the RiskQuantLib project path you want to persist.
     renderFromPath : str
-        The path of dictionary of source file used to render target project.
+        The path of directory of source file used to render target project.
     channel : str
         render action in this channel will not delete the result of render in other channel
         unless it is overwritten by current render.
@@ -793,7 +793,7 @@ def persistProject(targetPath:str = '', renderFromPath:str = '', channel:str = '
     if targetPath == '' and renderFromPath == '':
         parser = argparse.ArgumentParser()
         parser.add_argument("targetPath", type=str, help="the RiskQuantLib project whose code you want to change into permanent")
-        parser.add_argument("-r", "--renderFromPath", type=str, help="the dictionary of source code where the template code exists")
+        parser.add_argument("-r", "--renderFromPath", type=str, help="the directory of source code where the template code exists")
         parser.add_argument("-c", "--channel", type=str, help="if given a channel name, render action in this channel will not delete the result of render in other channel unless it is overwritten by current render")
         args = parser.parse_args()
         targetPath = args.targetPath

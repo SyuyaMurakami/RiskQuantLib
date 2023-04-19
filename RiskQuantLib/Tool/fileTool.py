@@ -195,7 +195,7 @@ def generateDataFrameFromDict(inputDict:dict, dateString:str, fileNameString:str
     df['COLUMN'] = columnNameString
     return df
 
-def compressExcel(filePathString:str, outputPathString:str, subDictionary:bool = True):
+def compressExcel(filePathString:str, outputPathString:str, subDirectory:bool = True):
     """
     Re-format excel in form of ['PATH','FILE','COLUMN','ROW','VALUE']
 
@@ -205,7 +205,7 @@ def compressExcel(filePathString:str, outputPathString:str, subDictionary:bool =
         The path where you hold your excel files.
     outputPathString : str
         The path of return file.
-    subDictionary : bool
+    subDirectory : bool
         If there are still other dictionaries in filePathString.
 
     Returns
@@ -215,20 +215,20 @@ def compressExcel(filePathString:str, outputPathString:str, subDictionary:bool =
     import pandas as pd
     import operator
     from functools import reduce
-    if subDictionary:
+    if subDirectory:
         dirList = [i for i in os.listdir(filePathString) if i.find('.')==-1]
-        subDictionaryDict = {}
-        [generateFileDictFromPath(filePathString+os.sep+i,subDictionaryDict) for i in dirList]
-        dfArray = [[[generateDataFrameFromDict(subDictionaryDict[i][j][k],dateString=i,fileNameString=j,columnNameString=k) for k in subDictionaryDict[i][j].keys()] for j in subDictionaryDict[i].keys()] for i in subDictionaryDict.keys()]
+        subDirectoryDict = {}
+        [generateFileDictFromPath(filePathString+os.sep+i,subDirectoryDict) for i in dirList]
+        dfArray = [[[generateDataFrameFromDict(subDirectoryDict[i][j][k],dateString=i,fileNameString=j,columnNameString=k) for k in subDirectoryDict[i][j].keys()] for j in subDirectoryDict[i].keys()] for i in subDirectoryDict.keys()]
         dfList = reduce(operator.add,dfArray)
         dfList = reduce(operator.add,dfList)
         result = pd.concat(dfList)
         result.reset_index(drop=True,inplace=True)
         result[['PATH','FILE','COLUMN','ROW','VALUE']].to_excel(outputPathString,index=0)
     else:
-        dictionaryDict = {}
-        generateFileDictFromPath(filePathString,dictionaryDict)
-        dfArray = [[[generateDataFrameFromDict(dictionaryDict[i][j][k],dateString=i,fileNameString=j,columnNameString=k) for k in dictionaryDict[i][j].keys()] for j in dictionaryDict[i].keys()] for i in dictionaryDict.keys()]
+        directoryDict = {}
+        generateFileDictFromPath(filePathString,directoryDict)
+        dfArray = [[[generateDataFrameFromDict(directoryDict[i][j][k],dateString=i,fileNameString=j,columnNameString=k) for k in directoryDict[i][j].keys()] for j in directoryDict[i].keys()] for i in directoryDict.keys()]
         dfList = reduce(operator.add,dfArray)
         dfList = reduce(operator.add,dfList)
         result = pd.concat(dfList)

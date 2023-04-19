@@ -536,7 +536,7 @@ class operation(object):
         self._paraQueue.append((functionName, args, kwargs))
         return self
 
-    def paraRun(self):
+    def paraRun(self, nJobs: int = -1):
         """
         This is the trigger of run paralleled function for every element in this RiskQuantLib list. Before you use
         this function, you should call someList.paraFunc('functionName') for more than one time to tell RiskQuantLib
@@ -555,7 +555,7 @@ class operation(object):
         from joblib import Parallel, delayed
 
         try:
-            result = Parallel(n_jobs=-1)(delayed(_coll)(i) for i in self.all)
+            result = Parallel(n_jobs=nJobs)(delayed(_coll)(i) for i in self.all)
             tmp = operation()
             tmp.setAll(result)
             self._paraQueue = []

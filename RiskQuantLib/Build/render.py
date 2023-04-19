@@ -15,8 +15,8 @@ class render(object):
         Parameters
         ----------
         componentPathString : str
-            path of dictionary where templates exist. Any sub-folder will be searched,
-            file and sub-file will be added into template dictionary
+            path of directory where templates exist. Any sub-folder will be searched,
+            file and sub-file will be added into template directory
 
         Returns
         -------
@@ -35,7 +35,7 @@ class render(object):
         Parameters
         ----------
         templateFileName : str
-            path of template file. Any sub-folder will be searched, file and sub-file will be added into template dictionary
+            path of template file. Any sub-folder will be searched, file and sub-file will be added into template directory
 
         Returns
         -------
