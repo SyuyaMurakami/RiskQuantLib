@@ -424,7 +424,7 @@ class systemGuardian:
             self.call_back_function = call_back_function
 
     def watch(self):
-        if os.path.isdir(self.path) or os.path.isfile(self.path):
+        if hasattr(self, 'path') and (os.path.isdir(self.path) or os.path.isfile(self.path)):
             stamp = os.stat(self.path).st_mtime
             if stamp != self._cachedStamp:
                 self._cachedStamp = stamp

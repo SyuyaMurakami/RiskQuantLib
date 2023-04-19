@@ -493,7 +493,7 @@ class operation(object):
         else:
             return np.nanstd([getattr(i,attrName,np.nan) for i in self.all])
 
-    def execFunc(self,functionName,*args):
+    def execFunc(self,functionName,*args,**kwargs):
         """
         This function will execute instance function for every element in present RiskQuantLib list object,
         given the function name. If some elements don't have the function, a Null function will be used, and
@@ -505,7 +505,7 @@ class operation(object):
             The function that element has, and you want to call.
         """
         try:
-            result = [getattr(i,functionName,lambda x:None)(*args) for i in self.all]
+            result = [getattr(i,functionName,lambda *arg, **kwarg:None)(*args, **kwargs) for i in self.all]
             tmp = operation()
             tmp.setAll(result)
             return tmp
@@ -513,6 +513,56 @@ class operation(object):
             print('Execution Failed:', e)
             pass
 
+    def paraFunc(self, functionName, *args, **kwargs):
+        """
+        This function will execute instance function for every element in present RiskQuantLib list object by parallel,
+        which means elements will be serialized and sent to different processes.
+
+        If some elements don't have the function which named as you specify, a Null function will be used, and
+        the result will skip the execution for that element.
+
+        The call will be delayed until you run currentRiskQuantLibList.paraRun().
+
+        Parameters
+        ----------
+        functionName : str
+            The function that element has, and you want to call.
+
+        Returns
+        -------
+        operation
+        """
+        self._paraQueue = [] if not hasattr(self, "_paraQueue") else self._paraQueue
+        self._paraQueue.append((functionName, args, kwargs))
+        return self
+
+    def paraRun(self):
+        """
+        This is the trigger of run paralleled function for every element in this RiskQuantLib list. Before you use
+        this function, you should call someList.paraFunc('functionName') for more than one time to tell RiskQuantLib
+        what function you want to parallel.
+
+        Returns
+        -------
+        operation
+        """
+        self._paraQueue = [] if not hasattr(self, "_paraQueue") else self._paraQueue
+
+        def _coll(obj):
+            paraTmp = [getattr(obj, functionName, lambda *arg, **kwarg:None)(*args, **kwargs) for functionName,args,kwargs in self._paraQueue]
+            return paraTmp
+
+        from joblib import Parallel, delayed
+
+        try:
+            result = Parallel(n_jobs=-1)(delayed(_coll)(i) for i in self.all)
+            tmp = operation()
+            tmp.setAll(result)
+            self._paraQueue = []
+            return tmp
+        except Exception as e:
+            print('Parallel Failed:', e)
+            pass
 
     def copy(self,deep = True):
         """

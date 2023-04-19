@@ -161,7 +161,7 @@ def buildProjectFromExcel(targetPath: str, buildCachePath: str, instrumentExcelP
     None
 
     """
-    import os
+    import os, time
     from RiskQuantLib.Build.builder import excelBuilder
     if os.path.isfile(buildCachePath):
         buildObj = excelBuilder.loadInfo(buildCachePath)
@@ -169,7 +169,7 @@ def buildProjectFromExcel(targetPath: str, buildCachePath: str, instrumentExcelP
         buildObj = excelBuilder(targetProjectPath=targetPath)
     buildObj.buildProject(instrumentExcelPath=instrumentExcelPath, attributeExcelPath=attributeExcelPath)
     buildObj.renderProject(renderFromPath,bindType,persist=False, debug=debug)
-    print("Build Project Finished")
+    print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), "- Build Project Finished")
 
 def newProject(targetPath:str = ''):
     """
@@ -709,7 +709,10 @@ def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str =
 
     # The call back function must be a single parameter function
     def build(projectPath=targetPath):
-        buildProjectFromExcel(targetPath,buildCachePath,instrumentExcelPath,attributeExcelPath, renderFromPath, bindType, debug)
+        try:
+            buildProjectFromExcel(targetPath,buildCachePath,instrumentExcelPath,attributeExcelPath, renderFromPath, bindType, debug)
+        except Exception as e:
+            pass
 
     from RiskQuantLib.Tool.fileTool import systemWatcher
     watchObj = systemWatcher([instrumentExcelPath, attributeExcelPath, renderFromPath], call_back_function_on_any_change=build)
