@@ -99,12 +99,13 @@ class debugger(object):
         endLineNum : int
             The total line number of source code.
         """
-        chunkOfGiven = sorted(functionChunk)
+        chunkOfGiven = sorted(functionChunk) if len(functionChunk)!=0 else [(0, 0)]
         chunkOfGivenNum = len(chunkOfGiven)
         chunkOfOthersBody = [(chunkOfGiven[i][1],chunkOfGiven[i+1][0]) for i in range(chunkOfGivenNum) if i<chunkOfGivenNum-1]
         chunkOfOthersHead = [(0,chunkOfGiven[0][0])]
         chunkOfOthersTail = [(chunkOfGiven[-1][1],endLineNum)]
         chunkOfOthers = [j for j in chunkOfOthersHead + chunkOfOthersBody + chunkOfOthersTail if j[0]!=j[1]]
+        chunkOfGiven = [i for i in chunkOfGiven if i[0]!=i[1]]
         return chunkOfGiven,chunkOfOthers
 
     @staticmethod
