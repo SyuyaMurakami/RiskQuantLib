@@ -715,7 +715,7 @@ def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str =
             pass
 
     from RiskQuantLib.Tool.fileTool import systemWatcher
-    watchObj = systemWatcher([instrumentExcelPath, attributeExcelPath, renderFromPath], call_back_function_on_any_change=build)
+    watchObj = systemWatcher([instrumentExcelPath, attributeExcelPath, renderFromPath], call_back_function_on_any_change=build, withFormat=True, monitorFormat={'.py','.pyt','.xlsx'})
     watchObj.start()
 
 def unBuildProject(targetPath:str = ''):

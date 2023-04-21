@@ -430,6 +430,12 @@ class systemGuardian:
                 self._cachedStamp = stamp
                 return self.call_back_function(self.path)
 
+    def tryWatch(self):
+        try:
+            return self.watch()
+        except Exception as e:
+            pass
+
     def start(self):
         try:
             while True:
@@ -441,11 +447,13 @@ class systemGuardian:
     #</systemGuardian>
 
 class systemWatcher:
-    def __init__(self, monitorPath: str or list, call_back_function_on_file = lambda x:x, call_back_function_on_dir = lambda x:x, call_back_function_on_any_change = lambda x:x):
+    def __init__(self, monitorPath: str or list, call_back_function_on_file = lambda x:x, call_back_function_on_dir = lambda x:x, call_back_function_on_any_change = lambda x:x, withFormat:bool = False, monitorFormat:set = {}):
         self.monitorPath = monitorPath
         self.call_back_function_on_file = call_back_function_on_file
         self.call_back_function_on_dir = call_back_function_on_dir
         self.call_back_function_on_any_change = call_back_function_on_any_change
+        self.withFormat = withFormat
+        self.monitorFormat = monitorFormat
         self.fileGuardian = []
         self.dirGuardian = []
         self.validatedFilePath = []
@@ -453,12 +461,11 @@ class systemWatcher:
         self.scanMonitorPath(monitorPath)
         self.createGuardian()
 
-
     def scanMonitorPath(self, monitorPath):
         monitorPath = [monitorPath] if type(monitorPath)==str else monitorPath
-        self.validatedFilePath = [i for i in monitorPath if os.path.isfile(i)]
+        self.validatedFilePath = [i for i in monitorPath if os.path.isfile(i) and (not self.withFormat or os.path.splitext(i)[-1] in self.monitorFormat)]
         self.validatedDirPath = [i for i in monitorPath if os.path.isdir(i)]
-        recursivePath = [([os.path.join(dirPath,dir) for dir in dirs],[os.path.join(dirPath,file) for file in files]) for rootPath in self.validatedDirPath for dirPath, dirs, files in os.walk(rootPath)]
+        recursivePath = [([os.path.join(dirPath,dir) for dir in dirs],[os.path.join(dirPath,file) for file in files if not self.withFormat or os.path.splitext(file)[-1] in self.monitorFormat]) for rootPath in self.validatedDirPath for dirPath, dirs, files in os.walk(rootPath)]
         [self.validatedDirPath.extend(i[0]) for i in recursivePath]
         [self.validatedFilePath.extend(i[1]) for i in recursivePath]
 
@@ -472,10 +479,10 @@ class systemWatcher:
         self.allGuardian = self.fileGuardian + self.dirGuardian
 
     def watch(self):
-        fileInfo = [i.watch() for i in self.fileGuardian]
+        fileInfo = [i.tryWatch() for i in self.fileGuardian]
         updatedFile = [i for i in fileInfo if type(i)==str and os.path.isfile(i)]
         self.call_back_function_on_file_result = [self.call_back_function_on_file(i) for i in updatedFile]
-        dirInfo = [i.watch() for i in self.dirGuardian]
+        dirInfo = [i.tryWatch() for i in self.dirGuardian]
         updatedDir = [i for i in dirInfo if type(i)==str and os.path.isdir(i)]
         self.call_back_function_on_dir_result = [self.call_back_function_on_dir(i) for i in updatedDir]
         self.call_back_function_on_any_change_result = self.call_back_function_on_any_change(updatedDir+updatedFile) if len(updatedDir+updatedFile)!=0 else None
