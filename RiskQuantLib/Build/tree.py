@@ -1,7 +1,18 @@
 #!/usr/bin/python
 # coding = utf-8
 
-class inheritNode(object):
+class treeOperation(object):
+
+    def copy(self, deep=True):
+        """
+        Get a copy of present tree object.
+        """
+        import copy
+        result = copy.deepcopy(self) if deep else copy.copy(self)
+        return result
+
+
+class inheritNode(treeOperation):
     """
     A link chain node used to hold inherit information.
     """
@@ -64,7 +75,7 @@ class inheritNode(object):
 
 
 
-class inheritTree(object):
+class inheritTree(treeOperation):
     """
     A link chain used to hold inherit information.
     """
