@@ -47,7 +47,7 @@ class controller(object):
         """
         declareTagNameOrigin = [i.split(':')[0].replace('#-|','').strip(' ') for i in controlSyntaxList]
         declareTagContentOrigin = [i.split(':')[-1].strip(' ') for i in controlSyntaxList]
-        declareTagMerged = pd.Series(declareTagContentOrigin,index=declareTagNameOrigin).groupby(level=0).apply(lambda x:",".join(x))
+        declareTagMerged = pd.Series(declareTagContentOrigin,index=declareTagNameOrigin,dtype=str).groupby(level=0,group_keys=False).apply(lambda x:",".join(x))
         declareTagName = declareTagMerged.index.to_list()
         declareTagContent = declareTagMerged.values.tolist()
         declareTagNameType, declareTagNameSubType = controller.parseDeclareTagByGivenString(",".join(declareTagName),splitWordBy='-')
@@ -65,7 +65,7 @@ class controller(object):
         buildInstrumentOption = buildInstrumentTotal[[i for i in buildInstrumentTotal.columns if i not in instrumentColDefault]]
         buildInstrument = pd.concat([buildInstrumentDefault,buildInstrumentOption],axis=1)
 
-        buildAttributeTotal = pd.concat(attributeInfo, axis=1).replace('', np.nan) if len(attributeInfo) != 0 else pd.DataFrame(dtype=str, columns=attributeColDefault)
+        buildAttributeTotal = pd.concat(attributeInfo, axis=1).replace('', np.nan) if len(attributeInfo) != 0 else pd.DataFrame(dtype=str, columns=attributeColDefault, index=pd.MultiIndex(levels=[[],[]],codes=[[],[]]))
         buildAttributeTotal['SecurityType'] = buildAttributeTotal.index.get_level_values(0)
         buildAttributeTotal['AttrName'] = buildAttributeTotal.index.get_level_values(1)
         buildAttributeDefault = buildAttributeTotal.T.reindex(attributeColDefault).T

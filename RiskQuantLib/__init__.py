@@ -280,9 +280,12 @@ def newProject(targetPath:str = ''):
     PYB = initiateExecutableDebugShortcutFile()
     PYB.writeToFile(targetPath + os.sep + 'debug'+shortCutFileType)
 
-    # create python source file directory
+    # create python source file directory and other useful directory
     renderFromPath = targetPath+os.sep+'Src'
-    os.makedirs(renderFromPath) if not os.path.exists(renderFromPath) else None
+    cachePath = targetPath+os.sep+'Cache'
+    dataPath = targetPath+os.sep+'Data'
+    resultPath = targetPath+os.sep+'Result'
+    [os.makedirs(p) if not os.path.exists(p) else None for p in [renderFromPath, cachePath, dataPath, resultPath]]
 
     print('RiskQuantLib project created!')
 
