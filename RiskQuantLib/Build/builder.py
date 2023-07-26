@@ -668,10 +668,10 @@ class validateBuilder(builder):
         attributeBelongTo = [validateBuilder.validateRootInstrumentName(ins,rootInstrumentName) for ins in attributeBelongTo]
         # add new instrument
         validatedInstrument = [(validateBuilder.validateString(ins),validateBuilder.validateString(prc),validateBuilder.validateString(pqc, lowerCaseFirstLetter=False),validateBuilder.validateString(ln, lowerCaseFirstLetter=False),validateBuilder.validateString(dt, lowerCaseFirstLetter=False) if dt else validateBuilder.upperCaseFirstLetter(ins)) for ins,prc,pqc,ln,dt in zip(instrumentName,parentRQLClassName,parentQuantLibClassName,libraryName,defaultInstrumentType) if validateBuilder.isString(ins,allowEmpty=False,allowComma=False) and validateBuilder.validateString(ins) not in self.instrumentTree.nodeDict]
-        [self.instrumentTree.addNode(ins).inheritFrom(validateBuilder.validateParentClassName(prc,self.instrumentTree.nodeDict)).setAttr('type', dt).inheritFromOutside(pqc).dependOnOutside(ln) for ins,prc,pqc,ln,dt in validatedInstrument]
+        [self.instrumentTree.addNode(ins).inheritFrom(prc).setAttr('type', dt).inheritFromOutside(pqc).dependOnOutside(ln) for ins,prc,pqc,ln,dt in validatedInstrument]
         # add new property
         validatedProperty = [validateBuilder.validateString(property) for property in propertyName if type(property)==str and property!='' and property.find(',')==-1]
-        [self.propertyTree.addNode(name).inheritFrom(validateBuilder.validateParentClassName('',self.propertyTree.nodeDict)) for name in validatedProperty]
+        [self.propertyTree.addNode(name).inheritFrom('') for name in validatedProperty]
         # set attribute to instrument
         validatedAttribute = [(validateBuilder.validateString(instrument),validateBuilder.validateString(attribute),validateBuilder.validateString(attributeType)) for instrument,attribute,attributeType in zip(attributeBelongTo,attributeName,propertyName) if validateBuilder.isString(instrument,allowComma=False) and validateBuilder.isString(attribute,allowEmpty=False,allowComma=False) and validateBuilder.isString(attributeType,allowComma=False)]
         [self.instrumentTree.getNode(instrument).addAttr('attribute',attribute,attributeType) if instrument in self.instrumentTree.nodeDict and attributeType in self.propertyTree.nodeDict else None for instrument,attribute,attributeType in validatedAttribute]
