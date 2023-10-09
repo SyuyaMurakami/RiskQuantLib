@@ -146,6 +146,7 @@ class builder(object):
         self.dependenceSeries = []
         self.attributeToPropertyDict = []
         self.bindType = {}
+        self.linkType = {}
 
     def initiateInstrumentTree(self):
         """
@@ -159,16 +160,6 @@ class builder(object):
         self.instrumentTree = inheritTree()
         self.instrumentTree.addNode('')
         self.instrumentTree.getNode('').setAttr('type','Instrument')
-        self.instrumentTree.addNode('security').inheritFrom('').setAttr('type','Security')
-        self.instrumentTree.addNode('company').inheritFrom('').setAttr('type','Company')
-        self.instrumentTree.addNode('index').inheritFrom('').setAttr('type','Index')
-        self.instrumentTree.addNode('interest').inheritFrom('').setAttr('type','Interest')
-        self.instrumentTree.addNode('bond').inheritFrom('security').setAttr('type', 'Bond').inheritFromOutside('Bond')
-        self.instrumentTree.addNode('stock').inheritFrom('security').setAttr('type', 'Stock')
-        self.instrumentTree.addNode('derivative').inheritFrom('security').setAttr('type', 'Derivative')
-        self.instrumentTree.addNode('fund').inheritFrom('security').setAttr('type', 'Fund')
-        self.instrumentTree.addNode('future').inheritFrom('derivative').setAttr('type', 'Future')
-        self.instrumentTree.addNode('option').inheritFrom('derivative').setAttr('type', 'Option')
 
     def initiatePropertyTree(self):
         """
@@ -202,7 +193,7 @@ class builder(object):
         self.updateRender()
         builder.buildProject(self)
 
-    def buildProject(self):
+    def buildProject(self, dumpCache=True):
         """
         Trigger of building. Call this function will parse instrument inherit tree into validated
         building information, create directory that is needed but does not exist yet, create file that
@@ -218,7 +209,7 @@ class builder(object):
         self.buildDir()
         self.buildFile()
         self.buildContent()
-        self.dumpInfo()
+        self.dumpInfo() if dumpCache else None
 
     def checkPath(self):
         """
@@ -486,6 +477,20 @@ class builder(object):
 
         [router.persistToFile(file, **(injectDict[file])) if persist else router.injectToFile(file, **(injectDict[file])) for file in injectDict]
 
+    def linkContent(self, content:str, linkType:str):
+        """
+        This function will use control declaration in source code to build the whole project again. Any instrument that
+        is required by source code will be created, any attribute this is needed will be added. These actions will be operated
+        on an independent builder named as mimicBuilder, which is the update version of base builder.
+        """
+        from RiskQuantLib.Build.controller import controller
+        controlSyntaxListUpdate = controller.findDeclareTag(content)
+        if len(controlSyntaxListUpdate)!=0:
+            self.linkType[linkType] = controlSyntaxListUpdate
+            controlSyntaxListSorted = [self.linkType[i] for i in self.linkType if i!=linkType]+[controlSyntaxListUpdate]
+            controlSyntaxListMerged = [j for i in controlSyntaxListSorted for j in i]
+            controller.linkController(self, controlSyntaxListMerged)
+
     def renderProject(self, sourceCodeDirPath: str = '', bindType: str = 'renderedSourceCode', persist: bool = False, debug: bool = False, **kwargs):
         """
         Render and inject source code into target project.
@@ -529,7 +534,9 @@ class builder(object):
                 contentRendered = [sourceCodeRender.render(file,**kwargs) if ext == '.pyt' else self.render.render('sourceCodeDebugger.pyt',srcPath=root+os.sep+file, **(debugger.splitSrcByChunkAndFindThoseCanBeDebugged(content))) if debug else content for content, file, ext in contentAndType]
                 contentMerged = "#-><FileStart>\n"+"\n#-><FileEnd>\n#-><FileStart>\n".join(contentRendered)+"\n#-><FileEnd>"
                 content.append(contentMerged)
-            self.bindContent("\n".join(content), bindType=bindType, persist=persist)
+            contentBind = "\n".join(content)
+            self.linkContent(contentBind, linkType=bindType)
+            self.mimicBuilder.bindContent(contentBind, bindType=bindType, persist=persist) if hasattr(self,'mimicBuilder') and isinstance(self.mimicBuilder,builder) else self.bindContent(contentBind, bindType=bindType, persist=persist)
             self.dumpInfo()
 
     def clearProject(self):
@@ -542,6 +549,7 @@ class builder(object):
         """
         self.initiateProject()
         [self.bindContent("", bindType=bt, persist=False) for bt in self.bindType]
+        [self.mimicBuilder.bindContent("", bindType=bt, persist=False) for bt in self.mimicBuilder.bindType] if hasattr(self,'mimicBuilder') and isinstance(self.mimicBuilder,builder) else None
         self.dumpInfo()
 
     def persistProject(self, sourceCodeDirPath: str = '', bindType: str = 'renderedSourceCode'):
@@ -649,22 +657,28 @@ class validateBuilder(builder):
     def __init__(self, buildFromProjectPath = '', targetProjectPath:str = '', templateSearchPath:str = ''):
         super(validateBuilder, self).__init__(buildFromProjectPath = buildFromProjectPath, targetProjectPath= targetProjectPath, templateSearchPath = templateSearchPath)
 
-    def buildProject(self, instrumentName:list = [], parentRQLClassName:list = [], parentQuantLibClassName:list = [], libraryName:list = [], defaultInstrumentType:list = [], attributeBelongTo:list = [], attributeName:list = [], propertyName:list = []):
+    def initiateTree(self):
+        self.initiateInstrumentTree()
+        self.initiatePropertyTree()
+
+    def validateTree(self, instrumentName:list = [], parentRQLClassName:list = [], parentQuantLibClassName:list = [], libraryName:list = [], defaultInstrumentType:list = [], attributeBelongTo:list = [], attributeName:list = [], propertyName:list = []):
         # change some word into empty string, because these words have the same meaning with root instrument.
         rootInstrumentName = set(['instrument','any'])
         instrumentName = [validateBuilder.validateRootInstrumentName(ins,rootInstrumentName) for ins in instrumentName]
         attributeBelongTo = [validateBuilder.validateRootInstrumentName(ins,rootInstrumentName) for ins in attributeBelongTo]
         # add new instrument
-        self.initiateInstrumentTree()
         validatedInstrument = [(validateBuilder.validateString(ins),validateBuilder.validateString(prc),validateBuilder.validateString(pqc, lowerCaseFirstLetter=False),validateBuilder.validateString(ln, lowerCaseFirstLetter=False),validateBuilder.validateString(dt, lowerCaseFirstLetter=False) if dt else validateBuilder.upperCaseFirstLetter(ins)) for ins,prc,pqc,ln,dt in zip(instrumentName,parentRQLClassName,parentQuantLibClassName,libraryName,defaultInstrumentType) if validateBuilder.isString(ins,allowEmpty=False,allowComma=False) and validateBuilder.validateString(ins) not in self.instrumentTree.nodeDict]
-        [self.instrumentTree.addNode(ins).inheritFrom(validateBuilder.validateParentClassName(prc,self.instrumentTree.nodeDict)).setAttr('type', dt).inheritFromOutside(pqc).dependOnOutside(ln) for ins,prc,pqc,ln,dt in validatedInstrument]
+        [self.instrumentTree.addNode(ins).inheritFrom(prc).setAttr('type', dt).inheritFromOutside(pqc).dependOnOutside(ln) for ins,prc,pqc,ln,dt in validatedInstrument]
         # add new property
-        self.initiatePropertyTree()
         validatedProperty = [validateBuilder.validateString(property) for property in propertyName if type(property)==str and property!='' and property.find(',')==-1]
-        [self.propertyTree.addNode(name).inheritFrom(validateBuilder.validateParentClassName('',self.propertyTree.nodeDict)) for name in validatedProperty]
+        [self.propertyTree.addNode(name).inheritFrom('') for name in validatedProperty]
         # set attribute to instrument
         validatedAttribute = [(validateBuilder.validateString(instrument),validateBuilder.validateString(attribute),validateBuilder.validateString(attributeType)) for instrument,attribute,attributeType in zip(attributeBelongTo,attributeName,propertyName) if validateBuilder.isString(instrument,allowComma=False) and validateBuilder.isString(attribute,allowEmpty=False,allowComma=False) and validateBuilder.isString(attributeType,allowComma=False)]
         [self.instrumentTree.getNode(instrument).addAttr('attribute',attribute,attributeType) if instrument in self.instrumentTree.nodeDict and attributeType in self.propertyTree.nodeDict else None for instrument,attribute,attributeType in validatedAttribute]
+
+    def buildProject(self, instrumentName:list = [], parentRQLClassName:list = [], parentQuantLibClassName:list = [], libraryName:list = [], defaultInstrumentType:list = [], attributeBelongTo:list = [], attributeName:list = [], propertyName:list = []):
+        self.initiateTree()
+        self.validateTree(instrumentName=instrumentName,parentRQLClassName=parentRQLClassName,parentQuantLibClassName=parentQuantLibClassName,libraryName=libraryName,defaultInstrumentType=defaultInstrumentType,attributeBelongTo=attributeBelongTo,attributeName=attributeName,propertyName=propertyName)
         super(validateBuilder, self).buildProject()
 
 class dataframeBuilder(validateBuilder):
@@ -698,6 +712,34 @@ class dataframeBuilder(validateBuilder):
 
     def buildProject(self):
         super(dataframeBuilder, self).buildProject(**self.buildFileInfo,**self.buildContentInfo)
+
+
+class stringBuilder(dataframeBuilder):
+    """
+    stringBuilder is a child class of validatedBuilder, it takes string as information of building.
+    """
+    def __init__(self, buildFromProjectPath='', targetProjectPath: str = '', templateSearchPath: str = ''):
+        super(stringBuilder, self).__init__(buildFromProjectPath=buildFromProjectPath, targetProjectPath=targetProjectPath, templateSearchPath=templateSearchPath)
+
+    def buildProject(self, content: str):
+        from RiskQuantLib.Build.controller import controller
+        controlSyntaxList = controller.findDeclareTag(content)
+        buildInstrument, buildAttr, buildOther = controller.parseDeclareTagAsDF(controlSyntaxList)
+        self.setInstrumentInfo(buildInstrument)
+        self.setAttributeInfo(buildAttr)
+        super(stringBuilder, self).buildProject()
+
+class configBuilder(stringBuilder):
+    """
+    configBuilder is a child class of stringBuilder, it takes config.py as information of building.
+    """
+    def __init__(self, buildFromProjectPath='', targetProjectPath: str = '', templateSearchPath: str = ''):
+        super(stringBuilder, self).__init__(buildFromProjectPath=buildFromProjectPath, targetProjectPath=targetProjectPath, templateSearchPath=templateSearchPath)
+
+    def buildProject(self, configFilePath: str):
+        from RiskQuantLib.Build.router import router
+        content = router.readContent(configFilePath)
+        super(configBuilder, self).buildProject(content)
 
 class excelBuilder(dataframeBuilder):
     """

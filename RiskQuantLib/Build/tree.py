@@ -1,7 +1,18 @@
 #!/usr/bin/python
 # coding = utf-8
 
-class inheritNode(object):
+class treeOperation(object):
+
+    def copy(self, deep=True):
+        """
+        Get a copy of present tree object.
+        """
+        import copy
+        result = copy.deepcopy(self) if deep else copy.copy(self)
+        return result
+
+
+class inheritNode(treeOperation):
     """
     A link chain node used to hold inherit information.
     """
@@ -14,17 +25,35 @@ class inheritNode(object):
         self.outsideParentNode = []
         self.outsideDependence = []
 
+    def extendInheritTree(self, parentNode):
+        """
+        Given a inheritNode object, this function will append the name of inheritNode after the
+        inheritTree of that node, then return the new list as extended inheritTree.
+        """
+        inheritTreeNode = [parentNode.name] if parentNode.name != '' else []
+        self.inheritTree = parentNode.inheritTree + inheritTreeNode
+
+    def updateInheritTree(self, inheritTree:list):
+        """
+        Given a list, this function will insert this list before the
+        inheritTree of that node and its any child node.
+        """
+        [setattr(c, 'inheritTree', inheritTree + c.inheritTree) for c in self.childNode]
+        [c.updateInheritTree(inheritTree) for c in self.childNode]
+
     def inheritFrom(self, parentNode:list):
         """
         Inherit from one or more node.
         """
         if isinstance(parentNode, inheritNode):
             parentNode = [parentNode]
-        if len(parentNode)!=0:
-            self.parentNode += parentNode
-            [p.childNode.append(self) for p in parentNode]
-            inheritTreeNode = [parentNode[0].name] if parentNode[0].name != '' else []
-            self.inheritTree = parentNode[0].inheritTree + inheritTreeNode
+        parentNodeAdd = [i for i in parentNode if i not in self.parentNode]
+        if len(parentNodeAdd)!=0:
+            self.parentNode += parentNodeAdd
+            [p.childNode.append(self) for p in parentNodeAdd]
+            if len(self.inheritTree)==0:
+                self.extendInheritTree(parentNodeAdd[0])
+                self.updateInheritTree(self.inheritTree)
 
     def inheritFromOutside(self, outsideParentName:str):
         """
@@ -62,9 +91,7 @@ class inheritNode(object):
         fromDict.pop(self.name) if self.name in fromDict else None
         [childNode.destroyNode(fromDict=fromDict) for childNode in self.childNode]
 
-
-
-class inheritTree(object):
+class inheritTree(treeOperation):
     """
     A link chain used to hold inherit information.
     """
@@ -73,13 +100,14 @@ class inheritTree(object):
         self.activeNode = None
         self.nodeDict = {}
 
-    def addNode(self, name:str):
+    def addNode(self, name:str, setActive:bool=True):
         """
-        Add a single node into current inherit tree.
+        Add a single node into current inherit tree, if it already exists, set that node into active, if it does not
+        exist, a new node will be created as set as active.
         """
         if name not in self.nodeDict:
-            self.activeNode = inheritNode(name)
-            self.nodeDict[name] = self.activeNode
+            self.nodeDict[name] = inheritNode(name)
+        self.activeNode = self.nodeDict[name] if setActive else self.activeNode
         return self
 
     def delNode(self, name:str):
@@ -103,7 +131,7 @@ class inheritTree(object):
         if type(parentNode)==str:
             parentNode = [parentNode]
         if len(parentNode)!=0 and self.activeNode:
-            self.activeNode.inheritFrom([self.nodeDict[p] for p in parentNode if p in self.nodeDict])
+            self.activeNode.inheritFrom([self.nodeDict[p] if p in self.nodeDict else self.addNode(p, setActive=False).getNode(p) for p in parentNode])
             deActivitiedNode = self.activeNode
             self.activeNode = None
             return deActivitiedNode
