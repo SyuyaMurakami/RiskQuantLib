@@ -785,6 +785,68 @@ class operation(object):
         """
         return self.isNotIn(anotherList) + anotherList
 
+    def match(self, anotherList, targetAttrName: str, matchFunctionOnLeft=lambda x: True, matchFunctionOnRight=lambda y: True):
+        """
+        For each element in current rqlList, find all elements that meet requirement
+        matchFunctionOnRight(element_in_another_list) == matchFunctionOnLeft(element_in_this_list)
+        from another RiskQuantLib list object. The elements meeting requirement will be set as an attribute
+        of element_in_this_list.
+
+        This function is very like rqlList.join, the only difference is that this function is
+        vectorized, thus run with faster speed. Of cause, this function has some drawbacks, it
+        can not deal with complicated relation which is described as coupled equation, while
+        rqlList.join can do it.
+
+        Parameters
+        ----------
+        anotherList : RiskQuantLib list or list
+            Another list object, holding elements waiting to be selected.
+        targetAttrName : str
+            The attribute name that you want to use to mark collected elements from another list.
+        matchFunctionOnLeft : function
+            This function has and only has one parameter, which stands for element in current list.
+        matchFunctionOnRight : function
+            This function has and only has one parameter, which stands for element in another list.
+        """
+        anotherMatchArray = np.array([matchFunctionOnRight(another) for another in anotherList])
+
+        thisMatchArray = np.array([matchFunctionOnLeft(this) for this in self.all]).reshape(-1, 1)
+        targetObjIDArray = np.apply_along_axis(lambda x: x == anotherMatchArray, 1, thisMatchArray)
+        anotherObjArray = np.array(anotherList.all)
+
+        matchedValueList = [anotherObjArray[targetIDList] for targetIDList in targetObjIDArray]
+        matchedObjList = [anotherList.new() for _ in range(len(self.all))]
+        [matchedObj.setAll(matchedValue.tolist()) for matchedObj,matchedValue in zip(matchedObjList,matchedValueList)]
+        [setattr(this, targetAttrName, matchedObj) for this, matchedObj in zip(self.all, matchedObjList)]
+
+    def link(self, anotherList, targetAttrNameOnLeft: str, targetAttrNameOnRight: str, matchFunctionOnLeft=lambda x: True, matchFunctionOnRight=lambda y: True):
+        """
+        For each element in current rqlList, find all elements that meet requirement
+        matchFunctionOnRight(element_in_another_list) == matchFunctionOnLeft(element_in_this_list)
+        from another RiskQuantLib list object. The elements meeting requirement will be set as an attribute
+        of element_in_this_list.
+
+        After this is done, for each element in another rqlList, find all elements that meet requirement
+        matchFunctionOnLeft(element_in_this_list) == matchFunctionOnRight(element_in_another_list)
+        from current RiskQuantLib list object. The elements meeting requirement will be set as an attribute
+        of element_in_another_list.
+
+        Parameters
+        ----------
+        anotherList : RiskQuantLib list or list
+            Another list object, holding elements waiting to be selected.
+        targetAttrNameOnLeft : str
+            The attribute name of present list that you want to use to mark collected elements from another list.
+        targetAttrNameOnRight : str
+            The attribute name of another list that you want to use to mark collected elements from present list.
+        matchFunctionOnLeft : function
+            This function has and only has one parameter, which stands for element in current list.
+        matchFunctionOnRight : function
+            This function has and only has one parameter, which stands for element in another list.
+        """
+        self.match(anotherList, targetAttrNameOnLeft, matchFunctionOnLeft, matchFunctionOnRight)
+        anotherList.match(self, targetAttrNameOnRight, matchFunctionOnRight, matchFunctionOnLeft)
+
     def join(self,anotherList,targetAttrName : str,filterFunction = lambda x,y:True):
         """
         For each element, find all elements that meet requirements from another RiskQuantLib
