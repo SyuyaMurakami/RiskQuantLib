@@ -809,14 +809,14 @@ class operation(object):
             This function has and only has one parameter, which stands for element in another list.
         """
         anotherMatchArray = np.array([matchFunctionOnRight(another) for another in anotherList])
-
         thisMatchArray = np.array([matchFunctionOnLeft(this) for this in self.all]).reshape(-1, 1)
         targetObjIDArray = np.apply_along_axis(lambda x: x == anotherMatchArray, 1, thisMatchArray)
-        anotherObjArray = np.array(anotherList.all)
 
-        matchedValueList = [anotherObjArray[targetIDList] for targetIDList in targetObjIDArray]
+        anotherObjIndexArray = np.array(range(len(anotherList.all)))
+        matchedValueList = [[anotherList.all[idx] for idx in anotherObjIndexArray[targetIDList]] for targetIDList in targetObjIDArray]
+
         matchedObjList = [anotherList.new() for _ in range(len(self.all))]
-        [matchedObj.setAll(matchedValue.tolist()) for matchedObj,matchedValue in zip(matchedObjList,matchedValueList)]
+        [matchedObj.setAll(matchedValue) for matchedObj,matchedValue in zip(matchedObjList, matchedValueList)]
         [setattr(this, targetAttrName, matchedObj) for this, matchedObj in zip(self.all, matchedObjList)]
 
     def link(self, anotherList, targetAttrNameOnLeft: str, targetAttrNameOnRight: str, matchFunctionOnLeft=lambda x: True, matchFunctionOnRight=lambda y: True):
