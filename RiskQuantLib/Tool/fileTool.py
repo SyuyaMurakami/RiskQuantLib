@@ -50,6 +50,24 @@ def loadVariable(filePath:str):
     import pickle as pkl
     return pkl.load(open(filePath,"rb"))
 
+def loadCsv(filePath:str, index_col=0):
+    return pd.read_csv(filePath, index_col=index_col)
+
+def loadCsvTimeSeries(filePath:str, index_col=0, converters={0:pd.Timestamp}):
+    return pd.read_csv(filePath, index_col=index_col, converters=converters)
+
+def loadCsvDict(dirPath:str, index_col=0):
+    return {i:loadCsv(dirPath+os.sep+i, index_col=index_col) for i in os.listdir(dirPath) if os.path.splitext(i)[-1] == '.csv'}
+
+def loadCsvTimeSeriesDict(dirPath:str, index_col=0, converters={0:pd.Timestamp}):
+    return {i:loadCsvTimeSeries(dirPath+os.sep+i, index_col=index_col, converters=converters) for i in os.listdir(dirPath) if os.path.splitext(i)[-1] == '.csv'}
+
+def loadExcel(filePath:str):
+    return pd.read_excel(filePath)
+
+def loadExcelDict(dirPath:str):
+    return {i:loadExcel(dirPath+os.sep+i) for i in os.listdir(dirPath) if os.path.splitext(i)[-1] in {'.xlsx', '.xls'}}
+
 def dumpDictToJson(dictVariable:dict,filePath:str):
     """
     Dump dict to json file.
