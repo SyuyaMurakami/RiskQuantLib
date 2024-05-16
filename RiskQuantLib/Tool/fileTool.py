@@ -51,21 +51,40 @@ def loadVariable(filePath:str):
     return pkl.load(open(filePath,"rb"))
 
 def loadCsv(filePath:str, index_col=0):
+    """
+    Use pandas.read_csv to load csv file, default set the first column as index.
+    """
     return pd.read_csv(filePath, index_col=index_col)
 
 def loadCsvTimeSeries(filePath:str, index_col=0, converters={0:pd.Timestamp}):
+    """
+    Use pandas.read_csv to load csv file, default set the first column as index, and set its datatype as pandas.Timestamp.
+    """
     return pd.read_csv(filePath, index_col=index_col, converters=converters)
 
 def loadCsvDict(dirPath:str, index_col=0):
+    """
+    Read all csv file in the target directory, return a dict whose keys are file names and values are pandas.DataFrames.
+    """
     return {i:loadCsv(dirPath+os.sep+i, index_col=index_col) for i in os.listdir(dirPath) if os.path.splitext(i)[-1] == '.csv'}
 
 def loadCsvTimeSeriesDict(dirPath:str, index_col=0, converters={0:pd.Timestamp}):
+    """
+    Read all csv file in the target directory, return a dict whose keys are file names and values are pandas.DataFrames.
+    Default set the first column of each file as index, and set its datatype as pandas.Timestamp.
+    """
     return {i:loadCsvTimeSeries(dirPath+os.sep+i, index_col=index_col, converters=converters) for i in os.listdir(dirPath) if os.path.splitext(i)[-1] == '.csv'}
 
 def loadExcel(filePath:str):
+    """
+    Use pandas.read_excel to load csv file.
+    """
     return pd.read_excel(filePath)
 
 def loadExcelDict(dirPath:str):
+    """
+    Read all excel file in the target directory, return a dict whose keys are file names and values are pandas.DataFrames.
+    """
     return {i:loadExcel(dirPath+os.sep+i) for i in os.listdir(dirPath) if os.path.splitext(i)[-1] in {'.xlsx', '.xls'}}
 
 def dumpDictToJson(dictVariable:dict,filePath:str):
