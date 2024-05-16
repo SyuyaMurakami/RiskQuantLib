@@ -83,7 +83,7 @@ class controller(object):
         build action. This function will return the new builder as a mimic one of original builder.
         """
         from RiskQuantLib.Build.builder import validateBuilder,builder
-        [linkToBuilder.mimicBuilder.bindContent("", bindType=bt, persist=False) for bt in linkToBuilder.mimicBuilder.bindType] if hasattr(linkToBuilder,'mimicBuilder') and isinstance(linkToBuilder.mimicBuilder,builder) else None
+        [linkToBuilder.mimicBuilder.bindContent("", bindType=bt, persist=False) for bt in linkToBuilder.mimicBuilder.bindType] if hasattr(linkToBuilder,'mimicBuilder') and isinstance(linkToBuilder.mimicBuilder,builder) and (linkToBuilder.buildFromPath, linkToBuilder.projectPath, linkToBuilder.targetPath, linkToBuilder.templatePath) == (linkToBuilder.mimicBuilder.buildFromPath, linkToBuilder.mimicBuilder.projectPath, linkToBuilder.mimicBuilder.targetPath, linkToBuilder.mimicBuilder.templatePath) else None
         mimicBuilder = validateBuilder()
         mimicBuilder.projectPath = linkToBuilder.projectPath
         mimicBuilder.targetPath = linkToBuilder.targetPath
