@@ -5,6 +5,7 @@ import copy
 from collections.abc import Iterable
 import pandas as pd
 from RiskQuantLib.Operation.loc import loc
+from RiskQuantLib.Operation.vectorization import vectorization
 from RiskQuantLib.Tool.strTool import changeSecurityListToStr
 #<import>
 #</import>
@@ -345,8 +346,6 @@ class operation(object):
     def apply(self,applyFunction,*args):
         """
         This function will apply the given function to each element of RiskQuantLib list.
-        Default settings will leave any change to element out. Your change to elements won't
-        be kept. Only the result of applyFunction is returned.
         """
         result = [applyFunction(i,*args) for i in self.all]
         tmp = operation()
@@ -563,6 +562,64 @@ class operation(object):
         except Exception as e:
             print('Parallel Failed:', e)
             pass
+
+    def vecApply(self, lambdaFunction=lambda x: None):
+        """
+        This function is like operation.apply, it will apply the given function to each 
+        element of RiskQuantLib list. The passed function should be one-parameter function,
+        whose parameter represents the element of current RiskQuantLib list.
+
+        The difference is this function will try to vectorize the calculation to speed up.
+        It will convert the attribute to np.array and operate mathematical calculation.
+
+        Notice: Only Pure Mathematic Function can be vectorized, this is to say, any logic key word
+        of python, like 'in', 'if', 'for', etc, can Not be used in passed function. If must be pure
+        math formula. Luckily, all numpy function can be used. If you want to do some logistic calculation,
+        you should make sure you write function as logic-matrix-like.
+
+        Returns
+        -------
+        operation
+        """
+        allElement = self.all
+        if len(allElement) != 0:
+            dynamicClass = type('tmp', (vectorization,), {'lambdaFuncName': lambdaFunction})
+            dynamicObj = dynamicClass(allElement)
+            result = super(vectorization, dynamicObj).__getattribute__('lambdaFuncName')()
+            del dynamicObj, dynamicClass
+            return self if result is None else result
+        else:
+            return self
+
+    def vecFunc(self, functionName, *args, **kwargs):
+        """
+        This function is like operation.execFunc, it will call the given function of each 
+        element of RiskQuantLib list. The passed function should be the attribute function 
+        of element of current RiskQuantLib List.
+
+        The difference is this function will try to vectorize the calculation to speed up.
+        It will convert the attribute to np.array and operate mathematical calculation.
+
+        Notice: Only Pure Mathematic Function can be vectorized, this is to say, any logic key word
+        of python, like 'in', 'if', 'for', etc, can Not be used in passed function. If must be pure
+        math formula. Luckily, all numpy function can be used. If you want to do some logistic calculation,
+        you should make sure you write function as logic-matrix-like.
+
+        Returns
+        -------
+        operation
+        """
+        allElement = self.all
+        if len(allElement) != 0:
+            functionObj = getattr(type(allElement[0]), functionName, lambda *argsSub, **kwargsSub: None)
+            functionObjName = functionName + 'Attribute'
+            dynamicClass = type(functionName, (vectorization,), {functionObjName: functionObj})
+            dynamicObj = dynamicClass(allElement)
+            result = super(vectorization, dynamicObj).__getattribute__(functionObjName)(*args, **kwargs)
+            del dynamicObj, dynamicClass
+            return self if result is None else result
+        else:
+            return self
 
     def copy(self,deep = True):
         """
