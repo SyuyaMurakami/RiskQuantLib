@@ -190,12 +190,11 @@ def generateNextNWeekday(startDateString:str,n:int):
     endDate_FormedStr = (startDate + pd.Timedelta(days=int(n/5*7)+10)).strftime("%Y-%m-%d")
     return [i for i in pd.date_range(startDate_FormedStr,endDate_FormedStr,freq='D').to_list() if i.dayofweek<5][:n]
 
-def changeSecurityListToStr(securityList:list):
+def concatStringListToStr(stringList:list):
     """
     This function will convert a list of string into a single string.
     """
-    securityListFormed = [i+',' for i in securityList]
-    return "".join(securityListFormed).strip(',')
+    return ",".join(stringList)
 
 def getStringSimilarity(string1:str,string2:str):
     """

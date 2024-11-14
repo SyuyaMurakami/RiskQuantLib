@@ -1,12 +1,13 @@
 #!/usr/bin/python
 #coding = utf-8
-import numpy as np
+import sys
 import copy
-from collections.abc import Iterable
+import traceback
+import numpy as np
 import pandas as pd
+from collections.abc import Iterable
 from RiskQuantLib.Operation.loc import loc
 from RiskQuantLib.Operation.vectorization import vectorization
-from RiskQuantLib.Tool.strTool import changeSecurityListToStr
 #<import>
 #</import>
 
@@ -236,7 +237,7 @@ class operation(object):
         This returns a list of string, showing the code of each element.
         """
         try:
-            return changeSecurityListToStr(self['code'])
+            return ','.join(self['code'])
         except:
             return ''
 
@@ -509,8 +510,11 @@ class operation(object):
             tmp.setAll(result)
             return tmp
         except Exception as e:
-            print('Execution Failed:', e)
-            pass
+            print('Execution Failed As Follows:', file=sys.stderr)
+            print('Instrument Type:', self.__class__.__name__, file=sys.stderr)
+            print('Function Name:', functionName, file=sys.stderr)
+            print('Exception Info:', e, file=sys.stderr)
+            traceback.print_exc()
 
     def paraFunc(self, functionName, *args, **kwargs):
         """
