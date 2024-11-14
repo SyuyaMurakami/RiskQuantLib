@@ -36,7 +36,7 @@ class controller(object):
         tagNameAdj = defaultTagName if tagName == '' else tagName
         controlCommandIndex, controlCommandValue = controller.parseDeclareTagByGivenString(content)
         controlCommandIndexRoot, controlCommandIndexRest = controller.parseDeclareTagByGivenString(",".join(controlCommandIndex), splitWordBy='.')
-        controlCommandSeries = pd.Series(controlCommandValue,index=pd.MultiIndex.from_arrays([controlCommandIndexRoot,controlCommandIndexRest],names=['Root','Rest'])).groupby(level=[0,1]).apply(lambda x:",".join(x.replace('',np.nan).dropna().drop_duplicates()).strip(',')).rename(tagNameAdj)
+        controlCommandSeries = pd.Series(controlCommandValue,index=pd.MultiIndex.from_arrays([controlCommandIndexRoot,controlCommandIndexRest],names=['Root','Rest'])).groupby(level=[0,1]).apply(lambda x:",".join(x.where(x != '', np.nan).dropna().drop_duplicates()).strip(',')).rename(tagNameAdj)
         return controlCommandSeries
 
     @staticmethod
