@@ -94,6 +94,24 @@ def dumpDictToJson(dictVariable:dict,filePath:str):
     import json
     json.dump(dictVariable,open(filePath,"w",encoding='UTF-8'),ensure_ascii=False)
 
+
+def deleteFile(filePath:str):
+    """
+    Delete a file if it exists.
+    """
+    if os.path.isfile(filePath):
+        os.remove(filePath)
+        print('Delete File: ', filePath)
+    else:
+        print('Delete Failed, File Does Not Exist: ', filePath)
+
+def deleteFileWithConfirm(filePath:str):
+    """
+    Before Delete a file, ask for confimation.
+    """
+    from RiskQuantLib.Tool.decoratorTool import confirmer
+    confirmer()(deleteFile)(filePath)
+
 def clearCachePklFile(filePath:str):
     """
     Delete all '.pkl' files in filePath.
@@ -101,7 +119,7 @@ def clearCachePklFile(filePath:str):
     print("Clearing Cache in "+filePath)
     fileListInPath = [i for i in os.listdir(filePath) if i.find('.pkl')!=-1]
     while len(fileListInPath)!=0:
-        os.system('del "'+filePath+os.sep+'*.pkl"')
+        [deleteFile(i) for i in fileListInPath]
         fileListInPath  = [i for i in os.listdir(filePath) if i.find('.pkl')!=-1]
     time.sleep(2)
 

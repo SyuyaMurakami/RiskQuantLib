@@ -236,7 +236,7 @@ class builder(object):
                            os.path.abspath(__file__).split(os.sep + os.path.basename(__file__))[0],
                            os.path.abspath(__file__).split(os.sep + os.path.basename(__file__))[0] + os.sep + "Component"]
         [None if os.path.exists(ptc) else (warnings.warn("\n"+pn+" does NOT exist, it is changed from " + ptc + " into : "+pa), setattr(self, pan, pa)) for pn, ptc, pa, pan in zip(pathName, pathToBeCheck, pathAlternative, pathAttr)]
-        self.bindType = {bindType:{pair if os.path.exists(pair[0]) else (self.targetPath+os.sep+pair[0].split(os.sep+'RiskQuantLib'+os.sep)[-1],pair[1]) for pair in self.bindType[bindType]} for bindType in self.bindType}
+        self.bindType = {bindType:{pair if os.path.exists(pair[0]) else (self.targetPath+os.sep+pair[0].replace('\\', os.sep).replace('/',os.sep).split(os.sep+'RiskQuantLib'+os.sep)[-1],pair[1]) for pair in self.bindType[bindType]} for bindType in self.bindType}
 
     def updateRender(self, templateSearchPath:str = ''):
         """
