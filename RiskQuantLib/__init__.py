@@ -901,10 +901,55 @@ def persistProject(targetPath: str = '', renderFromPath: str = '', channel: str 
     confirm = input("This action can not be Un-Done or Cancelled, do you confirm to continue? (y/n)")
     if confirm.lower()=='y':
         from RiskQuantLib.Build.builder import configBuilder
-        buildObj = configBuilder.loadInfo(buildCachePath) if os.path.isfile(buildCachePath) and not force else configBuilder(targetProjectPath=targetPath)
+        buildProject(targetPath,renderFromPath,channel,False,force) if not os.path.isfile(buildCachePath) or force else None
+        buildObj = configBuilder.loadInfo(buildCachePath)
         buildObj.persistProject(sourceCodeDirPath=renderFromPath,bindType=bindType)
         configFile = initiateConfigFile()
         configFile.writeToFile(configFilePath)
         print("Project persisted!")
     else:
         print("Action cancelled, nothing changed!")
+
+def copyProject(fromProjectPath: str = '', toProjectPath: str = ''):
+    """
+    copyProject() is a function to copy RiskQuantLib project to another directory.
+
+    Use terminal command 'copyRQL fromProjectPath toProjectPath' to use this function. The project
+    will be copied into the specified directory, if toProjectPath does not exist, it will be created.
+
+    This function will copy every file in current project into new directory except those files which 
+    are under path fromProjectPath/RiskQuantLib. If files with the same name already exist in toProjectPath,
+    then they will be overwritten, so use it carefully.
+
+    Parameters
+    ----------
+    fromProjectPath : str
+        A terminal command parameter, specify the RiskQuantLib project path you want to copy from.
+    toProjectPath : str
+        The path where you want to copy RiskQuantLib project to.
+
+    Returns
+    -------
+    None
+    """
+
+    if fromProjectPath == '' and toProjectPath == '':
+        parser = argparse.ArgumentParser()
+        parser.add_argument("fromProjectPath", type=str, help="the path of RiskQuantLib project which you want to copy files from")
+        parser.add_argument("toProjectPath", type=str, help="the path of RiskQuantLib project which you want to copy files into")
+        args = parser.parse_args()
+        fromProjectPath = args.fromProjectPath
+        toProjectPath = args.toProjectPath
+    
+    import os
+    fromProjectPath = os.path.abspath(fromProjectPath)
+    toProjectPath = os.path.abspath(toProjectPath)
+    if os.path.isdir(fromProjectPath):
+        import shutil
+        newProject(toProjectPath)
+        dirsAndFiles = [(i, fromProjectPath+os.sep+i, toProjectPath+os.sep+i) for i in os.listdir(fromProjectPath)]
+        [shutil.copy(f, t) for i, f, t in dirsAndFiles if os.path.isfile(f)]
+        [shutil.copytree(f, t, dirs_exist_ok=True) for i, f, t in dirsAndFiles if os.path.isdir(f) and i != 'RiskQuantLib']
+        print("Project copied from ", fromProjectPath, " to ", toProjectPath)
+    else:
+        print("You must specify a validated path which you want to copy files from")
