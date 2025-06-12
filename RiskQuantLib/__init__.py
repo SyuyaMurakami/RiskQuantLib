@@ -28,11 +28,12 @@ def initiateBuildFile():
     PYB.code.addLine(r'parser.add_argument("-r", "--renderFromPath", type=str, help="the directory of source code where the template code exists")')
     PYB.code.addLine(r'parser.add_argument("-c", "--channel", type=str, help="if given a channel name, render action in this channel will not delete the result of render in other channel unless it is overwritten by current render")')
     PYB.code.addLine(r'parser.add_argument("-d", "--debug", help="use debug mode, break point in Src will start to effect", action="store_true")')
+    PYB.code.addLine(r'parser.add_argument("-f", "--force", help="force to build, cached building information will be neglected, if auto-build mode is on, building information will be deleted for one time before auto-building", action="store_true")')
     PYB.code.addLine(r'args = parser.parse_args()')
     PYB.code.addLine(r'targetPath = args.targetPath if args.targetPath else path')
     PYB.code.addLine(r'renderFromPath = args.renderFromPath if args.renderFromPath else targetPath+os.sep+"Src"')
     PYB.code.addLine(r'bindType = args.channel if args.channel else "renderedSourceCode"')
-    PYB.code.addLine(r'autoBuildProject(targetPath,renderFromPath,bindType,args.debug) if args.auto else buildProject(targetPath,renderFromPath,bindType,args.debug)')
+    PYB.code.addLine(r'autoBuildProject(targetPath,renderFromPath,bindType,args.debug,args.force) if args.auto else buildProject(targetPath,renderFromPath,bindType,args.debug,args.force)')
     return PYB
 
 def initiateMainFile():
@@ -173,7 +174,7 @@ def parseBuildPath(targetPath: str, checkExist:bool = False):
         raise Exception("The target directory should be a RiskQuantLib project, with directory named as RiskQuantLib and config.py in it!")
     return rqlPath, configFilePath, buildCachePath
 
-def buildProjectFromConfig(targetPath: str, buildCachePath: str, configFilePath:str, renderFromPath: str, bindType: str = 'renderedSourceCode', debug: bool = False):
+def buildProjectFromConfig(targetPath: str, buildCachePath: str, configFilePath:str, renderFromPath: str, bindType: str = 'renderedSourceCode', debug: bool = False, force: bool = False):
     """
     buildProjectFromConfig() is a function to build project according to config.py declaration.
 
@@ -200,6 +201,13 @@ def buildProjectFromConfig(targetPath: str, buildCachePath: str, configFilePath:
         specified class. This mode is useful when your code is still under development. You will not have to change between
         ./Src/somecode.py and target instrument class .py file to edit any code error. The break point will stop right
         under ./Src/somecode.py.
+    force : bool
+        If True, the cached building file buildInfo.pkl will be neglected, a new builder object will be created.
+        This is useful when there are some mistakes in buildInfo.pkl, or error happens when caching buildInfo.pkl.
+        In these cases, old buildInfo.pkl exists but can not be used. The traditional way to solve this problem is manually
+        deleting this file and build whole project again. With this parameter specified as True, users can choose to build
+        project no matter buildInfo.pkl exists or not. However, any information in old building will be deleted. If you use
+        guardian projects, there could be problems, you will have to build all guardian projects again.
 
     Returns
     -------
@@ -208,7 +216,7 @@ def buildProjectFromConfig(targetPath: str, buildCachePath: str, configFilePath:
     """
     import os, time
     from RiskQuantLib.Build.builder import configBuilder
-    if os.path.isfile(buildCachePath):
+    if os.path.isfile(buildCachePath) and not force:
         buildObj = configBuilder.loadInfo(buildCachePath)
     else:
         buildObj = configBuilder(targetProjectPath=targetPath)
@@ -660,7 +668,7 @@ def sendProjectTemplate(targetPath:str = ''):
         send.run()
 
 
-def buildProject(targetPath:str = '', renderFromPath:str = '', channel:str = '', debug:bool = False):
+def buildProject(targetPath:str = '', renderFromPath:str = '', channel:str = '', debug: bool = False, force: bool = False):
     """
     buildProject() is a function to build RiskQuantLib project.
 
@@ -689,6 +697,13 @@ def buildProject(targetPath:str = '', renderFromPath:str = '', channel:str = '',
         specified class. This mode is useful when your code is still under development. You will not have to change between
         ./Src/somecode.py and target instrument class .py file to edit any code error. The break point will stop right
         under ./Src/somecode.py.
+    force : bool
+        If True, the cached building file buildInfo.pkl will be neglected, a new builder object will be created.
+        This is useful when there are some mistakes in buildInfo.pkl, or error happens when caching buildInfo.pkl.
+        In these cases, old buildInfo.pkl exists but can not be used. The traditional way to solve this problem is manually
+        deleting this file and build whole project again. With this parameter specified as True, users can choose to build
+        project no matter buildInfo.pkl exists or not. However, any information in old building will be deleted. If you use
+        guardian projects, there could be problems, you will have to build all guardian projects again.
 
     Returns
     -------
@@ -701,19 +716,21 @@ def buildProject(targetPath:str = '', renderFromPath:str = '', channel:str = '',
         parser.add_argument("-r","--renderFromPath", type=str, help="the directory of source code where the template code exists")
         parser.add_argument("-c", "--channel", type=str, help="if given a channel name, render action in this channel will not delete the result of render in other channel unless it is overwritten by current render")
         parser.add_argument("-d", "--debug", help="use debug mode, break point in Src will start to effect", action="store_true")
+        parser.add_argument("-f", "--force", help="force to build, cached building information will be neglected", action="store_true")
         args = parser.parse_args()
         targetPath = args.targetPath
         renderFromPath = args.renderFromPath
         channel = args.channel
         debug = args.debug
+        force = args.force
 
     import os
     renderFromPath = renderFromPath if renderFromPath else (targetPath + os.sep + "Src")
     bindType = channel if channel else 'renderedSourceCode'
     rqlPath, configFilePath, buildCachePath = parseBuildPath(targetPath, checkExist=True)
-    buildProjectFromConfig(targetPath, buildCachePath, configFilePath, renderFromPath, bindType, debug)
+    buildProjectFromConfig(targetPath, buildCachePath, configFilePath, renderFromPath, bindType, debug, force)
 
-def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str = '', debug:bool = False):
+def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str = '', debug: bool = False, force: bool = False):
     """
     autoBuildProject() is a function to build RiskQuantLib project. This function keeps
     running until catch a KeyboardInterrupt Exception.
@@ -740,6 +757,15 @@ def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str =
         specified class. This mode is useful when your code is still under development. You will not have to change between
         ./Src/somecode.py and target instrument class .py file to edit any code error. The break point will stop right
         under ./Src/somecode.py.
+    force : bool
+        If True, the cached building file buildInfo.pkl will be deleted, a new builder object will be created.
+        This is useful when there are some mistakes in buildInfo.pkl, or error happens when caching buildInfo.pkl.
+        In these cases, old buildInfo.pkl exists but can not be used. If this parameter is specified as True, buildInfo.pkl
+        will be deleted before auto-building. However, any information in old building will be deleted. If you use
+        guardian projects, there could be problems, you will have to build all guardian projects again. Another thing to
+        notice is the action of parameter force in autoBuildProject is different with that in buildProject or persistProject.
+        buildInfo.pkl will be neglected in buildProject and persistProject, but will be deleted for a single time before
+        auto-building.
 
     Returns
     -------
@@ -751,23 +777,29 @@ def autoBuildProject(targetPath:str = '', renderFromPath:str = '', channel:str =
         parser.add_argument("-r", "--renderFromPath", type=str, help="the directory of source code where the template code exists")
         parser.add_argument("-c", "--channel", type=str, help="if given a channel name, render action in this channel will not delete the result of render in other channel unless it is overwritten by current render")
         parser.add_argument("-d", "--debug", help="use debug mode, break point in Src will start to effect", action="store_true")
+        parser.add_argument("-f", "--force", help="force to build, cached building information will be neglected", action="store_true")
         args = parser.parse_args()
         targetPath = args.targetPath
         renderFromPath = args.renderFromPath
         channel = args.channel
         debug = args.debug
+        force = args.force
 
     import os
     renderFromPath = renderFromPath if renderFromPath else (targetPath + os.sep + "Src")
     bindType = channel if channel else 'renderedSourceCode'
     rqlPath, configFilePath, buildCachePath = parseBuildPath(targetPath, checkExist=True)
 
+    # Delete cached build information if force auto-building
+    os.remove(buildCachePath) if force and os.path.isfile(buildCachePath) else None
+
     # The call back function must be a single parameter function
     def build(projectPath=targetPath):
         try:
-            buildProjectFromConfig(targetPath,buildCachePath,configFilePath,renderFromPath, bindType, debug)
+            buildProjectFromConfig(targetPath,buildCachePath,configFilePath,renderFromPath, bindType, debug, force=False)
         except Exception as e:
-            pass
+            import time
+            print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), "- Build Project Failed: ", e)
 
     from RiskQuantLib.Tool.fileTool import systemWatcher
     watchObj = systemWatcher([configFilePath, renderFromPath], call_back_function_on_any_change=build, withFormat=True, monitorFormat={'.py','.pyt'})
@@ -810,7 +842,7 @@ def unBuildProject(targetPath:str = ''):
     print("Project un-build finished!")
 
 
-def persistProject(targetPath:str = '', renderFromPath:str = '', channel:str = ''):
+def persistProject(targetPath: str = '', renderFromPath: str = '', channel: str = '', force: bool = False):
     """
     persistProject() is a function to persist RiskQuantLib project.
 
@@ -838,6 +870,13 @@ def persistProject(targetPath:str = '', renderFromPath:str = '', channel:str = '
     channel : str
         render action in this channel will not delete the result of render in other channel
         unless it is overwritten by current render.
+    force : bool
+        If True, the cached building file buildInfo.pkl will be neglected, a new builder object will be created.
+        This is useful when there are some mistakes in buildInfo.pkl, or error happens when caching buildInfo.pkl.
+        In these cases, old buildInfo.pkl exists but can not be used. The traditional way to solve this problem is manually
+        deleting this file and build whole project again. With this parameter specified as True, users can choose to build
+        project no matter buildInfo.pkl exists or not. However, any information in old building will be deleted. If you use
+        guardian projects, there could be problems, you will have to build all guardian projects again.
 
     Returns
     -------
@@ -848,10 +887,12 @@ def persistProject(targetPath:str = '', renderFromPath:str = '', channel:str = '
         parser.add_argument("targetPath", type=str, help="the RiskQuantLib project whose code you want to change into permanent")
         parser.add_argument("-r", "--renderFromPath", type=str, help="the directory of source code where the template code exists")
         parser.add_argument("-c", "--channel", type=str, help="if given a channel name, render action in this channel will not delete the result of render in other channel unless it is overwritten by current render")
+        parser.add_argument("-f", "--force", help="force to persist, cached building information will be neglected", action="store_true")
         args = parser.parse_args()
         targetPath = args.targetPath
         renderFromPath = args.renderFromPath
         channel = args.channel
+        force = args.force
 
     import os
     rqlPath, configFilePath, buildCachePath = parseBuildPath(targetPath, checkExist=True)
@@ -860,7 +901,7 @@ def persistProject(targetPath:str = '', renderFromPath:str = '', channel:str = '
     confirm = input("This action can not be Un-Done or Cancelled, do you confirm to continue? (y/n)")
     if confirm.lower()=='y':
         from RiskQuantLib.Build.builder import configBuilder
-        buildObj = configBuilder.loadInfo(buildCachePath) if os.path.isfile(buildCachePath) else configBuilder(targetProjectPath=targetPath)
+        buildObj = configBuilder.loadInfo(buildCachePath) if os.path.isfile(buildCachePath) and not force else configBuilder(targetProjectPath=targetPath)
         buildObj.persistProject(sourceCodeDirPath=renderFromPath,bindType=bindType)
         configFile = initiateConfigFile()
         configFile.writeToFile(configFilePath)
