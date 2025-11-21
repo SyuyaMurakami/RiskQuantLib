@@ -378,8 +378,10 @@ class operation(object):
         groupBy['obj'] = self.all
         df = groupBy.groupby(attrName)['obj']
 
-        attrValueList = [[j for j in i] if type(i)==type(tuple()) else [i] for i in df.groups.keys()]
-        securityList = [df.get_group(i).to_list() for i in df.groups.keys()]
+        kvList = [([j for j in k] if type(k) is tuple else [k], v.to_list()) for k, v in df]
+        attrValueList = [i[0] for i in kvList]
+        securityList = [i[1] for i in kvList]
+
         if useObj:
             if inplace:
                 objList = [self.__new__(type(self)) for i in attrValueList]
@@ -419,8 +421,10 @@ class operation(object):
         groupBy['obj'] = self.all
         df = groupBy.groupby(attrName)['obj']
 
-        attrValueList = [[j for j in i] if type(i)==type(tuple()) else [i] for i in df.groups.keys()]
-        securityList = [df.get_group(i).to_list() for i in df.groups.keys()]
+        kvList = [([j for j in k] if type(k) is tuple else [k], v.to_list()) for k, v in df]
+        attrValueList = [i[0] for i in kvList]
+        securityList = [i[1] for i in kvList]
+
         if useObj:
             if inplace:
                 objList = [self.__new__(type(self)) for i in attrValueList]
