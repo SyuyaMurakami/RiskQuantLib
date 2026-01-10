@@ -56,10 +56,11 @@ def loadCsv(filePath:str, index_col=0):
     """
     return pd.read_csv(filePath, index_col=index_col)
 
-def loadCsvTimeSeries(filePath:str, index_col=0, converters={0:pd.Timestamp}):
+def loadCsvTimeSeries(filePath:str, index_col=0, converters=None):
     """
     Use pandas.read_csv to load csv file, default set the first column as index, and set its datatype as pandas.Timestamp.
     """
+    converters = {0: pd.Timestamp} if converters is None else converters
     return pd.read_csv(filePath, index_col=index_col, converters=converters)
 
 def loadCsvDict(dirPath:str, index_col=0):
@@ -68,11 +69,12 @@ def loadCsvDict(dirPath:str, index_col=0):
     """
     return {i:loadCsv(dirPath+os.sep+i, index_col=index_col) for i in os.listdir(dirPath) if os.path.splitext(i)[-1] == '.csv'}
 
-def loadCsvTimeSeriesDict(dirPath:str, index_col=0, converters={0:pd.Timestamp}):
+def loadCsvTimeSeriesDict(dirPath:str, index_col=0, converters=None):
     """
     Read all csv file in the target directory, return a dict whose keys are file names and values are pandas.DataFrames.
     Default set the first column of each file as index, and set its datatype as pandas.Timestamp.
     """
+    converters = {0: pd.Timestamp} if converters is None else converters
     return {i:loadCsvTimeSeries(dirPath+os.sep+i, index_col=index_col, converters=converters) for i in os.listdir(dirPath) if os.path.splitext(i)[-1] == '.csv'}
 
 def loadExcel(filePath:str):
@@ -107,7 +109,7 @@ def deleteFile(filePath:str):
 
 def deleteFileWithConfirm(filePath:str):
     """
-    Before Delete a file, ask for confimation.
+    Before Delete a file, ask for confirmation.
     """
     from RiskQuantLib.Tool.decoratorTool import confirmer
     confirmer()(deleteFile)(filePath)
@@ -123,175 +125,10 @@ def clearCachePklFile(filePath:str):
         fileListInPath  = [i for i in os.listdir(filePath) if i.find('.pkl')!=-1]
     time.sleep(2)
 
-def findFirstNotNanValueOfSeries(x):
-    """
-    Return the first not nan value of a pandas.Series object.
-    """
-    import numpy as np
-    for i in x.values:
-        if type(i)==type(np.nan) and np.isnan(i):
-            pass
-        else:
-            return i
-    return np.nan
-
-def resetIndexByFirstNotNanValue(df:pd.DataFrame,dropFirst = False):
-    """
-    Reset index by the first not nan value.
-    """
-    df.dropna(axis=0,how='all',inplace=True)
-    df.index = df.apply(findFirstNotNanValueOfSeries,axis=1)
-    if dropFirst:
-        df.drop(columns=[df.columns[0]],inplace=True)
-
-def louverBox(target_df:pd.DataFrame,groupBy:str = '',insertTo:str = ''):
-    """
-    This function is like pandas.DataFrame.sum, however, this function will
-    sum the value for each column, and insert it as a new row before the dataframe.
-
-    Parameters
-    -----------
-    target_df : pd.DataFrame
-        The dataframe you want to louverBox
-    groupBy : str
-        The column name that you want to groupby.
-    insertTo : str
-        The index name of the insert row.
-
-    Returns
-    -------
-    tmp_df : pd.DataFrame
-        The louverBox-ed dataframe.
-    """
-    import numpy as np
-    tmp_df = target_df.copy()
-    groupName  = tmp_df[groupBy].unique()[0]
-    tmp_df.reset_index(drop=True, inplace=True)
-    tmp_df = tmp_df.drop(columns=[groupBy])
-    tmp_df['IF_ASSEMBLE'] = False
-
-    insertList = [np.nansum(tmp_df[i]) if tmp_df[i].dtypes!=np.object else np.nan for i in tmp_df.columns]
-    insertList[tmp_df.columns.to_list().index(insertTo)] = groupName
-    insertList[tmp_df.columns.to_list().index("IF_ASSEMBLE")] = True
-    if tmp_df.shape[0]!=1:
-        tmp_df.loc[-1] = insertList
-    else:
-        tmp_df[insertTo] = groupName
-        tmp_df['IF_ASSEMBLE'] = True
-
-    tmp_df.drop_duplicates(inplace=True,keep='first')
-    tmp_df.sort_index(inplace=True)
-    tmp_df.reset_index(drop=True,inplace=True)
-    return tmp_df
-
-def dataFrameLouverBox(df:pd.DataFrame,groupBy:str='',insertTo:str=''):
-    """
-    This function is like pandas.DataFrame.groupby, however, this function will
-    sum the value for each group, and insert it as a new row before that group.
-
-    Parameters
-    ----------
-    df : pd.DataFrame
-        The dataframe that you want to louverBox
-    groupBy : str
-        The column you want to group by.
-    insertTo :str
-        The column you want to record the result
-
-    Returns
-    -------
-    result : pd.DataFrame
-    """
-    if insertTo not in df.columns.to_list():
-        df[insertTo] = ''
-    result = df.groupby(groupBy).apply(lambda x:louverBox(x,groupBy=groupBy,insertTo=insertTo))
-    result.reset_index(drop=True,inplace=True)
-    return result
-
-def generateFileDictFromPath(filePathString:str, targetDict:dict = {}, onlyExcel:bool = True):
-    """
-    This function generate a dict of file.
-
-    Parameters
-    ----------
-    filePathString :str
-        The path you want to read files from.
-    targetDict : dict
-        The dict to hold result.
-    onlyExcel : bool
-        If true, only excel will be read and loaded.
-
-    Returns
-    -------
-    targetDict : dict
-        The dict holding excel dataframe or paths.
-    """
-    import pandas as pd
-    fileList = os.listdir(filePathString)
-    if onlyExcel:
-        fileList = [i for i in fileList if i.find('.xlsx')!=-1 or i.find('.xls')!=-1]
-        excelList = [pd.read_excel(filePathString+os.sep+i,index_col=None) for i in fileList]
-        fileDict = dict(zip(fileList,excelList))
-        [resetIndexByFirstNotNanValue(fileDict[i]) for i in fileList]
-        targetDict[filePathString] = dict(zip(fileList,[fileDict[i].to_dict(orient='dict') for i in fileList]))
-        return targetDict
-    else:
-        targetDict[filePathString] = fileList
-        return targetDict
-
-def generateDataFrameFromDict(inputDict:dict, dateString:str, fileNameString:str, columnNameString:str):
-    """
-    Generate a dataframe from a dict.
-    """
-    import pandas as pd
-    df = pd.DataFrame([inputDict.keys(),inputDict.values()], index=['ROW','VALUE']).T
-    df['PATH'] = dateString
-    df['FILE'] = fileNameString
-    df['COLUMN'] = columnNameString
-    return df
-
-def compressExcel(filePathString:str, outputPathString:str, subDirectory:bool = True):
-    """
-    Re-format excel in form of ['PATH','FILE','COLUMN','ROW','VALUE']
-
-    Parameters
-    ----------
-    filePathString : str
-        The path where you hold your excel files.
-    outputPathString : str
-        The path of return file.
-    subDirectory : bool
-        If there are still other dictionaries in filePathString.
-
-    Returns
-    -------
-    None
-    """
-    import pandas as pd
-    import operator
-    from functools import reduce
-    if subDirectory:
-        dirList = [i for i in os.listdir(filePathString) if i.find('.')==-1]
-        subDirectoryDict = {}
-        [generateFileDictFromPath(filePathString+os.sep+i,subDirectoryDict) for i in dirList]
-        dfArray = [[[generateDataFrameFromDict(subDirectoryDict[i][j][k],dateString=i,fileNameString=j,columnNameString=k) for k in subDirectoryDict[i][j].keys()] for j in subDirectoryDict[i].keys()] for i in subDirectoryDict.keys()]
-        dfList = reduce(operator.add,dfArray)
-        dfList = reduce(operator.add,dfList)
-        result = pd.concat(dfList)
-        result.reset_index(drop=True,inplace=True)
-        result[['PATH','FILE','COLUMN','ROW','VALUE']].to_excel(outputPathString,index=0)
-    else:
-        directoryDict = {}
-        generateFileDictFromPath(filePathString,directoryDict)
-        dfArray = [[[generateDataFrameFromDict(directoryDict[i][j][k],dateString=i,fileNameString=j,columnNameString=k) for k in directoryDict[i][j].keys()] for j in directoryDict[i].keys()] for i in directoryDict.keys()]
-        dfList = reduce(operator.add,dfArray)
-        dfList = reduce(operator.add,dfList)
-        result = pd.concat(dfList)
-        result.reset_index(drop=True,inplace=True)
-        result[['PATH','FILE','COLUMN','ROW','VALUE']].to_excel(outputPathString,index=0)
 
 #<fileTool>
 #</fileTool>
+
 
 class fileReceiver:
     def __init__(self, targetFilePath):

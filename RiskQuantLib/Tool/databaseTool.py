@@ -3,152 +3,109 @@
 
 import numpy as np
 import pandas as pd
-import mysql.connector
+from typing import Union, List
+
 #<import>
 #</import>
 
-class mysqlTool(object):
-    """
-    This is the API to connect with mysql database.
-    """
-    def __init__(self,databaseNameString:str,hostAddress:str,userName:str,passWord:str):
-        self.targetDB = mysql.connector.connect(
-            host = hostAddress,
-            user = userName,
-            passwd = passWord,
-            database = databaseNameString
-            # buffered = True
-        )
-        self.targetCursor = self.targetDB.cursor(buffered=True)
 
-    def getAllTables(self):
-        self.targetCursor.execute("SHOW TABLES")
-        return [i for i in self.targetCursor]
+class sqlConnector(object):
+    def __init__(self, engine):
+        self.engine = engine
 
-    def getColNameOfTable(self,tableNameString:str):
-        sql = "SELECT * FROM "+tableNameString
-        self.targetCursor.execute(sql)
-        return [i for i in self.targetCursor.column_names]
-
-    def selectAllFromTable(self,tableNameString:str):
-        sql = "SELECT * FROM "+tableNameString
-        self.targetCursor.execute(sql)
-        result = self.targetCursor.fetchall()
-        df = pd.DataFrame(result,columns = self.targetCursor.column_names)
+    def readSql(self, sql: str, *args, **kwargs):
+        """Execute sql and return a dataframe."""
+        from sqlalchemy import text
+        with self.engine.connect() as conn:
+            df = pd.read_sql(text(sql), con=conn, *args, **kwargs)
         return df
 
-    def selectDictFromTable(self,tableNameString:str,colNameAsKey:str,colNameAsValue:str):
-        try:
-            sql = "SELECT "+colNameAsKey+","+colNameAsValue+" FROM "+tableNameString
-            self.targetCursor.execute(sql)
-            result = self.targetCursor.fetchall()
-            resultDict = dict(zip([i[0] for i in result],[i[1] for i in result]))
-            return resultDict
-        except Exception as e:
-            print(e)
-            return {}
+    def writeTable(self, df: pd.DataFrame, tableNameString: str, ifExists: str = 'append'):
+        """Write df into database, ifExists can be 'fail', 'replace', 'append'."""
+        df.to_sql(tableNameString, con=self.engine, if_exists=ifExists, index=False, method='multi', chunksize=1000)
 
-    def selectColFromTable(self,tableNameString:str,colNameList:list):
-        colNameString = "".join(["`"+i+"`," for i in colNameList]).strip(",")
-        sql = "SELECT "+colNameString+" FROM "+tableNameString
-        self.targetCursor.execute(sql)
-        result = self.targetCursor.fetchall()
-        df = pd.DataFrame(result,columns = self.targetCursor.column_names)
-        return df
+    def executeSql(self, sql: str, params: dict = None):
+        """Execute DDL or DML (like UPDATE, DELETE, CREATE)."""
+        from sqlalchemy import text
+        with self.engine.begin() as conn:
+            conn.execute(text(sql), params or {})
 
-    def selectColFromTableWithCondition(self,tableNameString:str,colNameList:list,conditionString:str):
-        colNameString = "".join(["`"+i+"`," for i in colNameList]).strip(",")
-        sql = "SELECT "+colNameString+" FROM "+tableNameString+" WHERE "+conditionString
-        self.targetCursor.execute(sql)
-        result = self.targetCursor.fetchall()
-        df = pd.DataFrame(result,columns = self.targetCursor.column_names)
-        return df
+    def getAllTables(self, *args, **kwargs):
+        """
+        Get names of all tables.
+        You may need to specify schema=some if you are connecting
+        to oracle or sqlserver.
+        """
+        from sqlalchemy import inspect
+        inspector = inspect(self.engine)
+        return inspector.get_table_names(*args, **kwargs)
 
-    def selectAllFromTableWithCondition(self,tableNameString:str,conditionString:str):
-        sql = "SELECT * FROM "+tableNameString+" WHERE "+conditionString
-        self.targetCursor.execute(sql)
-        result = self.targetCursor.fetchall()
-        df = pd.DataFrame(result,columns = self.targetCursor.column_names)
-        return df
+    def getColNames(self, tableName: str, *args, **kwargs):
+        """
+        Get all names of columns of a table.
+        You may need to specify schema=some if you are connecting
+        to oracle or sqlserver.
+        """
+        from sqlalchemy import inspect
+        inspector = inspect(self.engine)
+        columns = inspector.get_columns(tableName, *args, **kwargs)
+        return [col['name'] for col in columns]
 
-    def insertRowIntoTable(self,tableNameString:str,valuesTuple:tuple):
+    #<sqlConnector>
+    #</sqlConnector>
 
-        sql = "SELECT * FROM "+tableNameString
-        self.targetCursor.execute(sql)
-        colNameString = "".join(["`"+i+"`," for i in self.targetCursor.column_names]).strip(", ")
-        sql = "INSERT INTO "+tableNameString+" ("+colNameString+") VALUES (" + "".join(["%s, " for i in range(len(self.targetCursor.column_names))]).strip(", ")+")"
-        val = valuesTuple
-        self.targetCursor.execute(sql,val)
-        self.targetDB.commit()
-        print("Insert Finished")
 
-    def replaceRowsIntoTable(self,tableNameString:str,valuesTupleList:list):
-        sql = "SELECT * FROM "+tableNameString
-        self.targetCursor.execute(sql)
-        colNameString = "".join(["`"+i+"`," for i in self.targetCursor.column_names]).strip(", ")
-        sql = "REPLACE INTO "+tableNameString+" ("+colNameString+") VALUES (" + "".join(["%s, " for i in range(len(self.targetCursor.column_names))]).strip(", ")+")"
-        val = valuesTupleList
-        self.targetCursor.executemany(sql, val)
-        self.targetDB.commit()
-        print("Insert Finished")
+class mysqlConnector(sqlConnector):
+    """This is the API to connect with mysql database using PyMySQL."""
+    def __init__(self, databaseName: str, hostAddress: str, port: int, userName: str, passWord: str, charset: str = 'utf8mb4'):
+        from sqlalchemy import create_engine
+        from sqlalchemy.engine import URL
+        url = URL.create(drivername='mysql+pymysql', username=userName, password=passWord, host=hostAddress, port=port, database=databaseName, query={"charset": charset})
+        super().__init__(create_engine(url, pool_recycle=3600))
 
-    def replaceDFIntoTable(self,tableNameString:str,dataFrame:pd.DataFrame):
-        try:
-            import numpy as np
-            DBTableColNameList = self.getColNameOfTable(tableNameString)
-            df = dataFrame[DBTableColNameList]
-            # convert to tuple
-            valuesTapleList = df.apply(lambda x: tuple([None if type(i)==type(np.nan) and np.isnan(i) else i for i in x]),axis=1).to_list()
-            sql = "SELECT * FROM "+tableNameString
-            self.targetCursor.execute(sql)
-            colNameString = "".join(["`"+i+"`," for i in self.targetCursor.column_names]).strip(", ")
-            sql = "REPLACE INTO "+tableNameString+" ("+colNameString+") VALUES (" + "".join(["%s, " for i in range(len(self.targetCursor.column_names))]).strip(", ")+")"
-            val = valuesTapleList
-            self.targetCursor.executemany(sql, val)
-            self.targetDB.commit()
-            print("Replace Finished")
-        except Exception as e:
-            print("Replace Failed, Error:",e)
+    #<mysqlConnector>
+    #</mysqlConnector>
 
-    #<mysqlTool>
-    #</mysqlTool>
 
-class oracleTool(object):
+class oracleConnector(sqlConnector):
     """
     This is the API to connect with oracle database.
+    Notice that this driver (oracledb) supports only sqlalchemy>=2.0.0.
+    If you are using 1.4.0<=sqlalchemy<2.0.0, you can fix it by adding at
+    the beginning of your python script:
+        import sys, oracledb
+        oracledb.version = "8.3.0"
+        sys.modules["cx_Oracle"] = oracledb
+    Then change the following code into:
+        url = URL.create(drivername='oracle+cx_oracle', username=userName, password=passWord, host=hostAddress, port=port, database=databaseName)
     """
-    def __init__(self,databaseNameString:str,hostAddress:str,port:int,userName:str,passWord:str):
+    def __init__(self,databaseName: str, hostAddress: str, port: int, userName: str, passWord: str):
         from sqlalchemy import create_engine
-        uri = f'oracle+cx_oracle://{userName}:{passWord}@{hostAddress}:{port}/{databaseNameString}'
-        self.engine = create_engine(uri)
+        from sqlalchemy.engine import URL
+        url = URL.create(drivername='oracle+oracledb', username=userName, password=passWord, host=hostAddress, port=port, database=databaseName)
+        super().__init__(create_engine(url))
 
-    def readSql(self,sql:str):
-        data = pd.read_sql(sql,con=self.engine)
-        return data
+    #<oracleConnector>
+    #</oracleConnector>
 
-    #<oracleTool>
-    #</oracleTool>
 
-class sqlServerTool(object):
+class sqlServerConnector(sqlConnector):
     """
     This is the API to connect with sql server database.
     """
-    def __init__(self,databaseNameString:str,hostAddress:str,userName:str,passWord:str):
-        import pymssql
-        self.engine = pymssql.connect(hostAddress,userName,passWord,databaseNameString,charset='cp936')
-        self.cursor = self.engine.cursor()
 
-    def readSql(self,sql:str):
-        data = pd.read_sql(sql,con=self.engine)
-        return data
+    def __init__(self, databaseName: str, hostAddress: str, port: int, userName: str, passWord: str, charset: str = 'cp936'):
+        from sqlalchemy import create_engine
+        from sqlalchemy.engine import URL
+        url = URL.create(drivername='mssql+pymssql', username=userName, password=passWord, host=hostAddress, port=port, database=databaseName, query={"charset": charset})
+        super().__init__(create_engine(url))
 
-    #<sqlServerTool>
-    #</sqlServerTool>
+    #<sqlServerConnector>
+    #</sqlServerConnector>
 
-class neo4jTool(object):
-    """
-    This is the API to connect with neo4j database.
-    """
+
+class neo4jConnector(object):
+    """This is the API to connect with neo4j database."""
 
     def __init__(self, hostAddress:str,port:int,userName:str,password:str):
         from py2neo import Graph
@@ -158,29 +115,37 @@ class neo4jTool(object):
         data = self.engine.run(cypher)
         return data
 
-    def convertDataType(self,x):
-        if isinstance(x,np.float64):
+    def convertDataType(self, x):
+        if isinstance(x, np.floating):
             return float(x)
-        elif hasattr(x,'strftime'):
-            return x.strftime("%Y-%m-%d")
-        elif isinstance(x,list):
+        elif pd.isna(x):
+            return None
+        elif isinstance(x, str):
+            return x
+        elif isinstance(x, np.integer):
+            return int(x)
+        elif hasattr(x, 'strftime'):
+            return x.strftime("%Y-%m-%d %H:%M:%S")
+        elif isinstance(x, (list, tuple, np.ndarray)):
             return [self.convertDataType(i) for i in x]
+        elif isinstance(x, dict):
+            return {self.convertDataType(k): self.convertDataType(v) for k, v in x.items()}
         else:
             return x
 
-    def updateDFToNode(self,nodeList:list,df:pd.DataFrame,colAsName:str):
+    def updateDFToNode(self, nodeList: list, df: pd.DataFrame, colAsName: str):
         nameWaitedToBeUpdated = df[colAsName].to_list()
         nameList = [i for i in nodeList if i['name'] in nameWaitedToBeUpdated]
-        tmp = df.set_index(colAsName,drop=True)
-        [[node.update({j:self.convertDataType(tmp.loc[node['name']][j])}) for j in tmp.columns if j!= colAsName] for node in nameList]
+        tmp = df.set_index(colAsName, drop=True)
+        [[node.update({j: self.convertDataType(tmp.loc[node['name']][j])}) for j in tmp.columns if j!= colAsName] for node in nameList]
 
-    def convertDFToNode(self, nodeType:str, df:pd.DataFrame, colAsName:str):
+    def convertDFToNode(self, nodeType: str, df: pd.DataFrame, colAsName: str):
         from py2neo import Node
         nodeList = [Node(nodeType, name=df.iloc[i][colAsName]) for i in range(df.shape[0])]
-        [[nodeList[i].update({j:self.convertDataType(df.iloc[i][j])}) for j in df.columns if j!=colAsName] for i in range(df.shape[0])]
+        [[nodeList[i].update({j: self.convertDataType(df.iloc[i][j])}) for j in df.columns if j!=colAsName] for i in range(df.shape[0])]
         return nodeList
 
-    def addNodeFromDF(self, nodeType:str, df:pd.DataFrame, colAsName:str):
+    def addNodeFromDF(self, nodeType: str, df: pd.DataFrame, colAsName: str):
         nodeList = self.convertDFToNode(nodeType, df, colAsName)
         [self.engine.create(i) for i in nodeList]
         return nodeList
@@ -189,33 +154,27 @@ class neo4jTool(object):
         labelList = self.readCypher("MATCH (res) RETURN distinct labels(res)")
         return [i[0][0] for i in labelList]
 
-    def selectAllNode(self, nodeType:str):
+    def selectAllNode(self, nodeType: str):
         nodeList = self.readCypher(f'''MATCH (res:`{nodeType}`) RETURN res''')
         return [i['res'] for i in nodeList]
 
-    def selectAttrFromNode(self, nodeType:str, attrList:list):
-        if type(attrList)==type(''):
-            attrList = [attrList]
-        else:
-            pass
+    def selectAttrFromNode(self, nodeType: str, attrList: Union[List[str], str]):
+        attrList = [attrList] if type(attrList) is str else attrList
         attr = "'],res['".join(attrList)
         nodeList = self.readCypher(f"MATCH (res:`{nodeType}`) RETURN res['"+attr+"']")
         return nodeList.to_data_frame().rename(columns=dict(zip(["res['"+i+"']" for i in attrList],attrList)))
 
-    def selectAllNodeWithCondition(self, nodeType: str, conditionString:str, resultVariableName:str = 'res'):
+    def selectAllNodeWithCondition(self, nodeType: str, conditionString: str, resultVariableName: str = 'res'):
         nodeList = self.readCypher(f'''MATCH ({resultVariableName}:`{nodeType}`) WHERE {conditionString} RETURN {resultVariableName}''')
         return [i[resultVariableName] for i in nodeList]
 
-    def selectAttrFromNodeWithCondition(self, nodeType: str, attrList: list, conditionString:str, resultVariableName:str = 'res'):
-        if type(attrList) == type(''):
-            attrList = [attrList]
-        else:
-            pass
+    def selectAttrFromNodeWithCondition(self, nodeType: str, attrList: Union[List[str], str], conditionString: str, resultVariableName: str = 'res'):
+        attrList = [attrList] if type(attrList) is str else attrList
         attr = "'],res['".join(attrList)
         nodeList = self.readCypher(f"MATCH ({resultVariableName}:`{nodeType}`) WHERE {conditionString} RETURN {resultVariableName}['" + attr + "']")
         return nodeList.to_data_frame().rename(columns=dict(zip([f"{resultVariableName}['" + i + "']" for i in attrList], attrList)))
 
-    def connectNodeByAttr(self, nodeTypeLeft:str, nodeTypeRight:str, attrNameLeft:str, attrNameRight:str, relationName:str):
+    def connectNodeByAttr(self, nodeTypeLeft: str, nodeTypeRight: str, attrNameLeft: str, attrNameRight: str, relationName: str):
         from py2neo import Relationship
         leftNode = self.selectAllNode(nodeTypeLeft)
         rightNode = self.selectAllNode(nodeTypeRight)
@@ -226,12 +185,12 @@ class neo4jTool(object):
     def replaceNode(self, nodeObj):
         self.engine.push(nodeObj)
 
-    def replaceNodeFromDF(self, nodeType:str, df:pd.DataFrame, colAsName:str):
+    def replaceNodeFromDF(self, nodeType: str, df: pd.DataFrame, colAsName: str):
         nodeList = self.selectAllNodeWithCondition(nodeType,"res.name IN ['"+"','".join(df[colAsName].to_list())+"']")
         self.updateDFToNode(nodeList,df,colAsName)
         oldNode = [i['name'] for i in nodeList]
         tmp = df[[(i not in oldNode) for i in df[colAsName]]]
-        self.addNodeFromDF(nodeType,tmp,colAsName)
+        self.addNodeFromDF(nodeType, tmp, colAsName)
         [self.engine.push(i) for i in nodeList]
 
     def deleteAllNode(self):
@@ -241,5 +200,8 @@ class neo4jTool(object):
     def deleteNode(self, nodeObj):
         self.engine.delete(nodeObj)
 
-    #<neo4jTool>
-    #</neo4jTool>
+    #<neo4jConnector>
+    #</neo4jConnector>
+
+#<databaseTool>
+#</databaseTool>

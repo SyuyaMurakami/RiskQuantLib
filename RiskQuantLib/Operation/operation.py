@@ -6,8 +6,8 @@ import traceback
 import numpy as np
 import pandas as pd
 from collections.abc import Iterable
-from RiskQuantLib.Operation.loc import loc
 from RiskQuantLib.Operation.vectorization import vectorization
+
 #<import>
 #</import>
 
@@ -35,7 +35,7 @@ class operation(object):
         None
         """
         self.all = List
-        self.__init_get_item__()
+
     def _tunnelingGetitem(self, attrName):
         """
         Find the attribute of elements in present list which meet requirements and
@@ -187,13 +187,13 @@ class operation(object):
         """
         if useObj:
             tmpObj = self.new()
-            if type(other) == type([]):
+            if type(other) is list:
                 tmpObj.setAll(self.all + other)
             else:
                 tmpObj.setAll(self.all + other.all)
             return tmpObj
         else:
-            if type(other) == type([]):
+            if type(other) is list:
                 return self.all + other
             else:
                 return self.all + other.all
@@ -635,11 +635,9 @@ class operation(object):
         """
         if deep:
             tmp = copy.deepcopy(self)
-            tmp.__init_get_item__()
             return tmp
         else:
             tmp = copy.copy(self)
-            tmp.__init_get_item__()
             return tmp
 
     def sort(self,propertyList:list,reverse = False,inplace=False, useObj = True):
@@ -698,45 +696,13 @@ class operation(object):
             [[setattr(j,i,value) if hasattr(j, i) and (isnan(getattr(j, i)) or getattr(j, i)=='') else None for j in tmpList if hasattr(j, i)] for i in propertyList]
             return tmpList
 
-    def __init_get_item__(self):
-        self.loc = loc(self.all)
-        pass
-
-    def __set_number_index__(self):
-        [setattr(i,'numberIndex',j) for j,i in enumerate(self.all)]
-
-    def setIndex(self, propertyNameString:str, inplace = True):
-        """
-        Set the index for each element, given attribute name. The index value will be set as the attribute value
-        you choose.
-        """
-        if inplace:
-            [i.setIndex(getattr(i,propertyNameString,np.nan)) for i in self.all]
-            return None
-        else:
-            tmpObj = self.copy(deep=True)
-            [i.setIndex(getattr(i,propertyNameString,np.nan)) for i in tmpObj.all]
-            return tmpObj
-
-    def dropIndex(self, inplace=True):
-        """
-        Delete index for each element.
-        """
-        if inplace:
-            [delattr(i,'index') for i in self.all]
-            return None
-        else:
-            tmpObj = self.copy(deep=True)
-            [delattr(i,'index') for i in tmpObj.all]
-            return tmpObj
-
-    def reIndex(self, indexList:list, useObj = True, inplace = False):
+    def reIndex(self, attrName: str, indexList: list, useObj: bool = True, inplace: bool = False):
         """
         Return a new RiskQuantLib list object whose elements are chosen according to
         the index, the index of new list element must be in th indexList to be included.
         If more than one elements meet requirement, only the first one will be kept.
         """
-        tmpList = [[j for j in self.all if j.index == i][0] for i in indexList]
+        tmpList = [[j for j in self.all if getattr(j, attrName, np.nan) == i][0] for i in indexList]
         if inplace:
             self.setAll(tmpList)
             return None
@@ -747,27 +713,14 @@ class operation(object):
         else:
             return tmpList
 
-    def resetIndex(self, inplace = True):
-        """
-        Reset the index as the n-th element of list.
-        """
-        if inplace:
-            [j.setIndex(i) for i,j in enumerate(self.all)]
-            return None
-        else:
-            tmpObj = self.copy(deep=True)
-            [j.setIndex(i) for i, j in enumerate(tmpObj.all)]
-            return tmpObj
-
     def str(self):
         return self.__str__()
 
-
-    def rolling(self,windowNumber:int,useObj = True):
+    def rolling(self, windowNumber: int, useObj: bool = True):
         """
         For each element, This function will collect the n elements before
         that element, create a new RiskQuantLib list object to holding it. The new list
-        will be set as an attribute of '_rolling', thus the present element can reach to
+        will be set as an attribute of 'rolling', thus the present element can reach to
         the information of its former elements.
         """
         rollingList = [self[max((i-windowNumber+1),0):(i+1)] for i in range(len(self))]
@@ -775,8 +728,8 @@ class operation(object):
             rollingObj = [self.__new__(type(self)) for i in range(len(self))]
             [i.__init__() for i in rollingObj]
             [i.setAll(j) for i,j in zip(rollingObj,rollingList)]
-            [setattr(i,'_rolling',j) for i,j in zip(self.all,rollingObj)]
-            [setattr(i, '_rolling_window', windowNumber) for i in self.all]
+            [setattr(i,'rolling',j) for i,j in zip(self.all,rollingObj)]
+            [setattr(i, 'rollingWindow', windowNumber) for i in self.all]
             returnObj = self.__new__(type(self))
             returnObj.__init__()
             returnObj.setAll(rollingObj)
@@ -912,7 +865,7 @@ class operation(object):
         self.match(anotherList, targetAttrNameOnLeft, matchFunctionOnLeft, matchFunctionOnRight)
         anotherList.match(self, targetAttrNameOnRight, matchFunctionOnRight, matchFunctionOnLeft)
 
-    def join(self,anotherList,targetAttrName : str,filterFunction = lambda x,y:True):
+    def join(self, anotherList, targetAttrName: str, filterFunction = lambda x,y:True):
         """
         For each element, find all elements that meet requirements from another RiskQuantLib
         list object. The elements meeting requirement will be set as an attribute of present
@@ -988,8 +941,7 @@ class operation(object):
             self.join(anotherList,targetAttrNameOnLeft,filterFunction)
             anotherList.join(self,targetAttrNameOnRight,adjustedFilterFunctionOnRight)
 
-
-    def scale(self,attrName,targetAttrName = '',filterFunction = lambda x:True,inplace = False):
+    def scale(self, attrName: str, targetAttrName: str = '', filterFunction = lambda x: True, inplace: bool = False):
         """
         For each element, find the attribute value and calculate the portion of each element to the sum,
         given attribute name.
@@ -1273,12 +1225,12 @@ class operation(object):
         -------
         RiskQuantLib List
         """
-        if not hasattr(self,'elementClass'):
-            print("The List Must Have Attribute Named elementClass To Call This Function.")
+        if not hasattr(self,'__elementClass__'):
+            print("The List Must Have Attribute Named __elementClass__ To Call This Function.")
             return
         else:
             self.setAll([])
-            instrumentNameString = self.elementClass.__name__
+            instrumentNameString = self.__elementClass__.__name__
             c_instrumentNameString = instrumentNameString[0].capitalize() + instrumentNameString[1:]
             if code == '' and name == '':
                 getattr(self, 'add' + c_instrumentNameString + 'Series', lambda x,y:None)(df.index,df.index)
@@ -1354,12 +1306,12 @@ class operation(object):
         -------
         RiskQuantLib List
         """
-        if not hasattr(self,'elementClass'):
-            print("The List Must Have Attribute Named elementClass To Call This Function.")
+        if not hasattr(self,'__elementClass__'):
+            print("The List Must Have Attribute Named __elementClass__ To Call This Function.")
             return
         else:
             self.setAll([])
-            instrumentNameString = self.elementClass.__name__
+            instrumentNameString = self.__elementClass__.__name__
             c_instrumentNameString = instrumentNameString[0].capitalize() + instrumentNameString[1:]
             if code == '' and name == '':
                 getattr(self, 'add' + c_instrumentNameString + 'Series', lambda x,y:None)([str(index) for index,obj in enumerate(iterable)],[str(index) for index,obj in enumerate(iterable)])

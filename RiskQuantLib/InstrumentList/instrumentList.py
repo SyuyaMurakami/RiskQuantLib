@@ -12,13 +12,12 @@ class instrumentList(operation, instrumentListAuto):
     """
     This is the basic list class. Any instrument list class should inherit from this.
     """
-    elementClass = instrument
+    __elementClass__ = instrument
 
     #<init>
     def __init__(self):
         self.all = []
         self.listType = 'Instrument List'
-        self.__init_get_item__()
     #</init>
 
     #<addList>

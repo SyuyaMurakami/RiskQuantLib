@@ -2,13 +2,14 @@
 #coding = utf-8
 
 import pandas as pd
-from RiskQuantLib.Tool.wordTool import replaceParagraphContent
-import pptx
+from RiskQuantLib.Tool.wordTool import replaceParagraphContent # use package python-docx
+import pptx # use package python-pptx
 from pptx import Presentation
+
 #<import>
 #</import>
 
-def replaceTableContent(shape:pptx.shapes.graphfrm.GraphicFrame, dfInput:pd.DataFrame):
+def replaceTableContent(shape:pptx.shapes.placeholder.PlaceholderGraphicFrame, dfInput:pd.DataFrame):
     """
     This function will replace the content of table into given dataframe. If two tables have different
     shapes, then only the common part will be changed, other cells in original table will remain unchanged.
@@ -16,7 +17,7 @@ def replaceTableContent(shape:pptx.shapes.graphfrm.GraphicFrame, dfInput:pd.Data
 
     Parameters
     ----------
-    shape : pptx.shapes.graphfrm.GraphicFrame
+    shape : pptx.shapes.placeholder.PlaceholderGraphicFrame
         The shape object that you want to change, usually this shape is a table.
     dfInput : pd.DataFrame
         The dataframe that the original table should be changed to.
@@ -41,7 +42,7 @@ def replaceTableContent(shape:pptx.shapes.graphfrm.GraphicFrame, dfInput:pd.Data
                 except Exception as e:
                     print(e)
 
-def replaceChart(slide:pptx.slide.Slide, shape:pptx.shapes.graphfrm.GraphicFrame, picturePath:str):
+def replaceChart(slide:pptx.slide.Slide, shape:pptx.shapes.placeholder.PlaceholderGraphicFrame, picturePath:str):
     """
     This function will replace the chart in given slide into the given picture. This change is in place.
 
@@ -49,7 +50,7 @@ def replaceChart(slide:pptx.slide.Slide, shape:pptx.shapes.graphfrm.GraphicFrame
     ----------
     slide : pptx.slide.Slide
         The slide where the shape object lies.
-    shape : pptx.shapes.graphfrm.GraphicFrame
+    shape : pptx.shapes.placeholder.PlaceholderGraphicFrame
         The shape object that you want to change, usually this shape is a chart.
     picturePath : str
         The path of picture that you want to use to replace the original chart.
@@ -62,7 +63,7 @@ def replaceChart(slide:pptx.slide.Slide, shape:pptx.shapes.graphfrm.GraphicFrame
     tmp.getparent().remove(tmp)
     slide.shapes.add_picture(picturePath, shape.left, shape.top, width=shape.width, height=shape.height, )
 
-def replacePicture(slide:pptx.slide.Slide, shape:pptx.shapes.graphfrm.GraphicFrame, picturePath:str):
+def replacePicture(slide:pptx.slide.Slide, shape:pptx.shapes.placeholder.PlaceholderGraphicFrame, picturePath:str):
     """
     This function will replace the old picture in given slide into the given picture. This change is in place.
     And the new picture has the same shape with the original one.
@@ -71,7 +72,7 @@ def replacePicture(slide:pptx.slide.Slide, shape:pptx.shapes.graphfrm.GraphicFra
     ----------
     slide : pptx.slide.Slide
         The slide where the shape object lies.
-    shape : pptx.shapes.graphfrm.GraphicFrame
+    shape : pptx.shapes.placeholder.PlaceholderGraphicFrame
         The shape object that you want to change, usually this shape is a picture.
     picturePath : str
         The path of new picture that you want to use to replace the original picture.
@@ -84,14 +85,14 @@ def replacePicture(slide:pptx.slide.Slide, shape:pptx.shapes.graphfrm.GraphicFra
     tmp.getparent().remove(tmp)
     slide.shapes.add_picture(picturePath, shape.left, shape.top, width=shape.width, height=shape.height, )
 
-def formatTextFrameWithTemplate(shape:pptx.shapes.graphfrm.GraphicFrame, paraDict:dict):
+def formatTextFrameWithTemplate(shape:pptx.shapes.placeholder.PlaceholderGraphicFrame, paraDict:dict):
     """
     This function will use the content of paraDict to fill the mark in shape object. If it
     find any mark like {symbolName}, it will replace it into the value declared by paraDict.
 
     Parameters
     ----------
-    shape : pptx.shapes.graphfrm.GraphicFrame
+    shape : pptx.shapes.placeholder.PlaceholderGraphicFrame
         The shape object that you want to change, usually this shape is a text frame.
     paraDict : dict
         The key->value pairs that declare what the symbols should be replaced to.
@@ -106,14 +107,14 @@ def formatTextFrameWithTemplate(shape:pptx.shapes.graphfrm.GraphicFrame, paraDic
     for paragraph in textFrame.paragraphs:
         replaceParagraphContent(paragraph,paraDict)
 
-def formatTableWithTemplate(shape:pptx.shapes.graphfrm.GraphicFrame, paraDict:dict):
+def formatTableWithTemplate(shape:pptx.shapes.placeholder.PlaceholderGraphicFrame, paraDict:dict):
     """
     This function will use the content of paraDict to fill the mark in shape object. If it
     find any mark like {symbolName}, it will replace it into the value declared by paraDict.
 
     Parameters
     ----------
-    shape : pptx.shapes.graphfrm.GraphicFrame
+    shape : pptx.shapes.placeholder.PlaceholderGraphicFrame
         The shape object that you want to change, usually this shape is a table.
     paraDict : dict
         The key->value pairs that declare what the symbols should be replaced to.
@@ -130,7 +131,7 @@ def formatTableWithTemplate(shape:pptx.shapes.graphfrm.GraphicFrame, paraDict:di
             for num,paragraph in enumerate(table.cell(row,col).text_frame.paragraphs):
                 replaceParagraphContent(paragraph,paraDict)
 
-def formatSlide(slide:pptx.slide.Slide, tableDict:dict={},textDict:dict={},graphDict:dict={}):
+def formatSlide(slide: pptx.slide.Slide, tableDict: dict = None, textDict: dict = None, graphDict: dict = None):
     """
     This function will use the content of tableDict and textDict and graphDict to change given
     slide. The first table in the slide will be changed into tableDict[0] and the second table
@@ -142,7 +143,7 @@ def formatSlide(slide:pptx.slide.Slide, tableDict:dict={},textDict:dict={},graph
     ----------
     slide : pptx.slide.Slide
         The slide which you want to change.
-    tableDict :dict
+    tableDict : dict
         The key->value pairs that declare what the table should be replaced to. The key
         of this dict should be int number and start from 0, like 0, 1, 2... and the value
         of this dict should be pandas.DataFrame object.
@@ -150,7 +151,7 @@ def formatSlide(slide:pptx.slide.Slide, tableDict:dict={},textDict:dict={},graph
         The key->value pairs that declare what the symbols should be replaced to.
         The key of this dict should be string type and like '{symbolName}', and
         the value of this dict should be string type.
-    graphDict :dict
+    graphDict : dict
         The key->value pairs that declare what the graph should be replaced to. The key
         of this dict should be int number and start from 0, like 0, 1, 2... and the value
         of this dict should be path string of pictures.
@@ -162,6 +163,9 @@ def formatSlide(slide:pptx.slide.Slide, tableDict:dict={},textDict:dict={},graph
     shapes = [i for i in slide.shapes]
     tbId = 0
     imageId = 0
+    tableDict = {} if tableDict is None else tableDict
+    textDict = {} if textDict is None else textDict
+    graphDict = {} if graphDict is None else graphDict
     for shape in shapes:
         if shape.has_table:
             if len(tableDict)!=0:
@@ -179,7 +183,7 @@ def formatSlide(slide:pptx.slide.Slide, tableDict:dict={},textDict:dict={},graph
         else:
             pass
 
-def formatPpt(filePath:str,targetPath:str,tableDict:dict={},textDict:dict={},graphDict:dict={},slideIndex = None):
+def formatPPTX(filePath: str, targetPath: str, tableDict: dict = None, textDict:dict = None, graphDict: dict = None, slideIndex: int = None):
     """
     This function will use the content of tableDict and textDict and graphDict to change given
     PPT. It will iterate across every slide and modify it. The first table in the slide will be

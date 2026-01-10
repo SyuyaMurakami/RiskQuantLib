@@ -2,10 +2,11 @@
 #coding = utf-8
 
 import numpy as np
+
 #<import>
 #</import>
 
-def percentageOfSeries(dataList:list,percentage:float):
+def percentage(dataList:list, pct:float):
     """
     This function returns the percentage of a list.
 
@@ -13,7 +14,7 @@ def percentageOfSeries(dataList:list,percentage:float):
     ----------
     dataList : list
         The list holding data
-    percentage : float
+    pct : float
         The percentage number. 99 means 99% percentage.
 
     Returns
@@ -22,11 +23,12 @@ def percentageOfSeries(dataList:list,percentage:float):
     """
     length = len(dataList)
     sortedData = sorted(dataList,reverse=True)
-    return sortedData[int(percentage/100*length)]
+    return sortedData[int(pct/100*length)]
 
-def interP1d(xList:list,yList:list,Kind='cubic'):
+def interP1d(xList:list, yList:list, kind='linear'):
     """
     This function returns a cubic interpolate of two lists.
+    It returns a model object, use model(newValue) to predict new value.
 
     Parameters
     ----------
@@ -34,19 +36,44 @@ def interP1d(xList:list,yList:list,Kind='cubic'):
         The X list
     yList : list
         The Y list
+    kind : str
+        The type of interpolation, can be 'linear', 'cubic', 'nearest'
 
     Returns
     -------
     model : object
-        The scipy model.
+        The scipy model, use model(newValue) to get predicted values.
     """
     from scipy.interpolate import interp1d
     x = np.array(xList)
     y = np.array(yList)
-    model = interp1d(x,y,kind=Kind,fill_value='extrapolate')
+    model = interp1d(x,y,kind=kind,fill_value='extrapolate')
     return model
 
-def linearRegression(xList:list,yList:list):
+
+def linearRegressions(xArray:np.ndarray, yArray:np.ndarray):
+    """
+    This function returns a linear regression of multi-dimension array.
+
+    Parameters
+    ----------
+    xArray : np.ndarray
+        The X array, which has the shape of (n * k), n is the number of samples, k is the number of features
+    yArray : np.ndarray
+        The Y array, which has the shape of (n * 2), n is the number of samples
+
+    Returns
+    -------
+    model : tuple
+        The tuple of (coefList, intercept)
+    """
+    from sklearn.linear_model import LinearRegression
+    model = LinearRegression()
+    model.fit(xArray,yArray)
+    return model.coef_[0], model.intercept_[0]
+
+
+def linearRegression(xList:list, yList:list):
     """
     This function returns a linear regression of two lists.
 
@@ -59,44 +86,38 @@ def linearRegression(xList:list,yList:list):
 
     Returns
     -------
-    model : object
-        The scipy model.
+    model : tuple
+        The tuple of (coef, intercept)
     """
-    from sklearn.linear_model import LinearRegression
+
     x = np.array(xList).reshape(-1,1)
     y = np.array(yList).reshape(-1,1)
+    k, b = linearRegressions(x, y)
+    return k[0], b
 
-    model = LinearRegression()
-    model.fit(x,y)
-    return model
 
-def maxDropDown(dataList:list,valueType:str = 'Relative'):
+def maxDrawdown(dataList:list, relative: bool=True):
     """
-    This function returns a max dropdown of given list.
+    This function returns a max drawdown of given list.
 
     Parameters
     ----------
     dataList : list
         The data list
-    valueType : str
-        The drop down type. 'Relative' or 'Absolute' can be used.
+    relative : str
+        The drawdown type. If true, the max drawdown will be a percentage relative to highest point,
+        otherwise it will be a distance.
 
     Returns
     -------
-    model : np.float
-        The max drop down of given data.
+    model : np.float64
+        The max drawdown of given data.
     """
-    dropDownList = []
-    for i,j in enumerate(dataList):
-        historySeries = dataList[:i+1]
-        if valueType == 'Relative':
-            dropDownList.append(np.nanmin([0,j/np.nanmax(historySeries)-1]))
-        elif valueType == 'Absolute':
-            dropDownList.append(np.nanmin([0, j - np.nanmax(historySeries)]))
-        else:
-            print("valueType can only be Relative or Absolute")
-            return np.nan
-    return np.nanmin(dropDownList)
+    data = np.array(dataList)
+    cumMax = np.maximum.accumulate(data)
+    drawdown = 1 - (data / cumMax) if relative else cumMax - data
+    return np.max(drawdown)
+
 
 def isnan(x):
     """
@@ -111,10 +132,8 @@ def isnan(x):
     -------
     bool
     """
-    if type(x) == type(np.nan) and np.isnan(x):
-        return True
-    else:
-        return False
+    return True if type(x) == type(np.nan) and np.isnan(x) else False
+
 
 #<mathTool>
 #</mathTool>

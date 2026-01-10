@@ -20,7 +20,7 @@
 {{ macro.indent(1) }}"""
 {{ macro.indent(1) }}{{ macro.instrumentListClassName(instrumentName) }} is an instrument list class, used as nodes of data graph, and it is also the entrance of graph.
 {{ macro.indent(1) }}"""
-{{ macro.indent(1) }}elementClass = {{ macro.instrumentClassName(instrumentName = instrumentName) }}
+{{ macro.indent(1) }}__elementClass__ = {{ macro.instrumentClassName(instrumentName = instrumentName) }}
 
 {{ macro.instrumentListClassInit(instrumentName = instrumentName, instrumentType = instrumentType) }}
 
