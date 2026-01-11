@@ -1,117 +1,64 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>RiskQuantLib.Model.Copula package &mdash; RiskQuantLib 0.0.24 documentation</title>
-  
+  <title>RiskQuantLib.Model.Copula package &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/readthedocs-custom.css" />
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/readthedocs-custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+      <script src="_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="RiskQuantLib.Model.KMV package" href="RiskQuantLib.Model.KMV.html" />
     <link rel="prev" title="RiskQuantLib.Model package" href="RiskQuantLib.Model.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="index.html" class="icon icon-home"> RiskQuantLib
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            RiskQuantLib
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">RiskQuantLib</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="RiskQuantLib.html">RiskQuantLib package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="RiskQuantLib.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Auto.html">RiskQuantLib.Auto package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Build.html">RiskQuantLib.Build package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Company.html">RiskQuantLib.Company package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.CompanyList.html">RiskQuantLib.CompanyList package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.DataInputAPI.html">RiskQuantLib.DataInputAPI package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Index.html">RiskQuantLib.Index package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.IndexList.html">RiskQuantLib.IndexList package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.InterestRate.html">RiskQuantLib.InterestRate package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Instrument.html">RiskQuantLib.Instrument package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.InstrumentList.html">RiskQuantLib.InstrumentList package</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="RiskQuantLib.Model.html">RiskQuantLib.Model package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Operation.html">RiskQuantLib.Operation package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Property.html">RiskQuantLib.Property package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Security.html">RiskQuantLib.Security package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.SecurityList.html">RiskQuantLib.SecurityList package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Set.html">RiskQuantLib.Set package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="RiskQuantLib.Tool.html">RiskQuantLib.Tool package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="RiskQuantLib.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="RiskQuantLib.html#module-RiskQuantLib.Module">RiskQuantLib.Module module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RiskQuantLib.html#riskquantlib-module-module">RiskQuantLib.Module module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="RiskQuantLib.html#module-RiskQuantLib">Module contents</a></li>
 </ul>
 </li>
@@ -119,160 +66,113 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">RiskQuantLib</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="modules.html">RiskQuantLib</a> &raquo;</li>
-        
-          <li><a href="RiskQuantLib.html">RiskQuantLib package</a> &raquo;</li>
-        
-          <li><a href="RiskQuantLib.Model.html">RiskQuantLib.Model package</a> &raquo;</li>
-        
-      <li>RiskQuantLib.Model.Copula package</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">RiskQuantLib</a></li>
+          <li class="breadcrumb-item"><a href="RiskQuantLib.html">RiskQuantLib package</a></li>
+          <li class="breadcrumb-item"><a href="RiskQuantLib.Model.html">RiskQuantLib.Model package</a></li>
+      <li class="breadcrumb-item active">RiskQuantLib.Model.Copula package</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
+             
+  <section id="riskquantlib-model-copula-package">
+<h1>RiskQuantLib.Model.Copula package<a class="headerlink" href="#riskquantlib-model-copula-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-RiskQuantLib.Model.Copula.copula">
+<span id="riskquantlib-model-copula-copula-module"></span><h2>RiskQuantLib.Model.Copula.copula module<a class="headerlink" href="#module-RiskQuantLib.Model.Copula.copula" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="RiskQuantLib.Model.Copula.copula.copula">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">copula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Model/Copula/copula.html#copula"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Model.Copula.copula.copula" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="RiskQuantLib.Model.html#RiskQuantLib.Model.model.model" title="RiskQuantLib.Model.model.model"><code class="xref py py-class docutils literal notranslate"><span class="pre">model</span></code></a></p>
+<p>Generate new samples following the same correlation relation, given a series of data.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Model.Copula.copula.copula.generateSimulatedSample">
+<span class="sig-name descname"><span class="pre">generateSimulatedSample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numberOfSimulation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Model/Copula/copula.html#copula.generateSimulatedSample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Model.Copula.copula.copula.generateSimulatedSample" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
+</dd></dl>
 
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
+<dl class="py class">
+<dt class="sig sig-object py" id="RiskQuantLib.Model.Copula.copula.copulae">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">copulae</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dfCorrelation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Model/Copula/copula.html#copulae"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Model.Copula.copula.copulae" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="RiskQuantLib.Model.html#RiskQuantLib.Model.model.model" title="RiskQuantLib.Model.model.model"><code class="xref py py-class docutils literal notranslate"><span class="pre">model</span></code></a></p>
+<p>Generate new samples, given correlation matrix.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="RiskQuantLib.Model.Copula.copula.copulae.generateSimulatedSample">
+<span class="sig-name descname"><span class="pre">generateSimulatedSample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numberOfSimulation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/RiskQuantLib/Model/Copula/copula.html#copulae.generateSimulatedSample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#RiskQuantLib.Model.Copula.copula.copulae.generateSimulatedSample" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
+</dd></dl>
 
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<div class="section" id="riskquantlib-model-copula-package">
-<h1>RiskQuantLib.Model.Copula package<a class="headerlink" href="#riskquantlib-model-copula-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="riskquantlib-model-copula-copula-module">
-<h2>RiskQuantLib.Model.Copula.copula module<a class="headerlink" href="#riskquantlib-model-copula-copula-module" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-RiskQuantLib.Model.Copula">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-RiskQuantLib.Model.Copula" title="Permalink to this headline">¶</a></h2>
-</div>
-</div>
+</section>
+<section id="module-RiskQuantLib.Model.Copula">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-RiskQuantLib.Model.Copula" title="Link to this heading">¶</a></h2>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="RiskQuantLib.Model.KMV.html" class="btn btn-neutral float-right" title="RiskQuantLib.Model.KMV package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="RiskQuantLib.Model.html" class="btn btn-neutral float-left" title="RiskQuantLib.Model package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="RiskQuantLib.Model.KMV.html" class="btn btn-neutral float-right" title="RiskQuantLib.Model.KMV package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright .
-
-    </p>
+    <p>&#169; Copyright .</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

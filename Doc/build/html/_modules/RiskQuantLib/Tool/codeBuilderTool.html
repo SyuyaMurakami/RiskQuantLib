@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>RiskQuantLib.Tool.codeBuilderTool &mdash; RiskQuantLib 0.0.24 documentation</title>
+  <title>RiskQuantLib.Tool.codeBuilderTool &mdash; RiskQuantLib 0.3.6 documentation</title>
   
 
   
@@ -92,6 +92,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
 </ul>
 
             
@@ -163,56 +172,63 @@
 <span></span><span class="ch">#!/usr/bin/python</span>
 <span class="c1"># coding = utf-8</span>
 
+<span class="c1">#&lt;import&gt;</span>
+<span class="c1">#&lt;/import&gt;</span>
+
 <div class="viewcode-block" id="codeBuilder"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeBuilderTool.codeBuilder">[docs]</a><span class="k">class</span> <span class="nc">codeBuilder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class is the basic class used to generate source code of any language.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Build source code conveniently</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">global_indent_step</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">globalIndentStep</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">INDENT_STEP</span> <span class="o">=</span> <span class="mi">4</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">indent_level</span> <span class="o">=</span> <span class="n">indent</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ini_indent_level</span> <span class="o">=</span> <span class="n">indent</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">global_indent_step</span> <span class="o">=</span> <span class="n">global_indent_step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span> <span class="o">=</span> <span class="n">indent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iniIndentLevel</span> <span class="o">=</span> <span class="n">indent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">globalIndentStep</span> <span class="o">=</span> <span class="n">globalIndentStep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pythonSource</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
 
-<div class="viewcode-block" id="codeBuilder.get_globals"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeBuilderTool.codeBuilder.get_globals">[docs]</a>    <span class="k">def</span> <span class="nf">get_globals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">execute</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="codeBuilder.getGlobals"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeBuilderTool.codeBuilder.getGlobals">[docs]</a>    <span class="k">def</span> <span class="nf">getGlobals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">execute</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
         <span class="c1"># Execute the code, and return a dict of globals if defined</span>
 
         <span class="c1"># A check that caller really finished all the blocks</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">indent_level</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ini_indent_level</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">iniIndentLevel</span>
         <span class="c1"># Get the Python source as a single string</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">python_source</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pythonSource</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">execute</span><span class="p">:</span>
             <span class="c1"># Execute the source, defining globals, and return them.</span>
-            <span class="n">global_namespace</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ini_indent_level</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">exec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">python_source</span><span class="p">,</span> <span class="n">global_namespace</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">global_namespace</span></div>
+            <span class="n">globalNameSpace</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iniIndentLevel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">exec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pythonSource</span><span class="p">,</span> <span class="n">globalNameSpace</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">globalNameSpace</span></div>
 
-<div class="viewcode-block" id="codeBuilder.add_line"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeBuilderTool.codeBuilder.add_line">[docs]</a>    <span class="k">def</span> <span class="nf">add_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="codeBuilder.addLine"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeBuilderTool.codeBuilder.addLine">[docs]</a>    <span class="k">def</span> <span class="nf">addLine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
         <span class="c1"># Add a line of source to the code.</span>
         <span class="c1"># Indentation and new line will be added for you, don&#39;t provide them.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">indent_level</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">global_indent_step</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">line</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">])</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">globalIndentStep</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">line</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="codeBuilder.indent"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeBuilderTool.codeBuilder.indent">[docs]</a>    <span class="k">def</span> <span class="nf">indent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Increase the current indent for following lines</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">indent_level</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">INDENT_STEP</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">INDENT_STEP</span></div>
 
 <div class="viewcode-block" id="codeBuilder.dedent"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeBuilderTool.codeBuilder.dedent">[docs]</a>    <span class="k">def</span> <span class="nf">dedent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Decrease the current indent for following lines</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">indent_level</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">INDENT_STEP</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">INDENT_STEP</span></div>
 
-<div class="viewcode-block" id="codeBuilder.add_section"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeBuilderTool.codeBuilder.add_section">[docs]</a>    <span class="k">def</span> <span class="nf">add_section</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Add a secton, a sub-CodeBuilder</span>
-        <span class="n">section</span> <span class="o">=</span> <span class="n">codeBuilder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indent_level</span><span class="p">)</span>
+<div class="viewcode-block" id="codeBuilder.addSection"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeBuilderTool.codeBuilder.addSection">[docs]</a>    <span class="k">def</span> <span class="nf">addSection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Add a section, a sub-CodeBuilder</span>
+        <span class="n">section</span> <span class="o">=</span> <span class="n">codeBuilder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">section</span></div></div>
 
-<div class="viewcode-block" id="pythonScriptBuilder"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeBuilderTool.pythonScriptBuilder">[docs]</a><span class="k">class</span> <span class="nc">pythonScriptBuilder</span><span class="p">():</span>
+    <span class="c1">#&lt;codeBuilder&gt;</span>
+    <span class="c1">#&lt;/codeBuilder&gt;</span>
+
+<div class="viewcode-block" id="pythonScriptBuilder"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeBuilderTool.pythonScriptBuilder">[docs]</a><span class="k">class</span> <span class="nc">pythonScriptBuilder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class is the python source code builder, used to generate python</span>
 <span class="sd">    source code automatically.</span>
@@ -270,18 +286,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">codeBuilder</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">parentClassName</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;class &#39;&#39;&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">classNameString</span><span class="o">+</span><span class="s1">&#39;&#39;&#39;():&#39;&#39;&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;class &#39;&#39;&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">classNameString</span><span class="o">+</span><span class="s1">&#39;&#39;&#39;():&#39;&#39;&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">parentClassName</span><span class="p">)</span><span class="o">==</span><span class="nb">type</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;class &#39;&#39;&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">classNameString</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;(&#39;&#39;&#39;</span><span class="o">+</span><span class="n">parentClassName</span><span class="o">+</span><span class="s1">&#39;&#39;&#39;):&#39;&#39;&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;class &#39;&#39;&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">classNameString</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;(&#39;&#39;&#39;</span><span class="o">+</span><span class="n">parentClassName</span><span class="o">+</span><span class="s1">&#39;&#39;&#39;):&#39;&#39;&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">parentClassNameList</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">i</span><span class="o">+</span><span class="s1">&#39;,&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">parentClassName</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;class &#39;&#39;&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">classNameString</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;(&#39;&#39;&#39;</span> <span class="o">+</span> <span class="n">parentClassNameList</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;):&#39;&#39;&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;class &#39;&#39;&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">classNameString</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;(&#39;&#39;&#39;</span> <span class="o">+</span> <span class="n">parentClassNameList</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;):&#39;&#39;&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">indent</span><span class="p">()</span>
 
-        <span class="n">vars_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">add_section</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="s2">&quot;def __nullFunction__(self):&quot;</span><span class="p">)</span>
+        <span class="n">varsCode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addSection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s2">&quot;def __nullFunction__(self):&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">indent</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="s2">&quot;pass&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s2">&quot;pass&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">dedent</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span></div>
 
@@ -292,12 +308,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">=</span> <span class="n">functionName</span>
 
         <span class="k">if</span> <span class="n">variableName</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="s2">&quot;def &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">+</span> <span class="s2">&quot;(self):&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s2">&quot;def &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">+</span> <span class="s2">&quot;(self):&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">variableName</span><span class="p">)</span><span class="o">==</span><span class="nb">type</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="s2">&quot;def &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">+</span> <span class="s2">&quot;(self, &quot;</span><span class="o">+</span><span class="n">variableName</span><span class="o">+</span><span class="s2">&quot;):&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s2">&quot;def &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">+</span> <span class="s2">&quot;(self, &quot;</span><span class="o">+</span><span class="n">variableName</span><span class="o">+</span><span class="s2">&quot;):&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">variableNameList</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">i</span><span class="o">+</span><span class="s1">&#39;,&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">variableName</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="s2">&quot;def &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">+</span> <span class="s2">&quot;(self, &quot;</span><span class="o">+</span><span class="n">variableNameList</span><span class="o">+</span><span class="s2">&quot;):&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s2">&quot;def &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">+</span> <span class="s2">&quot;(self, &quot;</span><span class="o">+</span><span class="n">variableNameList</span><span class="o">+</span><span class="s2">&quot;):&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">indent</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="pythonScriptBuilder.endFunction"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeBuilderTool.pythonScriptBuilder.endFunction">[docs]</a>    <span class="k">def</span> <span class="nf">endFunction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -319,12 +335,17 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Output the source code to a file, use mode &#39;w+&#39;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">get_globals</span><span class="p">()</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">importLibrary</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">python_source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">getGlobals</span><span class="p">()</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">importLibrary</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">pythonSource</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filePathString</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span>  <span class="c1"># clear all contents</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\n</span><span class="s1">&#39;</span><span class="p">))</span></div></div>
 
+    <span class="c1">#&lt;pythonScriptBuilder&gt;</span>
+    <span class="c1">#&lt;/pythonScriptBuilder&gt;</span>
+
+<span class="c1">#&lt;codeBuilderTool&gt;</span>
+<span class="c1">#&lt;/codeBuilderTool&gt;</span>
 </pre></div>
 
            </div>

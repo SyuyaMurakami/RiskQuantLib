@@ -1,0 +1,237 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instrument List &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/readthedocs-custom.css" />
+
+  
+      <script src="_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tool" href="Tool.html" />
+    <link rel="prev" title="Instrument" href="Instrument.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument.html">Instrument</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Instrument List</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#add-element">Add Element</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mixed-index">Mixed Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#set-function">Set Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#addition-and-substraction">Addition And Substraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#iteration">Iteration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#selection">Selection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Instrument List</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="instrument-list">
+<h1>Instrument List<a class="headerlink" href="#instrument-list" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Instrument</span> <span class="pre">List</span></code> is a collection of any class in RiskQuantLib, it behaves like list in python. However, the difference is instrument list is defined for each kind of instrument, any change to one won’t influence the others. For example, <code class="docutils literal notranslate"><span class="pre">bond</span></code> will have <code class="docutils literal notranslate"><span class="pre">bondList</span></code>, <code class="docutils literal notranslate"><span class="pre">stock</span></code> will have <code class="docutils literal notranslate"><span class="pre">stockList</span></code>, if you build a new instrument called <code class="docutils literal notranslate"><span class="pre">pandaBond</span></code>, <code class="docutils literal notranslate"><span class="pre">pandaBondList</span></code> will be created, too.</p>
+<p>Any <code class="docutils literal notranslate"><span class="pre">Instrument</span> <span class="pre">List</span></code> has an atrribute named <code class="docutils literal notranslate"><span class="pre">all</span></code> to hold its elements. It also owns default function to allow you to add new element into this list, such as <code class="docutils literal notranslate"><span class="pre">addBond</span></code> and <code class="docutils literal notranslate"><span class="pre">addBondSeries</span></code>. With these function, you can add a single bond object into this list or add several bonds into it.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Instrument</span> <span class="pre">List</span></code> allows duplicate elements. You can add one element twice.</p>
+<p>Usually, <code class="docutils literal notranslate"><span class="pre">Instrument</span> <span class="pre">List</span></code> will inherit from <code class="docutils literal notranslate"><span class="pre">RiskQuantLib.Operation.operation.operation</span></code>, which is a class containing all kinds of operations that can be done to list. You can read <a class="reference external" href="https://riskquantlib-doc.readthedocs.io/en/latest/RiskQuantLib.Operation.html#module-RiskQuantLib.Operation.operation">Operation Of List</a> to know details.</p>
+<p>Useful functions of instrument list includes <code class="docutils literal notranslate"><span class="pre">groupBy</span></code>, <code class="docutils literal notranslate"><span class="pre">filter</span></code>, <code class="docutils literal notranslate"><span class="pre">execFunc</span></code>, <code class="docutils literal notranslate"><span class="pre">apply</span></code>, <code class="docutils literal notranslate"><span class="pre">join</span></code>, <code class="docutils literal notranslate"><span class="pre">merge</span></code>, <code class="docutils literal notranslate"><span class="pre">sort</span></code>, etc.</p>
+<p>It is necessary to introduce some important properties of instrument list here:</p>
+<section id="add-element">
+<h2>Add Element<a class="headerlink" href="#add-element" title="Link to this heading">¶</a></h2>
+<p>If <code class="docutils literal notranslate"><span class="pre">pandaBondList</span></code> is an instrument list, you can add instruments by using <code class="docutils literal notranslate"><span class="pre">addPandaBondSeries</span></code> function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">listA</span> <span class="o">=</span> <span class="n">pandaBondList</span><span class="p">()</span>
+<span class="n">listA</span><span class="o">.</span><span class="n">addPandaBondSeries</span><span class="p">(</span><span class="n">codeSeries</span><span class="p">,</span><span class="n">nameSeries</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also add one element by <code class="docutils literal notranslate"><span class="pre">addPandaBond</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">listA</span> <span class="o">=</span> <span class="n">pandaBondList</span><span class="p">()</span>
+<span class="n">listA</span><span class="o">.</span><span class="n">addPandaBond</span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Notice: The name of add function will change if you build different instrument class, for example, if you built an instrument named samuraiBond, this function will be</strong> <code class="docutils literal notranslate"><span class="pre">addSamuraiBond</span></code>.</p>
+</section>
+<section id="mixed-index">
+<h2>Mixed Index<a class="headerlink" href="#mixed-index" title="Link to this heading">¶</a></h2>
+<p>For python list, you can index an element if you know the number of its position, for example, <code class="docutils literal notranslate"><span class="pre">listA[2]</span></code> will give you the third element. However, in RiskQuantLib, index can be the number of position, or the value of <code class="docutils literal notranslate"><span class="pre">code</span></code> attribute of that element, or any attribute name, or a list of value of <code class="docutils literal notranslate"><span class="pre">code</span></code> attribute, or a list of attribute name. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rqlListA</span> <span class="o">=</span> <span class="n">stockList</span><span class="p">()</span>
+<span class="n">rqlListA</span><span class="o">.</span><span class="n">addStockSeries</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">],[</span><span class="s1">&#39;TC US&#39;</span><span class="p">,</span><span class="s1">&#39;HU China&#39;</span><span class="p">,</span><span class="s1">&#39;JI UK&#39;</span><span class="p">])</span>
+<span class="n">rqlListA</span><span class="o">.</span><span class="n">setIssuer</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">],[</span><span class="s1">&#39;Tencent&#39;</span><span class="p">,</span><span class="s1">&#39;HU JI FA&#39;</span><span class="p">,</span><span class="s1">&#39;JIK&amp;&#39;</span><span class="p">])</span>
+
+<span class="c1"># This will give you the third element</span>
+<span class="n">theThirdElement</span> <span class="o">=</span> <span class="n">rqlListA</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># This will give you the first stock whose code is &#39;C&#39;</span>
+<span class="n">theThirdElement</span> <span class="o">=</span> <span class="n">rqlListA</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]</span>
+
+<span class="c1"># This will give you the last element</span>
+<span class="n">theThirdElement</span> <span class="o">=</span> <span class="n">rqlListA</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># This will give you the first two element</span>
+<span class="n">theFirstTwoElement</span> <span class="o">=</span> <span class="n">rqlListA</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># This will give you all the elements whose code is &#39;A&#39; or &#39;B&#39;</span>
+<span class="n">theFirstTwoElement</span> <span class="o">=</span> <span class="n">rqlListA</span><span class="p">[[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="p">]]</span>
+
+<span class="c1"># This will give you a list whose element is the value of attribute issuer</span>
+<span class="n">theValueListOfIssuer</span> <span class="o">=</span> <span class="n">rqlListA</span><span class="p">[</span><span class="s1">&#39;issuer&#39;</span><span class="p">]</span>
+
+<span class="c1"># This will give you an dict whose element is the value of attribute issuer and name</span>
+<span class="n">theValueDictOfIssuerAndName</span> <span class="o">=</span> <span class="n">rqlListA</span><span class="p">[[</span><span class="s1">&#39;issuer&#39;</span><span class="p">,</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>You may ask, what if the value of attribute <code class="docutils literal notranslate"><span class="pre">code</span></code> is the same with some attribute name? Well, the best practice is not to let this happen. If it happens, RiskQuantLib will treat it as the value of attribute <code class="docutils literal notranslate"><span class="pre">code</span></code>, and gives you an single element whose attribute <code class="docutils literal notranslate"><span class="pre">code</span></code> equals this value.</p>
+</section>
+<section id="set-function">
+<h2>Set Function<a class="headerlink" href="#set-function" title="Link to this heading">¶</a></h2>
+<p>Set function is a series of function used to set values of instrument list. As you see above, we used <code class="docutils literal notranslate"><span class="pre">rqlListA.setIssuer(['A','B','C'],['Tencent','HU</span> <span class="pre">JI</span> <span class="pre">FA','JIK&amp;'])</span></code> to set the value of <code class="docutils literal notranslate"><span class="pre">issuer</span></code> attribtue. This function has two parameters, <code class="docutils literal notranslate"><span class="pre">codeSeries</span></code> and <code class="docutils literal notranslate"><span class="pre">issuerNameSeries</span></code>, when you passed the value of these two series, they are used as a dict. In this example, stock ‘A’ is related to ‘Tencent’, stock ‘B’ is related to ‘HU JI FA’. Here, the length of passing paramter of set function <strong>do not</strong> have to be the same with the length of instrument list. RiskQuantLib will skip those elements whose <code class="docutils literal notranslate"><span class="pre">code</span></code> are not in the passed <code class="docutils literal notranslate"><span class="pre">codeSeries</span></code>.</p>
+</section>
+<section id="addition-and-substraction">
+<h2>Addition And Substraction<a class="headerlink" href="#addition-and-substraction" title="Link to this heading">¶</a></h2>
+<p>You can add or substract a instrument list to another, by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rqlListC</span> <span class="o">=</span> <span class="n">rqlListA</span> <span class="o">+</span> <span class="n">rqlListB</span>
+<span class="n">rqlListD</span> <span class="o">=</span> <span class="n">rqlListA</span> <span class="o">-</span> <span class="n">rqlListB</span>
+</pre></div>
+</div>
+<p>After this, all elements in B will be added to A or deleted from A. However, any attribute of A won’t be kept in C or D, only elements will be changed. If you want C to keep the attribute of A, you should use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rqlListC</span> <span class="o">=</span> <span class="n">rqlListA</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">rqlListC</span><span class="o">.</span><span class="n">setAll</span><span class="p">(</span><span class="n">rqlListA</span><span class="o">.</span><span class="n">all</span> <span class="o">+</span> <span class="n">rqlListB</span><span class="o">.</span><span class="n">all</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="iteration">
+<h2>Iteration<a class="headerlink" href="#iteration" title="Link to this heading">¶</a></h2>
+<p>If <code class="docutils literal notranslate"><span class="pre">rqlListA</span></code> is a stockList, and in <code class="docutils literal notranslate"><span class="pre">RiskQuantLib.Instrument.Security.Stock.stock</span></code>, you defined an attribute function like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">stock</span><span class="p">(</span><span class="n">base</span><span class="p">):</span>
+   <span class="o">...</span>
+   <span class="k">def</span><span class="w"> </span><span class="nf">calTradingAmount</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">tradingAmount</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tradingPrice</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tradingShare</span>
+</pre></div>
+</div>
+<p>If you need to iterate all elements and call this attribute function, you should use <code class="docutils literal notranslate"><span class="pre">execFunc</span></code> like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rqlListA</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s1">&#39;calTradingAmount&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is totally the same with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">rqlListA</span><span class="p">:</span>
+   <span class="n">element</span><span class="o">.</span><span class="n">calTradingAmount</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You can also call it with parameters, like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rqlListA</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s1">&#39;calTradingAmount&#39;</span><span class="p">,</span><span class="n">tradingAmountType</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is totally the same with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">rqlListA</span><span class="p">:</span>
+   <span class="n">element</span><span class="o">.</span><span class="n">calTradingAmount</span><span class="p">(</span><span class="n">tradingAmountType</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="selection">
+<h2>Selection<a class="headerlink" href="#selection" title="Link to this heading">¶</a></h2>
+<p>If <code class="docutils literal notranslate"><span class="pre">stockListA</span></code> is a stockList, you want to select all elements whose name contains letter ‘HG’, you can do it like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">selectedElements</span> <span class="o">=</span> <span class="n">stockListA</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;HG&#39;</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">filter</span></code> is a function to select those elements you need, you can pass a function to it, and it will return the elements which are justified as <code class="docutils literal notranslate"><span class="pre">True</span></code> by the passed function.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Instrument.html" class="btn btn-neutral float-left" title="Instrument" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Tool.html" class="btn btn-neutral float-right" title="Tool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

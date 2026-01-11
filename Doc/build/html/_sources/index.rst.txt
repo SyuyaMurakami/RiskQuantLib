@@ -8,6 +8,19 @@
    modules.rst
    Install.rst
    Create_Project.rst
+   Build_Project.rst
+   Instrument.rst
+   Instrument_List.rst
+   Tool.rst
+   Project_Management.rst
+   Variable_Type.rst
+   With_QuantLib.rst
+   With_Pandas.rst
+   With_ORM.rst
+   E_project.rst
+   With_Github.rst
+   Advance.rst
+   About.rst
 
 Welcome to Use RiskQuantLib
 ===========================
@@ -133,44 +146,50 @@ Things get to complicated now. You decide to use RiskQuantLib. First of all, you
 
    newRQL Archegos_Risk
 
-After this, the dictionary looks like:
+After this, the dictionary looks like ( *In Windows System* ):
 ::
 
    --Archegos_Risk
+     --Cache
+     --Data
+     --Result
      --RiskQuantLib
+     --Src
+     --build.bat
      --build.py
+     --config.py
+     --debug.bat
      --main.py
-     --Build_Attr.xlsx
-     --Build_Instrument.xlsx
 
-Open ``Build_Attr.xlsx``, you edit it and make it looks like:
+Open ``config.py``, you edit it and make it looks like:
+::
 
-+--------------+----------------+----------------+
-| SecurityType |    AttrName    |    AttrType    |
-+==============+================+================+
-|     Fund     | netAssetValue  |     Number     |
-+--------------+----------------+----------------+
-|     Fund     |        amount  |     Number     |
-+--------------+----------------+----------------+
-|     Fund     | varPercentage  |     Number     |
-+--------------+----------------+----------------+
-|    Stock     |      mktValue  |     Number     |
-+--------------+----------------+----------------+
-|    Stock     |   closeSeries  |     Series     |
-+--------------+----------------+----------------+
+   #!/usr/bin/python
+   # coding = utf-8
 
-You close this file and build this project in command terminal:
+   #-|instrument: security, company, index, interest
+   #-|instrument: bond@security, stock@security, derivative@security, fund@security
+   #-|instrument: future@derivative, option@derivative
+
+   #-|instrument-DefaultInstrumentType: security@Security, company@Company, index@Index, interest@Interest
+   #-|instrument-DefaultInstrumentType: bond@Bond, stock@Stock, derivative@Derivative, fund@Fund
+   #-|instrument-DefaultInstrumentType: future@Future, option@Option
+
+   #-|attribute: fund.netAssetValue@number, fund.amount@number, fund.varPercentage@number
+   #-|attribute: stock.mktValue@number, stock.closeSeries@series
+
+Notice that you only add two lines after the default config information. You close this file and build this project in command terminal:
 ::
 
    python build.py
 
-After this, you open ``RiskQuantLib.Security.Fund.fund`` to add class function:
+After this, you open ``RiskQuantLib.Instrument.Security.Fund.fund`` to add class function:
 ::
 
    def calVaR(self):
       self.VaR = self.netAssetValue * self.amount * self.varPercentage
 
-You open ``RiskQuantLib.Security.Stock.stock`` to add class function:
+You open ``RiskQuantLib.Instrument.Security.Stock.stock`` to add class function:
 ::
 
    def calVaRPercentage(self):
@@ -224,6 +243,7 @@ Now it's more easy to read and modify, isn't it? You decide to continue and save
 Till now, the process looks more complicated than a pandas way, however, if you noticed, with RiskQuantLib, data input, data process, data output is independent, change to any of them won't influence the others. Let's take a closer look:
 
 *Data Input*:
+-------------------
 
 ``main.py``:
 ::
@@ -252,14 +272,15 @@ Till now, the process looks more complicated than a pandas way, however, if you 
    [fund.setVarPercentage(0.15) for fund in fund_holdings]
 
 *Data Analysis*
+-------------------
 
-``RiskQuantLib.Security.Fund.fund``:
+``RiskQuantLib.Instrument.Security.Fund.fund``:
 ::
 
    def calVaR(self):
       self.VaR = self.netAssetValue * self.amount * self.varPercentage
 
-``RiskQuantLib.Security.Stock.stock``
+``RiskQuantLib.Instrument.Security.Stock.stock``
 ::
 
    def calVaRPercentage(self):
@@ -278,6 +299,7 @@ Till now, the process looks more complicated than a pandas way, however, if you 
    stock_holdings.execFunc('calVaR')
 
 *Data Output*
+---------------------
 
 ``main.py``
 ::

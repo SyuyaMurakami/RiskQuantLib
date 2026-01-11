@@ -1,0 +1,988 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>RiskQuantLib.Build.builder &mdash; RiskQuantLib 0.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> RiskQuantLib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RiskQuantLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../RiskQuantLib.html">RiskQuantLib</a> &raquo;</li>
+        
+      <li>RiskQuantLib.Build.builder</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for RiskQuantLib.Build.builder</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1">#coding = utf-8</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span><span class="nn">json</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="builder"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder">[docs]</a><span class="k">class</span> <span class="nc">builder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    builder is a class to use default render and router to re-construct the whole project.</span>
+<span class="sd">    Any RiskQuantLib project should have a default builder. You can also add other builders</span>
+<span class="sd">    to achieve different project mode or use other builder to assist your current project by</span>
+<span class="sd">    specifying render channel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="builder.validateStringForJson"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.validateStringForJson">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">validateStringForJson</span><span class="p">(</span><span class="n">string</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will parse json like string into a validated json string. All escape character</span>
+<span class="sd">        will be kept as original form, which is to say, any &#39;\&#39; will not be treated as an escape sign.</span>
+
+<span class="sd">        This function is used to parse .pyt file when .pyt file is in a json form and contains file path.</span>
+<span class="sd">        In windows, these file paths will have &#39;\&#39;, and it will be wrongly seen as escape character. This</span>
+<span class="sd">        function will keep the string as raw string, validateStringForJson(string) equals r&#39;stringContent&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">escapes</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="n">char</span><span class="p">)</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">)])</span>
+        <span class="n">translator</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">escapes</span><span class="p">)</span>
+        <span class="n">stringWithoutEscape</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">translator</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stringWithoutEscape</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="builder.checkAndMakeDir"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.checkAndMakeDir">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">checkAndMakeDir</span><span class="p">(</span><span class="nb">dir</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make directory recursively if it does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="builder.checkAndMakeDirAndInitiate"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.checkAndMakeDirAndInitiate">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">checkAndMakeDirAndInitiate</span><span class="p">(</span><span class="nb">dir</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make directory recursively if it does not exist, then add an __init__.py file in it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">checkAndMakeDir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">checkAndMakeFile</span><span class="p">(</span><span class="nb">dir</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;__init__.py&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="builder.checkAndMakeFile"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.checkAndMakeFile">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">checkAndMakeFile</span><span class="p">(</span><span class="n">file</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make a file is it does not exist, and write content into it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span>  <span class="c1"># clear all contents</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="builder.formatWarning"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.formatWarning">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">formatWarning</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make the warning message more readable and neglect the redundant line.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">category</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="builder.loadInfo"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.loadInfo">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">loadInfo</span><span class="p">(</span><span class="n">savePath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load building cache from a RiskQuantLib project or a .pkl file. If there is not building cache</span>
+<span class="sd">        in specified path, an exception will be raised.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        savePath : str</span>
+<span class="sd">            The path of building cache .pkl file, or the path of RiskQuantLib project.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">savePath</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">filePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;buildInfo.pkl&#39;</span>
+        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">savePath</span><span class="p">):</span>
+            <span class="n">filePath</span> <span class="o">=</span> <span class="n">savePath</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s2">&quot;RiskQuantLib&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;Build&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;buildInfo.pkl&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filePath</span> <span class="o">=</span> <span class="n">savePath</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filePath</span><span class="p">):</span>
+            <span class="kn">from</span> <span class="nn">RiskQuantLib.Tool.fileTool</span> <span class="kn">import</span> <span class="n">loadVariable</span>
+            <span class="n">cachedBuilder</span> <span class="o">=</span> <span class="n">loadVariable</span><span class="p">(</span><span class="n">filePath</span><span class="p">)</span>
+            <span class="n">cachedBuilder</span><span class="o">.</span><span class="n">checkPath</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cachedBuilder</span><span class="p">,</span> <span class="s1">&#39;checkPath&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="n">cachedBuilder</span><span class="o">.</span><span class="n">checkRender</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cachedBuilder</span><span class="p">,</span><span class="s1">&#39;checkRender&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">cachedBuilder</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Load Cache Error: savePath should either be an empty string or a validated RiskQuantLib project dir path or a .pkl file path. If it is a RiskQuantLib project path, make sure there exists savePath/RiskQuantLib/Build/buildInfo.pkl&#39;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buildFromProjectPath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">templateSearchPath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        builder is a class to combine router and render to re-construct the whole project, a project must</span>
+<span class="sd">        have a default builder. It may also have other builders to construct project by another form.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        buildFromProjectPath : str</span>
+<span class="sd">            The path of builder class, default as Build directory in current project.</span>
+<span class="sd">        targetProjectPath : str</span>
+<span class="sd">            The path of target RiskQuantLib project which will be changed according to build information,</span>
+<span class="sd">            default as current project.</span>
+<span class="sd">        templateSearchPath : str</span>
+<span class="sd">            The path of directory where .pyt file for building exists, default as Build/Component in</span>
+<span class="sd">            current project. If buildFromProjectPath is specified, the default will be</span>
+<span class="sd">            buildFromProjectPath/Build/Component.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">targetProjectPath</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">projectPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;RiskQuantLib&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;Build&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">targetPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">projectPath</span><span class="p">)</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;RiskQuantLib&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">projectPath</span> <span class="o">=</span> <span class="n">targetProjectPath</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">targetPath</span> <span class="o">=</span> <span class="n">targetProjectPath</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;RiskQuantLib&#39;</span>
+        <span class="k">if</span> <span class="n">buildFromProjectPath</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buildFromPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">buildFromPath</span> <span class="o">=</span> <span class="n">buildFromProjectPath</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;RiskQuantLib&#39;</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;Build&#39;</span>
+        <span class="k">if</span> <span class="n">templateSearchPath</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">templatePath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buildFromPath</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s2">&quot;Component&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">templatePath</span> <span class="o">=</span> <span class="n">templateSearchPath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateRender</span><span class="p">()</span>
+        <span class="kn">from</span> <span class="nn">RiskQuantLib.Build.tree</span> <span class="kn">import</span> <span class="n">inheritTree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span> <span class="o">=</span> <span class="n">inheritTree</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propertyTree</span> <span class="o">=</span> <span class="n">inheritTree</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pathRel</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dirAbs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrumentNameList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrumentInheritTreeSeries</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propertyNameList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propertyInheritTreeSeries</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parentInstrumentNameSeries</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parentInstrumentInheritListSeries</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parentPropertyNameSeries</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parentPropertyInheritListSeries</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrumentType</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parentQuantLibNameSeries</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dependenceSeries</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attributeToPropertyDict</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bindType</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linkType</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="builder.initiateInstrumentTree"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.initiateInstrumentTree">[docs]</a>    <span class="k">def</span> <span class="nf">initiateInstrumentTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a new inherit tree object to store instrument information, and add default nodes into it.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">RiskQuantLib.Build.tree</span> <span class="kn">import</span> <span class="n">inheritTree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span> <span class="o">=</span> <span class="n">inheritTree</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">getNode</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setAttr</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span><span class="s1">&#39;Instrument&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="builder.initiatePropertyTree"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.initiatePropertyTree">[docs]</a>    <span class="k">def</span> <span class="nf">initiatePropertyTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a new inherit tree object to store property type information, and add default nodes into it.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">RiskQuantLib.Build.tree</span> <span class="kn">import</span> <span class="n">inheritTree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propertyTree</span> <span class="o">=</span> <span class="n">inheritTree</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propertyTree</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propertyTree</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="s1">&#39;string&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">inheritFrom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propertyTree</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="s1">&#39;series&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">inheritFrom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propertyTree</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">inheritFrom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="builder.initiateProject"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.initiateProject">[docs]</a>    <span class="k">def</span> <span class="nf">initiateProject</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the project will brand new instrument inherit tree and property inherit tree.</span>
+<span class="sd">        It will also replace the render object into a new one.</span>
+
+<span class="sd">        This function will clear up all current instrument inherit information and property information,</span>
+<span class="sd">        all current attributes will be removed.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initiateInstrumentTree</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initiatePropertyTree</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateRender</span><span class="p">()</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">buildProject</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="builder.buildProject"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.buildProject">[docs]</a>    <span class="k">def</span> <span class="nf">buildProject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dumpCache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Trigger of building. Call this function will parse instrument inherit tree into validated</span>
+<span class="sd">        building information, create directory that is needed but does not exist yet, create file that</span>
+<span class="sd">        is needed but does not exist yet. Generate set attribute function and write them into related</span>
+<span class="sd">        instrument. And finally, write these change into building cache .pkl file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateBuildInfo</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updatePathInfo</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildDir</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildFile</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildContent</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dumpInfo</span><span class="p">()</span> <span class="k">if</span> <span class="n">dumpCache</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="builder.checkPath"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.checkPath">[docs]</a>    <span class="k">def</span> <span class="nf">checkPath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        In old versions of RiskQuantLib, if the project and built, and then, the project dir name is changed,</span>
+<span class="sd">        the builder can not recognize the new project path and will raise an error when you build it again. This function</span>
+<span class="sd">        is used to check whether the path has been changed. If changed, it will replace the old path into</span>
+<span class="sd">        the default project path.</span>
+
+<span class="sd">        This is the default behavior of RiskQuantLib, if your project does not use many guardians, this default</span>
+<span class="sd">        setting will be helpful and make it convenient to change project location or run your old project in</span>
+<span class="sd">        a new computer.</span>
+
+<span class="sd">        However, it may cause problem when you use guardian projects. The best way is always un-build a project</span>
+<span class="sd">        when you want to change its location or rename it, and build it again when rename action is finished. It is</span>
+<span class="sd">        safer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">warnings</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">formatWarning</span>
+        <span class="n">pathName</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Project_Path&#39;</span><span class="p">,</span> <span class="s1">&#39;Target_Path&#39;</span><span class="p">,</span> <span class="s1">&#39;Build_From_Path&#39;</span><span class="p">,</span> <span class="s1">&#39;Template_Path&#39;</span><span class="p">]</span>
+        <span class="n">pathAttr</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;projectPath&#39;</span><span class="p">,</span> <span class="s1">&#39;targetPath&#39;</span><span class="p">,</span> <span class="s1">&#39;buildFromPath&#39;</span><span class="p">,</span> <span class="s1">&#39;templatePath&#39;</span><span class="p">]</span>
+        <span class="n">pathToBeCheck</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">projectPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">buildFromPath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">templatePath</span><span class="p">]</span>
+        <span class="n">pathAlternative</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;RiskQuantLib&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;Build&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                           <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;RiskQuantLib&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s1">&#39;Build&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;RiskQuantLib&#39;</span><span class="p">,</span>
+                           <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span>
+                           <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s2">&quot;Component&quot;</span><span class="p">]</span>
+        <span class="p">[</span><span class="kc">None</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ptc</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">+</span><span class="n">pn</span><span class="o">+</span><span class="s2">&quot; does NOT exist, it is changed from &quot;</span> <span class="o">+</span> <span class="n">ptc</span> <span class="o">+</span> <span class="s2">&quot; into : &quot;</span><span class="o">+</span><span class="n">pa</span><span class="p">),</span> <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pan</span><span class="p">,</span> <span class="n">pa</span><span class="p">))</span> <span class="k">for</span> <span class="n">pn</span><span class="p">,</span> <span class="n">ptc</span><span class="p">,</span> <span class="n">pa</span><span class="p">,</span> <span class="n">pan</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pathName</span><span class="p">,</span> <span class="n">pathToBeCheck</span><span class="p">,</span> <span class="n">pathAlternative</span><span class="p">,</span> <span class="n">pathAttr</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bindType</span> <span class="o">=</span> <span class="p">{</span><span class="n">bindType</span><span class="p">:{</span><span class="n">pair</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">else</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">targetPath</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;RiskQuantLib&#39;</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bindType</span><span class="p">[</span><span class="n">bindType</span><span class="p">]}</span> <span class="k">for</span> <span class="n">bindType</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bindType</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="builder.updateRender"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.updateRender">[docs]</a>    <span class="k">def</span> <span class="nf">updateRender</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">templateSearchPath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change the render into a new one, use specified templateSearchPath.</span>
+<span class="sd">        templateSearchPath is default as current templateSearchPath.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        templateSearchPath : str</span>
+<span class="sd">            The path of directory where .pyt file for building exists, default as Build/Component in</span>
+<span class="sd">            current project. If buildFromProjectPath is specified, the default will be</span>
+<span class="sd">            buildFromProjectPath/Build/Component.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">RiskQuantLib.Build.render</span> <span class="kn">import</span> <span class="n">render</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">templatePath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">templatePath</span> <span class="k">if</span> <span class="n">templateSearchPath</span><span class="o">==</span><span class="s1">&#39;&#39;</span> <span class="k">else</span> <span class="n">templateSearchPath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render</span> <span class="o">=</span> <span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">templatePath</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="builder.checkRender"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.checkRender">[docs]</a>    <span class="k">def</span> <span class="nf">checkRender</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">templateSearchPath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change the render into a new one if it does not exist, use specified templateSearchPath.</span>
+<span class="sd">        templateSearchPath is default as current templateSearchPath.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        templateSearchPath : str</span>
+<span class="sd">            The path of directory where .pyt file for building exists, default as Build/Component in</span>
+<span class="sd">            current project. If buildFromProjectPath is specified, the default will be</span>
+<span class="sd">            buildFromProjectPath/Build/Component.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateRender</span><span class="p">(</span><span class="n">templateSearchPath</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s1">&#39;render&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="builder.delRender"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.delRender">[docs]</a>    <span class="k">def</span> <span class="nf">delRender</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the render from current builder. This is the preparation for dumping current</span>
+<span class="sd">        builder into .pkl file, since render object can not be serialized.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;render&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;render&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="builder.updateBuildInfo"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.updateBuildInfo">[docs]</a>    <span class="k">def</span> <span class="nf">updateBuildInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse instrument inherit tree, property type tree, attribute information and instrument dependency.</span>
+<span class="sd">        This function will change these information into list to prepare for further render.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrumentNameList</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentInheritTreeSeries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">getInheritList</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propertyNameList</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">propertyInheritTreeSeries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">propertyTree</span><span class="o">.</span><span class="n">getInheritList</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parentInstrumentNameSeries</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parentInstrumentInheritListSeries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">getParentInheritListSeries</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parentPropertyNameSeries</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parentPropertyInheritListSeries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">propertyTree</span><span class="o">.</span><span class="n">getParentInheritListSeries</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrumentType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">getAttr</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parentQuantLibNameSeries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">getAttr</span><span class="p">(</span><span class="s1">&#39;outsideParentNode&#39;</span><span class="p">,[])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dependenceSeries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">getAttr</span><span class="p">(</span><span class="s1">&#39;outsideDependence&#39;</span><span class="p">,[])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attributeToPropertyDict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">getAttr</span><span class="p">(</span><span class="s1">&#39;attribute&#39;</span><span class="p">,{})</span></div>
+
+<div class="viewcode-block" id="builder.updatePathInfo"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.updatePathInfo">[docs]</a>    <span class="k">def</span> <span class="nf">updatePathInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Render the filePath.pyt according to current parsed information to generate absolute file path</span>
+<span class="sd">        and relative file path.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkRender</span><span class="p">()</span>
+        <span class="n">pathDict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;filePath.pyt&#39;</span><span class="p">,</span> <span class="n">instrumentNameList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentNameList</span><span class="p">,</span> <span class="n">instrumentInheritTreeSeries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentInheritTreeSeries</span><span class="p">,</span> <span class="n">propertyNameList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">propertyNameList</span><span class="p">,</span> <span class="n">propertyInheritTreeSeries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">propertyInheritTreeSeries</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pathRel</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">builder</span><span class="o">.</span><span class="n">validateStringForJson</span><span class="p">(</span><span class="n">pathDict</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span> <span class="o">=</span> <span class="p">{</span><span class="n">pathType</span><span class="p">:{</span><span class="n">instrument</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">targetPath</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">pathRel</span><span class="p">[</span><span class="n">pathType</span><span class="p">][</span><span class="n">instrument</span><span class="p">]</span> <span class="k">for</span> <span class="n">instrument</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pathRel</span><span class="p">[</span><span class="n">pathType</span><span class="p">]}</span> <span class="k">for</span> <span class="n">pathType</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pathRel</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dirAbs</span> <span class="o">=</span> <span class="p">{</span><span class="n">pathType</span><span class="p">:{</span><span class="n">instrument</span><span class="p">:</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">[</span><span class="n">pathType</span><span class="p">][</span><span class="n">instrument</span><span class="p">])</span> <span class="k">for</span> <span class="n">instrument</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">[</span><span class="n">pathType</span><span class="p">]}</span> <span class="k">for</span> <span class="n">pathType</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="builder.buildDir"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.buildDir">[docs]</a>    <span class="k">def</span> <span class="nf">buildDir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate through all instrument and make directory that does not exist yet, then add __init__.py into it.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">[</span><span class="n">builder</span><span class="o">.</span><span class="n">checkAndMakeDirAndInitiate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirAbs</span><span class="p">[</span><span class="n">pathType</span><span class="p">][</span><span class="n">instrument</span><span class="p">])</span> <span class="k">for</span> <span class="n">pathType</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dirAbs</span> <span class="k">for</span> <span class="n">instrument</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dirAbs</span><span class="p">[</span><span class="n">pathType</span><span class="p">]]</span></div>
+
+<div class="viewcode-block" id="builder.buildFile"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.buildFile">[docs]</a>    <span class="k">def</span> <span class="nf">buildFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Render initiate .pyt file and write them into related .py file. If .py file already exists, it will be skipped</span>
+<span class="sd">        and not change. If .py file does not exist, it will be created and initialized.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkRender</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;instrumentFilePath&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">builder</span><span class="o">.</span><span class="n">checkAndMakeFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">[</span><span class="s1">&#39;instrumentFilePath&#39;</span><span class="p">][</span><span class="n">instrument</span><span class="p">],</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;instrument.pyt&#39;</span><span class="p">,</span>
+                                                              <span class="n">instrumentName</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentNameList</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">parentInstrumentNameSeries</span><span class="o">=</span>
+                                                              <span class="bp">self</span><span class="o">.</span><span class="n">parentInstrumentNameSeries</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">inheritList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentInheritTreeSeries</span><span class="p">[</span>
+                                                                  <span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">parentInheritListSeries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parentInstrumentInheritListSeries</span><span class="p">[</span>
+                                                                  <span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">instrumentType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentType</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">parentQuantLibInstrumentNameSeries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parentQuantLibNameSeries</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">dependenceList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dependenceSeries</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">]</span>
+                                                              <span class="p">)</span>
+                                           <span class="p">)</span> <span class="k">for</span> <span class="n">instrumentId</span><span class="p">,</span> <span class="n">instrument</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">[</span><span class="s1">&#39;instrumentFilePath&#39;</span><span class="p">])]</span>
+        <span class="k">if</span> <span class="s1">&#39;instrumentListFilePath&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">builder</span><span class="o">.</span><span class="n">checkAndMakeFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">[</span><span class="s1">&#39;instrumentListFilePath&#39;</span><span class="p">][</span><span class="n">instrument</span><span class="p">],</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;instrumentList.pyt&#39;</span><span class="p">,</span>
+                                                              <span class="n">instrumentName</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentNameList</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">parentInstrumentNameSeries</span><span class="o">=</span>
+                                                              <span class="bp">self</span><span class="o">.</span><span class="n">parentInstrumentNameSeries</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">inheritList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentInheritTreeSeries</span><span class="p">[</span>
+                                                                  <span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">parentInheritListSeries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parentInstrumentInheritListSeries</span><span class="p">[</span>
+                                                                  <span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">instrumentType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentType</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">dependenceList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dependenceSeries</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">]</span>
+                                                              <span class="p">))</span> <span class="k">for</span> <span class="n">instrumentId</span><span class="p">,</span> <span class="n">instrument</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">[</span><span class="s1">&#39;instrumentListFilePath&#39;</span><span class="p">])]</span>
+        <span class="k">if</span> <span class="s1">&#39;instrumentAutoFilePath&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">builder</span><span class="o">.</span><span class="n">checkAndMakeFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">[</span><span class="s1">&#39;instrumentAutoFilePath&#39;</span><span class="p">][</span><span class="n">instrument</span><span class="p">],</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;instrumentAuto.pyt&#39;</span><span class="p">,</span>
+                                                              <span class="n">instrumentName</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentNameList</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">parentInstrumentNameSeries</span><span class="o">=</span>
+                                                              <span class="bp">self</span><span class="o">.</span><span class="n">parentInstrumentNameSeries</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">inheritList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentInheritTreeSeries</span><span class="p">[</span>
+                                                                  <span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">parentInheritListSeries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parentInstrumentInheritListSeries</span><span class="p">[</span>
+                                                                  <span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">instrumentType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentType</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">dependenceList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dependenceSeries</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">]</span>
+                                                              <span class="p">))</span> <span class="k">for</span> <span class="n">instrumentId</span><span class="p">,</span> <span class="n">instrument</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">[</span><span class="s1">&#39;instrumentAutoFilePath&#39;</span><span class="p">])]</span>
+        <span class="k">if</span> <span class="s1">&#39;instrumentListAutoFilePath&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">builder</span><span class="o">.</span><span class="n">checkAndMakeFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">[</span><span class="s1">&#39;instrumentListAutoFilePath&#39;</span><span class="p">][</span><span class="n">instrument</span><span class="p">],</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;instrumentListAuto.pyt&#39;</span><span class="p">,</span>
+                                                              <span class="n">instrumentName</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentNameList</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">parentInstrumentNameSeries</span><span class="o">=</span>
+                                                              <span class="bp">self</span><span class="o">.</span><span class="n">parentInstrumentNameSeries</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">inheritList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentInheritTreeSeries</span><span class="p">[</span>
+                                                                  <span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">parentInheritListSeries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parentInstrumentInheritListSeries</span><span class="p">[</span>
+                                                                  <span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">instrumentType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentType</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">],</span>
+                                                              <span class="n">dependenceList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dependenceSeries</span><span class="p">[</span><span class="n">instrumentId</span><span class="p">]</span>
+                                                              <span class="p">))</span> <span class="k">for</span> <span class="n">instrumentId</span><span class="p">,</span> <span class="n">instrument</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">[</span><span class="s1">&#39;instrumentListAutoFilePath&#39;</span><span class="p">])]</span>
+        <span class="k">if</span> <span class="s1">&#39;propertyFilePath&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">builder</span><span class="o">.</span><span class="n">checkAndMakeFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">[</span><span class="s1">&#39;propertyFilePath&#39;</span><span class="p">][</span><span class="nb">property</span><span class="p">],</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;property.pyt&#39;</span><span class="p">,</span>
+                                                              <span class="n">propertyName</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">propertyNameList</span><span class="p">[</span><span class="n">propertyId</span><span class="p">],</span>
+                                                              <span class="n">parentPropertyNameSeries</span><span class="o">=</span>
+                                                              <span class="bp">self</span><span class="o">.</span><span class="n">parentPropertyNameSeries</span><span class="p">[</span><span class="n">propertyId</span><span class="p">],</span>
+                                                              <span class="n">inheritList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">propertyInheritTreeSeries</span><span class="p">[</span>
+                                                                  <span class="n">propertyId</span><span class="p">],</span>
+                                                              <span class="n">parentInheritListSeries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parentPropertyInheritListSeries</span><span class="p">[</span>
+                                                                  <span class="n">propertyId</span><span class="p">]</span>
+                                                              <span class="p">))</span> <span class="k">for</span> <span class="n">propertyId</span><span class="p">,</span> <span class="nb">property</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathAbs</span><span class="p">[</span><span class="s1">&#39;propertyFilePath&#39;</span><span class="p">])]</span></div>
+
+<div class="viewcode-block" id="builder.buildContent"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.buildContent">[docs]</a>    <span class="k">def</span> <span class="nf">buildContent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">persist</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Render set attribute functions and write them into related .py file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        persist : bool</span>
+<span class="sd">            If true, the current set attribute function will be saved as permanent source code. It will not</span>
+<span class="sd">            be influenced by building action any more. This action can not be cancelled.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkRender</span><span class="p">()</span>
+        <span class="n">setAttribute</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;setAttribute.pyt&#39;</span><span class="p">,</span> <span class="n">instrumentName</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                                           <span class="n">attributeNameList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">attributeToPropertyDict</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+                                           <span class="n">propertyNameList</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attributeToPropertyDict</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
+                                           <span class="n">propertyInheritTreeSeries</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">propertyTree</span><span class="o">.</span><span class="n">getNode</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span><span class="o">.</span><span class="n">inheritTree</span> <span class="k">for</span>
+                                                                      <span class="n">prop</span> <span class="ow">in</span>
+                                                                      <span class="bp">self</span><span class="o">.</span><span class="n">attributeToPropertyDict</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span> <span class="k">for</span>
+                        <span class="n">idx</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentNameList</span><span class="p">)]</span>
+        <span class="n">setAttributeList</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;setAttributeList.pyt&#39;</span><span class="p">,</span> <span class="n">instrumentName</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                                           <span class="n">attributeNameList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">attributeToPropertyDict</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+                                           <span class="n">propertyNameList</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attributeToPropertyDict</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
+                                           <span class="n">defaultValueList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pd.Series(dtype=float)&#39;</span> <span class="k">if</span> <span class="n">prop</span><span class="o">==</span><span class="s1">&#39;series&#39;</span> <span class="k">else</span> <span class="s1">&#39;np.nan&#39;</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributeToPropertyDict</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span> <span class="k">for</span>
+                        <span class="n">idx</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentNameList</span><span class="p">)]</span>
+        <span class="n">shortcutAutoImport</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;module.pyt&#39;</span><span class="p">,</span><span class="n">instrumentNameList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentNameList</span><span class="p">,</span>
+                                                 <span class="n">instrumentInheritTreeSeries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentInheritTreeSeries</span><span class="p">,</span>
+                                                 <span class="n">propertyNameList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">propertyNameList</span><span class="p">,</span>
+                                                 <span class="n">propertyInheritTreeSeries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">propertyInheritTreeSeries</span><span class="p">)]</span>
+        <span class="n">sourceCodeToBeInjected</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">setAttribute</span><span class="o">+</span><span class="n">setAttributeList</span><span class="o">+</span><span class="n">shortcutAutoImport</span> <span class="k">if</span> <span class="n">i</span><span class="o">!=</span><span class="s1">&#39;&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bindContent</span><span class="p">(</span><span class="n">sourceCodeToBeInjected</span><span class="p">,</span> <span class="n">bindType</span><span class="o">=</span><span class="s2">&quot;setAttribute&quot;</span><span class="p">,</span><span class="n">persist</span><span class="o">=</span><span class="n">persist</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="builder.bindContent"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.bindContent">[docs]</a>    <span class="k">def</span> <span class="nf">bindContent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sourceCodeToBeInjected</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">bindType</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">persist</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse the source code, find where the code should be injected into, and inject them.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sourceCodeToBeInjected : str</span>
+<span class="sd">            Content of python source code, with comment used as control syntax</span>
+<span class="sd">        bindType : str</span>
+<span class="sd">            The type of binding action. Different bind type will be saved into different channel.</span>
+<span class="sd">            Binding action in one channel will not influence one in another channel, unless it</span>
+<span class="sd">            overwrites the same tag.</span>
+<span class="sd">        persist : bool</span>
+<span class="sd">            If true, the current source code will be saved as permanent source code. It will not</span>
+<span class="sd">            be influenced by building action any more. This action can not be cancelled.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">RiskQuantLib.Build.router</span> <span class="kn">import</span> <span class="n">router</span>
+        <span class="n">syntacticSugarPathMap</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="p">[</span><span class="n">syntacticSugarPathMap</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathRel</span><span class="p">[</span><span class="n">dictType</span><span class="p">])</span> <span class="k">for</span> <span class="n">dictType</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pathRel</span><span class="p">]</span>
+        <span class="n">injectDict</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">parseInjectTarget</span><span class="p">(</span><span class="n">sourceCodeToBeInjected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetPath</span><span class="p">,</span> <span class="n">syntacticSugarPathMap</span><span class="p">)</span>
+
+        <span class="n">alreadyBoundTag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bindType</span><span class="p">[</span><span class="n">bindType</span><span class="p">]</span> <span class="k">if</span> <span class="n">bindType</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bindType</span> <span class="k">else</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">aliveRenderTag</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([(</span><span class="n">file</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">injectDict</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">injectDict</span><span class="p">[</span><span class="n">file</span><span class="p">]])</span>
+        <span class="n">deprecatedRenderTag</span> <span class="o">=</span> <span class="n">alreadyBoundTag</span> <span class="o">-</span> <span class="n">aliveRenderTag</span>
+        <span class="n">deprecatedRenderTagDF</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">deprecatedRenderTag</span><span class="p">],</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">,</span><span class="s1">&#39;tag&#39;</span><span class="p">,</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
+        <span class="n">deprecatedInjectDict</span> <span class="o">=</span> <span class="n">deprecatedRenderTagDF</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])))</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">if</span> <span class="n">deprecatedRenderTagDF</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="mi">0</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="p">[</span><span class="n">injectDict</span><span class="p">[</span><span class="n">file</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">deprecatedInjectDict</span><span class="p">[</span><span class="n">file</span><span class="p">])</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">injectDict</span> <span class="k">if</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">deprecatedInjectDict</span><span class="p">]</span>
+        <span class="p">[</span><span class="n">injectDict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">file</span><span class="p">:</span><span class="n">deprecatedInjectDict</span><span class="p">[</span><span class="n">file</span><span class="p">]})</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">deprecatedInjectDict</span> <span class="k">if</span> <span class="n">file</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">injectDict</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bindType</span><span class="p">[</span><span class="n">bindType</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span> <span class="k">if</span> <span class="n">persist</span> <span class="k">else</span> <span class="n">aliveRenderTag</span>
+
+        <span class="p">[</span><span class="n">router</span><span class="o">.</span><span class="n">persistToFile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="o">**</span><span class="p">(</span><span class="n">injectDict</span><span class="p">[</span><span class="n">file</span><span class="p">]))</span> <span class="k">if</span> <span class="n">persist</span> <span class="k">else</span> <span class="n">router</span><span class="o">.</span><span class="n">injectToFile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="o">**</span><span class="p">(</span><span class="n">injectDict</span><span class="p">[</span><span class="n">file</span><span class="p">]))</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">injectDict</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="builder.linkContent"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.linkContent">[docs]</a>    <span class="k">def</span> <span class="nf">linkContent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">linkType</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will use control declaration in source code to build the whole project again. Any instrument that</span>
+<span class="sd">        is required by source code will be created, any attribute this is needed will be added. These actions will be operated</span>
+<span class="sd">        on an independent builder named as mimicBuilder, which is the update version of base builder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">RiskQuantLib.Build.controller</span> <span class="kn">import</span> <span class="n">controller</span>
+        <span class="n">controlSyntaxListUpdate</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">findDeclareTag</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">controlSyntaxListUpdate</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">linkType</span><span class="p">[</span><span class="n">linkType</span><span class="p">]</span> <span class="o">=</span> <span class="n">controlSyntaxListUpdate</span>
+            <span class="n">controlSyntaxListSorted</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">linkType</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">linkType</span> <span class="k">if</span> <span class="n">i</span><span class="o">!=</span><span class="n">linkType</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="n">controlSyntaxListUpdate</span><span class="p">]</span>
+            <span class="n">controlSyntaxListMerged</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">controlSyntaxListSorted</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="p">]</span>
+            <span class="n">controller</span><span class="o">.</span><span class="n">linkController</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controlSyntaxListMerged</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="builder.renderProject"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.renderProject">[docs]</a>    <span class="k">def</span> <span class="nf">renderProject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sourceCodeDirPath</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">bindType</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;renderedSourceCode&#39;</span><span class="p">,</span> <span class="n">persist</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Render and inject source code into target project.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sourceCodeDirPath : str</span>
+<span class="sd">            The path of directory where source code exist. Any sub file in this folder or sub-folder</span>
+<span class="sd">            will be rendered and parsed.</span>
+<span class="sd">        bindType : str</span>
+<span class="sd">            The channel of binding action. Source code are rendered and injected into project by different channels,</span>
+<span class="sd">            The source code injected by channel A will be not influenced by source code injected by channel B, unless</span>
+<span class="sd">            the content of tag is overwritten by code in channel B. This is used when you have several builders and</span>
+<span class="sd">            you want them to build into the same project. In this case, you should give a bindType for each render action</span>
+<span class="sd">            to make sure they do not conflict with each other.</span>
+<span class="sd">        persist : bool</span>
+<span class="sd">            If true, the current source code will be saved as permanent source code. It will not</span>
+<span class="sd">            be influenced by building action any more. This action can not be cancelled.</span>
+<span class="sd">        debug : bool</span>
+<span class="sd">            If false, the break point in Src will not be effective, only break point within instrument class will effect.</span>
+<span class="sd">            If true, the class method defined in Src directory will be dynamically bound to instrument node class.</span>
+<span class="sd">            Then the program will take .py file under .Src directory as a module and import it, bind the class method into</span>
+<span class="sd">            specified class. This mode is useful when your code is still under development. You will not have to change between</span>
+<span class="sd">            ./Src/somecode.py and target instrument class .py file to edit any code error. The break point will stop right</span>
+<span class="sd">            under ./Src/somecode.py.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkRender</span><span class="p">()</span>
+        <span class="n">sourceCodeDirPath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">projectPath</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s2">&quot;Src&quot;</span> <span class="k">if</span> <span class="n">sourceCodeDirPath</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="k">else</span> <span class="n">sourceCodeDirPath</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">sourceCodeDirPath</span><span class="p">):</span>
+            <span class="kn">from</span> <span class="nn">RiskQuantLib.Build.render</span> <span class="kn">import</span> <span class="n">render</span>
+            <span class="kn">from</span> <span class="nn">RiskQuantLib.Build.router</span> <span class="kn">import</span> <span class="n">router</span>
+            <span class="kn">from</span> <span class="nn">RiskQuantLib.Build.debugger</span> <span class="kn">import</span> <span class="n">debugger</span>
+            <span class="n">sourceCodeRender</span> <span class="o">=</span> <span class="n">render</span><span class="p">(</span><span class="n">sourceCodeDirPath</span><span class="p">)</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">sourceCodeDirPath</span><span class="p">):</span>
+                <span class="n">contentAndType</span> <span class="o">=</span> <span class="p">[(</span><span class="n">router</span><span class="o">.</span><span class="n">readContent</span><span class="p">(</span><span class="n">root</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="n">file</span><span class="p">),</span> <span class="n">file</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;.pyt&#39;</span><span class="p">,</span><span class="s1">&#39;.py&#39;</span><span class="p">}]</span>
+                <span class="n">contentRendered</span> <span class="o">=</span> <span class="p">[</span><span class="n">sourceCodeRender</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">file</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;.pyt&#39;</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;sourceCodeDebugger.pyt&#39;</span><span class="p">,</span><span class="n">srcPath</span><span class="o">=</span><span class="n">root</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="n">file</span><span class="p">,</span> <span class="o">**</span><span class="p">(</span><span class="n">debugger</span><span class="o">.</span><span class="n">splitSrcByChunkAndFindThoseCanBeDebugged</span><span class="p">(</span><span class="n">content</span><span class="p">)))</span> <span class="k">if</span> <span class="n">debug</span> <span class="k">else</span> <span class="n">content</span> <span class="k">for</span> <span class="n">content</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">contentAndType</span><span class="p">]</span>
+                <span class="n">contentMerged</span> <span class="o">=</span> <span class="s2">&quot;#-&gt;&lt;FileStart&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">#-&gt;&lt;FileEnd&gt;</span><span class="se">\n</span><span class="s2">#-&gt;&lt;FileStart&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">contentRendered</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">#-&gt;&lt;FileEnd&gt;&quot;</span>
+                <span class="n">content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">contentMerged</span><span class="p">)</span>
+            <span class="n">contentBind</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">linkContent</span><span class="p">(</span><span class="n">contentBind</span><span class="p">,</span> <span class="n">linkType</span><span class="o">=</span><span class="n">bindType</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mimicBuilder</span><span class="o">.</span><span class="n">bindContent</span><span class="p">(</span><span class="n">contentBind</span><span class="p">,</span> <span class="n">bindType</span><span class="o">=</span><span class="n">bindType</span><span class="p">,</span> <span class="n">persist</span><span class="o">=</span><span class="n">persist</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s1">&#39;mimicBuilder&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mimicBuilder</span><span class="p">,</span><span class="n">builder</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">bindContent</span><span class="p">(</span><span class="n">contentBind</span><span class="p">,</span> <span class="n">bindType</span><span class="o">=</span><span class="n">bindType</span><span class="p">,</span> <span class="n">persist</span><span class="o">=</span><span class="n">persist</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dumpInfo</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="builder.clearProject"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.clearProject">[docs]</a>    <span class="k">def</span> <span class="nf">clearProject</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear any code generated by building and render action. But it will not delete .py file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initiateProject</span><span class="p">()</span>
+        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">bindContent</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bindType</span><span class="o">=</span><span class="n">bt</span><span class="p">,</span> <span class="n">persist</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">bt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bindType</span><span class="p">]</span>
+        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mimicBuilder</span><span class="o">.</span><span class="n">bindContent</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bindType</span><span class="o">=</span><span class="n">bt</span><span class="p">,</span> <span class="n">persist</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">bt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mimicBuilder</span><span class="o">.</span><span class="n">bindType</span><span class="p">]</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s1">&#39;mimicBuilder&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mimicBuilder</span><span class="p">,</span><span class="n">builder</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dumpInfo</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="builder.persistProject"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.persistProject">[docs]</a>    <span class="k">def</span> <span class="nf">persistProject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sourceCodeDirPath</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">bindType</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;renderedSourceCode&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build and render current project according to current information, and turn the generated</span>
+<span class="sd">        code into permanent code. These code will not be influenced by any building action any more.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sourceCodeDirPath : str</span>
+<span class="sd">            The path of directory where source code exist. Any sub file in this folder or sub-folder</span>
+<span class="sd">            will be rendered and parsed and injected to target project.</span>
+<span class="sd">        bindType : str</span>
+<span class="sd">            The channel of binding action. Source code are rendered and injected into project by different channels,</span>
+<span class="sd">            The source code injected by channel A will be not influenced by source code injected by channel B, unless</span>
+<span class="sd">            the content of tag is overwritten by code in channel B. This is used when you have several builders and</span>
+<span class="sd">            you want them to build into the same project. In this case, you should give a bindType for each render action</span>
+<span class="sd">            to make sure they do not conflict with each other.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateBuildInfo</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updatePathInfo</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildDir</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildFile</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildContent</span><span class="p">(</span><span class="n">persist</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">renderProject</span><span class="p">(</span><span class="n">sourceCodeDirPath</span><span class="o">=</span><span class="n">sourceCodeDirPath</span><span class="p">,</span><span class="n">bindType</span><span class="o">=</span><span class="n">bindType</span><span class="p">,</span><span class="n">persist</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dumpInfo</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="builder.dumpInfo"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.builder.dumpInfo">[docs]</a>    <span class="k">def</span> <span class="nf">dumpInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">savePath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dump current builder into disk.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">RiskQuantLib.Tool.fileTool</span> <span class="kn">import</span> <span class="n">dumpVariable</span>
+        <span class="n">targetPath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetPath</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;Build&#39;</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;buildInfo.pkl&#39;</span> <span class="k">if</span> <span class="n">savePath</span><span class="o">==</span><span class="s1">&#39;&#39;</span> <span class="k">else</span> <span class="n">savePath</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">checkAndMakeDir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">targetPath</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delRender</span><span class="p">()</span>
+        <span class="n">dumpVariable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">targetPath</span><span class="p">)</span></div></div>
+        
+        
+<div class="viewcode-block" id="validateBuilder"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.validateBuilder">[docs]</a><span class="k">class</span> <span class="nc">validateBuilder</span><span class="p">(</span><span class="n">builder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    validateBuilder is a child class of builder, it will parse the information, screen out those</span>
+<span class="sd">    wrong syntax and pass validated information to base builder.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="validateBuilder.lowerCaseFirstLetter"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.validateBuilder.lowerCaseFirstLetter">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">lowerCaseFirstLetter</span><span class="p">(</span><span class="n">string</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">string</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="n">string</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">string</span> <span class="k">else</span> <span class="n">string</span></div>
+
+<div class="viewcode-block" id="validateBuilder.upperCaseFirstLetter"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.validateBuilder.upperCaseFirstLetter">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">upperCaseFirstLetter</span><span class="p">(</span><span class="n">string</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">string</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="n">string</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">string</span> <span class="k">else</span> <span class="n">string</span></div>
+
+<div class="viewcode-block" id="validateBuilder.isString"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.validateBuilder.isString">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">isString</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">allowComma</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">allowEmpty</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">allowSpace</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="o">==</span><span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="kc">True</span> <span class="k">if</span> <span class="n">allowComma</span> <span class="k">else</span> <span class="n">string</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="kc">True</span> <span class="k">if</span> <span class="n">allowEmpty</span> <span class="k">else</span> <span class="n">string</span><span class="o">!=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="kc">True</span> <span class="k">if</span> <span class="n">allowSpace</span> <span class="k">else</span> <span class="n">string</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="validateBuilder.validateString"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.validateBuilder.validateString">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">validateString</span><span class="p">(</span><span class="n">string</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">lowerCaseFirstLetter</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Strip any blank in string, if comma exists in string, split string according to comma, then</span>
+<span class="sd">        strip any blank in every sub-string.</span>
+
+<span class="sd">        If lowerCaseFirstLetter is True, the first letter of every sub-string will be changed into</span>
+<span class="sd">        lower-case letter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="o">!=</span><span class="nb">str</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">stringList</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
+        <span class="n">stringList</span> <span class="o">=</span> <span class="p">[</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">lowerCaseFirstLetter</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">if</span> <span class="n">lowerCaseFirstLetter</span> <span class="k">else</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">stringList</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stringList</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">stringList</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">stringList</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">stringList</span></div>
+
+<div class="viewcode-block" id="validateBuilder.validateParentClassName"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.validateBuilder.validateParentClassName">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">validateParentClassName</span><span class="p">(</span><span class="n">parentClass</span><span class="p">:</span><span class="nb">str</span> <span class="ow">or</span> <span class="nb">list</span><span class="p">,</span> <span class="n">inheritTreeNodeDict</span><span class="p">:</span><span class="nb">dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If class name in inheritTreeNodeDict, return it. Otherwise, parent class will</span>
+<span class="sd">        be root instrument, and parent class is defaulted as blank string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">classList</span> <span class="o">=</span> <span class="p">[</span><span class="n">parentClass</span><span class="p">]</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">parentClass</span><span class="p">)</span><span class="o">==</span><span class="nb">str</span> <span class="k">else</span> <span class="n">parentClass</span>
+        <span class="n">validatedClass</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">classList</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inheritTreeNodeDict</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">validatedClass</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="n">validatedClass</span></div>
+
+<div class="viewcode-block" id="validateBuilder.validateRootInstrumentName"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.validateBuilder.validateRootInstrumentName">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">validateRootInstrumentName</span><span class="p">(</span><span class="n">instrumentName</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">rootInstrumentName</span><span class="p">:</span><span class="nb">set</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        You can have some words who have the same meaning with root instrument name. This function</span>
+<span class="sd">        is used to identify those words.</span>
+
+<span class="sd">        If instrumentName in rootInstrumentName, return default root instrument name, which is blank string.</span>
+<span class="sd">        otherwise, return instrumentName itself.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="n">validateBuilder</span><span class="o">.</span><span class="n">isString</span><span class="p">(</span><span class="n">instrumentName</span><span class="p">,</span><span class="n">allowComma</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateString</span><span class="p">(</span><span class="n">instrumentName</span><span class="p">)</span> <span class="ow">in</span> <span class="n">rootInstrumentName</span><span class="p">)</span> <span class="k">else</span> <span class="n">instrumentName</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buildFromProjectPath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">templateSearchPath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">validateBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">buildFromProjectPath</span> <span class="o">=</span> <span class="n">buildFromProjectPath</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="o">=</span> <span class="n">targetProjectPath</span><span class="p">,</span> <span class="n">templateSearchPath</span> <span class="o">=</span> <span class="n">templateSearchPath</span><span class="p">)</span>
+
+<div class="viewcode-block" id="validateBuilder.initiateTree"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.validateBuilder.initiateTree">[docs]</a>    <span class="k">def</span> <span class="nf">initiateTree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initiateInstrumentTree</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initiatePropertyTree</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="validateBuilder.validateTree"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.validateBuilder.validateTree">[docs]</a>    <span class="k">def</span> <span class="nf">validateTree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instrumentName</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">parentRQLClassName</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">parentQuantLibClassName</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">libraryName</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">defaultInstrumentType</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">attributeBelongTo</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">attributeName</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">propertyName</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[]):</span>
+        <span class="c1"># change some word into empty string, because these words have the same meaning with root instrument.</span>
+        <span class="n">rootInstrumentName</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;instrument&#39;</span><span class="p">,</span><span class="s1">&#39;any&#39;</span><span class="p">])</span>
+        <span class="n">instrumentName</span> <span class="o">=</span> <span class="p">[</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateRootInstrumentName</span><span class="p">(</span><span class="n">ins</span><span class="p">,</span><span class="n">rootInstrumentName</span><span class="p">)</span> <span class="k">for</span> <span class="n">ins</span> <span class="ow">in</span> <span class="n">instrumentName</span><span class="p">]</span>
+        <span class="n">attributeBelongTo</span> <span class="o">=</span> <span class="p">[</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateRootInstrumentName</span><span class="p">(</span><span class="n">ins</span><span class="p">,</span><span class="n">rootInstrumentName</span><span class="p">)</span> <span class="k">for</span> <span class="n">ins</span> <span class="ow">in</span> <span class="n">attributeBelongTo</span><span class="p">]</span>
+        <span class="c1"># add new instrument</span>
+        <span class="n">validatedInstrument</span> <span class="o">=</span> <span class="p">[(</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateString</span><span class="p">(</span><span class="n">ins</span><span class="p">),</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateString</span><span class="p">(</span><span class="n">prc</span><span class="p">),</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateString</span><span class="p">(</span><span class="n">pqc</span><span class="p">,</span> <span class="n">lowerCaseFirstLetter</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateString</span><span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="n">lowerCaseFirstLetter</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateString</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">lowerCaseFirstLetter</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">if</span> <span class="n">dt</span> <span class="k">else</span> <span class="n">validateBuilder</span><span class="o">.</span><span class="n">upperCaseFirstLetter</span><span class="p">(</span><span class="n">ins</span><span class="p">))</span> <span class="k">for</span> <span class="n">ins</span><span class="p">,</span><span class="n">prc</span><span class="p">,</span><span class="n">pqc</span><span class="p">,</span><span class="n">ln</span><span class="p">,</span><span class="n">dt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">instrumentName</span><span class="p">,</span><span class="n">parentRQLClassName</span><span class="p">,</span><span class="n">parentQuantLibClassName</span><span class="p">,</span><span class="n">libraryName</span><span class="p">,</span><span class="n">defaultInstrumentType</span><span class="p">)</span> <span class="k">if</span> <span class="n">validateBuilder</span><span class="o">.</span><span class="n">isString</span><span class="p">(</span><span class="n">ins</span><span class="p">,</span><span class="n">allowEmpty</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">allowComma</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> <span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateString</span><span class="p">(</span><span class="n">ins</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">nodeDict</span><span class="p">]</span>
+        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">ins</span><span class="p">)</span><span class="o">.</span><span class="n">inheritFrom</span><span class="p">(</span><span class="n">prc</span><span class="p">)</span><span class="o">.</span><span class="n">setAttr</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span><span class="o">.</span><span class="n">inheritFromOutside</span><span class="p">(</span><span class="n">pqc</span><span class="p">)</span><span class="o">.</span><span class="n">dependOnOutside</span><span class="p">(</span><span class="n">ln</span><span class="p">)</span> <span class="k">for</span> <span class="n">ins</span><span class="p">,</span><span class="n">prc</span><span class="p">,</span><span class="n">pqc</span><span class="p">,</span><span class="n">ln</span><span class="p">,</span><span class="n">dt</span> <span class="ow">in</span> <span class="n">validatedInstrument</span><span class="p">]</span>
+        <span class="c1"># add new property</span>
+        <span class="n">validatedProperty</span> <span class="o">=</span> <span class="p">[</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateString</span><span class="p">(</span><span class="nb">property</span><span class="p">)</span> <span class="k">for</span> <span class="nb">property</span> <span class="ow">in</span> <span class="n">propertyName</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="nb">property</span><span class="p">)</span><span class="o">==</span><span class="nb">str</span> <span class="ow">and</span> <span class="nb">property</span><span class="o">!=</span><span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="nb">property</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span><span class="o">==-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">propertyTree</span><span class="o">.</span><span class="n">addNode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">inheritFrom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">validatedProperty</span><span class="p">]</span>
+        <span class="c1"># set attribute to instrument</span>
+        <span class="n">validatedAttribute</span> <span class="o">=</span> <span class="p">[(</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateString</span><span class="p">(</span><span class="n">instrument</span><span class="p">),</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateString</span><span class="p">(</span><span class="n">attribute</span><span class="p">),</span><span class="n">validateBuilder</span><span class="o">.</span><span class="n">validateString</span><span class="p">(</span><span class="n">attributeType</span><span class="p">))</span> <span class="k">for</span> <span class="n">instrument</span><span class="p">,</span><span class="n">attribute</span><span class="p">,</span><span class="n">attributeType</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">attributeBelongTo</span><span class="p">,</span><span class="n">attributeName</span><span class="p">,</span><span class="n">propertyName</span><span class="p">)</span> <span class="k">if</span> <span class="n">validateBuilder</span><span class="o">.</span><span class="n">isString</span><span class="p">(</span><span class="n">instrument</span><span class="p">,</span><span class="n">allowComma</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> <span class="n">validateBuilder</span><span class="o">.</span><span class="n">isString</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span><span class="n">allowEmpty</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">allowComma</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> <span class="n">validateBuilder</span><span class="o">.</span><span class="n">isString</span><span class="p">(</span><span class="n">attributeType</span><span class="p">,</span><span class="n">allowComma</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">getNode</span><span class="p">(</span><span class="n">instrument</span><span class="p">)</span><span class="o">.</span><span class="n">addAttr</span><span class="p">(</span><span class="s1">&#39;attribute&#39;</span><span class="p">,</span><span class="n">attribute</span><span class="p">,</span><span class="n">attributeType</span><span class="p">)</span> <span class="k">if</span> <span class="n">instrument</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">nodeDict</span> <span class="ow">and</span> <span class="n">attributeType</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">propertyTree</span><span class="o">.</span><span class="n">nodeDict</span> <span class="k">else</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">instrument</span><span class="p">,</span><span class="n">attribute</span><span class="p">,</span><span class="n">attributeType</span> <span class="ow">in</span> <span class="n">validatedAttribute</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="validateBuilder.buildProject"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.validateBuilder.buildProject">[docs]</a>    <span class="k">def</span> <span class="nf">buildProject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instrumentName</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">parentRQLClassName</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">parentQuantLibClassName</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">libraryName</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">defaultInstrumentType</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">attributeBelongTo</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">attributeName</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">propertyName</span><span class="p">:</span><span class="nb">list</span> <span class="o">=</span> <span class="p">[]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initiateTree</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validateTree</span><span class="p">(</span><span class="n">instrumentName</span><span class="o">=</span><span class="n">instrumentName</span><span class="p">,</span><span class="n">parentRQLClassName</span><span class="o">=</span><span class="n">parentRQLClassName</span><span class="p">,</span><span class="n">parentQuantLibClassName</span><span class="o">=</span><span class="n">parentQuantLibClassName</span><span class="p">,</span><span class="n">libraryName</span><span class="o">=</span><span class="n">libraryName</span><span class="p">,</span><span class="n">defaultInstrumentType</span><span class="o">=</span><span class="n">defaultInstrumentType</span><span class="p">,</span><span class="n">attributeBelongTo</span><span class="o">=</span><span class="n">attributeBelongTo</span><span class="p">,</span><span class="n">attributeName</span><span class="o">=</span><span class="n">attributeName</span><span class="p">,</span><span class="n">propertyName</span><span class="o">=</span><span class="n">propertyName</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">validateBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">buildProject</span><span class="p">()</span></div></div>
+
+<div class="viewcode-block" id="dataframeBuilder"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.dataframeBuilder">[docs]</a><span class="k">class</span> <span class="nc">dataframeBuilder</span><span class="p">(</span><span class="n">validateBuilder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    dataframeBuilder is a child class of validatedBuilder, it takes two pandas.DataFrame as information of building.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buildFromProjectPath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">templateSearchPath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">dataframeBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">buildFromProjectPath</span> <span class="o">=</span> <span class="n">buildFromProjectPath</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="o">=</span> <span class="n">targetProjectPath</span><span class="p">,</span> <span class="n">templateSearchPath</span> <span class="o">=</span> <span class="n">templateSearchPath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildFileInfo</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildContentInfo</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="dataframeBuilder.setInstrumentInfo"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.dataframeBuilder.setInstrumentInfo">[docs]</a>    <span class="k">def</span> <span class="nf">setInstrumentInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">colAsInstrumentName</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;InstrumentName&#39;</span><span class="p">,</span> <span class="n">colAsParentRQLClassName</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ParentRQLClassName&#39;</span><span class="p">,</span> <span class="n">colAsParentQuantLibClassName</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ParentQuantLibClassName&#39;</span><span class="p">,</span> <span class="n">colAsLibraryName</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;LibraryName&#39;</span><span class="p">,</span> <span class="n">colAsDefaultInstrumentType</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;DefaultInstrumentType&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pass a pandas.DataFrame into this function to use it as instrument building information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">buildInstrumentInfo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">colAsInstrumentName</span><span class="p">])</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildFileInfo</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;instrumentName&#39;</span><span class="p">:</span><span class="n">buildInstrumentInfo</span><span class="p">[</span><span class="n">colAsInstrumentName</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+                                    <span class="s1">&#39;parentRQLClassName&#39;</span><span class="p">:</span><span class="n">buildInstrumentInfo</span><span class="p">[</span><span class="n">colAsParentRQLClassName</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+                                    <span class="s1">&#39;parentQuantLibClassName&#39;</span><span class="p">:</span><span class="n">buildInstrumentInfo</span><span class="p">[</span><span class="n">colAsParentQuantLibClassName</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+                                    <span class="s1">&#39;libraryName&#39;</span><span class="p">:</span><span class="n">buildInstrumentInfo</span><span class="p">[</span><span class="n">colAsLibraryName</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+                                    <span class="s1">&#39;defaultInstrumentType&#39;</span><span class="p">:</span><span class="n">buildInstrumentInfo</span><span class="p">[</span><span class="n">colAsDefaultInstrumentType</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()}</span></div>
+
+<div class="viewcode-block" id="dataframeBuilder.setAttributeInfo"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.dataframeBuilder.setAttributeInfo">[docs]</a>    <span class="k">def</span> <span class="nf">setAttributeInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">colAsInstrumentName</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;SecurityType&#39;</span><span class="p">,</span> <span class="n">colAsAttributeName</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;AttrName&#39;</span><span class="p">,</span> <span class="n">colAsPropertyName</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;AttrType&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pass a pandas.DataFrame into this function to use it as attribute building information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">buildAttributeInfo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">colAsAttributeName</span><span class="p">])</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildContentInfo</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;attributeBelongTo&#39;</span><span class="p">:</span><span class="n">buildAttributeInfo</span><span class="p">[</span><span class="n">colAsInstrumentName</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+                                  <span class="s1">&#39;attributeName&#39;</span><span class="p">:</span><span class="n">buildAttributeInfo</span><span class="p">[</span><span class="n">colAsAttributeName</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+                                  <span class="s1">&#39;propertyName&#39;</span><span class="p">:</span><span class="n">buildAttributeInfo</span><span class="p">[</span><span class="n">colAsPropertyName</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()}</span></div>
+
+<div class="viewcode-block" id="dataframeBuilder.buildProject"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.dataframeBuilder.buildProject">[docs]</a>    <span class="k">def</span> <span class="nf">buildProject</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">dataframeBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">buildProject</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">buildFileInfo</span><span class="p">,</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">buildContentInfo</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="stringBuilder"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.stringBuilder">[docs]</a><span class="k">class</span> <span class="nc">stringBuilder</span><span class="p">(</span><span class="n">dataframeBuilder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    stringBuilder is a child class of validatedBuilder, it takes string as information of building.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buildFromProjectPath</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">templateSearchPath</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">stringBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">buildFromProjectPath</span><span class="o">=</span><span class="n">buildFromProjectPath</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="o">=</span><span class="n">targetProjectPath</span><span class="p">,</span> <span class="n">templateSearchPath</span><span class="o">=</span><span class="n">templateSearchPath</span><span class="p">)</span>
+
+<div class="viewcode-block" id="stringBuilder.buildProject"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.stringBuilder.buildProject">[docs]</a>    <span class="k">def</span> <span class="nf">buildProject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">RiskQuantLib.Build.controller</span> <span class="kn">import</span> <span class="n">controller</span>
+        <span class="n">controlSyntaxList</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">findDeclareTag</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="n">buildInstrument</span><span class="p">,</span> <span class="n">buildAttr</span><span class="p">,</span> <span class="n">buildOther</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">parseDeclareTagAsDF</span><span class="p">(</span><span class="n">controlSyntaxList</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setInstrumentInfo</span><span class="p">(</span><span class="n">buildInstrument</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAttributeInfo</span><span class="p">(</span><span class="n">buildAttr</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">stringBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">buildProject</span><span class="p">()</span></div></div>
+
+<div class="viewcode-block" id="configBuilder"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.configBuilder">[docs]</a><span class="k">class</span> <span class="nc">configBuilder</span><span class="p">(</span><span class="n">stringBuilder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    configBuilder is a child class of stringBuilder, it takes config.py as information of building.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buildFromProjectPath</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">templateSearchPath</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">stringBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">buildFromProjectPath</span><span class="o">=</span><span class="n">buildFromProjectPath</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="o">=</span><span class="n">targetProjectPath</span><span class="p">,</span> <span class="n">templateSearchPath</span><span class="o">=</span><span class="n">templateSearchPath</span><span class="p">)</span>
+
+<div class="viewcode-block" id="configBuilder.buildProject"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.configBuilder.buildProject">[docs]</a>    <span class="k">def</span> <span class="nf">buildProject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configFilePath</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">RiskQuantLib.Build.router</span> <span class="kn">import</span> <span class="n">router</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">readContent</span><span class="p">(</span><span class="n">configFilePath</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">configBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">buildProject</span><span class="p">(</span><span class="n">content</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="excelBuilder"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.excelBuilder">[docs]</a><span class="k">class</span> <span class="nc">excelBuilder</span><span class="p">(</span><span class="n">dataframeBuilder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    excelBuilder is a child class of dataframeBuilder, it takes two xlsx file as information of building.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buildFromProjectPath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">templateSearchPath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">excelBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">buildFromProjectPath</span> <span class="o">=</span> <span class="n">buildFromProjectPath</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="o">=</span> <span class="n">targetProjectPath</span><span class="p">,</span> <span class="n">templateSearchPath</span> <span class="o">=</span> <span class="n">templateSearchPath</span><span class="p">)</span>
+
+<div class="viewcode-block" id="excelBuilder.buildProject"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.excelBuilder.buildProject">[docs]</a>    <span class="k">def</span> <span class="nf">buildProject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instrumentExcelPath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">attributeExcelPath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">colAsInstrumentNameForInstrumentDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;InstrumentName&#39;</span><span class="p">,</span> <span class="n">colAsParentRQLClassNameForInstrumentDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ParentRQLClassName&#39;</span><span class="p">,</span> <span class="n">colAsParentQuantLibClassNameForInstrumentDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ParentQuantLibClassName&#39;</span><span class="p">,</span> <span class="n">colAsLibraryNameForInstrumentDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;LibraryName&#39;</span><span class="p">,</span> <span class="n">colAsDefaultInstrumentTypeForInstrumentDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;DefaultInstrumentType&#39;</span><span class="p">,</span> <span class="n">colAsInstrumentNameForAttributeDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;SecurityType&#39;</span><span class="p">,</span> <span class="n">colAsAttributeNameForAttributeDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;AttrName&#39;</span><span class="p">,</span> <span class="n">colAsPropertyNameForAttributeDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;AttrType&#39;</span><span class="p">):</span>
+        <span class="n">buildInstrumentInfo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">instrumentExcelPath</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+        <span class="n">buildAttributeInfo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">attributeExcelPath</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setInstrumentInfo</span><span class="p">(</span><span class="n">buildInstrumentInfo</span><span class="p">,</span><span class="n">colAsInstrumentNameForInstrumentDF</span><span class="p">,</span><span class="n">colAsParentRQLClassNameForInstrumentDF</span><span class="p">,</span><span class="n">colAsParentQuantLibClassNameForInstrumentDF</span><span class="p">,</span><span class="n">colAsLibraryNameForInstrumentDF</span><span class="p">,</span><span class="n">colAsDefaultInstrumentTypeForInstrumentDF</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAttributeInfo</span><span class="p">(</span><span class="n">buildAttributeInfo</span><span class="p">,</span><span class="n">colAsInstrumentNameForAttributeDF</span><span class="p">,</span><span class="n">colAsAttributeNameForAttributeDF</span><span class="p">,</span><span class="n">colAsPropertyNameForAttributeDF</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">excelBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">buildProject</span><span class="p">()</span></div></div>
+
+<div class="viewcode-block" id="databaseBuilder"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.databaseBuilder">[docs]</a><span class="k">class</span> <span class="nc">databaseBuilder</span><span class="p">(</span><span class="n">dataframeBuilder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    databaseBuilder is a child class of dataframeBuilder, you should pass two</span>
+<span class="sd">    sql syntax and a connection object into this class to classify building information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buildFromProjectPath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">templateSearchPath</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">databaseBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">buildFromProjectPath</span> <span class="o">=</span> <span class="n">buildFromProjectPath</span><span class="p">,</span> <span class="n">targetProjectPath</span><span class="o">=</span> <span class="n">targetProjectPath</span><span class="p">,</span> <span class="n">templateSearchPath</span> <span class="o">=</span> <span class="n">templateSearchPath</span><span class="p">)</span>
+
+<div class="viewcode-block" id="databaseBuilder.buildProject"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.builder.databaseBuilder.buildProject">[docs]</a>    <span class="k">def</span> <span class="nf">buildProject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instrumentSql</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">attributeSql</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">colAsInstrumentNameForInstrumentDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;InstrumentName&#39;</span><span class="p">,</span> <span class="n">colAsParentRQLClassNameForInstrumentDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ParentRQLClassName&#39;</span><span class="p">,</span> <span class="n">colAsParentQuantLibClassNameForInstrumentDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ParentQuantLibClassName&#39;</span><span class="p">,</span> <span class="n">colAsLibraryNameForInstrumentDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;LibraryName&#39;</span><span class="p">,</span> <span class="n">colAsDefaultInstrumentTypeForInstrumentDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;DefaultInstrumentType&#39;</span><span class="p">,</span> <span class="n">colAsInstrumentNameForAttributeDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;SecurityType&#39;</span><span class="p">,</span> <span class="n">colAsAttributeNameForAttributeDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;AttrName&#39;</span><span class="p">,</span> <span class="n">colAsPropertyNameForAttributeDF</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;AttrType&#39;</span><span class="p">):</span>
+        <span class="n">buildInstrumentInfo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">instrumentSql</span><span class="p">,</span> <span class="n">con</span><span class="p">)</span>
+        <span class="n">buildAttributeInfo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">attributeSql</span><span class="p">,</span> <span class="n">con</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setInstrumentInfo</span><span class="p">(</span><span class="n">buildInstrumentInfo</span><span class="p">,</span><span class="n">colAsInstrumentNameForInstrumentDF</span><span class="p">,</span><span class="n">colAsParentRQLClassNameForInstrumentDF</span><span class="p">,</span><span class="n">colAsParentQuantLibClassNameForInstrumentDF</span><span class="p">,</span><span class="n">colAsLibraryNameForInstrumentDF</span><span class="p">,</span><span class="n">colAsDefaultInstrumentTypeForInstrumentDF</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAttributeInfo</span><span class="p">(</span><span class="n">buildAttributeInfo</span><span class="p">,</span><span class="n">colAsInstrumentNameForAttributeDF</span><span class="p">,</span><span class="n">colAsAttributeNameForAttributeDF</span><span class="p">,</span><span class="n">colAsPropertyNameForAttributeDF</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">databaseBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">buildProject</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright .
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

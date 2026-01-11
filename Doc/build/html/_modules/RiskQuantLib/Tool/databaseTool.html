@@ -1,316 +1,399 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>RiskQuantLib.Tool.databaseTool &mdash; RiskQuantLib 0.0.24 documentation</title>
-  
+  <title>RiskQuantLib.Tool.databaseTool &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/readthedocs-custom.css" />
 
   
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+      <script src="../../../_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../../index.html" class="icon icon-home"> RiskQuantLib
           
-
-          
+          <a href="../../../index.html" class="icon icon-home">
+            RiskQuantLib
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../About.html">About</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">RiskQuantLib</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
-          <li><a href="../../RiskQuantLib.html">RiskQuantLib</a> &raquo;</li>
-        
-      <li>RiskQuantLib.Tool.databaseTool</li>
-    
-    
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../RiskQuantLib.html">RiskQuantLib</a></li>
+      <li class="breadcrumb-item active">RiskQuantLib.Tool.databaseTool</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for RiskQuantLib.Tool.databaseTool</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
 <span class="c1">#coding = utf-8</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">mysql.connector</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
 
-<div class="viewcode-block" id="mysqlTool"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.mysqlTool">[docs]</a><span class="k">class</span> <span class="nc">mysqlTool</span><span class="p">():</span>
-	<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">	This is the API to connect with mysql database.</span>
-<span class="sd">	&quot;&quot;&quot;</span>
-	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">databaseNameString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">hostAddress</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">userName</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">passWord</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetDB</span> <span class="o">=</span> <span class="n">mysql</span><span class="o">.</span><span class="n">connector</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-			<span class="n">host</span> <span class="o">=</span> <span class="n">hostAddress</span><span class="p">,</span>
-			<span class="n">user</span> <span class="o">=</span> <span class="n">userName</span><span class="p">,</span>
-			<span class="n">passwd</span> <span class="o">=</span> <span class="n">passWord</span><span class="p">,</span>
-			<span class="n">database</span> <span class="o">=</span> <span class="n">databaseNameString</span>
-			<span class="c1"># buffered = True</span>
-		<span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetDB</span><span class="o">.</span><span class="n">cursor</span><span class="p">(</span><span class="n">buffered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#&lt;import&gt;</span>
+<span class="c1">#&lt;/import&gt;</span>
 
-<div class="viewcode-block" id="mysqlTool.getAllTables"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.mysqlTool.getAllTables">[docs]</a>	<span class="k">def</span> <span class="nf">getAllTables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SHOW TABLES&quot;</span><span class="p">)</span>
-		<span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="mysqlTool.getColNameOfTable"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.mysqlTool.getColNameOfTable">[docs]</a>	<span class="k">def</span> <span class="nf">getColNameOfTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tableNameString</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
-		<span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM &quot;</span><span class="o">+</span><span class="n">tableNameString</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-		<span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">column_names</span><span class="p">]</span></div>
+<div class="viewcode-block" id="sqlConnector">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.sqlConnector">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">sqlConnector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">engine</span>
 
-<div class="viewcode-block" id="mysqlTool.selectAllFromTable"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.mysqlTool.selectAllFromTable">[docs]</a>	<span class="k">def</span> <span class="nf">selectAllFromTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tableNameString</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
-		<span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM &quot;</span><span class="o">+</span><span class="n">tableNameString</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-		<span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
-		<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span>
-		<span class="k">return</span> <span class="n">df</span></div>
+<div class="viewcode-block" id="sqlConnector.readSql">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.sqlConnector.readSql">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">readSql</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sql</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute sql and return a dataframe.&quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">text</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="n">sql</span><span class="p">),</span> <span class="n">con</span><span class="o">=</span><span class="n">conn</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div>
 
-<div class="viewcode-block" id="mysqlTool.selectDictFromTable"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.mysqlTool.selectDictFromTable">[docs]</a>	<span class="k">def</span> <span class="nf">selectDictFromTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tableNameString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">colNameAsKey</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">colNameAsValue</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
-		<span class="k">try</span><span class="p">:</span>
-			<span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT &quot;</span><span class="o">+</span><span class="n">colNameAsKey</span><span class="o">+</span><span class="s2">&quot;,&quot;</span><span class="o">+</span><span class="n">colNameAsValue</span><span class="o">+</span><span class="s2">&quot; FROM &quot;</span><span class="o">+</span><span class="n">tableNameString</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-			<span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
-			<span class="n">resultDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">],[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]))</span>
-			<span class="k">return</span> <span class="n">resultDict</span>
-		<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-			<span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-			<span class="k">return</span> <span class="p">{}</span></div>
 
-<div class="viewcode-block" id="mysqlTool.selectColFromTable"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.mysqlTool.selectColFromTable">[docs]</a>	<span class="k">def</span> <span class="nf">selectColFromTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tableNameString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">colNameList</span><span class="p">:</span><span class="nb">list</span><span class="p">):</span>
-		<span class="n">colNameString</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;`&quot;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot;`,&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">colNameList</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
-		<span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT &quot;</span><span class="o">+</span><span class="n">colNameString</span><span class="o">+</span><span class="s2">&quot; FROM &quot;</span><span class="o">+</span><span class="n">tableNameString</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-		<span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
-		<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span>
-		<span class="k">return</span> <span class="n">df</span></div>
+<div class="viewcode-block" id="sqlConnector.writeTable">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.sqlConnector.writeTable">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">writeTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">tableNameString</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ifExists</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;append&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Write df into database, ifExists can be &#39;fail&#39;, &#39;replace&#39;, &#39;append&#39;.&quot;&quot;&quot;</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="n">tableNameString</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="n">ifExists</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;multi&#39;</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="mysqlTool.selectColFromTableWithCondition"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.mysqlTool.selectColFromTableWithCondition">[docs]</a>	<span class="k">def</span> <span class="nf">selectColFromTableWithCondition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tableNameString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">colNameList</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span><span class="n">conditionString</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
-		<span class="n">colNameString</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;`&quot;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot;`,&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">colNameList</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
-		<span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT &quot;</span><span class="o">+</span><span class="n">colNameString</span><span class="o">+</span><span class="s2">&quot; FROM &quot;</span><span class="o">+</span><span class="n">tableNameString</span><span class="o">+</span><span class="s2">&quot; WHERE &quot;</span><span class="o">+</span><span class="n">conditionString</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-		<span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
-		<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span>
-		<span class="k">return</span> <span class="n">df</span></div>
 
-<div class="viewcode-block" id="mysqlTool.selectAllFromTableWithCondition"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.mysqlTool.selectAllFromTableWithCondition">[docs]</a>	<span class="k">def</span> <span class="nf">selectAllFromTableWithCondition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tableNameString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">conditionString</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
-		<span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM &quot;</span><span class="o">+</span><span class="n">tableNameString</span><span class="o">+</span><span class="s2">&quot; WHERE &quot;</span><span class="o">+</span><span class="n">conditionString</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-		<span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
-		<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span>
-		<span class="k">return</span> <span class="n">df</span></div>
+<div class="viewcode-block" id="sqlConnector.executeSql">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.sqlConnector.executeSql">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">executeSql</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sql</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute DDL or DML (like UPDATE, DELETE, CREATE).&quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">text</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="n">sql</span><span class="p">),</span> <span class="n">params</span> <span class="ow">or</span> <span class="p">{})</span></div>
 
-<div class="viewcode-block" id="mysqlTool.insertRowIntoTable"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.mysqlTool.insertRowIntoTable">[docs]</a>	<span class="k">def</span> <span class="nf">insertRowIntoTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tableNameString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">valuesTuple</span><span class="p">:</span><span class="nb">tuple</span><span class="p">):</span>
 
-		<span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM &quot;</span><span class="o">+</span><span class="n">tableNameString</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-		<span class="n">colNameString</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;`&quot;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot;`,&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">column_names</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
-		<span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO &quot;</span><span class="o">+</span><span class="n">tableNameString</span><span class="o">+</span><span class="s2">&quot; (&quot;</span><span class="o">+</span><span class="n">colNameString</span><span class="o">+</span><span class="s2">&quot;) VALUES (&quot;</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">, &quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">column_names</span><span class="p">))])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;)&quot;</span>
-		<span class="n">val</span> <span class="o">=</span> <span class="n">valuesTuple</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span><span class="n">val</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetDB</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Insert Finished&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="sqlConnector.getAllTables">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.sqlConnector.getAllTables">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getAllTables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get names of all tables.</span>
+<span class="sd">        You may need to specify schema=some if you are connecting</span>
+<span class="sd">        to oracle or sqlserver.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">inspect</span>
+        <span class="n">inspector</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">inspector</span><span class="o">.</span><span class="n">get_table_names</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="mysqlTool.replaceRowsIntoTable"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.mysqlTool.replaceRowsIntoTable">[docs]</a>	<span class="k">def</span> <span class="nf">replaceRowsIntoTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tableNameString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">valuesTupleList</span><span class="p">:</span><span class="nb">list</span><span class="p">):</span>
-		<span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM &quot;</span><span class="o">+</span><span class="n">tableNameString</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-		<span class="n">colNameString</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;`&quot;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot;`,&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">column_names</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
-		<span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;REPLACE INTO &quot;</span><span class="o">+</span><span class="n">tableNameString</span><span class="o">+</span><span class="s2">&quot; (&quot;</span><span class="o">+</span><span class="n">colNameString</span><span class="o">+</span><span class="s2">&quot;) VALUES (&quot;</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">, &quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">column_names</span><span class="p">))])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;)&quot;</span>
-		<span class="n">val</span> <span class="o">=</span> <span class="n">valuesTupleList</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">targetDB</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Insert Finished&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="mysqlTool.replaceDFIntoTable"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.mysqlTool.replaceDFIntoTable">[docs]</a>	<span class="k">def</span> <span class="nf">replaceDFIntoTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tableNameString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">dataFrame</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-		<span class="k">try</span><span class="p">:</span>
-			<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-			<span class="n">DBTableColNameList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getColNameOfTable</span><span class="p">(</span><span class="n">tableNameString</span><span class="p">)</span>
-			<span class="n">df</span> <span class="o">=</span> <span class="n">dataFrame</span><span class="p">[</span><span class="n">DBTableColNameList</span><span class="p">]</span>
-			<span class="c1"># convert to tuple</span>
-			<span class="n">valuesTapleList</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">([</span><span class="kc">None</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">==</span><span class="nb">type</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">else</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
-			<span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM &quot;</span><span class="o">+</span><span class="n">tableNameString</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-			<span class="n">colNameString</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;`&quot;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot;`,&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">column_names</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
-			<span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;REPLACE INTO &quot;</span><span class="o">+</span><span class="n">tableNameString</span><span class="o">+</span><span class="s2">&quot; (&quot;</span><span class="o">+</span><span class="n">colNameString</span><span class="o">+</span><span class="s2">&quot;) VALUES (&quot;</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">, &quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">column_names</span><span class="p">))])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;)&quot;</span>
-			<span class="n">val</span> <span class="o">=</span> <span class="n">valuesTapleList</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">targetCursor</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">targetDB</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-			<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Replace Finished&quot;</span><span class="p">)</span>
-		<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-			<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Replace Failed, Error:&quot;</span><span class="p">,</span><span class="n">e</span><span class="p">)</span></div></div>
+<div class="viewcode-block" id="sqlConnector.getColNames">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.sqlConnector.getColNames">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getColNames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all names of columns of a table.</span>
+<span class="sd">        You may need to specify schema=some if you are connecting</span>
+<span class="sd">        to oracle or sqlserver.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">inspect</span>
+        <span class="n">inspector</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="n">inspector</span><span class="o">.</span><span class="n">get_columns</span><span class="p">(</span><span class="n">tableName</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">col</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">]</span></div>
+</div>
+
+
+    <span class="c1">#&lt;sqlConnector&gt;</span>
+    <span class="c1">#&lt;/sqlConnector&gt;</span>
+
+
+<div class="viewcode-block" id="mysqlConnector">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.mysqlConnector">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">mysqlConnector</span><span class="p">(</span><span class="n">sqlConnector</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This is the API to connect with mysql database using PyMySQL.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">databaseName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hostAddress</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">userName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">passWord</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">charset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;utf8mb4&#39;</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">URL</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">URL</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">drivername</span><span class="o">=</span><span class="s1">&#39;mysql+pymysql&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">userName</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">passWord</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">hostAddress</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="n">databaseName</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;charset&quot;</span><span class="p">:</span> <span class="n">charset</span><span class="p">})</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">pool_recycle</span><span class="o">=</span><span class="mi">3600</span><span class="p">))</span></div>
+
+
+    <span class="c1">#&lt;mysqlConnector&gt;</span>
+    <span class="c1">#&lt;/mysqlConnector&gt;</span>
+
+
+<div class="viewcode-block" id="oracleConnector">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.oracleConnector">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">oracleConnector</span><span class="p">(</span><span class="n">sqlConnector</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the API to connect with oracle database.</span>
+<span class="sd">    Notice that this driver (oracledb) supports only sqlalchemy&gt;=2.0.0.</span>
+<span class="sd">    If you are using 1.4.0&lt;=sqlalchemy&lt;2.0.0, you can fix it by adding at</span>
+<span class="sd">    the beginning of your python script:</span>
+<span class="sd">        import sys, oracledb</span>
+<span class="sd">        oracledb.version = &quot;8.3.0&quot;</span>
+<span class="sd">        sys.modules[&quot;cx_Oracle&quot;] = oracledb</span>
+<span class="sd">    Then change the following code into:</span>
+<span class="sd">        url = URL.create(drivername=&#39;oracle+cx_oracle&#39;, username=userName, password=passWord, host=hostAddress, port=port, database=databaseName)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">databaseName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hostAddress</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">userName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">passWord</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">URL</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">URL</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">drivername</span><span class="o">=</span><span class="s1">&#39;oracle+oracledb&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">userName</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">passWord</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">hostAddress</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="n">databaseName</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="p">))</span></div>
+
+
+    <span class="c1">#&lt;oracleConnector&gt;</span>
+    <span class="c1">#&lt;/oracleConnector&gt;</span>
+
+
+<div class="viewcode-block" id="sqlServerConnector">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.sqlServerConnector">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">sqlServerConnector</span><span class="p">(</span><span class="n">sqlConnector</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the API to connect with sql server database.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">databaseName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hostAddress</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">userName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">passWord</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">charset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;cp936&#39;</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">URL</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">URL</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">drivername</span><span class="o">=</span><span class="s1">&#39;mssql+pymssql&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">userName</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">passWord</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">hostAddress</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="n">databaseName</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;charset&quot;</span><span class="p">:</span> <span class="n">charset</span><span class="p">})</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="p">))</span></div>
+
+
+    <span class="c1">#&lt;sqlServerConnector&gt;</span>
+    <span class="c1">#&lt;/sqlServerConnector&gt;</span>
+
+
+<div class="viewcode-block" id="neo4jConnector">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">neo4jConnector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This is the API to connect with neo4j database.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostAddress</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">port</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span><span class="n">userName</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">password</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">py2neo</span><span class="w"> </span><span class="kn">import</span> <span class="n">Graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">hostAddress</span><span class="o">+</span><span class="s2">&quot;:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">port</span><span class="p">),</span><span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">userName</span><span class="p">,</span><span class="n">password</span><span class="p">))</span>
+
+<div class="viewcode-block" id="neo4jConnector.readCypher">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.readCypher">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">readCypher</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cypher</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cypher</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.convertDataType">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.convertDataType">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">convertDataType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">x</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;strftime&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">convertDataType</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">convertDataType</span><span class="p">(</span><span class="n">k</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">convertDataType</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.updateDFToNode">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.updateDFToNode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">updateDFToNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodeList</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">colAsName</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">nameWaitedToBeUpdated</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">colAsName</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+        <span class="n">nameList</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nodeList</span> <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">nameWaitedToBeUpdated</span><span class="p">]</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">colAsName</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">[[</span><span class="n">node</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">j</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">convertDataType</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]][</span><span class="n">j</span><span class="p">])})</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">tmp</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">j</span><span class="o">!=</span> <span class="n">colAsName</span><span class="p">]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nameList</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.convertDFToNode">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.convertDFToNode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">convertDFToNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodeType</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">colAsName</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">py2neo</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+        <span class="n">nodeList</span> <span class="o">=</span> <span class="p">[</span><span class="n">Node</span><span class="p">(</span><span class="n">nodeType</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">colAsName</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+        <span class="p">[[</span><span class="n">nodeList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">j</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">convertDataType</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])})</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">j</span><span class="o">!=</span><span class="n">colAsName</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+        <span class="k">return</span> <span class="n">nodeList</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.addNodeFromDF">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.addNodeFromDF">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">addNodeFromDF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodeType</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">colAsName</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">nodeList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convertDFToNode</span><span class="p">(</span><span class="n">nodeType</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">colAsName</span><span class="p">)</span>
+        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nodeList</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">nodeList</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.selectAllLabel">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.selectAllLabel">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">selectAllLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">labelList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readCypher</span><span class="p">(</span><span class="s2">&quot;MATCH (res) RETURN distinct labels(res)&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">labelList</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.selectAllNode">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.selectAllNode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">selectAllNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodeType</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">nodeList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readCypher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&#39;&#39;MATCH (res:`</span><span class="si">{</span><span class="n">nodeType</span><span class="si">}</span><span class="s1">`) RETURN res&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nodeList</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.selectAttrFromNode">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.selectAttrFromNode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">selectAttrFromNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodeType</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">attrList</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">str</span><span class="p">]):</span>
+        <span class="n">attrList</span> <span class="o">=</span> <span class="p">[</span><span class="n">attrList</span><span class="p">]</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">attrList</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="k">else</span> <span class="n">attrList</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="s2">&quot;&#39;],res[&#39;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">attrList</span><span class="p">)</span>
+        <span class="n">nodeList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readCypher</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MATCH (res:`</span><span class="si">{</span><span class="n">nodeType</span><span class="si">}</span><span class="s2">`) RETURN res[&#39;&quot;</span><span class="o">+</span><span class="n">attr</span><span class="o">+</span><span class="s2">&quot;&#39;]&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">nodeList</span><span class="o">.</span><span class="n">to_data_frame</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;res[&#39;&quot;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot;&#39;]&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">attrList</span><span class="p">],</span><span class="n">attrList</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.selectAllNodeWithCondition">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.selectAllNodeWithCondition">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">selectAllNodeWithCondition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodeType</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">conditionString</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">resultVariableName</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;res&#39;</span><span class="p">):</span>
+        <span class="n">nodeList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readCypher</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&#39;&#39;MATCH (</span><span class="si">{</span><span class="n">resultVariableName</span><span class="si">}</span><span class="s1">:`</span><span class="si">{</span><span class="n">nodeType</span><span class="si">}</span><span class="s1">`) WHERE </span><span class="si">{</span><span class="n">conditionString</span><span class="si">}</span><span class="s1"> RETURN </span><span class="si">{</span><span class="n">resultVariableName</span><span class="si">}</span><span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="n">resultVariableName</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nodeList</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.selectAttrFromNodeWithCondition">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.selectAttrFromNodeWithCondition">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">selectAttrFromNodeWithCondition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodeType</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">attrList</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">str</span><span class="p">],</span> <span class="n">conditionString</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">resultVariableName</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;res&#39;</span><span class="p">):</span>
+        <span class="n">attrList</span> <span class="o">=</span> <span class="p">[</span><span class="n">attrList</span><span class="p">]</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">attrList</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="k">else</span> <span class="n">attrList</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="s2">&quot;&#39;],res[&#39;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">attrList</span><span class="p">)</span>
+        <span class="n">nodeList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readCypher</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MATCH (</span><span class="si">{</span><span class="n">resultVariableName</span><span class="si">}</span><span class="s2">:`</span><span class="si">{</span><span class="n">nodeType</span><span class="si">}</span><span class="s2">`) WHERE </span><span class="si">{</span><span class="n">conditionString</span><span class="si">}</span><span class="s2"> RETURN </span><span class="si">{</span><span class="n">resultVariableName</span><span class="si">}</span><span class="s2">[&#39;&quot;</span> <span class="o">+</span> <span class="n">attr</span> <span class="o">+</span> <span class="s2">&quot;&#39;]&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">nodeList</span><span class="o">.</span><span class="n">to_data_frame</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">resultVariableName</span><span class="si">}</span><span class="s2">[&#39;&quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s2">&quot;&#39;]&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">attrList</span><span class="p">],</span> <span class="n">attrList</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.connectNodeByAttr">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.connectNodeByAttr">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">connectNodeByAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodeTypeLeft</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">nodeTypeRight</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">attrNameLeft</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">attrNameRight</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">relationName</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">py2neo</span><span class="w"> </span><span class="kn">import</span> <span class="n">Relationship</span>
+        <span class="n">leftNode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectAllNode</span><span class="p">(</span><span class="n">nodeTypeLeft</span><span class="p">)</span>
+        <span class="n">rightNode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectAllNode</span><span class="p">(</span><span class="n">nodeTypeRight</span><span class="p">)</span>
+        <span class="n">pair</span> <span class="o">=</span> <span class="p">[(</span><span class="n">left</span><span class="p">,</span><span class="n">right</span><span class="p">)</span> <span class="k">for</span> <span class="n">left</span> <span class="ow">in</span> <span class="n">leftNode</span> <span class="k">for</span> <span class="n">right</span> <span class="ow">in</span> <span class="n">rightNode</span> <span class="k">if</span> <span class="n">left</span><span class="p">[</span><span class="n">attrNameLeft</span><span class="p">]</span><span class="o">==</span><span class="n">right</span><span class="p">[</span><span class="n">attrNameRight</span><span class="p">]]</span>
+        <span class="n">relation</span> <span class="o">=</span> <span class="p">[</span><span class="n">Relationship</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">relationName</span><span class="p">,</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pair</span><span class="p">]</span>
+        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">relation</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.replaceNode">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.replaceNode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">replaceNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodeObj</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">nodeObj</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.replaceNodeFromDF">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.replaceNodeFromDF">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">replaceNodeFromDF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodeType</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">colAsName</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">nodeList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectAllNodeWithCondition</span><span class="p">(</span><span class="n">nodeType</span><span class="p">,</span><span class="s2">&quot;res.name IN [&#39;&quot;</span><span class="o">+</span><span class="s2">&quot;&#39;,&#39;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">colAsName</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">())</span><span class="o">+</span><span class="s2">&quot;&#39;]&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateDFToNode</span><span class="p">(</span><span class="n">nodeList</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">colAsName</span><span class="p">)</span>
+        <span class="n">oldNode</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nodeList</span><span class="p">]</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[(</span><span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">oldNode</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="n">colAsName</span><span class="p">]]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addNodeFromDF</span><span class="p">(</span><span class="n">nodeType</span><span class="p">,</span> <span class="n">tmp</span><span class="p">,</span> <span class="n">colAsName</span><span class="p">)</span>
+        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nodeList</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.deleteAllNode">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.deleteAllNode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deleteAllNode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">delete_all</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All Nodes Have Been Deleted&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="neo4jConnector.deleteNode">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.databaseTool.neo4jConnector.deleteNode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deleteNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodeObj</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">nodeObj</span><span class="p">)</span></div>
+</div>
+
+
+    <span class="c1">#&lt;neo4jConnector&gt;</span>
+    <span class="c1">#&lt;/neo4jConnector&gt;</span>
+
+<span class="c1">#&lt;databaseTool&gt;</span>
+<span class="c1">#&lt;/databaseTool&gt;</span>
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright .
-
-    </p>
+    <p>&#169; Copyright .</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

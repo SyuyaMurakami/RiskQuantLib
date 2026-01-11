@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi-Process &mdash; RiskQuantLib 0.3.8 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/readthedocs-custom.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/documentation_options.js?v=c1cae59a"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advance.html">Advance</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Multi-Process</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="multi-process">
+<h1>Multi-Process<a class="headerlink" href="#multi-process" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>This section deals with <code class="docutils literal notranslate"><span class="pre">Multiprocess</span> <span class="pre">Programming</span></code>. For data analysts, it seems to be accepted that python is a very slow language. Its strength lies in its rich ecosystem of applications, while speed is a huge drawback. RiskQuantLib provides an easy way to run your project by multi-process. For tasks that are computationally intensive, multi-process running can increase speed by roughly an order of magnitude.</p>
+<section id="first-thing-to-consider">
+<h2>First Thing To Consider<a class="headerlink" href="#first-thing-to-consider" title="Link to this heading">¶</a></h2>
+<p>Multi-process programming is a double-edged sword, and almost programmers will agree that there is no easy way to write multi-process codes very generically for all types of task. Good multi-process programs often require careful debugging and optimization, and will vary slightly from one project to another. It is also critical that the overhead of turning on multiprocessing must outweigh the benefits of multi-processing.</p>
+<p>For scaffolding such as RiskQuantLib, the requirements for multi-process programming are reduced because it focuses on data processing, and the graph-structure data store makes the data more tractable. The tricky part is that the OOP (object-oriented programming) style is not well suited for multiprocessing, and serializing the entire graph and transferring it to another process is very resource intensive.</p>
+<p>So it is important to remind users who need to use this feature, before changing your code to multiprocessing, you need to consider whether the function you want to call is sufficiently computationally intensive, and you need to consider the memory constraints.</p>
+</section>
+<section id="how-to-use-multi-process">
+<h2>How To Use Multi-Process<a class="headerlink" href="#how-to-use-multi-process" title="Link to this heading">¶</a></h2>
+<p>Using multiprocessing in RiskQuantLib is very simple and almost identical to using <code class="docutils literal notranslate"><span class="pre">execFunc</span></code>. If you are not familiar with <code class="docutils literal notranslate"><span class="pre">execFunc</span></code>, you can refer to the <strong>Iteration</strong> section in <a class="reference internal" href="Instrument_List.html"><span class="doc">Instrument List</span></a>.</p>
+<p>In short, <code class="docutils literal notranslate"><span class="pre">paraFunc</span></code> allows you to parallelize operations on instances of Instrument List. Use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">instrumentListA</span><span class="o">.</span><span class="n">paraFunc</span><span class="p">(</span><span class="s1">&#39;someFunc&#39;</span><span class="p">,</span><span class="n">someParameter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is almost totally the same with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">instrumentListA</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s1">&#39;someFunc&#39;</span><span class="p">,</span><span class="n">someParameter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>They are almost the same with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">instrumentA</span> <span class="ow">in</span> <span class="n">instrumentListA</span><span class="p">:</span>
+    <span class="n">instrumentA</span><span class="o">.</span><span class="n">someFunc</span><span class="p">(</span><span class="n">someParameter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The difference is that <code class="docutils literal notranslate"><span class="pre">execFunc</span></code> is executed immediately, and the function called by <code class="docutils literal notranslate"><span class="pre">execFunc</span></code> can make direct changes to the data graph. Whereas <code class="docutils literal notranslate"><span class="pre">paraFunc</span></code> is delayed and you have to use <code class="docutils literal notranslate"><span class="pre">paraRun</span></code> to trigger the multiprocessing after you call <code class="docutils literal notranslate"><span class="pre">paraFunc</span></code> one or more times. Otherwise the multiprocessing program will not be executed.</p>
+<p>In addition, the functions called by <code class="docutils literal notranslate"><span class="pre">paraFunc</span></code> do not make direct changes to the datatagram. If changes are made to attributes inside these functions, these changes are not preserved (Any effect on the original data graph is not preserved, because it occurs in another process). This requires functions called by <code class="docutils literal notranslate"><span class="pre">paraFunc</span></code> to have a return value, and only the return value can carry data and return it to the main data graph.</p>
+<p><strong>You don’t need to optimize the function to use</strong> <code class="docutils literal notranslate"><span class="pre">paraFunc</span></code> <strong>, you can still make changes to the properties inside the function, you can treat each process as a pipeline, and these changes will be passed along the pipeline, and successive calls inside the pipeline will be able to access the properties that are changed, except that you can’t pass the properties between pipelines, you have to catch the output data at the end of the pipeline and send them back to the main process by yourself.</strong></p>
+<p>A good example is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">instrumentListA</span><span class="o">.</span><span class="n">paraFunc</span><span class="p">(</span><span class="s1">&#39;someFuncX&#39;</span><span class="p">,</span><span class="n">someParameterX</span><span class="p">)</span>
+<span class="n">instrumentListA</span><span class="o">.</span><span class="n">paraFunc</span><span class="p">(</span><span class="s1">&#39;someFuncY&#39;</span><span class="p">,</span><span class="n">someParameterY</span><span class="p">)</span>
+<span class="n">instrumentListA</span><span class="o">.</span><span class="n">paraFunc</span><span class="p">(</span><span class="s1">&#39;someFuncZ&#39;</span><span class="p">,</span><span class="n">someParameterZ</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">instrumentListA</span><span class="o">.</span><span class="n">paraRun</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This is the same with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">instrumentListA</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s1">&#39;someFuncX&#39;</span><span class="p">,</span><span class="n">someParameterX</span><span class="p">)</span>
+<span class="n">instrumentListA</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s1">&#39;someFuncY&#39;</span><span class="p">,</span><span class="n">someParameterY</span><span class="p">)</span>
+<span class="n">instrumentListA</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s1">&#39;someFuncZ&#39;</span><span class="p">,</span><span class="n">someParameterZ</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that <code class="docutils literal notranslate"><span class="pre">result</span></code> is used here to hold return values, <code class="docutils literal notranslate"><span class="pre">result</span></code> should be a list, each element of which is a tuple, (since you’re calling three functions in parallel, the return value of each function is packaged and returned.) The first element of the tuple is the return value of the first function <code class="docutils literal notranslate"><span class="pre">someFuncX</span></code>, the second element is the return value of the second function <code class="docutils literal notranslate"><span class="pre">someFuncY</span></code>, and so on.</p>
+<p>If you define the three functions in the above example this way:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">someFuncX</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">codeX</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeX</span>
+<span class="k">def</span> <span class="nf">someFuncY</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">codeY</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeX</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeY</span>
+<span class="k">def</span> <span class="nf">someFuncZ</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">codeZ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeY</span> <span class="o">+</span> <span class="mi">3</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeZ</span>
+</pre></div>
+</div>
+<p>Both the multiprocess and non-multi-process versions work fine. When the non-multi-process version is run, each element of your <code class="docutils literal notranslate"><span class="pre">instrumentListA</span></code> will have the additional attributes <code class="docutils literal notranslate"><span class="pre">codeX</span></code>, <code class="docutils literal notranslate"><span class="pre">codeY</span></code>, and <code class="docutils literal notranslate"><span class="pre">codeZ</span></code>, but not when the multi-process version is run. The <code class="docutils literal notranslate"><span class="pre">result</span></code> variable in multiprocessing will be a list, and each element will be a tuple of <code class="docutils literal notranslate"><span class="pre">(self.codeX,</span> <span class="pre">self.codeY,</span> <span class="pre">self.codeZ)</span></code>.</p>
+<p>As we just said, the multi-process version of <code class="docutils literal notranslate"><span class="pre">someFuncY</span></code> has no problem accessing the <code class="docutils literal notranslate"><span class="pre">codeX</span></code> generated in <code class="docutils literal notranslate"><span class="pre">someFuncX</span></code>, except that <code class="docutils literal notranslate"><span class="pre">codeX</span></code> cannot be accessed in <code class="docutils literal notranslate"><span class="pre">instrumentListA</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

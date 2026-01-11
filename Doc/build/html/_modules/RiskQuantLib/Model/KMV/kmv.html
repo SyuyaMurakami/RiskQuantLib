@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>RiskQuantLib.Model.KMV.kmv &mdash; RiskQuantLib 0.0.24 documentation</title>
+  <title>RiskQuantLib.Model.KMV.kmv &mdash; RiskQuantLib 0.3.6 documentation</title>
   
 
   
@@ -92,6 +92,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">RiskQuantLib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../With_ORM.html">With ORM</a></li>
 </ul>
 
             
@@ -165,13 +174,16 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fsolve</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
-<span class="kn">from</span> <span class="nn">RiskQuantLib.Model.base</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="kn">from</span> <span class="nn">RiskQuantLib.Model.model</span> <span class="kn">import</span> <span class="n">model</span>
+<span class="c1">#&lt;import&gt;</span>
+<span class="c1">#&lt;/import&gt;</span>
 
-<div class="viewcode-block" id="kmv"><a class="viewcode-back" href="../../../../RiskQuantLib.Model.KMV.html#RiskQuantLib.Model.KMV.kmv.kmv">[docs]</a><span class="k">class</span> <span class="nc">kmv</span><span class="p">(</span><span class="n">base</span><span class="p">):</span>
+<div class="viewcode-block" id="kmv"><a class="viewcode-back" href="../../../../RiskQuantLib.Model.KMV.html#RiskQuantLib.Model.KMV.kmv.kmv">[docs]</a><span class="k">class</span> <span class="nc">kmv</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    kmv(base) is a class to calculate KMV relative parameters, including Asset Volatility, Asset Value,</span>
 <span class="sd">    Distance to Default.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#&lt;init&gt;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">riskFreeRateNum</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">tenorNum</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">debtNum</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">equityNum</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">equitySigmaNum</span><span class="p">:</span><span class="nb">float</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        You must specify risk free rate, tenor, debt value, equity value and equity volatility to</span>
@@ -183,6 +195,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">debt</span> <span class="o">=</span> <span class="n">debtNum</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">equity</span> <span class="o">=</span> <span class="n">equityNum</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">equitySigma</span> <span class="o">=</span> <span class="n">equitySigmaNum</span>
+    <span class="c1">#&lt;/init&gt;</span>
 
 <div class="viewcode-block" id="kmv.BSfunction"><a class="viewcode-back" href="../../../../RiskQuantLib.Model.KMV.html#RiskQuantLib.Model.KMV.kmv.kmv.BSfunction">[docs]</a>    <span class="k">def</span> <span class="nf">BSfunction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -209,7 +222,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">defaultPoint</span> <span class="o">=</span> <span class="n">shortTermDebtNum</span> <span class="o">+</span> <span class="n">mixedRatioNum</span> <span class="o">*</span> <span class="n">longTermDebtNum</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">defaultDistance</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asset</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaultPoint</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asset</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">assetSigma</span><span class="p">)</span></div></div>
 
-
+    <span class="c1">#&lt;kmv&gt;</span>
+    <span class="c1">#&lt;/kmv&gt;</span>
 
 
 

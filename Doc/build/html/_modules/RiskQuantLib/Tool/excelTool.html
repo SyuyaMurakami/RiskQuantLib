@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>RiskQuantLib.Tool.excelTool &mdash; RiskQuantLib 0.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> RiskQuantLib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RiskQuantLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../RiskQuantLib.html">RiskQuantLib</a> &raquo;</li>
+        
+      <li>RiskQuantLib.Tool.excelTool</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for RiskQuantLib.Tool.excelTool</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1">#coding = utf-8</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">openpyxl</span>
+<span class="c1">#&lt;import&gt;</span>
+<span class="c1">#&lt;/import&gt;</span>
+
+<div class="viewcode-block" id="formatExcelWithTemplate"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.excelTool.formatExcelWithTemplate">[docs]</a><span class="k">def</span> <span class="nf">formatExcelWithTemplate</span><span class="p">(</span><span class="n">templateExcelPathString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">dataExcelPathString</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">savePathString</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will use the format of templateExcel and the data of dataExcel to</span>
+<span class="sd">    generate a new excel.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    templateExcelPathString : str</span>
+<span class="sd">        The xlsx file that specify the format of output.</span>
+<span class="sd">    dataExcelPathString : str</span>
+<span class="sd">        The xlsx file that specify the content of output.</span>
+<span class="sd">    savePathString : str</span>
+<span class="sd">        The path where the output should be saved.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">columnNameList</span> <span class="o">=</span> <span class="p">[</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">97</span><span class="p">,</span><span class="mi">123</span><span class="p">)]</span>
+
+    <span class="c1"># import template</span>
+    <span class="n">wb</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">load_workbook</span><span class="p">(</span><span class="n">templateExcelPathString</span><span class="p">)</span>
+    <span class="n">sheetnames</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">get_sheet_names</span><span class="p">()</span>
+
+
+    <span class="c1"># load data</span>
+    <span class="n">wbOfData</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">load_workbook</span><span class="p">(</span><span class="n">dataExcelPathString</span><span class="p">)</span>
+    <span class="n">sheetnamesOfData</span> <span class="o">=</span> <span class="n">wbOfData</span><span class="o">.</span><span class="n">get_sheet_names</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">tmp</span><span class="p">,</span><span class="n">data</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sheetnames</span><span class="p">,</span><span class="n">sheetnamesOfData</span><span class="p">):</span>
+        <span class="n">sheet</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">get_sheet_by_name</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+        <span class="n">sheetOfData</span> <span class="o">=</span> <span class="n">wbOfData</span><span class="o">.</span><span class="n">get_sheet_by_name</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="c1"># replace content</span>
+        <span class="n">max_column</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">sheet</span><span class="o">.</span><span class="n">max_column</span><span class="p">,</span><span class="n">sheetOfData</span><span class="o">.</span><span class="n">max_column</span><span class="p">])</span>
+        <span class="n">max_row</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">sheet</span><span class="o">.</span><span class="n">max_row</span><span class="p">,</span><span class="n">sheetOfData</span><span class="o">.</span><span class="n">max_row</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_column</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_row</span><span class="p">):</span>
+                <span class="n">blockIndexString</span> <span class="o">=</span> <span class="n">columnNameList</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">sheet</span><span class="p">[</span><span class="n">blockIndexString</span><span class="p">]</span> <span class="o">=</span> <span class="n">sheetOfData</span><span class="p">[</span><span class="n">blockIndexString</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+    <span class="n">wb</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">savePathString</span><span class="p">)</span></div>
+
+<span class="c1">#&lt;excelTool&gt;</span>
+<span class="c1">#&lt;/excelTool&gt;</span>
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright .
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

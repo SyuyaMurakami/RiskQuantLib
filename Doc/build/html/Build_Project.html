@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build Your Project &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/readthedocs-custom.css" />
+
+  
+      <script src="_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Instrument" href="Instrument.html" />
+    <link rel="prev" title="Create A New Project" href="Create_Project.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Build Your Project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#riskquantlib">RiskQuantLib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src">Src</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#config-py">config.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#instrument"><em>instrument</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#attribute"><em>attribute</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instrument-defaultinstrumenttype"><em>instrument-DefaultInstrumentType</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instrument-parentquantlibclassname"><em>instrument-ParentQuantLibClassName</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instrument-libraryname"><em>instrument-LibraryName</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#build-py">build.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-py">main.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data">Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cache">Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#result">Result</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-bat">build.bat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debug-bat">debug.bat</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Build Your Project</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="build-your-project">
+<h1>Build Your Project<a class="headerlink" href="#build-your-project" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>After create a project, you should build it to suit for your mission. By <code class="docutils literal notranslate"><span class="pre">Build</span></code>, RiskQuantLib will generate python source code automatically. It is the core conception of RiskQuantLib. Before moving on, let specify some definition in RiskQuantLib:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Build</span></code> means generate source code automatically.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Instrument</span></code> means any class you will use in your mission. For financial analysis, <code class="docutils literal notranslate"><span class="pre">Instrument</span></code> refers to stock, bond or other security type, or like interest rate or company, etc.</p>
+<p>Then we start to build our first project. The critical thing is to tell RiskQuantLib how to build it. This is done by specify key word in <code class="docutils literal notranslate"><span class="pre">config.py</span></code> , which you can find in your project root dictionary once you create a project. The content of building will be written into <code class="docutils literal notranslate"><span class="pre">RiskQuantLib.Auto</span></code>.</p>
+<p>In last chapter we create a project, it looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">your_project_path</span>
+  <span class="o">--</span><span class="n">Cache</span>
+  <span class="o">--</span><span class="n">Data</span>
+  <span class="o">--</span><span class="n">Result</span>
+  <span class="o">--</span><span class="n">RiskQuantLib</span>
+  <span class="o">--</span><span class="n">Src</span>
+  <span class="o">--</span><span class="n">build</span><span class="o">.</span><span class="n">bat</span>
+  <span class="o">--</span><span class="n">build</span><span class="o">.</span><span class="n">py</span>
+  <span class="o">--</span><span class="n">config</span><span class="o">.</span><span class="n">py</span>
+  <span class="o">--</span><span class="n">debug</span><span class="o">.</span><span class="n">bat</span>
+  <span class="o">--</span><span class="n">main</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>We will explain the function of each term as follows:</p>
+<section id="riskquantlib">
+<h2>RiskQuantLib<a class="headerlink" href="#riskquantlib" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> is a dictionary holding all source files of RiskQuantLib, it looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">RiskQuantLib</span>
+  <span class="o">--</span><span class="n">Auto</span>
+  <span class="o">--</span><span class="n">Build</span>
+  <span class="o">--</span><span class="n">Instrument</span>
+  <span class="o">--</span><span class="n">InstrumentList</span>
+  <span class="o">--</span><span class="n">Model</span>
+  <span class="o">--</span><span class="n">Operation</span>
+  <span class="o">--</span><span class="n">Property</span>
+  <span class="o">--</span><span class="n">Tool</span>
+  <span class="o">--</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+  <span class="o">--</span><span class="n">module</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</section>
+<section id="src">
+<h2>Src<a class="headerlink" href="#src" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Src</span></code> is a dictionary holding all source files that is needed in your project. You can leave <code class="docutils literal notranslate"><span class="pre">Src</span></code> alone and never use it. It won’t influence your project at all. Or you can put any python source code in it, run or import them as you always know in python, RiskQuantLib is also cool with that. However, if you want to try some new things, <code class="docutils literal notranslate"><span class="pre">Src</span></code> will give you a great way to manage your code.</p>
+<p><strong>In short, any code in</strong> <code class="docutils literal notranslate"><span class="pre">Src</span></code> <strong>can be parsed by RiskQuantLib according to the comment in source code, the control comment syntax will help to generate python code as you wish.</strong></p>
+<p>The most simple way to control your code is to tell RiskQuantLib where they should be insert. You can insert any code into any position of any file as long as this file is under <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> directory. If you want to do this, use <code class="docutils literal notranslate"><span class="pre">#-&gt;</span></code> control comment.</p>
+<p>For example, you have a instrument class named as <code class="docutils literal notranslate"><span class="pre">stock</span></code>, and you want to add a class method to append a string <code class="docutils literal notranslate"><span class="pre">_hello</span></code> after the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute, and mark the value as a new attribute named as <code class="docutils literal notranslate"><span class="pre">greeting</span></code>. You can go to <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/Instrument/Security/Stock.stock.py</span></code> to add this function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">sayHello</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">greeting</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_hello&quot;</span>
+</pre></div>
+</div>
+<p>This is usually what we do. But with <code class="docutils literal notranslate"><span class="pre">Src</span></code>, you can do it another way. First, create a file named <code class="docutils literal notranslate"><span class="pre">greeting.py</span></code> under <code class="docutils literal notranslate"><span class="pre">Src</span></code>, then open it and write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-&gt;stock</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sayHello</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">greeting</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_hello&quot;</span>
+</pre></div>
+</div>
+<p>Then close this file and open your terminal, change working directory into current project, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">build</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>And this function will be inserted into <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/Instrument/Security/Stock.stock.py</span></code> automatically. Cool, isn’t it?</p>
+<p><strong>For the automatically generated instrument by RiskQuantLib, use instrument name will be enough to specify a target destination, like</strong> <code class="docutils literal notranslate"><span class="pre">#-&gt;stock</span></code>. <strong>But if you create the source file by yourself, you should use the absolute import path to tell RiskQuantLib where this file is, like:</strong> <code class="docutils literal notranslate"><span class="pre">#-&gt;RiskQuantLib.Instrument.Security.Stock.stock</span></code></p>
+</section>
+<section id="config-py">
+<h2>config.py<a class="headerlink" href="#config-py" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">config.py</span></code> is the file to tell RiskQuantLib how to generate python source code of instrument class. After calling <code class="docutils literal notranslate"><span class="pre">build.py</span></code>, Any instrument specified will be created, the source file will be added into <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> dictionary besides its first RiskQuantLib parent class. The default <code class="docutils literal notranslate"><span class="pre">config.py</span></code> looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># coding = utf-8</span>
+
+<span class="c1">#-|instrument: security, company, index, interest</span>
+<span class="c1">#-|instrument: bond@security, stock@security, derivative@security, fund@security</span>
+<span class="c1">#-|instrument: future@derivative, option@derivative</span>
+
+<span class="c1">#-|instrument-DefaultInstrumentType: security@Security, company@Company, index@Index, interest@Interest</span>
+<span class="c1">#-|instrument-DefaultInstrumentType: bond@Bond, stock@Stock, derivative@Derivative, fund@Fund</span>
+<span class="c1">#-|instrument-DefaultInstrumentType: future@Future, option@Option</span>
+</pre></div>
+</div>
+<p>It might be a little confusing if we write it in above way, but it will be more clear if we see it as a tree:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">instrument</span>
+  <span class="o">--</span><span class="n">security</span> <span class="p">(</span> <span class="n">DefaultInstrumentType</span> <span class="o">=</span> <span class="n">Security</span> <span class="p">)</span>
+    <span class="o">--</span><span class="n">bond</span> <span class="p">(</span> <span class="n">DefaultInstrumentType</span> <span class="o">=</span> <span class="n">Bond</span> <span class="p">)</span>
+    <span class="o">--</span><span class="n">stock</span> <span class="p">(</span> <span class="n">DefaultInstrumentType</span> <span class="o">=</span> <span class="n">Stock</span> <span class="p">)</span>
+    <span class="o">--</span><span class="n">derivative</span> <span class="p">(</span> <span class="n">DefaultInstrumentType</span> <span class="o">=</span> <span class="n">Derivative</span> <span class="p">)</span>
+      <span class="o">--</span><span class="n">future</span> <span class="p">(</span> <span class="n">DefaultInstrumentType</span> <span class="o">=</span> <span class="n">Future</span> <span class="p">)</span>
+      <span class="o">--</span><span class="n">option</span> <span class="p">(</span> <span class="n">DefaultInstrumentType</span> <span class="o">=</span> <span class="n">Option</span> <span class="p">)</span>
+    <span class="o">--</span><span class="n">fund</span> <span class="p">(</span> <span class="n">DefaultInstrumentType</span> <span class="o">=</span> <span class="n">Fund</span> <span class="p">)</span>
+  <span class="o">--</span><span class="n">company</span> <span class="p">(</span> <span class="n">DefaultInstrumentType</span> <span class="o">=</span> <span class="n">Company</span> <span class="p">)</span>
+  <span class="o">--</span><span class="n">index</span> <span class="p">(</span> <span class="n">DefaultInstrumentType</span> <span class="o">=</span> <span class="n">Index</span> <span class="p">)</span>
+  <span class="o">--</span><span class="n">interest</span> <span class="p">(</span> <span class="n">DefaultInstrumentType</span> <span class="o">=</span> <span class="n">Interest</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>There are two basic kinds of keyword in <code class="docutils literal notranslate"><span class="pre">config.py</span></code>, which is <code class="docutils literal notranslate"><span class="pre">instrument</span></code> and <code class="docutils literal notranslate"><span class="pre">attribute</span></code> , we will explain them here:</p>
+<section id="instrument">
+<h3><em>instrument</em><a class="headerlink" href="#instrument" title="Link to this heading">¶</a></h3>
+<p>The <em>instrument</em> key word can be used to define instrument by your will, depending on your data. It is just a comment in python, but a little special. To use it, the comment line has to start with <code class="docutils literal notranslate"><span class="pre">#-|</span></code> command tag, and followed closely by <code class="docutils literal notranslate"><span class="pre">instrument</span></code> keyword, no space or other characters in the middle. Finally, a <code class="docutils literal notranslate"><span class="pre">:</span></code> has to follow the <code class="docutils literal notranslate"><span class="pre">instrument</span></code> keyword. A validated command comment is like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument: instrument_a</span>
+</pre></div>
+</div>
+<p><strong>You can use comma to seperate different instruments declaration, like:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument: instrument_a, instrument_b</span>
+</pre></div>
+</div>
+<p><strong>You can use &#64; to specify what parent instrument the current one is inheriting from, like:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument: instrument_a@parent_instrument_p</span>
+</pre></div>
+</div>
+<p><strong>If an instrument has more than two parents, write them seperately like:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument: instrument_a@parent_instrument_p1, instrument_a@parent_instrument_p2</span>
+</pre></div>
+</div>
+<p>The instrument declared here will tell RiskQuantLib how to build your project and add class files that will be used to form a data graph. For example, if you write this in <code class="docutils literal notranslate"><span class="pre">config.py</span></code> :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument: treasureBond@bond</span>
+</pre></div>
+</div>
+<p>RiskQuantLib will create instrument class source file <code class="docutils literal notranslate"><span class="pre">treasureBond.py</span></code> under <code class="docutils literal notranslate"><span class="pre">RiskQuantLib.Instrument.Security.Bond.TreasureBond</span></code>, and create list class source file <code class="docutils literal notranslate"><span class="pre">treasureBondList.py</span></code> under  <code class="docutils literal notranslate"><span class="pre">RiskQuantLib.InstrumentList.SecurityList.BondList.TreasureBondList</span></code> after your run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">build.py</span></code>.</p>
+<p>The &#64; means this new instrument will inherit from this RiskQuantLib class. It can accept key word like: <code class="docutils literal notranslate"><span class="pre">Fund</span></code>, <code class="docutils literal notranslate"><span class="pre">Stock</span></code>, <code class="docutils literal notranslate"><span class="pre">Bond</span></code>, <code class="docutils literal notranslate"><span class="pre">Repo</span></code>, etc.</p>
+<p><strong>However, you should always inherit from a class that you have declared. It doesn’t matter if you declare the parent class before or after this line.</strong></p>
+<p><strong>You can not split this declaration into two lines using or /. If you want to start a new line, a new keyword must be used, like:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument: treasureBondOne@bond</span>
+<span class="c1">#-|instrument: treasureBondTwo@bond</span>
+</pre></div>
+</div>
+</section>
+<section id="attribute">
+<h3><em>attribute</em><a class="headerlink" href="#attribute" title="Link to this heading">¶</a></h3>
+<p>The <em>attribute</em> key word can be used to what kind of attributes you need when analysising your data, and which class these attributes belong to. After calling <code class="docutils literal notranslate"><span class="pre">build.py</span></code>, any attributes specified here will be registered and can be used with <code class="docutils literal notranslate"><span class="pre">set</span></code> function.</p>
+<p>This keyword is just a comment in python, but, as always, a little special. To use it, the comment line has to start with <code class="docutils literal notranslate"><span class="pre">#-|</span></code> command tag, and followed closely by <code class="docutils literal notranslate"><span class="pre">attribute</span></code> keyword, no space or other characters in the middle. Finally, a <code class="docutils literal notranslate"><span class="pre">:</span></code> has to follow the <code class="docutils literal notranslate"><span class="pre">attribute</span></code> keyword. A validated command comment is like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|attribute: fund.yourAttribute</span>
+</pre></div>
+</div>
+<p>This declaration will add <code class="docutils literal notranslate"><span class="pre">yourAttribute</span></code> to class <code class="docutils literal notranslate"><span class="pre">fund</span></code> .</p>
+<p><strong>You can use comma to seperate different attributes declaration, like:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|attribute: fund.yourAttribute, stock.anotherAttribute</span>
+</pre></div>
+</div>
+<p><strong>You can use &#64; to specify what data type this attribute should have, like:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|attribute: fund.yourAttribute@number, stock.anotherAttribute@string</span>
+</pre></div>
+</div>
+<p>The default data type can be <code class="docutils literal notranslate"><span class="pre">number</span></code>, <code class="docutils literal notranslate"><span class="pre">string</span></code>, <code class="docutils literal notranslate"><span class="pre">series</span></code>. It can also be self-defined, actually you can use any word after &#64; to specify a data type, if it doesn’t exist, RiskQuantLib will create a new data type and use the new one, like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|attribute: fund.yourAttribute@my_new_data_type</span>
+</pre></div>
+</div>
+<p>Data type tells RiskQuantLib what kind of data will be stored by this attribute. If you add ‘sellPrice’ to <code class="docutils literal notranslate"><span class="pre">stock</span></code>, this should be a <code class="docutils literal notranslate"><span class="pre">number</span></code> attribute, while an attribute like ‘issuerName’ is a <code class="docutils literal notranslate"><span class="pre">string</span></code> kind. <code class="docutils literal notranslate"><span class="pre">series</span></code> is used if it’s an attribute like ‘sellPriceOfPastSixMonth’. If you specify a kind that is never used before, it will be created as a type class, located in <code class="docutils literal notranslate"><span class="pre">RiskQuantLib.Property</span></code>.</p>
+<p>The data type here is not only a data type in RiskQuantLib. RiskQuantLib is designed to be used to process graph-structure-data. Data type we mentioned above is actually the ending-node of a graph, thus we’d better call it <code class="docutils literal notranslate"><span class="pre">property</span></code> . We will explain it in later chapter.</p>
+<p><strong>You should add attribute to an instrument that is already declared, no matter it is before or after.</strong></p>
+<p><strong>You can not split this declaration into two lines using or /. If you want to start a new line, a new keyword must be used, like:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|attribute: fund.yourAttributeOne</span>
+<span class="c1">#-|attribute: fund.yourAttributeTwo</span>
+</pre></div>
+</div>
+</section>
+<section id="instrument-defaultinstrumenttype">
+<h3><em>instrument-DefaultInstrumentType</em><a class="headerlink" href="#instrument-defaultinstrumenttype" title="Link to this heading">¶</a></h3>
+<p>This key word is a string to mark your new instrument class. It is just a label, does not actually influence the class behavior. An example is like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument-DefaultInstrumentType: instrument_a@another_name_of_instrument_a</span>
+</pre></div>
+</div>
+</section>
+<section id="instrument-parentquantlibclassname">
+<h3><em>instrument-ParentQuantLibClassName</em><a class="headerlink" href="#instrument-parentquantlibclassname" title="Link to this heading">¶</a></h3>
+<p>This keyword means this new instrument will inherit from this QuantLib class. It can accept key word like: <code class="docutils literal notranslate"><span class="pre">Instrument</span></code>, <code class="docutils literal notranslate"><span class="pre">Bond</span></code>, etc. You can refer to QuantLib document to find what class QuantLib has. Like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument-ParentQuantLibClassName: my_bond@Bond</span>
+</pre></div>
+</div>
+</section>
+<section id="instrument-libraryname">
+<h3><em>instrument-LibraryName</em><a class="headerlink" href="#instrument-libraryname" title="Link to this heading">¶</a></h3>
+<p>The <em>LibraryName</em> is other library that you will use in instrument class source file, like numpy and pandas. Like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument-LibraryName: instrument_a@tensorflow as tf</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="build-py">
+<h2>build.py<a class="headerlink" href="#build-py" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">build.py</span></code> is used to generate python source code automatically. After you specify what kind of class you want to create, how it inherit from other class, what attributes these class should have in <em>config.py</em>, you can call <em>build.py</em> by terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">build</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p><strong>Notice: If you do not use control comment syntax in Src, this build.py will only need to be excuted once, at the begin of your project. Do not build your project every time you run main.py, it is not necessary. But if you use control comment in Src, you can use the following command so that the build action will be triggered every time you make change to Src directory:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">build</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+</div>
+<p>If your project is under development, it will be useful to use <code class="docutils literal notranslate"><span class="pre">debug</span></code> mode. With this mode, the python source code in <code class="docutils literal notranslate"><span class="pre">Src</span></code> will not be directly inserted into target file, it will be bound dynamically into target file. By this way, the break point in file under <code class="docutils literal notranslate"><span class="pre">Src</span></code> will start to effect, you can debug it directly. Surely, the <code class="docutils literal notranslate"><span class="pre">auto</span> <span class="pre">build</span></code> mode can be run at the same time, it will automatically build the whole project every time you make a change. To build project in automatically debug mode, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">build</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">d</span>
+</pre></div>
+</div>
+<p>or just double click the file in windows system:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">debug</span><span class="o">.</span><span class="n">bat</span>
+</pre></div>
+</div>
+</section>
+<section id="main-py">
+<h2>main.py<a class="headerlink" href="#main-py" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code> is entrance of your project. You can start your coding here, by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.module</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Then you can use the class directly by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bondA</span> <span class="o">=</span> <span class="n">treasureBond</span><span class="p">(</span><span class="s1">&#39;firstBond&#39;</span><span class="p">,</span><span class="s1">&#39;nameOfFirstBond&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also set attributes directly by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stockA</span> <span class="o">=</span> <span class="n">stock</span><span class="p">(</span><span class="s1">&#39;firstStock&#39;</span><span class="p">,</span><span class="s1">&#39;nameOfFirstStock&#39;</span><span class="p">)</span>
+<span class="n">stockA</span><span class="o">.</span><span class="n">setAnotherAttribute</span><span class="p">(</span><span class="s1">&#39;valueOfAnotherAttribute&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more information about the <code class="docutils literal notranslate"><span class="pre">Instrument</span></code>, we will introduce it in next chapter.</p>
+</section>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Link to this heading">¶</a></h2>
+<p>This is a folder just used to hold your data. Default as empty.</p>
+</section>
+<section id="cache">
+<h2>Cache<a class="headerlink" href="#cache" title="Link to this heading">¶</a></h2>
+<p>This is a folder just used to hold your cache file. Default as empty.</p>
+</section>
+<section id="result">
+<h2>Result<a class="headerlink" href="#result" title="Link to this heading">¶</a></h2>
+<p>This is a folder just used to hold your result file. Default as empty.</p>
+</section>
+<section id="build-bat">
+<h2>build.bat<a class="headerlink" href="#build-bat" title="Link to this heading">¶</a></h2>
+<p>After specifying all instruments and attributes in <code class="docutils literal notranslate"><span class="pre">config.py</span></code> , you can double click <code class="docutils literal notranslate"><span class="pre">build.bat</span></code> to build your preoject. This file only exists in windows system.</p>
+</section>
+<section id="debug-bat">
+<h2>debug.bat<a class="headerlink" href="#debug-bat" title="Link to this heading">¶</a></h2>
+<p>After specifying all instruments and attributes in <code class="docutils literal notranslate"><span class="pre">config.py</span></code> , you can double click <code class="docutils literal notranslate"><span class="pre">debug.bat</span></code> to debug your preoject. This file only exists in windows system.</p>
+<p>The difference between build and debug is debug mode import file in <code class="docutils literal notranslate"><span class="pre">Src</span></code> as a module, thus leads to different behaviors. You can find more information about <code class="docutils literal notranslate"><span class="pre">Src</span></code> above.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Create_Project.html" class="btn btn-neutral float-left" title="Create A New Project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Instrument.html" class="btn btn-neutral float-right" title="Instrument" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

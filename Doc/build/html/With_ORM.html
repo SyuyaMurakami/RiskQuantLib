@@ -1,0 +1,154 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>With ORM &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/readthedocs-custom.css" />
+
+  
+      <script src="_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Process Graph-Structure Data" href="E_project.html" />
+    <link rel="prev" title="With Pandas" href="With_Pandas.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">With ORM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#from-iterable">From Iterable</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">With ORM</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="with-orm">
+<h1>With ORM<a class="headerlink" href="#with-orm" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>For convience, RiskQuantLib provides with functions to interact with ORM. However, these functions can be used to any iterable objects. We shall introduce them as follows:</p>
+<section id="from-iterable">
+<h2>From Iterable<a class="headerlink" href="#from-iterable" title="Link to this heading">¶</a></h2>
+<p>If you use ORM to get a list, whose elements is the record in database and all columns in database are mapped into element attributes, you may want to change this list into RiskQuantLib list.</p>
+<p>Let’s suppose you have a ORM list object <code class="docutils literal notranslate"><span class="pre">ORM</span></code> whose element has attributes named: <code class="docutils literal notranslate"><span class="pre">OptionCode</span></code>, <code class="docutils literal notranslate"><span class="pre">PayOff</span></code>, <code class="docutils literal notranslate"><span class="pre">ExerciseType</span></code>, <code class="docutils literal notranslate"><span class="pre">ExerciseDate</span></code>, <code class="docutils literal notranslate"><span class="pre">StockPrice</span></code>, <code class="docutils literal notranslate"><span class="pre">RiskFreeRate</span></code>, <code class="docutils literal notranslate"><span class="pre">Sigma</span></code>.</p>
+<p>Now we build our project by edit <code class="docutils literal notranslate"><span class="pre">config.py</span></code> to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument: myEuropeanOption</span>
+<span class="c1">#-|instrument-ParentQuantLibClassName: myEuropeanOption@EuropeanOption</span>
+<span class="c1">#-|instrument-DefaultInstrumentType: myEuropeanOption@myEuropeanOption</span>
+
+<span class="c1">#-|attribute: myEuropeanOption.PayOff@qlPayOff, myEuropeanOption.ExerciseDate@qlExercise, myEuropeanOption.StockPrice@qlQuote, myEuropeanOption.RiskFreeRate@qlQuote, myEuropeanOption.Sigma@qlQuote</span>
+</pre></div>
+</div>
+<p><strong>Noticed here, we have all attribute names that are the same with ORM list element attribute names. This will help RiskQuantLib to identify attribute and set them automatically.</strong></p>
+<p>After building it, you can open the <code class="docutils literal notranslate"><span class="pre">main.py</span></code> and use it directly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.module</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">vanillaOptionList</span> <span class="o">=</span> <span class="n">myEuropeanOptionList</span><span class="p">()</span><span class="o">.</span><span class="n">fromIterable</span><span class="p">(</span><span class="n">ORM</span><span class="p">,</span> <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;OptionCode&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can generate RiskQuantLib list from another RiskQuantLib list in this way:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stockListA</span> <span class="o">=</span> <span class="n">stockList</span><span class="p">()</span><span class="o">.</span><span class="n">fromDF</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
+<span class="n">stockListB</span> <span class="o">=</span> <span class="n">subStockList</span><span class="p">()</span><span class="o">.</span><span class="n">fromIterable</span><span class="p">(</span><span class="n">stockListA</span><span class="p">,</span> <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here, if <code class="docutils literal notranslate"><span class="pre">subStockList</span></code> is a class inheriting from <code class="docutils literal notranslate"><span class="pre">stockList</span></code>, all attributes of stockListA will be kept in stockListB. If <code class="docutils literal notranslate"><span class="pre">subStockList</span></code> doesn’t have any relation with <code class="docutils literal notranslate"><span class="pre">stockList</span></code>, then only the attributes registered in both classes will be kept.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="With_Pandas.html" class="btn btn-neutral float-left" title="With Pandas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="E_project.html" class="btn btn-neutral float-right" title="Process Graph-Structure Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

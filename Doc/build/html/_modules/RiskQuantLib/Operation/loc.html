@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>RiskQuantLib.Operation.loc &mdash; RiskQuantLib 0.0.24 documentation</title>
+  <title>RiskQuantLib.Operation.loc &mdash; RiskQuantLib 0.3.6 documentation</title>
   
 
   
@@ -92,6 +92,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
 </ul>
 
             
@@ -164,6 +173,8 @@
 <span class="c1">#coding = utf-8</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Integral</span>
+<span class="c1">#&lt;import&gt;</span>
+<span class="c1">#&lt;/import&gt;</span>
 
 <div class="viewcode-block" id="loc"><a class="viewcode-back" href="../../../RiskQuantLib.Operation.html#RiskQuantLib.Operation.loc.loc">[docs]</a><span class="k">class</span> <span class="nc">loc</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -171,12 +182,15 @@
 <span class="sd">    that in pandas. Use it by calling stockList.loc[index]. It returns the element in</span>
 <span class="sd">    that list whose index equals given value.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#&lt;init&gt;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dataList</span><span class="p">:</span><span class="nb">list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Passing a list to initialize loc object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">all</span> <span class="o">=</span> <span class="n">dataList</span>
+    <span class="c1">#&lt;/init&gt;</span>
 
+    <span class="c1">#&lt;getitem&gt;</span>
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the element whose index equals given value. If item is a Slice object, return a list</span>
@@ -189,6 +203,9 @@
                 <span class="k">return</span> <span class="p">[[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">j</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="k">return</span> <span class="p">[]</span></div>
+    <span class="c1">#&lt;/getitem&gt;</span>
+    <span class="c1">#&lt;loc&gt;</span>
+    <span class="c1">#&lt;/loc&gt;</span>
 </pre></div>
 
            </div>

@@ -1,0 +1,416 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>RiskQuantLib.Build.router &mdash; RiskQuantLib 0.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> RiskQuantLib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RiskQuantLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../RiskQuantLib.html">RiskQuantLib</a> &raquo;</li>
+        
+      <li>RiskQuantLib.Build.router</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for RiskQuantLib.Build.router</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># coding = utf-8</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span><span class="nn">re</span>
+<div class="viewcode-block" id="router"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router">[docs]</a><span class="k">class</span> <span class="nc">router</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="router.formatTag"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.formatTag">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">formatTag</span><span class="p">(</span><span class="n">tagName</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="n">tagStart</span> <span class="o">=</span> <span class="s1">&#39;#&lt;&#39;</span><span class="o">+</span><span class="n">tagName</span><span class="o">+</span><span class="s1">&#39;&gt;&#39;</span>
+        <span class="n">tagEnd</span> <span class="o">=</span> <span class="s1">&#39;#&lt;/&#39;</span><span class="o">+</span><span class="n">tagName</span><span class="o">+</span><span class="s1">&#39;&gt;&#39;</span>
+        <span class="k">return</span> <span class="n">tagStart</span><span class="p">,</span> <span class="n">tagEnd</span></div>
+
+<div class="viewcode-block" id="router.stripTag"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.stripTag">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">stripTag</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the row of tag</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;#&lt;.*&gt;&#39;&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="router.indent"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.indent">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">indent</span><span class="p">(</span><span class="n">num</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;    &#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">)])</span></div>
+
+<div class="viewcode-block" id="router.readContent"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.readContent">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">readContent</span><span class="p">(</span><span class="n">pythonSourceFilePath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pythonSourceFilePath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">content</span></div>
+
+<div class="viewcode-block" id="router.contentSplit"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.contentSplit">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">contentSplit</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">tagStart</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">tagEnd</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Split content by given tagStart and tagEnd, return content</span>
+<span class="sd">        before tagStart and content after tagEnd</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">former</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">tagStart</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">ender</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">tagEnd</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">former</span><span class="p">,</span> <span class="n">ender</span></div>
+
+<div class="viewcode-block" id="router.writeContent"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.writeContent">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">writeContent</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">pythonSourceFilePath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pythonSourceFilePath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span>  <span class="c1"># clear all contents of file</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\n</span><span class="s1">&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="router.findIndentOfLine"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.findIndentOfLine">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">findIndentOfLine</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">startTextOfLine</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the blank before given text.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tagLine</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;^([ \f\r\t\v]*)&#39;&#39;&#39;</span><span class="o">+</span><span class="n">startTextOfLine</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+        <span class="n">indentOfLine</span> <span class="o">=</span> <span class="n">tagLine</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tagLine</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">indentOfLine</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="router.insertToContent"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.insertToContent">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">insertToContent</span><span class="p">(</span><span class="n">sourceCode</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">tagName</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Insert some content to given tag position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tagStart</span><span class="p">,</span> <span class="n">tagEnd</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">formatTag</span><span class="p">(</span><span class="n">tagName</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tagStart</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tagEnd</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">content</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">indent</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">findIndentOfLine</span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="n">tagStart</span><span class="p">)</span>
+            <span class="n">indentedSourceCode</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;^&#39;&#39;&#39;</span><span class="p">,</span><span class="n">indent</span><span class="p">,</span><span class="n">sourceCode</span><span class="p">,</span><span class="n">flags</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+            <span class="n">former</span><span class="p">,</span> <span class="n">ender</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">contentSplit</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">tagStart</span><span class="p">,</span> <span class="n">tagEnd</span><span class="p">)</span>
+            <span class="n">newContent</span> <span class="o">=</span> <span class="n">former</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">indent</span> <span class="o">+</span> <span class="n">tagStart</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">indentedSourceCode</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">indent</span> <span class="o">+</span> <span class="n">tagEnd</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">ender</span>
+            <span class="k">return</span> <span class="n">newContent</span></div>
+
+<div class="viewcode-block" id="router.injectToContent"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.injectToContent">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">injectToContent</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Insert several contents into related tag. Contents will be between tagStart and tagEnd.</span>
+<span class="sd">        kwargs is a dict whose key is tag name and value is content to be inserted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">tagName</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">tagStart</span><span class="p">,</span> <span class="n">tagEnd</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">formatTag</span><span class="p">(</span><span class="n">tagName</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tagStart</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tagEnd</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">indent</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">findIndentOfLine</span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="n">tagStart</span><span class="p">)</span>
+                <span class="n">strippedSourceCode</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">stripTag</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">tagName</span><span class="p">])</span>
+                <span class="n">indentedSourceCode</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;^&#39;&#39;&#39;</span><span class="p">,</span><span class="n">indent</span><span class="p">,</span><span class="n">strippedSourceCode</span><span class="p">,</span><span class="n">flags</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+                <span class="n">former</span><span class="p">,</span> <span class="n">ender</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">contentSplit</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">tagStart</span><span class="p">,</span> <span class="n">tagEnd</span><span class="p">)</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">former</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">indent</span> <span class="o">+</span> <span class="n">tagStart</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">indentedSourceCode</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">indent</span> <span class="o">+</span> <span class="n">tagEnd</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">ender</span>
+        <span class="k">return</span> <span class="n">content</span></div>
+
+<div class="viewcode-block" id="router.persistToContent"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.persistToContent">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">persistToContent</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Insert several contents right before related tag. Contents will be before tagStart.</span>
+<span class="sd">        kwargs is a dict whose key is tag name and value is content to be inserted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">tagName</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">tagStart</span><span class="p">,</span> <span class="n">tagEnd</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">formatTag</span><span class="p">(</span><span class="n">tagName</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tagStart</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tagEnd</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">indent</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">findIndentOfLine</span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="n">tagStart</span><span class="p">)</span>
+                <span class="n">strippedSourceCode</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">stripTag</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">tagName</span><span class="p">])</span>
+                <span class="n">indentedSourceCode</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;^&#39;&#39;&#39;</span><span class="p">,</span><span class="n">indent</span><span class="p">,</span><span class="n">strippedSourceCode</span><span class="p">,</span><span class="n">flags</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+                <span class="n">former</span><span class="p">,</span> <span class="n">ender</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">contentSplit</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">tagStart</span><span class="p">,</span> <span class="n">tagEnd</span><span class="p">)</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">former</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">indentedSourceCode</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">indent</span> <span class="o">+</span> <span class="n">tagStart</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">indent</span> <span class="o">+</span> <span class="n">tagEnd</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">ender</span>
+        <span class="k">return</span> <span class="n">content</span></div>
+
+<div class="viewcode-block" id="router.insertToFile"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.insertToFile">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">insertToFile</span><span class="p">(</span><span class="n">sourceCode</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">tagName</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">pythonSourceFilePath</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read a .py file and insert some code into tag position.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">readContent</span><span class="p">(</span><span class="n">pythonSourceFilePath</span><span class="p">)</span>
+        <span class="n">newContent</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">insertToContent</span><span class="p">(</span><span class="n">sourceCode</span><span class="p">,</span> <span class="n">tagName</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+        <span class="n">router</span><span class="o">.</span><span class="n">writeContent</span><span class="p">(</span><span class="n">newContent</span><span class="p">,</span><span class="n">pythonSourceFilePath</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="router.injectToFile"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.injectToFile">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">injectToFile</span><span class="p">(</span><span class="n">pythonSourceFilePath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read a .py file and insert several contents into related tag position.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">readContent</span><span class="p">(</span><span class="n">pythonSourceFilePath</span><span class="p">)</span>
+        <span class="n">newContent</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">injectToContent</span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">router</span><span class="o">.</span><span class="n">writeContent</span><span class="p">(</span><span class="n">newContent</span><span class="p">,</span> <span class="n">pythonSourceFilePath</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="router.persistToFile"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.persistToFile">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">persistToFile</span><span class="p">(</span><span class="n">pythonSourceFilePath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read a .py file and insert several contents before related tag position.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">readContent</span><span class="p">(</span><span class="n">pythonSourceFilePath</span><span class="p">)</span>
+        <span class="n">newContent</span> <span class="o">=</span> <span class="n">router</span><span class="o">.</span><span class="n">persistToContent</span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">router</span><span class="o">.</span><span class="n">writeContent</span><span class="p">(</span><span class="n">newContent</span><span class="p">,</span> <span class="n">pythonSourceFilePath</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="router.validateInjectTag"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.validateInjectTag">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">validateInjectTag</span><span class="p">(</span><span class="n">injectTag</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">injectPath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">syntacticSugarPathMap</span><span class="p">:</span><span class="nb">dict</span> <span class="o">=</span> <span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse a single tag information. If user does not specify @, use file name as tag name.</span>
+<span class="sd">        Then convert dirA.dirB.dirC into dirA/dirB/dirC. Return target file path and target</span>
+<span class="sd">        tag name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">targetPath</span> <span class="o">=</span> <span class="n">injectTag</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">injectTag</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)</span><span class="o">!=-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">targetTag</span> <span class="o">=</span> <span class="n">injectTag</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">targetTag</span> <span class="o">=</span> <span class="n">targetPath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">targetPath</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">targetPath</span> <span class="ow">in</span> <span class="n">syntacticSugarPathMap</span><span class="p">:</span>
+            <span class="n">filePath</span> <span class="o">=</span> <span class="n">injectPath</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">syntacticSugarPathMap</span><span class="p">[</span><span class="n">targetPath</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filePath</span> <span class="o">=</span> <span class="n">injectPath</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">targetPath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.py&#39;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filePath</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">filePath</span><span class="p">,</span> <span class="n">targetTag</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">targetTag</span></div>
+
+<div class="viewcode-block" id="router.convertInjectTagToFilePath"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.convertInjectTagToFilePath">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">convertInjectTagToFilePath</span><span class="p">(</span><span class="n">injectTag</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">injectPath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">syntacticSugarPathMap</span><span class="p">:</span><span class="nb">dict</span> <span class="o">=</span> <span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse a line of tag information. Split the line by comma, parse every sub-string into</span>
+<span class="sd">        (filePath,tagName) and reform them into a list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tagList</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">injectTag</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
+        <span class="n">pathList</span> <span class="o">=</span> <span class="p">[</span><span class="n">router</span><span class="o">.</span><span class="n">validateInjectTag</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">injectPath</span><span class="p">,</span> <span class="n">syntacticSugarPathMap</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tagList</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">pathList</span></div>
+
+<div class="viewcode-block" id="router.parseInjectTarget"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.router.router.parseInjectTarget">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">parseInjectTarget</span><span class="p">(</span><span class="n">sourceCode</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">injectPath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">syntacticSugarPathMap</span><span class="p">:</span><span class="nb">dict</span> <span class="o">=</span> <span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the line of control comment, split whole content by control comment line. Parse the</span>
+<span class="sd">        target file and tag name for every control comment. Finally, return a dict whose key is target</span>
+<span class="sd">        file and value is (tag,content) pair.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+        <span class="n">tagPosition</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">regs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;^#-&gt;.*$&#39;&#39;&#39;</span><span class="p">,</span> <span class="n">sourceCode</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)]</span>
+        <span class="n">tagStart</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tagPosition</span><span class="p">]</span>
+        <span class="n">tagEnd</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tagPosition</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">sourceCode</span><span class="p">)]</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="p">[</span><span class="n">sourceCode</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span> <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">tagPosition</span><span class="p">]</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="p">[</span><span class="n">sourceCode</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span> <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tagStart</span><span class="p">,</span> <span class="n">tagEnd</span><span class="p">)]</span>
+        <span class="n">targetPathAndTargetTag</span> <span class="o">=</span> <span class="p">[</span><span class="n">router</span><span class="o">.</span><span class="n">convertInjectTagToFilePath</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;#-&gt;&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="n">injectPath</span><span class="p">,</span> <span class="n">syntacticSugarPathMap</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tag</span><span class="p">]</span>
+        <span class="n">injectInfoList</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([(</span><span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">j</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">contentId</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">pathTag</span><span class="p">])</span> <span class="k">for</span> <span class="n">contentId</span><span class="p">,</span><span class="n">pathTag</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">targetPathAndTargetTag</span><span class="p">)]</span>
+        <span class="n">injectInfo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">injectInfoList</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s1">&#39;path&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;tag&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="s1">&#39;contentId&#39;</span><span class="p">})</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">injectInfoList</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span> <span class="k">else</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">,</span><span class="s1">&#39;tag&#39;</span><span class="p">,</span><span class="s1">&#39;contentId&#39;</span><span class="p">])</span>
+        <span class="n">injectInfo</span> <span class="o">=</span> <span class="n">injectInfo</span><span class="p">[</span><span class="n">injectInfo</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span><span class="o">!=</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
+        <span class="n">injectContentAfterMerge</span> <span class="o">=</span> <span class="n">injectInfo</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">,</span><span class="s1">&#39;tag&#39;</span><span class="p">],</span> <span class="n">group_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">content</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;contentId&#39;</span><span class="p">]]))</span>
+        <span class="k">if</span> <span class="n">injectContentAfterMerge</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">injectContentAfterMerge</span> <span class="o">=</span> <span class="n">injectContentAfterMerge</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;mergedContent&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+            <span class="n">injectContentDict</span> <span class="o">=</span> <span class="n">injectContentAfterMerge</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;path&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;mergedContent&#39;</span><span class="p">])))</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">injectContentDict</span></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright .
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

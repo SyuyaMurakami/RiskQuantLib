@@ -1,0 +1,163 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guardian &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/readthedocs-custom.css" />
+
+  
+      <script src="_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Multi-Process" href="Multi_Process.html" />
+    <link rel="prev" title="Component" href="Src.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Github.html">With Github</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Advance.html">Advance</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Src.html">Component</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Guardian</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#why-guardian-is-needed">Why Guardian Is Needed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-use-guardian">How To Use Guardian</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Multi_Process.html">Multi-Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Vectorization.html">Vectorization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Advance.html">Advance</a></li>
+      <li class="breadcrumb-item active">Guardian</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="guardian">
+<h1>Guardian<a class="headerlink" href="#guardian" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>This section deals mainly with <code class="docutils literal notranslate"><span class="pre">Guardian</span></code>, <code class="docutils literal notranslate"><span class="pre">Guardian</span></code> is another RiskQuantLib project in addition to the current one. However, it does not perform any data processing logic, and it cannot perform any data analysis tasks on its own. Its only role is to provide source code to the <code class="docutils literal notranslate"><span class="pre">Guarded</span> <span class="pre">Project</span></code> .</p>
+<section id="why-guardian-is-needed">
+<h2>Why Guardian Is Needed<a class="headerlink" href="#why-guardian-is-needed" title="Link to this heading">¶</a></h2>
+<p>Usually, a data project has many tool functions in addition to the data processing logic. These tool functions have nothing to do with the specific data processing, but are indispensable. For example, the function to calculate the date, the function to calculate the volatility surface interpolation for options. To meet the needs of exploratory data analysis, each project may have a date calculation function of its own. But if you want a stable application to run every day, having so many of the same functions is not a wise choice.</p>
+<p>That is why we need <code class="docutils literal notranslate"><span class="pre">Guardian</span> <span class="pre">Project</span></code>, also called <code class="docutils literal notranslate"><span class="pre">Guardian</span></code>. Generally speaking, RiskQuantLib project only generates and modifies its own source code when built, but <code class="docutils literal notranslate"><span class="pre">Guardian</span></code> can generate and modify the code of other RiskQuantLib projects that located in other paths. You can put functions that will be used in several similar projects in the <code class="docutils literal notranslate"><span class="pre">Guardian</span></code> and distribute the code by build the <code class="docutils literal notranslate"><span class="pre">Guardian</span></code>. If there is a need to make changes someday, then just change the <code class="docutils literal notranslate"><span class="pre">Guardian</span></code> and build it again.</p>
+<p>For example, if you are working on a multi-factor stock investment model, you can have three separate data projects for <code class="docutils literal notranslate"><span class="pre">backtesting</span></code>, <code class="docutils literal notranslate"><span class="pre">parameter</span> <span class="pre">search</span></code>, and <code class="docutils literal notranslate"><span class="pre">daily</span> <span class="pre">update</span></code>. It is very convenient to create a new <code class="docutils literal notranslate"><span class="pre">multifactor</span> <span class="pre">guard</span> <span class="pre">project</span></code> and put all the common date functions, matrix eigenfunctions, and other utility functions into the <code class="docutils literal notranslate"><span class="pre">guard</span> <span class="pre">project</span></code> and control them in a unified way.</p>
+<p><strong>Of course, using a Guardian will make it necessary to make a corresponding change to the Guardian every time you change the name of the project, or when you change the location of the guarded project. However, once the guarded project is built, the code becomes native to the guarded project, and unless the channel is overwritten by an update, the code is unaffected no matter how you change the name of the file or the directory of the project.</strong></p>
+</section>
+<section id="how-to-use-guardian">
+<h2>How To Use Guardian<a class="headerlink" href="#how-to-use-guardian" title="Link to this heading">¶</a></h2>
+<p>As we learned in the previous section, the <code class="docutils literal notranslate"><span class="pre">Src</span></code> folder allows you to aggregate source code in one place, categorize the source code by data process logic, and use <code class="docutils literal notranslate"><span class="pre">Comment</span> <span class="pre">Control</span> <span class="pre">Syntax</span></code> to tell RiskQuantLib which source file to insert that source code into. Typically, the <code class="docutils literal notranslate"><span class="pre">Src</span></code> folder is located under the current data engineering project. The <code class="docutils literal notranslate"><span class="pre">Src</span></code> folder is created when you create a project using the <code class="docutils literal notranslate"><span class="pre">newRQL</span></code> command.</p>
+<p><strong>In practice, however, the</strong> <code class="docutils literal notranslate"><span class="pre">Src</span></code> <strong>folder can be located anywhere and does not necessarily need to be in the current data project directory. The</strong> <code class="docutils literal notranslate"><span class="pre">Src</span></code> <strong>folder can also have a different name.</strong></p>
+<p>If you put the <code class="docutils literal notranslate"><span class="pre">Src</span></code> folder outside the root path of current project, you need to specify the location of the <code class="docutils literal notranslate"><span class="pre">Src</span></code> folder at build time, using <code class="docutils literal notranslate"><span class="pre">-r</span> <span class="pre">yourSrcPath</span></code> to tell RiskQuantLib to use the <code class="docutils literal notranslate"><span class="pre">yourSrcPath</span></code> folder as the component folder instead of the default <code class="docutils literal notranslate"><span class="pre">Src</span></code> folder. The specific command is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">build</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">r</span> <span class="n">yourSrcPath</span>
+</pre></div>
+</div>
+<p><strong>More critically, the same data project can have more than one component folder. When there is more than one component folder, different components make changes to the target data project via different</strong> <code class="docutils literal notranslate"><span class="pre">channels</span></code> <strong>, and the</strong> <code class="docutils literal notranslate"><span class="pre">-c</span></code> <strong>parameter needs to be used at compile time to specify the name of the channel.</strong></p>
+<p>Imagine that your data project <code class="docutils literal notranslate"><span class="pre">A</span></code> may need a lot of logic to handle data, and they are located inside the <code class="docutils literal notranslate"><span class="pre">A/Src</span></code> . But at the same time, your project also needs a lot of tool functions, such as a function that calculates what day the third Friday of each month is, and so on. These functions are located in the <code class="docutils literal notranslate"><span class="pre">Src</span></code> component folder under the <code class="docutils literal notranslate"><span class="pre">B</span></code> project.</p>
+<p>For the <code class="docutils literal notranslate"><span class="pre">A</span></code> project to work properly, you need the code in both <code class="docutils literal notranslate"><span class="pre">A/Src</span></code> and <code class="docutils literal notranslate"><span class="pre">B/Src</span></code>. In this case, <code class="docutils literal notranslate"><span class="pre">A</span></code>, which handles the data-process logic, is called the <code class="docutils literal notranslate"><span class="pre">guarded</span> <span class="pre">project</span></code>, and <code class="docutils literal notranslate"><span class="pre">B</span></code>, which provides the tool functions, is called the <code class="docutils literal notranslate"><span class="pre">guard</span> <span class="pre">project</span></code> or <code class="docutils literal notranslate"><span class="pre">Guardian</span></code>. Go to the <code class="docutils literal notranslate"><span class="pre">A</span></code> project directory and run each of the following two commands to make the code in both component folders work at the same time:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">build</span><span class="o">.</span><span class="n">py</span>
+<span class="n">python</span> <span class="n">build</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">r</span> <span class="n">B</span><span class="o">/</span><span class="n">Src</span> <span class="o">-</span><span class="n">c</span> <span class="n">guardian</span>
+</pre></div>
+</div>
+<p>The first command means to use the <code class="docutils literal notranslate"><span class="pre">Src</span></code> component folder under <code class="docutils literal notranslate"><span class="pre">A</span></code> project and the default channel to build it. The second command means to use the <code class="docutils literal notranslate"><span class="pre">B/Src</span></code> component folder and the <code class="docutils literal notranslate"><span class="pre">guardian</span></code> channel to build it.</p>
+<p><strong>When different channels make changes to the same Tag, the last channel in effect overwrites the previous channel. If components from different channels make changes to different Tags, they do not affect each other.</strong></p>
+<p>If you are not sure what a <code class="docutils literal notranslate"><span class="pre">Tag</span></code> is, you can refer to <a class="reference internal" href="Src.html"><span class="doc">Component</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Src.html" class="btn btn-neutral float-left" title="Component" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Multi_Process.html" class="btn btn-neutral float-right" title="Multi-Process" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

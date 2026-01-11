@@ -1,0 +1,150 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instrument &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/readthedocs-custom.css" />
+
+  
+      <script src="_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Instrument List" href="Instrument_List.html" />
+    <link rel="prev" title="Build Your Project" href="Build_Project.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Instrument</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Instrument</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="instrument">
+<h1>Instrument<a class="headerlink" href="#instrument" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Instrument</span></code> is any class you will use in your mission. For financial analysis, Instrument refers to stock, bond or other security type, or like interest rate or company, etc.</p>
+<p>If you choose to inherit from <code class="docutils literal notranslate"><span class="pre">security</span></code> in <code class="docutils literal notranslate"><span class="pre">config.py</span></code>, Instrument will be like security type. Or you inherit from <code class="docutils literal notranslate"><span class="pre">index</span></code> or <code class="docutils literal notranslate"><span class="pre">interest</span></code>, etc. Instrument will be like what you choose. You can also only declare the name of instrument, which means create a brand new branch of class.</p>
+<p>Any type of instrument should be initialized with <code class="docutils literal notranslate"><span class="pre">code</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">code</span></code> behaves like index in pandas, <code class="docutils literal notranslate"><span class="pre">name</span></code> is the string to tell you information of detail.</p>
+<p><strong>Notice: code and name attribute is not totally the same, code will be related to some function in instrument list.</strong></p>
+<p>By <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">RiskQuantLib.module</span> <span class="pre">import</span> <span class="pre">*</span></code>, any registered instrument will be imported automatically. You can use it be create an object of that class. If you create an Instrument called pandaBond, then use it like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">firstPandaBondObject</span> <span class="o">=</span> <span class="n">pandaBond</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">,</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Any instrument class has an optional attribute called type. When initializing, you can pass a string to it, like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">firstPandaBondObject</span> <span class="o">=</span> <span class="n">pandaBond</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">,</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The main reason to use instrument class is to package your source code into small block, and use or maintain them independently. This proved to be effective when data processing is complicated or it is a team mission.</p>
+<p>The path of any instrument is the path of their first RiskQuantLib parent class. For example, if you inherit from <code class="docutils literal notranslate"><span class="pre">Bond</span></code>, <code class="docutils literal notranslate"><span class="pre">pandaBond</span></code> will be located at <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/Instrument/Security/Bond</span></code>, you should put all source code about <code class="docutils literal notranslate"><span class="pre">pandasBond</span></code> in <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/Instrument/Security/Bond/PandaBond/pandaBond.py</span></code></p>
+<p>If you change the content of <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/Instrument/Security/Bond/PandaBond/pandaBond.py</span></code>, your change will be saved and no matter how many times you run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">build.py</span></code>, these content won’t be affected. This allows you to build intrument again and add new instrument, if you find mission changes.</p>
+<p><strong>Notice: There is exceptions. If you change code in</strong> <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/Instrument/Security/Bond/PandaBond/pandaBond.py</span></code> <strong>, you should make sure your code does not lie between any insert tag. Insert tag is used to specify the position of inserted code. It looks like:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#&lt;tagName&gt;</span>
+<span class="c1">#&lt;/tagName&gt;</span>
+</pre></div>
+</div>
+<p><strong>This is very similar as the tag in html, actually, RiskQuantLib can help you to generate some code and insert them into target position. Source code can only be inserted between tags. And any content between tags can be dynamically replaced. This is why you should write your own code outside of tags.</strong></p>
+<p><strong>Notice: However, any created instrument file will remain unless you delete the class file manually.</strong></p>
+<p><strong>Notice: Instrument file can not be deleted automatically, but instrument class can be un-registered. If you want to cancel the registration of some instrument, you only need to remove its row in</strong> <code class="docutils literal notranslate"><span class="pre">config.py</span></code> <strong>and rebuild it. After this operation, you can not use it directly by</strong> <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">RiskQuantLib.module</span> <span class="pre">import</span> <span class="pre">*</span></code> <strong>or create another instrument inheriting from this.</strong></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Build_Project.html" class="btn btn-neutral float-left" title="Build Your Project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Instrument_List.html" class="btn btn-neutral float-right" title="Instrument List" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

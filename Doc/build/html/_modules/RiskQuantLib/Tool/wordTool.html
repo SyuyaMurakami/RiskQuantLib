@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RiskQuantLib.Tool.wordTool &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/readthedocs-custom.css" />
+
+  
+      <script src="../../../_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../RiskQuantLib.html">RiskQuantLib</a></li>
+      <li class="breadcrumb-item active">RiskQuantLib.Tool.wordTool</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for RiskQuantLib.Tool.wordTool</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1">#coding = utf-8</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">docx</span><span class="w"> </span><span class="kn">import</span> <span class="n">Document</span> <span class="c1"># use package python-docx</span>
+
+<span class="c1">#&lt;import&gt;</span>
+<span class="c1">#&lt;/import&gt;</span>
+
+<div class="viewcode-block" id="replaceParagraphContent">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.wordTool.replaceParagraphContent">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">replaceParagraphContent</span><span class="p">(</span><span class="n">paragraph</span><span class="p">,</span><span class="n">paraDict</span><span class="p">:</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will replace the paragraph content of word Document object.</span>
+<span class="sd">    This replace is inplace, so this function returns None. This function is very</span>
+<span class="sd">    like the str.format() function in python, it replaces any symbol like {symbolName}</span>
+<span class="sd">    according to key-&gt;value relation in paraDict, if there is a {code} showed in</span>
+<span class="sd">    word, and paraDict declares &#39;{code}&#39;:&#39;000001&#39;, then the content of {code} will</span>
+<span class="sd">    be replaced to 000001.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    paragraph : Object</span>
+<span class="sd">        The python-docx paragraph object.</span>
+<span class="sd">    paraDict : dict</span>
+<span class="sd">        A python dict used to declare which symbol should be replaced and how should</span>
+<span class="sd">        it be replaced.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">paragraph</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">replacePara</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">paraDict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">replacePara</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">replacePara</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">paraDict</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">replaceTo</span> <span class="o">=</span> <span class="n">paraDict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">paraDict</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s1">&#39;strftime&#39;</span><span class="p">):</span>
+                <span class="n">replaceTo</span> <span class="o">=</span> <span class="n">paraDict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">replaceTo</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">paraDict</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">replaceTo</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">paragraph</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="n">line</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">endIndex</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="n">endIndex</span><span class="p">])</span>
+                <span class="n">line</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="n">endIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+                <span class="n">paraToBeReplaced</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+                <span class="n">line</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">paraDict</span><span class="p">[</span><span class="n">paraToBeReplaced</span><span class="p">]</span> <span class="o">+</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span>
+                <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">paraDict</span><span class="p">[</span><span class="n">paraToBeReplaced</span><span class="p">]):]</span>
+
+            <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">):]</span>
+            <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">startIndex</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">)</span>
+                <span class="n">endIndex</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span>
+                <span class="n">paraToBeReplaced</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="n">startIndex</span><span class="p">:</span><span class="n">endIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="n">line</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="n">startIndex</span><span class="p">]</span> <span class="o">+</span> <span class="n">paraDict</span><span class="p">[</span><span class="n">paraToBeReplaced</span><span class="p">]</span> <span class="o">+</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="n">endIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">paraDict</span><span class="p">[</span><span class="n">paraToBeReplaced</span><span class="p">]):]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">)</span>
+                <span class="n">line</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">content</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="formatWordWithTemplate">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.wordTool.formatWordWithTemplate">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">formatWordWithTemplate</span><span class="p">(</span><span class="n">originFilePath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">targetFilePath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">paraDict</span><span class="p">:</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will iterate across the whole docx file and check for each paragraph</span>
+<span class="sd">    and table, if it finds any symbol like {symbolName}, it will replace it into the</span>
+<span class="sd">    value declared by paraDict.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    originFilePath : str</span>
+<span class="sd">        The docx template file whose content you want to check and replace.</span>
+<span class="sd">    targetFilePath : str</span>
+<span class="sd">        The path you want to save the after-replacement docx file.</span>
+<span class="sd">    paraDict : dict</span>
+<span class="sd">        The key-&gt;value pairs that declare what the symbols should be replaced to.</span>
+<span class="sd">        The key of this dict should be string type and like &#39;{symbolName}&#39;, and</span>
+<span class="sd">        the value of this dict should be string type.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="n">originFilePath</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">document</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">):</span>
+        <span class="n">replaceParagraphContent</span><span class="p">(</span><span class="n">paragraph</span><span class="p">,</span><span class="n">paraDict</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">document</span><span class="o">.</span><span class="n">tables</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">rows</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">num</span><span class="p">,</span><span class="n">paragraph</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">):</span>
+                    <span class="n">replaceParagraphContent</span><span class="p">(</span><span class="n">paragraph</span><span class="p">,</span><span class="n">paraDict</span><span class="p">)</span>
+    <span class="n">document</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">targetFilePath</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="formatTableWithTemplate">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.wordTool.formatTableWithTemplate">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">formatTableWithTemplate</span><span class="p">(</span><span class="n">originFilePath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">targetFilePath</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">tableIndex</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">dfInput</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will change the table in docx file into the given dataframe.</span>
+<span class="sd">    This change is inplace. A new file will be generated and replace the original</span>
+<span class="sd">    docx file.</span>
+<span class="sd">    </span>
+<span class="sd">    You should make sure the shape of table in your docx file is equal or larger than your dfInput, including index and</span>
+<span class="sd">    column, which means your table in docx should have shape of (n+1, k+1) while your dfInput has shape (n, k).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    originFilePath : str</span>
+<span class="sd">        The docx file path that you want to change one of its table into the given</span>
+<span class="sd">        dataframe.</span>
+<span class="sd">    targetFilePath : str</span>
+<span class="sd">        The docx file path where you want to save the changed file.</span>
+<span class="sd">    tableIndex : int</span>
+<span class="sd">        The table index that showed which table you want to change.</span>
+<span class="sd">    dfInput : pd.DataFrame</span>
+<span class="sd">        The dataframe that the original table should be changed to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="n">originFilePath</span><span class="p">)</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">tableIndex</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dfInput</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">cl</span> <span class="o">=</span> <span class="n">dfInput</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">):</span>
+            <span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">cl</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="nb">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span><span class="nb">float</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">cl</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dfInput</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">dfInput</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">num</span><span class="p">,</span><span class="n">paragraph</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">):</span>
+            <span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">idx</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="nb">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="nb">float</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dfInput</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">num</span><span class="p">,</span><span class="n">paragraph</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">dfInput</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+                <span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">value</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="nb">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="nb">float</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">document</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">targetFilePath</span><span class="p">)</span></div>
+
+
+<span class="c1">#&lt;wordTool&gt;</span>
+<span class="c1">#&lt;/wordTool&gt;</span>
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

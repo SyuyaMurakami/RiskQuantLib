@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>With Pandas &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/readthedocs-custom.css" />
+
+  
+      <script src="_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="With ORM" href="With_ORM.html" />
+    <link rel="prev" title="With QuantLib" href="With_QuantLib.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">With Pandas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#from-pandas-series">From Pandas Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#from-pandas-dataframe">From Pandas DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#update-with-dataframe">Update With DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#to-pandas-dataframe">To Pandas DataFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">With Pandas</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="with-pandas">
+<h1>With Pandas<a class="headerlink" href="#with-pandas" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>When I am inspired to start RiskQuantLib project, my friend asked me one question:</p>
+<blockquote>
+<div><p><cite>Are you trying to design another pandas?</cite></p>
+</div></blockquote>
+<p>Well, I admit that in some way, RiskQuantLib is very similar to pandas, but at the very beginning, RiskQuantLib is designed to be based on pandas. It lies behind pandas because it is a data analysis core concentrating on dealing with data process, rather than an integrated tool to do things from data input to data output.</p>
+<p>But later after the day we discussed this issue, I realized that to jump out of the curse of pandas, I should get rid of more conventions. This leads me to this place, where RiskQuantLib has its own functions for iteration or merge, etc.</p>
+<p>However, there is one thing need to be noticed, that is:</p>
+<p><strong>RiskQuantLib is still based on pandas, it is not a substitute of pandas, the best practice is to code your data process logic with RiskQuantLib, and leave the rest to pandas.</strong></p>
+<p>For convience, RiskQuantLib provides with functions to interact with pandas, we shall introduce them as follows:</p>
+<section id="from-pandas-series">
+<h2>From Pandas Series<a class="headerlink" href="#from-pandas-series" title="Link to this heading">¶</a></h2>
+<p>The most simple way to use pandas with RiskQuantLib is to use pandas.Series, remember what we have shown before, if you have a dataframe looks like:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>OptionCode</p></th>
+<th class="head"><p>PayOff</p></th>
+<th class="head"><p>ExerciseType</p></th>
+<th class="head"><p>ExerciseDate</p></th>
+<th class="head"><p>StockPrice</p></th>
+<th class="head"><p>RiskFreeRate</p></th>
+<th class="head"><p>Sigma</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>A</p></td>
+<td><p>PlainVanilla</p></td>
+<td><p>European</p></td>
+<td><p>2021-11-18</p></td>
+<td><p>100.0</p></td>
+<td><p>0.05</p></td>
+<td><p>0.20</p></td>
+</tr>
+<tr class="row-odd"><td><p>B</p></td>
+<td><p>PlainVanilla</p></td>
+<td><p>European</p></td>
+<td><p>2022-03-20</p></td>
+<td><p>97.6</p></td>
+<td><p>0.032</p></td>
+<td><p>0.17</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>After creating a project and building it with <code class="docutils literal notranslate"><span class="pre">config.py</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument: myEuropeanOption</span>
+<span class="c1">#-|instrument-ParentQuantLibClassName: myEuropeanOption@EuropeanOption</span>
+<span class="c1">#-|instrument-DefaultInstrumentType: myEuropeanOption@myEuropeanOption</span>
+
+<span class="c1">#-|attribute: myEuropeanOption.myPayOff@qlPayOff, myEuropeanOption.myExercise@qlExercise, myEuropeanOption.underlyingStockPrice@qlQuote, myEuropeanOption.riskFreeRate@qlQuote, myEuropeanOption.sigma@qlQuote</span>
+</pre></div>
+</div>
+<p>You can open the <code class="docutils literal notranslate"><span class="pre">main.py</span></code> and use it directly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.module</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;European_Option.xlsx&#39;</span><span class="p">)</span>
+
+<span class="n">vanillaOptionList</span> <span class="o">=</span> <span class="n">myEuropeanOptionList</span><span class="p">()</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">addMyEuropeanOptionSeries</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">])</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">setMyPayOff</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">],[</span><span class="mi">100</span> <span class="k">for</span> <span class="n">payoff</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">]])</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">setMyExercise</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">],[</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ExerciseDate&#39;</span><span class="p">]])</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">setUnderlyingStockPrice</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;StockPrice&#39;</span><span class="p">])</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">setRiskFreeRate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;RiskFreeRate&#39;</span><span class="p">])</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">setSigma</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sigma&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>We see here that <code class="docutils literal notranslate"><span class="pre">set</span></code> function in RiskQuantLib accept any iterable object as parameters, including pandas.Series. Usually, <code class="docutils literal notranslate"><span class="pre">set</span></code> function has two parameters, the first one should be the code used to identify elements, the second one should be the value you want to set.</p>
+</section>
+<section id="from-pandas-dataframe">
+<h2>From Pandas DataFrame<a class="headerlink" href="#from-pandas-dataframe" title="Link to this heading">¶</a></h2>
+<p>You may ask, what if I have a dataframe that has thousands of columns? I can’t set them one by one, right?</p>
+<p>True, luckily, RiskQuantLib provides functions to read from pandas.DataFrame. Suppose we still want to import the dataframe mentioned before:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>OptionCode</p></th>
+<th class="head"><p>PayOff</p></th>
+<th class="head"><p>ExerciseType</p></th>
+<th class="head"><p>ExerciseDate</p></th>
+<th class="head"><p>StockPrice</p></th>
+<th class="head"><p>RiskFreeRate</p></th>
+<th class="head"><p>Sigma</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>A</p></td>
+<td><p>PlainVanilla</p></td>
+<td><p>European</p></td>
+<td><p>2021-11-18</p></td>
+<td><p>100.0</p></td>
+<td><p>0.05</p></td>
+<td><p>0.20</p></td>
+</tr>
+<tr class="row-odd"><td><p>B</p></td>
+<td><p>PlainVanilla</p></td>
+<td><p>European</p></td>
+<td><p>2022-03-20</p></td>
+<td><p>97.6</p></td>
+<td><p>0.032</p></td>
+<td><p>0.17</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>Now we build it by change <code class="docutils literal notranslate"><span class="pre">Build_Attr.xlsx</span></code> to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument: myEuropeanOption</span>
+<span class="c1">#-|instrument-ParentQuantLibClassName: myEuropeanOption@EuropeanOption</span>
+<span class="c1">#-|instrument-DefaultInstrumentType: myEuropeanOption@myEuropeanOption</span>
+
+<span class="c1">#-|attribute: myEuropeanOption.PayOff@qlPayOff, myEuropeanOption.ExerciseDate@qlExercise, myEuropeanOption.StockPrice@qlQuote, myEuropeanOption.RiskFreeRate@qlQuote, myEuropeanOption.Sigma@qlQuote</span>
+</pre></div>
+</div>
+<p><strong>Noticed here, we have all attribute names that are the same with dataframe column names. This will help RiskQuantLib to identify column and set them automatically.</strong></p>
+<p>After building it, you can open the <code class="docutils literal notranslate"><span class="pre">main.py</span></code> and use it directly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.module</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;European_Option.xlsx&#39;</span><span class="p">)</span>
+
+<span class="n">vanillaOptionList</span> <span class="o">=</span> <span class="n">myEuropeanOptionList</span><span class="p">()</span><span class="o">.</span><span class="n">fromDF</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;OptionCode&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Cool, isn’t it? However, I won’t suggest doing this, cause RiskQuantLib is not meant to be bonded with single excel file. If you do it like this, you will find that you may have another dataframe, whose column name is not the same with this one, but its meaning is the same. For example, in another dataframe <code class="docutils literal notranslate"><span class="pre">df2</span></code>, it may looks like:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Code</p></th>
+<th class="head"><p>Pay</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>KDate</p></th>
+<th class="head"><p>Price</p></th>
+<th class="head"><p>RF</p></th>
+<th class="head"><p>Vol</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>C</p></td>
+<td><p>PlainVanilla</p></td>
+<td><p>European</p></td>
+<td><p>2021-11-18</p></td>
+<td><p>103.5</p></td>
+<td><p>0.03</p></td>
+<td><p>0.16</p></td>
+</tr>
+<tr class="row-odd"><td><p>D</p></td>
+<td><p>PlainVanilla</p></td>
+<td><p>European</p></td>
+<td><p>2022-03-20</p></td>
+<td><p>88.1</p></td>
+<td><p>0.019</p></td>
+<td><p>0.10</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>If you want to add these contracts to your RiskQuantLib list, you should use <code class="docutils literal notranslate"><span class="pre">addFromDF</span></code>, rather than <code class="docutils literal notranslate"><span class="pre">fromDF</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">addFromDF</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span><span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;Code&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>However, because the column name in df2 is not the same with your registered attribute, you will find the new elements that you added just now don’t have any attribute value.</strong></p>
+<p>There are two ways to solve this problem, you can change the name of columns of df2 and update the elements, or mannually set the attribute value by set function. We explain the first one as follows.</p>
+</section>
+<section id="update-with-dataframe">
+<h2>Update With DataFrame<a class="headerlink" href="#update-with-dataframe" title="Link to this heading">¶</a></h2>
+<p>After you rename your df2, it looks like:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>OptionCode</p></th>
+<th class="head"><p>PayOff</p></th>
+<th class="head"><p>ExerciseType</p></th>
+<th class="head"><p>ExerciseDate</p></th>
+<th class="head"><p>StockPrice</p></th>
+<th class="head"><p>RiskFreeRate</p></th>
+<th class="head"><p>Sigma</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>C</p></td>
+<td><p>PlainVanilla</p></td>
+<td><p>European</p></td>
+<td><p>2021-11-18</p></td>
+<td><p>103.5</p></td>
+<td><p>0.03</p></td>
+<td><p>0.16</p></td>
+</tr>
+<tr class="row-odd"><td><p>D</p></td>
+<td><p>PlainVanilla</p></td>
+<td><p>European</p></td>
+<td><p>2022-03-20</p></td>
+<td><p>88.1</p></td>
+<td><p>0.019</p></td>
+<td><p>0.10</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>Good, remember you have already added element C and D into <code class="docutils literal notranslate"><span class="pre">vanillaOptionList</span></code>, we should update the attribute value of them. Here, it is simple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">updateAttrFromDF</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;OptionCode&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After doing this, the information of contract C and D is updated, while A and B are not changed. But it is necessary to mention here:</p>
+<p><strong>Try not to build your project based on data pattern, build it based on analysis logic.</strong></p>
+<p>That is, when you design your project, you should forget all your input files, forget what name the column is given, forget how many files you would have, forget how you get these data or how you want to output and show these data. You should try to think, what kind of intrument you would use, how they are related with each other, what kind of attribute you should use, could less attribute be used, what type of variable you should use, why using self-defined types can simplicify your task, etc.</p>
+</section>
+<section id="to-pandas-dataframe">
+<h2>To Pandas DataFrame<a class="headerlink" href="#to-pandas-dataframe" title="Link to this heading">¶</a></h2>
+<p>The most straight forward way to do it is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">vanillaOptionList</span><span class="p">[</span><span class="n">attributeList</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">attributeList</span></code> is a python list whose elements is the name string of attribute. You can also pass an index when converting to pandas.DataFrame, like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">vanillaOptionList</span><span class="p">[</span><span class="n">attributeList</span><span class="p">],</span><span class="n">index</span> <span class="o">=</span> <span class="n">vanillaOptionList</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Or, there is another easy way:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">vanillaOptionList</span><span class="p">[</span><span class="n">attributeList</span><span class="p">]</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">vanillaOptionList</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="With_QuantLib.html" class="btn btn-neutral float-left" title="With QuantLib" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="With_ORM.html" class="btn btn-neutral float-right" title="With ORM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,420 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>With QuantLib &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/readthedocs-custom.css" />
+
+  
+      <script src="_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="With Pandas" href="With_Pandas.html" />
+    <link rel="prev" title="Variable Type" href="Variable_Type.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">With QuantLib</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">With QuantLib</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="with-quantlib">
+<h1>With QuantLib<a class="headerlink" href="#with-quantlib" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>Once upon a time, there is a famous ask in Stack Overflow:</p>
+<blockquote>
+<div><p><cite>Why it is so complicated when using QuantLib for option pricing? Even if I just want to price a vanilla option, it takes several lines to do it.</cite></p>
+</div></blockquote>
+<p>It is true, if you use QuantLib to price a vanilla call option, you may do it like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set Evaluation Date</span>
+<span class="n">today</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2021</span><span class="p">)</span>
+<span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">today</span>
+
+<span class="c1"># Build An Option</span>
+<span class="c1"># Set Payoff</span>
+<span class="n">payoff</span><span class="o">=</span><span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Option</span><span class="o">.</span><span class="n">Call</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">)</span>
+
+<span class="c1"># Set Exercise Date</span>
+<span class="n">europeanExercise</span><span class="o">=</span><span class="n">ql</span><span class="o">.</span><span class="n">EuropeanExercise</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">2021</span><span class="p">))</span>
+<span class="n">option</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EuropeanOption</span><span class="p">(</span><span class="n">payoff</span><span class="p">,</span> <span class="n">europeanExercise</span><span class="p">)</span>
+
+<span class="c1"># Set Initial Stock Price, Risk-Free Rate, Volatility</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="mf">100.0</span><span class="p">)</span>      <span class="c1"># Initial Stock Price</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>       <span class="c1"># Risk-Free Rate</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="mf">0.20</span><span class="p">)</span>    <span class="c1"># Volatility</span>
+
+<span class="c1"># Set Term Structure Of Curve</span>
+<span class="n">riskFreeCurve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">TARGET</span><span class="p">(),</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual360</span><span class="p">())</span>
+<span class="n">volatility</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackConstantVol</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">TARGET</span><span class="p">(),</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">sigma</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual360</span><span class="p">())</span>
+
+<span class="c1"># Initialize Stochastic Process And Pricing Enging</span>
+<span class="n">process</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackScholesProcess</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="n">u</span><span class="p">),</span>
+                              <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span><span class="n">riskFreeCurve</span><span class="p">),</span>
+                              <span class="n">ql</span><span class="o">.</span><span class="n">BlackVolTermStructureHandle</span><span class="p">(</span><span class="n">volatility</span><span class="p">))</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">AnalyticEuropeanEngine</span><span class="p">(</span><span class="n">process</span><span class="p">)</span>
+
+<span class="c1"># Set Enging To Option</span>
+<span class="n">option</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="c1"># Print Result</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Option Value：</span><span class="si">{</span><span class="n">option</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%-12s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Delta&quot;</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">delta</span><span class="p">()</span> <span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%-12s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Gamma&quot;</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">gamma</span><span class="p">()</span> <span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%-12s</span><span class="s2">: </span><span class="si">%4.4f</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="s2">&quot;Theta&quot;</span><span class="p">,</span> <span class="n">option</span><span class="o">.</span><span class="n">vega</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p>However, what if you have ten options and you want to price them all? What if you just want a test that show how your option value will be in certain market situation? For research purpose or you are a real derivative trader, you may sometimes have a table looks like:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>OptionCode</p></th>
+<th class="head"><p>PayOff</p></th>
+<th class="head"><p>ExerciseType</p></th>
+<th class="head"><p>ExerciseDate</p></th>
+<th class="head"><p>StockPrice</p></th>
+<th class="head"><p>RiskFreeRate</p></th>
+<th class="head"><p>Sigma</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>A</p></td>
+<td><p>PlainVanilla</p></td>
+<td><p>European</p></td>
+<td><p>2021-11-18</p></td>
+<td><p>100.0</p></td>
+<td><p>0.05</p></td>
+<td><p>0.20</p></td>
+</tr>
+<tr class="row-odd"><td><p>B</p></td>
+<td><p>PlainVanilla</p></td>
+<td><p>European</p></td>
+<td><p>2022-03-20</p></td>
+<td><p>97.6</p></td>
+<td><p>0.032</p></td>
+<td><p>0.17</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>To do it in RiskQuantLib, we need to build our own european option pricing template first, we create a project by using terminal command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">newRQL</span> <span class="n">yourProjectPath</span>
+</pre></div>
+</div>
+<p>After it, we open <code class="docutils literal notranslate"><span class="pre">config.py</span></code>, and edit it like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument: myEuropeanOption</span>
+<span class="c1">#-|instrument-ParentQuantLibClassName: myEuropeanOption@EuropeanOption</span>
+<span class="c1">#-|instrument-DefaultInstrumentType: myEuropeanOption@myEuropeanOption</span>
+</pre></div>
+</div>
+<p>Then we continue to add contents into <code class="docutils literal notranslate"><span class="pre">config.py</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|attribute: myEuropeanOption.myPayOff@qlPayOff, myEuropeanOption.myExercise@qlExercise, myEuropeanOption.underlyingStockPrice@qlQuote, myEuropeanOption.riskFreeRate@qlQuote, myEuropeanOption.sigma@qlQuote</span>
+</pre></div>
+</div>
+<p>Then we build it by using terminal command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">yourProjectPath</span>
+<span class="n">python</span> <span class="n">build</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Good, we now have a brand new project for european option pricing. RiskQuantLib has created the instrument class, type class we need. We need to change it a little bit for further use. We open <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/Property/QlExercise/qlExercise.py</span></code>, and make it look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># coding = utf-8</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">QuantLib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ql</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.Property.property</span><span class="w"> </span><span class="kn">import</span> <span class="nb">property</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">qlExercise</span><span class="p">(</span><span class="nb">property</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__nullFunction__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span> <span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EuropeanExercise</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">year</span><span class="p">))</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">qlExercise</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span> <span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">EuropeanExercise</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">year</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>In this step, we package the QuantLib code of exercise, so that it can be used even if we only pass a date to it. Once it is finished, we don’t need to define it every time we want to price an european option.</p>
+<p>Again, we do the similar thing to <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/Property/QlPayOff/qlPayOff.py</span></code>, and make it look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># coding = utf-8</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">QuantLib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ql</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.Property.property</span><span class="w"> </span><span class="kn">import</span> <span class="nb">property</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">qlPayOff</span><span class="p">(</span><span class="nb">property</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__nullFunction__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span> <span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Option</span><span class="o">.</span><span class="n">Call</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">qlPayOff</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span> <span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">PlainVanillaPayoff</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Option</span><span class="o">.</span><span class="n">Call</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this step, we package the QuantLib code of payoff, so that it can be used even if we only pass a payoff value to it. Once it is finished, we don’t need to define it every time we want to price an european option.</p>
+<p>Again, we do the similar thing to <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/Property/QlQuote/qlQuote.py</span></code>, and make it look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># coding = utf-8</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">QuantLib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ql</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.Property.property</span><span class="w"> </span><span class="kn">import</span> <span class="nb">property</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">qlQuote</span><span class="p">(</span><span class="nb">property</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__nullFunction__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span> <span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SimpleQuote</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">qlQuote</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The final preparation, is to edit <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/Instrument/Security/MyEuropeanOption/myEuropeanOption.py</span></code>, to make it look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># coding = utf-8</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">QuantLib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ql</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.Instrument.Security.security</span><span class="w"> </span><span class="kn">import</span> <span class="n">security</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">QuantLib</span><span class="w"> </span><span class="kn">import</span> <span class="n">EuropeanOption</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.Auto.Instrument.Security.MyEuropeanOption.myEuropeanOption</span><span class="w"> </span><span class="kn">import</span> <span class="n">setMyEuropeanOption</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">myEuropeanOption</span><span class="p">(</span><span class="n">security</span><span class="p">,</span><span class="n">EuropeanOption</span><span class="p">,</span><span class="n">setMyEuropeanOption</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__nullFunction__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codeString</span><span class="p">,</span><span class="n">nameString</span><span class="p">,</span><span class="n">securityTypeString</span> <span class="o">=</span> <span class="s1">&#39;myEuropeanOption&#39;</span><span class="p">):</span>
+        <span class="n">security</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">codeString</span><span class="p">,</span><span class="n">nameString</span><span class="p">,</span><span class="n">securityTypeString</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">iniPricingModule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">EuropeanOption</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">pricing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iniPricingModule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">myPayOff</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">myExercise</span><span class="p">)</span>
+        <span class="n">riskFreeCurve</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">FlatForward</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">TARGET</span><span class="p">(),</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">riskFreeRate</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual360</span><span class="p">())</span>
+        <span class="n">volatility</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackConstantVol</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">TARGET</span><span class="p">(),</span> <span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">),</span> <span class="n">ql</span><span class="o">.</span><span class="n">Actual360</span><span class="p">())</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">BlackScholesProcess</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">QuoteHandle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">underlyingStockPrice</span><span class="p">),</span>
+                                         <span class="n">ql</span><span class="o">.</span><span class="n">YieldTermStructureHandle</span><span class="p">(</span><span class="n">riskFreeCurve</span><span class="p">),</span>
+                                         <span class="n">ql</span><span class="o">.</span><span class="n">BlackVolTermStructureHandle</span><span class="p">(</span><span class="n">volatility</span><span class="p">))</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">AnalyticEuropeanEngine</span><span class="p">(</span><span class="n">process</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setPricingEngine</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+        <span class="c1"># Calculate Result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">npvValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">NPV</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deltaValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gammaValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vegaValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vega</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now everything is ready, we switch to <code class="docutils literal notranslate"><span class="pre">main.py</span></code> in your project root path, we can pricing the same option with RiskQuantLib, by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># With RiskQuantLib</span>
+
+<span class="c1"># Don&#39;t Forget to Set Evaluation Date</span>
+<span class="n">today</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2021</span><span class="p">)</span>
+<span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">today</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.module</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">vanillaOption</span> <span class="o">=</span> <span class="n">myEuropeanOption</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+<span class="n">vanillaOption</span><span class="o">.</span><span class="n">setMyPayOff</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">vanillaOption</span><span class="o">.</span><span class="n">setMyExercise</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">&quot;20211118&quot;</span><span class="p">))</span>
+<span class="n">vanillaOption</span><span class="o">.</span><span class="n">setUnderlyingStockPrice</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">vanillaOption</span><span class="o">.</span><span class="n">setRiskFreeRate</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">vanillaOption</span><span class="o">.</span><span class="n">setSigma</span><span class="p">(</span><span class="mf">0.20</span><span class="p">)</span>
+<span class="n">vanillaOption</span><span class="o">.</span><span class="n">pricing</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>It is more readable, right? More importantly, you can change the value of any parameter and price it again. If you want to price another option, just initialize another object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># You already set valuation date, don&#39;t need to do it again.</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.module</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">vanillaOption</span> <span class="o">=</span> <span class="n">myEuropeanOption</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span><span class="s2">&quot;B&quot;</span><span class="p">)</span>
+<span class="n">vanillaOption</span><span class="o">.</span><span class="n">setMyPayOff</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">vanillaOption</span><span class="o">.</span><span class="n">setMyExercise</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">&quot;20220320&quot;</span><span class="p">))</span>
+<span class="n">vanillaOption</span><span class="o">.</span><span class="n">setUnderlyingStockPrice</span><span class="p">(</span><span class="mf">97.6</span><span class="p">)</span>
+<span class="n">vanillaOption</span><span class="o">.</span><span class="n">setRiskFreeRate</span><span class="p">(</span><span class="mf">0.032</span><span class="p">)</span>
+<span class="n">vanillaOption</span><span class="o">.</span><span class="n">setSigma</span><span class="p">(</span><span class="mf">0.17</span><span class="p">)</span>
+<span class="n">vanillaOption</span><span class="o">.</span><span class="n">pricing</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Or do it in a more elegant way, which is to use RiskQuantLib list. Remember you have a dataframe like:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>OptionCode</p></th>
+<th class="head"><p>PayOff</p></th>
+<th class="head"><p>ExerciseType</p></th>
+<th class="head"><p>ExerciseDate</p></th>
+<th class="head"><p>StockPrice</p></th>
+<th class="head"><p>RiskFreeRate</p></th>
+<th class="head"><p>Sigma</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>A</p></td>
+<td><p>PlainVanilla</p></td>
+<td><p>European</p></td>
+<td><p>2021-11-18</p></td>
+<td><p>100.0</p></td>
+<td><p>0.05</p></td>
+<td><p>0.20</p></td>
+</tr>
+<tr class="row-odd"><td><p>B</p></td>
+<td><p>PlainVanilla</p></td>
+<td><p>European</p></td>
+<td><p>2022-03-20</p></td>
+<td><p>97.6</p></td>
+<td><p>0.032</p></td>
+<td><p>0.17</p></td>
+</tr>
+</tbody>
+</table>
+<p>We save it as an excel file named <code class="docutils literal notranslate"><span class="pre">European_Option.xlsx</span></code> in your project root path. Then in <code class="docutils literal notranslate"><span class="pre">main.py</span></code>, we code like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># With RiskQuantLib List</span>
+<span class="c1"># Set Evaluation Date</span>
+<span class="n">today</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2021</span><span class="p">)</span>
+<span class="n">ql</span><span class="o">.</span><span class="n">Settings</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">evaluationDate</span> <span class="o">=</span> <span class="n">today</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.module</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">+</span><span class="s1">&#39;European_Option.xlsx&#39;</span><span class="p">)</span>
+
+<span class="n">vanillaOptionList</span> <span class="o">=</span> <span class="n">myEuropeanOptionList</span><span class="p">()</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">addMyEuropeanOptionSeries</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">])</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">setMyPayOff</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">],[</span><span class="mi">100</span> <span class="k">for</span> <span class="n">payoff</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">]])</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">setMyExercise</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">],[</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ExerciseDate&#39;</span><span class="p">]])</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">setUnderlyingStockPrice</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;StockPrice&#39;</span><span class="p">])</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">setRiskFreeRate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;RiskFreeRate&#39;</span><span class="p">])</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">setSigma</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OptionCode&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sigma&#39;</span><span class="p">])</span>
+<span class="n">vanillaOptionList</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s1">&#39;pricing&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you want to save the result, the only thing you need to do is to convert it to dataframe by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">vanillaOptionList</span><span class="p">[[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span><span class="s1">&#39;npvValue&#39;</span><span class="p">,</span><span class="s1">&#39;deltaValue&#39;</span><span class="p">,</span><span class="s1">&#39;gammaValue&#39;</span><span class="p">,</span><span class="s1">&#39;vegaValue&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p><strong>Do not forget to save your work to a template, this project can be used again, this is the most important feature of RiskQuantLib.</strong></p>
+<p>To do this, you should delete the file <code class="docutils literal notranslate"><span class="pre">European_Option.xlsx</span></code>, and clear the content of <code class="docutils literal notranslate"><span class="pre">main.py</span></code>, because these data and operation are not repeatable, only the logic behind could be used again. After this, open a terminal and call:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">saveRQL</span> <span class="n">yourProjectPath</span> <span class="n">europeanOption</span>
+</pre></div>
+</div>
+<p>Next time you want to use it, just use terminal command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tplRQL</span> <span class="n">europeanOption</span> <span class="n">yourNewProjectPath</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Variable_Type.html" class="btn btn-neutral float-left" title="Variable Type" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="With_Pandas.html" class="btn btn-neutral float-right" title="With Pandas" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

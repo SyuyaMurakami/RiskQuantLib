@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>RiskQuantLib.Tool.outlookTool &mdash; RiskQuantLib 0.0.24 documentation</title>
+  <title>RiskQuantLib.Tool.outlookTool &mdash; RiskQuantLib 0.3.6 documentation</title>
   
 
   
@@ -92,6 +92,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
 </ul>
 
             
@@ -163,12 +172,13 @@
 <span></span><span class="ch">#!/usr/bin/python</span>
 <span class="c1">#coding = utf-8</span>
 
-
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span><span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">win32com</span> <span class="kn">import</span> <span class="n">client</span> <span class="k">as</span> <span class="n">win32</span>  <span class="c1"># outlook control module</span>
 <span class="kn">from</span> <span class="nn">win32com.client.gencache</span> <span class="kn">import</span> <span class="n">EnsureDispatch</span> <span class="k">as</span> <span class="n">Dispatch</span>  <span class="c1"># read mail module</span>
+<span class="c1">#&lt;import&gt;</span>
+<span class="c1">#&lt;/import&gt;</span>
 
-<div class="viewcode-block" id="readMailFromOutlook"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.outlookTool.readMailFromOutlook">[docs]</a><span class="k">class</span> <span class="nc">readMailFromOutlook</span><span class="p">():</span>
+<div class="viewcode-block" id="readMailFromOutlook"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.outlookTool.readMailFromOutlook">[docs]</a><span class="k">class</span> <span class="nc">readMailFromOutlook</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class is used to control Outlook App in windows.</span>
 <span class="sd">    Due to the difference of version of win32.com module, this class may not perform well.</span>
@@ -243,7 +253,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mail</span> <span class="o">=</span> <span class="n">result</span>
         <span class="k">return</span> <span class="n">result</span></div></div>
 
-<div class="viewcode-block" id="sendMailFromOutlook"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.outlookTool.sendMailFromOutlook">[docs]</a><span class="k">class</span> <span class="nc">sendMailFromOutlook</span><span class="p">():</span>
+    <span class="c1">#&lt;readMailFromOutlook&gt;</span>
+    <span class="c1">#&lt;/readMailFromOutlook&gt;</span>
+
+<div class="viewcode-block" id="sendMailFromOutlook"><a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.outlookTool.sendMailFromOutlook">[docs]</a><span class="k">class</span> <span class="nc">sendMailFromOutlook</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class is used to send mails by outlook.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -264,7 +277,8 @@
             <span class="k">pass</span>
         <span class="n">mail_item</span><span class="o">.</span><span class="n">Send</span><span class="p">()</span>  <span class="c1"># send it.</span></div></div>
 
-
+    <span class="c1">#&lt;sendMailFromOutlook&gt;</span>
+    <span class="c1">#&lt;/sendMailFromOutlook&gt;</span>
 
 
 

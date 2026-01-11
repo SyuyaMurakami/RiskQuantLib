@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vectorization &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/readthedocs-custom.css" />
+
+  
+      <script src="_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="About" href="About.html" />
+    <link rel="prev" title="Multi-Process" href="Multi_Process.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Github.html">With Github</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Advance.html">Advance</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Src.html">Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Guardian.html">Guardian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Multi_Process.html">Multi-Process</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Vectorization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#first-thing-to-consider">First Thing To Consider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pure-mathematical-function">Pure Mathematical Function</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-use-vectorization">How To Use Vectorization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#high-dimensional-vectorization-and-manual-vectorization">High Dimensional Vectorization And Manual Vectorization</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-combine-multiprocessing-and-vectorization">How To Combine Multiprocessing And Vectorization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Advance.html">Advance</a></li>
+      <li class="breadcrumb-item active">Vectorization</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="vectorization">
+<h1>Vectorization<a class="headerlink" href="#vectorization" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>This section deals primarily with <code class="docutils literal notranslate"><span class="pre">Vectorized</span> <span class="pre">Programming</span></code>. This term is not new to data analysts, simply speaking, it is <code class="docutils literal notranslate"><span class="pre">Use</span> <span class="pre">matrices</span> <span class="pre">for</span> <span class="pre">operations</span> <span class="pre">whenever</span> <span class="pre">possible</span></code>. Because modern CPUs are basically multi-bit, vectorized data can take advantage of this feature to multiply the speed of operations.</p>
+<section id="first-thing-to-consider">
+<h2>First Thing To Consider<a class="headerlink" href="#first-thing-to-consider" title="Link to this heading">¶</a></h2>
+<section id="pure-mathematical-function">
+<h3>Pure Mathematical Function<a class="headerlink" href="#pure-mathematical-function" title="Link to this heading">¶</a></h3>
+<p>Vectorization turned out to be a double-edged sword just like multiprocess programming. Almost all programmers would agree that functions that can be vectorized are only a very small part of the large family. Because it uses basic CPU parallel instructions, vectorization has strict restrictions on data types, ensuring that only the correct type of data is processed.</p>
+<p><strong>On the user’s side, roughly speaking, functions that can be vectorized must be pure mathematical function.</strong></p>
+<p>What is a pure mathematical function? Here it is necessary to make a distinction between a function of programming and a function in mathematics. A programming function is a block of code defined by a keyword that accomplishes a particular computer task, which often involves logical judgment, loops, input and output. Mathematical functions, on the other hand, are variable-to-variable mappings that must yield the same output given the same input.</p>
+<p><strong>Programming functions tend to be state-dependent, such as the function to read a file</strong> <code class="docutils literal notranslate"><span class="pre">pandas.read_csv</span></code> <strong>which takes a file path and returns the contents of that file. If you change the contents of file, the returned contents will change as well. However, notice that the value of the parameter received by this function does not change at all; it remains the path of that file. The reason why it returns a different value even if the parameter value remains the same is that it depends on the state of that file.</strong></p>
+<p><strong>Mathematic functions are pure, state-free. For example, the function</strong> <code class="docutils literal notranslate"><span class="pre">numpy.exp</span></code> <strong>must return the value of the natural logarithm</strong> <code class="docutils literal notranslate"><span class="pre">e</span></code> <strong>when it receives a parameter of</strong> <code class="docutils literal notranslate"><span class="pre">1</span></code> <strong>, no matter when and in what context the function is called.</strong></p>
+<p>Therefore, when using this function, extra care needs to be taken to make sure that your function is not state-dependent and is a purely mathematical function. Also, the process of vectorization involves wrapping and unwrapping of data, which can consume some computational resources. Of course, for functions that can be vectorized, this extra resource consumption is often negligible compared to the speedup of vectorization.</p>
+<p>Based on the requirements of pure mathematical functions, <strong>many of python’s logical keywords are not allowed</strong>. Keywords such as <code class="docutils literal notranslate"><span class="pre">if</span></code> , <code class="docutils literal notranslate"><span class="pre">for</span></code> , <code class="docutils literal notranslate"><span class="pre">is</span></code> , <code class="docutils literal notranslate"><span class="pre">in</span></code> , etc. are not allowed to be used in functions to be vectorized. If you want to perform logical operations, you must be familiar with how to use logical matrices, which we will demonstrate below.</p>
+</section>
+</section>
+<section id="how-to-use-vectorization">
+<h2>How To Use Vectorization<a class="headerlink" href="#how-to-use-vectorization" title="Link to this heading">¶</a></h2>
+<p>Using Vectorization in RiskQuantLib is very simple and almost identical to using <code class="docutils literal notranslate"><span class="pre">execFunc</span></code>. If you are not familiar with <code class="docutils literal notranslate"><span class="pre">execFunc</span></code>, you can refer to the <strong>Iteration</strong> subsection in <a class="reference internal" href="Instrument_List.html"><span class="doc">Instrument List</span></a>.</p>
+<p>To vectorize a function of Instrument, you can use <code class="docutils literal notranslate"><span class="pre">vecFunc</span></code> with instance of its Instrument List:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">instrumentListA</span><span class="o">.</span><span class="n">vecFunc</span><span class="p">(</span><span class="s1">&#39;someFunc&#39;</span><span class="p">,</span><span class="n">someParameter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is almost totally the same with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">instrumentListA</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s1">&#39;someFunc&#39;</span><span class="p">,</span><span class="n">someParameter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>They are almost the same with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">instrumentA</span> <span class="ow">in</span> <span class="n">instrumentListA</span><span class="p">:</span>
+    <span class="n">instrumentA</span><span class="o">.</span><span class="n">someFunc</span><span class="p">(</span><span class="n">someParameter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The difference is that <code class="docutils literal notranslate"><span class="pre">execFunc</span></code> is sequential, where the first element executes <code class="docutils literal notranslate"><span class="pre">someFunc</span></code> firstly, and the second element executes that function after that. If you use <code class="docutils literal notranslate"><span class="pre">vecFunc</span></code> , then very inaccurately, <code class="docutils literal notranslate"><span class="pre">someFunc</span></code> of every element are called almost at the same time, which makes it impossible to make the next element’s operation depend on the result of the previous element’s operation, like <code class="docutils literal notranslate"><span class="pre">fold</span></code> function.</p>
+<p>Fortunately, the function called in <code class="docutils literal notranslate"><span class="pre">vecFunc</span></code> can use almost any <code class="docutils literal notranslate"><span class="pre">numpy</span></code> function internally. Because <code class="docutils literal notranslate"><span class="pre">numpy</span></code> functions are almost always purely mathematical. In fact, <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> uses <code class="docutils literal notranslate"><span class="pre">numpy</span></code> for vectorization.</p>
+<p>In addition, <code class="docutils literal notranslate"><span class="pre">vecFunc</span></code> can modify the data graph. Assignments will still work. But assignment operations cannot be truely vectorized; they just don’t cause vectorization exceptions, and are thus compatible with vectorization. Assignment operations tend to slow down vectorization.</p>
+<p><strong>You don’t need to optimize the function specifically to use</strong> <code class="docutils literal notranslate"><span class="pre">vecFunc</span></code> , <strong>the function can still make changes to attributes internally. You just need to make sure that the function being called is purely mathematical, with no logical judgment keywords.</strong></p>
+<p>A good example is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">instrumentListA</span><span class="o">.</span><span class="n">vecFunc</span><span class="p">(</span><span class="s1">&#39;someFuncX&#39;</span><span class="p">,</span><span class="n">someParameterX</span><span class="p">)</span>
+<span class="n">instrumentListA</span><span class="o">.</span><span class="n">vecFunc</span><span class="p">(</span><span class="s1">&#39;someFuncY&#39;</span><span class="p">,</span><span class="n">someParameterY</span><span class="p">)</span>
+<span class="n">instrumentListA</span><span class="o">.</span><span class="n">vecFunc</span><span class="p">(</span><span class="s1">&#39;someFuncZ&#39;</span><span class="p">,</span><span class="n">someParameterZ</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is almost the same with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">instrumentListA</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s1">&#39;someFuncX&#39;</span><span class="p">,</span><span class="n">someParameterX</span><span class="p">)</span>
+<span class="n">instrumentListA</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s1">&#39;someFuncY&#39;</span><span class="p">,</span><span class="n">someParameterY</span><span class="p">)</span>
+<span class="n">instrumentListA</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s1">&#39;someFuncZ&#39;</span><span class="p">,</span><span class="n">someParameterZ</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you define above functions like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">someFuncX</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">codeX</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeX</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">someFuncY</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">codeY</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeX</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeY</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">someFuncZ</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">codeZ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeY</span> <span class="o">+</span> <span class="mi">3</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeZ</span>
+</pre></div>
+</div>
+<p>Both the vectorized version and the non-vectorized version work fine. The vectorized version tends to be 3-5 times faster than the non-vectorized version. Notice that the second function is able to access the data graph node variables generated by the first function.</p>
+<p>Also, notice that all three of our functions here are purely mathematical. And functions like the one below are not vectorizable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">wrongFuncX</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">codeX</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">3</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeX</span>
+</pre></div>
+</div>
+<p>To use logical judgment, you must use a logical matrix. To implement the functionality of the above function while using vectorization, you should change the function to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">rightFuncX</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">logicMatrix</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">codeX</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">*</span> <span class="n">logicMatrix</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">logicMatrix</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeX</span>
+</pre></div>
+</div>
+<p><strong>For functions that can be vectorized, its parameter can also be high-dimensional.</strong> For example, the <code class="docutils literal notranslate"><span class="pre">self.code</span></code> property in the code above is a numeric variable by default. However, it can actually be a higher dimensional variable, such as a numeric matrix, which does not affect vectorization.</p>
+<section id="high-dimensional-vectorization-and-manual-vectorization">
+<h3>High Dimensional Vectorization And Manual Vectorization<a class="headerlink" href="#high-dimensional-vectorization-and-manual-vectorization" title="Link to this heading">¶</a></h3>
+<p><strong>It is possible to use constants as parameter of the vectorized function, but when passing in a vector of constants or a sequence of constants, you need to make sure that the parameter are already vectorized, because only the attributes of nodes will be automatically vectorized, and the constants will not be automatically vectorized.</strong> Let’s illustrate this with an example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">someFuncWithPara</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">para</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">codeX</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">+</span> <span class="n">para</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">codeX</span>
+</pre></div>
+</div>
+<p>For this function, if you want to call it by vectorization, then by default <code class="docutils literal notranslate"><span class="pre">self.code</span></code> , <code class="docutils literal notranslate"><span class="pre">para</span></code> , <code class="docutils literal notranslate"><span class="pre">self.codeX</span></code> should be numeric variables, such as <code class="docutils literal notranslate"><span class="pre">float</span></code> variables. But in fact, <code class="docutils literal notranslate"><span class="pre">self.code</span></code> , <code class="docutils literal notranslate"><span class="pre">self.codeX</span></code> can all be numeric vectors or matrices, such as <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> variables whose elements are <code class="docutils literal notranslate"><span class="pre">float</span></code>. This is because all attributes of data graph nodes are automatically vectorized by <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code>.</p>
+<p>But the problem is with the <code class="docutils literal notranslate"><span class="pre">para</span></code> variable. If <code class="docutils literal notranslate"><span class="pre">para</span></code> is a <code class="docutils literal notranslate"><span class="pre">float</span></code> variable, then when <code class="docutils literal notranslate"><span class="pre">self.code</span></code> is a vector, there is no problem because constants are automatically broadcast to each element of the vector. What happens if <code class="docutils literal notranslate"><span class="pre">para</span></code> is also a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> whose elements are <code class="docutils literal notranslate"><span class="pre">float</span></code>?</p>
+<p>Since <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> can’t tell if the passed parameter is vectorized or not, <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> will use <code class="docutils literal notranslate"><span class="pre">para</span></code> directly on the vectorized attribute variable. That is, <code class="docutils literal notranslate"><span class="pre">para</span></code> will not be processed additionally. So if <code class="docutils literal notranslate"><span class="pre">para</span></code> is also a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> whose elements are of type <code class="docutils literal notranslate"><span class="pre">float</span></code>, then an error is likely to occur, unless these two <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> can be added.</p>
+<p>If you want the program to work correctly, then you need to make sure that you vectorize the <code class="docutils literal notranslate"><span class="pre">para</span></code> constant manually before vectorizing the call to <code class="docutils literal notranslate"><span class="pre">someFuncWithPara</span></code>, i.e., <code class="docutils literal notranslate"><span class="pre">para</span></code> should be an iterable object and its length should be equal to the length of the current list. The first element of <code class="docutils literal notranslate"><span class="pre">para</span></code> should be the parameter passed to the first element of the <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> list, the second element of <code class="docutils literal notranslate"><span class="pre">para</span></code> should be the parameter passed to the second element of the <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> list, and so on.</p>
+<p><strong>The good thing is that this is very rare, and if you need to use a different parameter on each element, why not set it as an attribute? It makes more sense to consider changing the link structure of the data graph, using</strong> <code class="docutils literal notranslate"><span class="pre">match</span></code> , <code class="docutils literal notranslate"><span class="pre">link</span></code> , <code class="docutils literal notranslate"><span class="pre">join</span></code> , <code class="docutils literal notranslate"><span class="pre">connect</span></code> <strong>to change the data graph</strong>.</p>
+</section>
+</section>
+<section id="how-to-combine-multiprocessing-and-vectorization">
+<h2>How To Combine Multiprocessing And Vectorization<a class="headerlink" href="#how-to-combine-multiprocessing-and-vectorization" title="Link to this heading">¶</a></h2>
+<p>Multi-processing and Vectorization give <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> a very flexible and powerful data handling capability as two ways to increase speed. With careful debugging and design, programs written in <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> can often be up to 50% as fast as matrix programs written in <code class="docutils literal notranslate"><span class="pre">pandas</span></code> and <code class="docutils literal notranslate"><span class="pre">numpy</span></code>. In cases involving very high data IO, network interactions, etc., <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> can be even faster than matrix programs. (Of course, very few programmers use numerical libraries such as <code class="docutils literal notranslate"><span class="pre">pandas</span></code> to handle high IO data.) The advantages of <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code> such as simplicity of coding, low maintenance cost, and high code reuse rate become even more significant when considering code modification, such as in the area of data exploration.</p>
+<p>Usually, <code class="docutils literal notranslate"><span class="pre">numpy</span></code> does the CPU scheduling automatically, but you can use both multiprocessing and vectorization if you need to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">instrumentListA</span><span class="o">.</span><span class="n">groupByFunc</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span><span class="o">.</span><span class="n">paraFunc</span><span class="p">(</span><span class="s1">&#39;vecFunc&#39;</span><span class="p">,</span><span class="s1">&#39;someFuncX&#39;</span><span class="p">,</span><span class="n">someParameterX</span><span class="p">)</span><span class="o">.</span><span class="n">paraRun</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The meaning of the above code is that <code class="docutils literal notranslate"><span class="pre">instrumentListA</span></code> is randomly divided into four groups, a new process is started for each group, and each process performs vectorization operations, calls the <code class="docutils literal notranslate"><span class="pre">someFuncX</span></code> function, and then collects all the results and stores them in the <code class="docutils literal notranslate"><span class="pre">result</span></code> variable. Notice that because of the use of multiprocessing, which is pipelined and changes to the data graph are not preserved, <code class="docutils literal notranslate"><span class="pre">someFuncX</span></code> must have a return value and must receive it via a variable for subsequent processing.</p>
+<p>The above code demonstrates the amazing abstraction and flexibility of <code class="docutils literal notranslate"><span class="pre">RiskQuantLib</span></code>. You can change the way your program works with a single line of code without making any changes to the data processing logic or the data graph. The use of chained calls makes the program even more readable. In <code class="docutils literal notranslate"><span class="pre">paraFunc</span></code> we use <code class="docutils literal notranslate"><span class="pre">Tunneling</span> <span class="pre">Index</span></code>, which we mentioned in the previous section, so that for multi-layer graphs we can nest any number of function calls (up to the depth of the graph) in <code class="docutils literal notranslate"><span class="pre">paraFunc</span></code> or <code class="docutils literal notranslate"><span class="pre">execFunc</span></code> or <code class="docutils literal notranslate"><span class="pre">vecFunc</span></code>, as if we were tunneling through a graph node in the upper level to get to the next level of the graph, and then calling the functions in the next layer. Finally, we use <code class="docutils literal notranslate"><span class="pre">paraRun</span></code> to trigger multiprocessing.</p>
+<p><strong>Unfortunately, if</strong> <code class="docutils literal notranslate"><span class="pre">someFuncX</span></code> <strong>is defined as we have showed above, then on most computers the above code should not run as fast as if it were vectorized directly:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">instrumentListA</span><span class="o">.</span><span class="n">vecFunc</span><span class="p">(</span><span class="s1">&#39;someFuncX&#39;</span><span class="p">,</span><span class="n">someParameterX</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using both multiprocessing and vectorization is not even as fast as direct iteration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">instrumentListA</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s1">&#39;someFuncX&#39;</span><span class="p">,</span><span class="n">someParameterX</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The reason for this is simply that <code class="docutils literal notranslate"><span class="pre">someFuncX</span></code>, which we defined above, is so simple that the overhead of using multiprocessing already far outweighs the benefits. So in this case, it’s not a good idea to use multiprocessing. Typically, the number of operations in the <code class="docutils literal notranslate"><span class="pre">someFuncX</span></code> function should be more than 100,000 to ensure that the use of multiprocessing has efficiency gain. This is what we mean when we say that before using multiprocessing and vectorization, you need to think about the environment where your program is running and make sure that the overhead is worthy.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Multi_Process.html" class="btn btn-neutral float-left" title="Multi-Process" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="About.html" class="btn btn-neutral float-right" title="About" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -13,10 +13,10 @@ Subpackages
 Submodules
 ----------
 
-RiskQuantLib.Model.base module
-------------------------------
+RiskQuantLib.Model.model module
+-------------------------------
 
-.. automodule:: RiskQuantLib.Model.base
+.. automodule:: RiskQuantLib.Model.model
    :members:
    :undoc-members:
    :show-inheritance:

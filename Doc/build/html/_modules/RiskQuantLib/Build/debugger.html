@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>RiskQuantLib.Build.debugger &mdash; RiskQuantLib 0.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> RiskQuantLib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RiskQuantLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../RiskQuantLib.html">RiskQuantLib</a> &raquo;</li>
+        
+      <li>RiskQuantLib.Build.debugger</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for RiskQuantLib.Build.debugger</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># coding = utf-8</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">ast</span><span class="o">,</span> <span class="nn">sys</span>
+
+<div class="viewcode-block" id="debugger"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.debugger.debugger">[docs]</a><span class="k">class</span> <span class="nc">debugger</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    debugger is a class used to render .py file. It will parse the functions in .py file and bound them into</span>
+<span class="sd">    the class which is specified by #-&gt; comment command. This is different with the normal render, the normal render</span>
+<span class="sd">    will take .py file as a text file and take the content as it be. This debugger takes .py file as an executable</span>
+<span class="sd">    file and will execute it by import the file and bind its functions into class dynamically.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="debugger.findFunction"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.debugger.debugger.findFunction">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">findFunction</span><span class="p">(</span><span class="n">sourceCode</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Use python ast module to parse source code. This aims at finding functions that can be treated as validated</span>
+<span class="sd">        python functions. ast module can be used in python&gt;=3.5, it is the abstract-syntax-tree, used as interface to</span>
+<span class="sd">        python interpreter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">astObject</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">sourceCode</span><span class="p">)</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">sourceCode</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+        <span class="n">function</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">astObject</span><span class="o">.</span><span class="n">body</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">==</span><span class="n">ast</span><span class="o">.</span><span class="n">FunctionDef</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">function</span></div>
+
+<div class="viewcode-block" id="debugger.findFunctionStart"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.debugger.debugger.findFunctionStart">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">findFunctionStart</span><span class="p">(</span><span class="n">functionObject</span><span class="p">:</span><span class="n">ast</span><span class="o">.</span><span class="n">FunctionDef</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find function start line index. For some functions with decorators, the start line will be the start line of first</span>
+<span class="sd">        decorator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">([</span><span class="n">functionObject</span><span class="o">.</span><span class="n">lineno</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">j</span><span class="o">.</span><span class="n">lineno</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">functionObject</span><span class="o">.</span><span class="n">decorator_list</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span></div>
+
+<div class="viewcode-block" id="debugger.findFunctionEnd"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.debugger.debugger.findFunctionEnd">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">findFunctionEnd</span><span class="p">(</span><span class="n">functionObject</span><span class="p">:</span><span class="n">ast</span><span class="o">.</span><span class="n">FunctionDef</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find function end line index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">functionObject</span><span class="o">.</span><span class="n">end_lineno</span></div>
+
+<div class="viewcode-block" id="debugger.unParseSourceCode"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.debugger.debugger.unParseSourceCode">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">unParseSourceCode</span><span class="p">(</span><span class="n">sourceCodeByLine</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span> <span class="n">startLine</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">endLine</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a list of source code, whose element is each line of source code, given start line and end line, this</span>
+<span class="sd">        function will merge the content between start and end line, and return the merged source code.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sourceCode</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sourceCodeByLine</span><span class="p">[</span><span class="n">startLine</span><span class="p">:</span><span class="n">endLine</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">sourceCode</span></div>
+
+<div class="viewcode-block" id="debugger.findClassMethodFunction"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.debugger.debugger.findClassMethodFunction">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">findClassMethodFunction</span><span class="p">(</span><span class="n">function</span><span class="p">:</span><span class="nb">list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For all possible definition parsed from ast module, only those with first argument as &#39;self&#39; can be treated as</span>
+<span class="sd">        class method. For python, this is not a restriction, you can use any key word to replace &#39;self&#39;, however, for</span>
+<span class="sd">        RiskQuantLib, it takes &#39;self&#39; as the only possible one in order to debug.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        function : list</span>
+<span class="sd">            The list whose element is the parsed ast function definition object, which is ast.FunctionDef.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">functionOfClassMethod</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">function</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="n">ast</span><span class="o">.</span><span class="n">FunctionDef</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">args</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">i</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">arg</span> <span class="o">==</span> <span class="s1">&#39;self&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">functionOfClassMethod</span></div>
+
+<div class="viewcode-block" id="debugger.findFunctionUnderControlComment"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.debugger.debugger.findFunctionUnderControlComment">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">findFunctionUnderControlComment</span><span class="p">(</span><span class="n">function</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span> <span class="n">controlCommentLineRange</span><span class="p">:</span><span class="nb">list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For all possible class method, it can not be debugged unless it is distributed into a RiskQuantLib instrument</span>
+<span class="sd">        node. Only those functions which is under some control comment can be debugged, this function is to find those.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        function : list</span>
+<span class="sd">            The list whose element is the parsed ast function definition object, which is ast.FunctionDef.</span>
+<span class="sd">        controlCommentLineRange : list</span>
+<span class="sd">            The list whose element is a tuple, which is (line index where control comment start effective, line index</span>
+<span class="sd">            where that control comment end effective).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">functionChunk</span> <span class="o">=</span> <span class="p">[(</span><span class="n">debugger</span><span class="o">.</span><span class="n">findFunctionStart</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">debugger</span><span class="o">.</span><span class="n">findFunctionEnd</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">function</span><span class="p">]</span>
+        <span class="n">underControlComment</span> <span class="o">=</span> <span class="p">[[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">controlCommentLineRange</span> <span class="k">if</span> <span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">j</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">functionChunk</span><span class="p">]</span>
+        <span class="n">functionUnderControlComment</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">underControlComment</span><span class="p">,</span><span class="n">functionChunk</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">functionValidated</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">functionUnderControlComment</span><span class="p">]</span>
+        <span class="n">functionChunkValidated</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">functionUnderControlComment</span><span class="p">]</span>
+        <span class="n">functionNameValidated</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">functionValidated</span><span class="p">]</span>
+        <span class="n">functionNameValidatedDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">functionChunkValidated</span><span class="p">,</span> <span class="n">functionNameValidated</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">functionChunkValidated</span><span class="p">,</span> <span class="n">functionNameValidatedDict</span></div>
+
+<div class="viewcode-block" id="debugger.findOtherChunkOutsideGivenChunk"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.debugger.debugger.findOtherChunkOutsideGivenChunk">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">findOtherChunkOutsideGivenChunk</span><span class="p">(</span><span class="n">functionChunk</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span> <span class="n">endLineNum</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a list whose element is a tuple: (start line of chunk, end line of chunk), and given the total line number,</span>
+<span class="sd">        this function will find those chunk which does not belong to given chunk and not cross with given chunk.</span>
+<span class="sd">        In short, this function is to find replenishment of given set.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        functionChunk : list</span>
+<span class="sd">            The list whose element is the start and end of a chunk.</span>
+<span class="sd">        endLineNum : int</span>
+<span class="sd">            The total line number of source code.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">chunkOfGiven</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">functionChunk</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">functionChunk</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span> <span class="k">else</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+        <span class="n">chunkOfGivenNum</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunkOfGiven</span><span class="p">)</span>
+        <span class="n">chunkOfOthersBody</span> <span class="o">=</span> <span class="p">[(</span><span class="n">chunkOfGiven</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">chunkOfGiven</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">chunkOfGivenNum</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">chunkOfGivenNum</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">chunkOfOthersHead</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="n">chunkOfGiven</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])]</span>
+        <span class="n">chunkOfOthersTail</span> <span class="o">=</span> <span class="p">[(</span><span class="n">chunkOfGiven</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">endLineNum</span><span class="p">)]</span>
+        <span class="n">chunkOfOthers</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">chunkOfOthersHead</span> <span class="o">+</span> <span class="n">chunkOfOthersBody</span> <span class="o">+</span> <span class="n">chunkOfOthersTail</span> <span class="k">if</span> <span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="n">j</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">chunkOfGiven</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chunkOfGiven</span> <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">chunkOfGiven</span><span class="p">,</span><span class="n">chunkOfOthers</span></div>
+
+<div class="viewcode-block" id="debugger.findControlCommentLineId"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.debugger.debugger.findControlCommentLineId">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">findControlCommentLineId</span><span class="p">(</span><span class="n">sourceCodeByLine</span><span class="p">:</span><span class="nb">list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the line index of control comment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">commentLineMatch</span> <span class="o">=</span> <span class="p">[[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;^#-&gt;.*$&#39;&#39;&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sourceCodeByLine</span><span class="p">]</span>
+        <span class="n">controlCommentLineId</span> <span class="o">=</span> <span class="p">[</span><span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">commentLineMatch</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">controlCommentLineId</span></div>
+
+<div class="viewcode-block" id="debugger.findControlCommentLineRange"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.debugger.debugger.findControlCommentLineRange">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">findControlCommentLineRange</span><span class="p">(</span><span class="n">controlCommentLineId</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span> <span class="n">numberOfLine</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For every control comment, find the line index where it starts effective and line index where it stops effective.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        controlCommentLineId : list</span>
+<span class="sd">            The list whose element is the line index number where the control comments lie.</span>
+<span class="sd">        numberOfLine : int</span>
+<span class="sd">            The total line number of source code.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">endOfChunk</span> <span class="o">=</span> <span class="n">controlCommentLineId</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="p">[</span><span class="n">numberOfLine</span><span class="p">]</span>
+        <span class="nb">range</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">controlCommentLineId</span><span class="p">,</span> <span class="n">endOfChunk</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="debugger.importModuleFromFile"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.debugger.debugger.importModuleFromFile">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">importModuleFromFile</span><span class="p">(</span><span class="n">filePath</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Import module from given file and cache it into sys.modules. If this file has already been imported, it will load</span>
+<span class="sd">        the cached one.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filePath</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">importlib.util</span> <span class="k">as</span> <span class="nn">util</span>
+            <span class="n">spec</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span> <span class="n">filePath</span><span class="p">)</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">module_from_spec</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+            <span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">filePath</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">filePath</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">tmp</span></div>
+
+<div class="viewcode-block" id="debugger.splitSrcByChunkAndFindThoseCanBeDebugged"><a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.debugger.debugger.splitSrcByChunkAndFindThoseCanBeDebugged">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">splitSrcByChunkAndFindThoseCanBeDebugged</span><span class="p">(</span><span class="n">sourceCode</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will check the while source code and find those functions can be treated as class method,</span>
+<span class="sd">        the definition of these functions are wrapped into a chunk. Then the other source code are packed into</span>
+<span class="sd">        chunks according to class-method chunk. All these source code chunk are then labelled as &#39;can be debugged&#39;</span>
+<span class="sd">        and &#39;can not be debugged&#39;, if it can be debugged, its function name will be found and returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># collect source code and split them into lines</span>
+        <span class="n">lineOfContent</span> <span class="o">=</span> <span class="n">sourceCode</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+        <span class="n">lineNum</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lineOfContent</span><span class="p">)</span>
+
+        <span class="c1"># collect all control comment that can be debugged</span>
+        <span class="n">controlCommentLineId</span> <span class="o">=</span> <span class="n">debugger</span><span class="o">.</span><span class="n">findControlCommentLineId</span><span class="p">(</span><span class="n">lineOfContent</span><span class="p">)</span>
+        <span class="n">controlCommentLineRange</span> <span class="o">=</span> <span class="n">debugger</span><span class="o">.</span><span class="n">findControlCommentLineRange</span><span class="p">(</span><span class="n">controlCommentLineId</span><span class="p">,</span><span class="n">lineNum</span><span class="p">)</span>
+
+        <span class="c1"># find function definition from source code, and find those which can be treated as class method</span>
+        <span class="n">function</span> <span class="o">=</span> <span class="n">debugger</span><span class="o">.</span><span class="n">findFunction</span><span class="p">(</span><span class="n">sourceCode</span><span class="p">)</span>
+        <span class="n">functionOfPossibleClassMethod</span> <span class="o">=</span> <span class="n">debugger</span><span class="o">.</span><span class="n">findClassMethodFunction</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+
+        <span class="n">functionChunkOfClassMethod</span><span class="p">,</span> <span class="n">functionNameOfClassMethodDict</span> <span class="o">=</span> <span class="n">debugger</span><span class="o">.</span><span class="n">findFunctionUnderControlComment</span><span class="p">(</span><span class="n">functionOfPossibleClassMethod</span><span class="p">,</span><span class="n">controlCommentLineRange</span><span class="p">)</span>
+        <span class="n">chunkOfClassMethod</span><span class="p">,</span> <span class="n">chunkOfNonClassMethod</span> <span class="o">=</span> <span class="n">debugger</span><span class="o">.</span><span class="n">findOtherChunkOutsideGivenChunk</span><span class="p">(</span><span class="n">functionChunkOfClassMethod</span><span class="p">,</span> <span class="n">lineNum</span><span class="p">)</span>
+
+        <span class="c1"># collect all chunks, and whether it can be debugged, and the class method name if it can be debugged</span>
+        <span class="n">chunk</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">chunkOfClassMethod</span> <span class="o">+</span> <span class="n">chunkOfNonClassMethod</span><span class="p">)</span>
+        <span class="n">srcOfChunk</span> <span class="o">=</span> <span class="p">[</span><span class="n">debugger</span><span class="o">.</span><span class="n">unParseSourceCode</span><span class="p">(</span><span class="n">lineOfContent</span><span class="p">,</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chunk</span><span class="p">]</span>
+        <span class="n">canBeDebugged</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">chunkOfClassMethod</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chunk</span><span class="p">]</span>
+        <span class="n">functionName</span> <span class="o">=</span> <span class="p">[</span><span class="n">functionNameOfClassMethodDict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">functionNameOfClassMethodDict</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chunk</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;srcOfChunk&quot;</span><span class="p">:</span><span class="n">srcOfChunk</span><span class="p">,</span> <span class="s2">&quot;canBeDebugged&quot;</span><span class="p">:</span><span class="n">canBeDebugged</span><span class="p">,</span> <span class="s2">&quot;functionName&quot;</span><span class="p">:</span><span class="n">functionName</span><span class="p">}</span></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright .
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

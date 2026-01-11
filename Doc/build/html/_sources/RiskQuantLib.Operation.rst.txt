@@ -4,26 +4,18 @@ RiskQuantLib.Operation package
 Submodules
 ----------
 
-RiskQuantLib.Operation.iloc module
-----------------------------------
+RiskQuantLib.Operation.operation module
+---------------------------------------
 
-.. automodule:: RiskQuantLib.Operation.iloc
+.. automodule:: RiskQuantLib.Operation.operation
    :members:
    :undoc-members:
    :show-inheritance:
 
-RiskQuantLib.Operation.listBaseOperation module
------------------------------------------------
+RiskQuantLib.Operation.vectorization module
+-------------------------------------------
 
-.. automodule:: RiskQuantLib.Operation.listBaseOperation
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-RiskQuantLib.Operation.loc module
----------------------------------
-
-.. automodule:: RiskQuantLib.Operation.loc
+.. automodule:: RiskQuantLib.Operation.vectorization
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,0 +1,171 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RiskQuantLib.Tool.mailTool &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/readthedocs-custom.css" />
+
+  
+      <script src="../../../_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../RiskQuantLib.html">RiskQuantLib</a></li>
+      <li class="breadcrumb-item active">RiskQuantLib.Tool.mailTool</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for RiskQuantLib.Tool.mailTool</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1">#coding = utf-8</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">imapclient</span><span class="w"> </span><span class="kn">import</span> <span class="n">IMAPClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">redmail</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmailSender</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">email</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">email.policy</span><span class="w"> </span><span class="kn">import</span> <span class="n">default</span>
+
+<span class="c1">#&lt;import&gt;</span>
+<span class="c1">#&lt;/import&gt;</span>
+
+
+<div class="viewcode-block" id="mailConnector">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.mailTool.mailConnector">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">mailConnector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This is the basic connector of mail service.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostIMAP</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hostSMTP</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">userName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">portSMTP</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">25</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">userName</span> <span class="o">=</span> <span class="n">userName</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sender</span> <span class="o">=</span> <span class="n">EmailSender</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">hostSMTP</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">portSMTP</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">userName</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">imap_host</span> <span class="o">=</span> <span class="n">hostIMAP</span>
+
+<div class="viewcode-block" id="mailConnector.receive">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.mailTool.mailConnector.receive">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">receive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;INBOX&#39;</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ALL&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function is used to search mailbox and get the latest n mails, it returns html string.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">IMAPClient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imap_host</span><span class="p">,</span> <span class="n">ssl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">userName</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">select_folder</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+            <span class="n">messages</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">search</span><span class="p">([</span><span class="n">message</span><span class="p">])</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">msg_id</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">messages</span><span class="p">[</span><span class="o">-</span><span class="n">number</span><span class="p">:],</span> <span class="p">[</span><span class="s1">&#39;RFC822&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">message_from_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sa">b</span><span class="s1">&#39;RFC822&#39;</span><span class="p">],</span> <span class="n">policy</span><span class="o">=</span><span class="n">default</span><span class="p">)</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">],</span>
+                    <span class="s2">&quot;sender&quot;</span><span class="p">:</span> <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;from&#39;</span><span class="p">],</span>
+                    <span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="n">msg</span><span class="o">.</span><span class="n">get_body</span><span class="p">(</span><span class="n">preferencelist</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;plain&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">get_content</span><span class="p">()</span>
+                <span class="p">})</span>
+            <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="mailConnector.send">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.mailTool.mailConnector.send">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">html</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function will send mails to a list of users. You can pass html string or pure string to it.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">receivers</span><span class="o">=</span><span class="n">to</span><span class="p">,</span><span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span><span class="n">html</span><span class="o">=</span><span class="n">content</span><span class="p">)</span> <span class="k">if</span> <span class="n">html</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">receivers</span><span class="o">=</span><span class="n">to</span><span class="p">,</span><span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="n">content</span><span class="p">)</span></div>
+</div>
+
+
+    <span class="c1">#&lt;mailConnector&gt;</span>
+    <span class="c1">#&lt;/mailConnector&gt;</span>
+
+<span class="c1">#&lt;mailTool&gt;</span>
+<span class="c1">#&lt;/mailTool&gt;</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

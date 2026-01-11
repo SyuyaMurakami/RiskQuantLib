@@ -1,0 +1,894 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RiskQuantLib.Tool.dateTool &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/readthedocs-custom.css" />
+
+  
+      <script src="../../../_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../RiskQuantLib.html">RiskQuantLib</a></li>
+      <li class="breadcrumb-item active">RiskQuantLib.Tool.dateTool</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for RiskQuantLib.Tool.dateTool</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1">#coding = utf-8</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">QuantLib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ql</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.Tool.decoratorTool</span><span class="w"> </span><span class="kn">import</span> <span class="n">stringTimestampConverter</span>
+
+<span class="c1">#&lt;import&gt;</span>
+<span class="c1">#&lt;/import&gt;</span>
+
+<div class="viewcode-block" id="calendar">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">calendar</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">unitKey</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;W&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]</span>
+    <span class="n">unitValue</span> <span class="o">=</span> <span class="p">[</span><span class="n">ql</span><span class="o">.</span><span class="n">Weeks</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Weeks</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Months</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Months</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Days</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Days</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Years</span><span class="p">]</span>
+    <span class="n">unitMap</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">unitKey</span><span class="p">,</span> <span class="n">unitValue</span><span class="p">))</span>
+
+<div class="viewcode-block" id="calendar.parsePeriod">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.parsePeriod">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parsePeriod</span><span class="p">(</span><span class="n">period</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">n</span><span class="p">,</span> <span class="n">unit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">period</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">unit</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">calendar</span><span class="o">.</span><span class="n">unitKey</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n</span><span class="p">,</span> <span class="n">calendar</span><span class="o">.</span><span class="n">unitMap</span><span class="p">[</span><span class="n">unit</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="calendar.timestampToDate">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.timestampToDate">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">timestampToDate</span><span class="p">(</span><span class="n">date</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="calendar.dateToTimestamp">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.dateToTimestamp">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dateToTimestamp</span><span class="p">(</span><span class="n">date</span><span class="p">:</span> <span class="n">ql</span><span class="o">.</span><span class="n">Date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">to_date</span><span class="p">())</span></div>
+
+
+    <span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIterableIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">argIterableKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;otherHolidays&#39;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">holidayRule</span><span class="p">:</span> <span class="n">ql</span><span class="o">.</span><span class="n">Calendar</span><span class="p">,</span> <span class="n">otherHolidays</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateCalendar</span><span class="p">(</span><span class="n">holidayRule</span><span class="p">,</span> <span class="n">otherHolidays</span><span class="p">)</span>
+
+<div class="viewcode-block" id="calendar.updateCalendar">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.updateCalendar">[docs]</a>
+    <span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIterableIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">argIterableKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;otherHolidays&#39;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">updateCalendar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">holidayRule</span><span class="p">:</span> <span class="n">ql</span><span class="o">.</span><span class="n">Calendar</span><span class="p">,</span> <span class="n">otherHolidays</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a custom calendar using QuantLib.&quot;&quot;&quot;</span>
+        <span class="n">otherHolidays</span> <span class="o">=</span> <span class="n">otherHolidays</span> <span class="k">if</span> <span class="n">otherHolidays</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addHolidayRule</span><span class="p">(</span><span class="n">holidayRule</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addHolidays</span><span class="p">(</span><span class="n">otherHolidays</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="calendar.addHolidayRule">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.addHolidayRule">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">addHolidayRule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">holidayRule</span><span class="p">:</span> <span class="n">ql</span><span class="o">.</span><span class="n">Calendar</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add customized holiday rule, this will overwrite current holiday settings.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_otherHolidays</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_qlCalendar</span> <span class="o">=</span> <span class="n">holidayRule</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_holidayRule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qlCalendar</span><span class="o">.</span><span class="n">isHoliday</span></div>
+
+
+<div class="viewcode-block" id="calendar.addHolidays">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.addHolidays">[docs]</a>
+    <span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIterableIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">argIterableKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;holidays&#39;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">addHolidays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">holidays</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add customized holiday.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_otherHolidays</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">holidays</span><span class="p">)</span>
+        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_qlCalendar</span><span class="o">.</span><span class="n">addHoliday</span><span class="p">(</span><span class="n">calendar</span><span class="o">.</span><span class="n">timestampToDate</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">holidays</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_holidayRule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qlCalendar</span><span class="o">.</span><span class="n">isHoliday</span></div>
+
+
+<div class="viewcode-block" id="calendar.isTrading">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.isTrading">[docs]</a>
+    <span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">argKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isTrading</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return True if a day is trading day.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_holidayRule</span><span class="p">(</span><span class="n">calendar</span><span class="o">.</span><span class="n">timestampToDate</span><span class="p">(</span><span class="n">date</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="calendar.tradingDaysBetween">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.tradingDaysBetween">[docs]</a>
+    <span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">argKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tradingDaysBetween</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span> <span class="n">startPoint</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">endPoint</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of trading days between *start* and *end*. Endpoints</span>
+<span class="sd">        are counted only if they are trading.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">startAdjust</span> <span class="o">=</span> <span class="n">start</span> <span class="k">if</span> <span class="n">startPoint</span> <span class="k">else</span> <span class="n">start</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">startQlDate</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">timestampToDate</span><span class="p">(</span><span class="n">startAdjust</span><span class="p">)</span>
+        <span class="n">endAdjust</span> <span class="o">=</span> <span class="n">end</span> <span class="k">if</span> <span class="n">endPoint</span> <span class="k">else</span> <span class="n">end</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">endQlDate</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">timestampToDate</span><span class="p">(</span><span class="n">endAdjust</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">calendar</span><span class="o">.</span><span class="n">dateToTimestamp</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qlCalendar</span><span class="o">.</span><span class="n">businessDayList</span><span class="p">(</span><span class="n">startQlDate</span><span class="p">,</span> <span class="n">endQlDate</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="calendar.offset">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.offset">[docs]</a>
+    <span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">argKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Days</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return date of trading day *n* days before or after *date*.&quot;&quot;&quot;</span>
+        <span class="n">qlDate</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">timestampToDate</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+        <span class="n">offsetDate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qlCalendar</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="n">qlDate</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">period</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">calendar</span><span class="o">.</span><span class="n">dateToTimestamp</span><span class="p">(</span><span class="n">offsetDate</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="calendar.makeSchedule">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.makeSchedule">[docs]</a>
+    <span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">argKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">makeSchedule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span> <span class="n">period</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">forwardAdjust</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">forwardScale</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">forwardAdjustEndDay</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate periodical trading dates between start and end, given period.&quot;&quot;&quot;</span>
+        <span class="n">n</span><span class="p">,</span> <span class="n">periodQl</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">parsePeriod</span><span class="p">(</span><span class="n">period</span><span class="p">)</span>
+        <span class="n">convention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Following</span> <span class="k">if</span> <span class="n">forwardAdjust</span> <span class="k">else</span> <span class="n">ql</span><span class="o">.</span><span class="n">Preceding</span>
+        <span class="n">terminalDateConvention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Following</span> <span class="k">if</span> <span class="n">forwardAdjustEndDay</span> <span class="k">else</span> <span class="n">ql</span><span class="o">.</span><span class="n">Preceding</span>
+        <span class="n">forwards</span><span class="p">,</span> <span class="n">backwards</span> <span class="o">=</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="k">if</span> <span class="n">forwardScale</span> <span class="k">else</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">startQlDate</span><span class="p">,</span> <span class="n">endQlDate</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">timestampToDate</span><span class="p">(</span><span class="n">start</span><span class="p">),</span> <span class="n">calendar</span><span class="o">.</span><span class="n">timestampToDate</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
+        <span class="n">schedule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">MakeSchedule</span><span class="p">(</span><span class="n">startQlDate</span><span class="p">,</span> <span class="n">endQlDate</span><span class="p">,</span> <span class="n">ql</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">periodQl</span><span class="p">),</span> <span class="n">calendar</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_qlCalendar</span><span class="p">,</span> <span class="n">convention</span><span class="o">=</span><span class="n">convention</span><span class="p">,</span> <span class="n">terminalDateConvention</span><span class="o">=</span><span class="n">terminalDateConvention</span><span class="p">,</span><span class="n">forwards</span><span class="o">=</span><span class="n">forwards</span><span class="p">,</span> <span class="n">backwards</span><span class="o">=</span><span class="n">backwards</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">calendar</span><span class="o">.</span><span class="n">dateToTimestamp</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">schedule</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="calendar.makeScheduleByPeriod">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.makeScheduleByPeriod">[docs]</a>
+    <span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">argKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">makeScheduleByPeriod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span> <span class="n">period</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">forwardAdjust</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate periodical trading dates.</span>
+<span class="sd">        Warnings: If the first day is not a trading day, the next trading day will be used, thus leading</span>
+<span class="sd">        to duplicated elements. So make sure the given start date is a trading day.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n</span><span class="p">,</span> <span class="n">periodQl</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">parsePeriod</span><span class="p">(</span><span class="n">period</span><span class="p">)</span>
+        <span class="n">convention</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Following</span> <span class="k">if</span> <span class="n">forwardAdjust</span> <span class="k">else</span> <span class="n">ql</span><span class="o">.</span><span class="n">Preceding</span>
+        <span class="n">dateQl</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">timestampToDate</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+        <span class="n">tradingDates</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_qlCalendar</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="n">dateQl</span><span class="p">,</span> <span class="n">i</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="n">periodQl</span><span class="p">,</span> <span class="n">convention</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">calendar</span><span class="o">.</span><span class="n">dateToTimestamp</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tradingDates</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="calendar.numTradingDaysBetween">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.numTradingDaysBetween">[docs]</a>
+    <span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">argKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">numTradingDaysBetween</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span> <span class="n">countStart</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">countEnd</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return number of trading days between two dates.&quot;&quot;&quot;</span>
+        <span class="n">startQlDate</span><span class="p">,</span> <span class="n">endQlDate</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">timestampToDate</span><span class="p">(</span><span class="n">start</span><span class="p">),</span> <span class="n">calendar</span><span class="o">.</span><span class="n">timestampToDate</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qlCalendar</span><span class="o">.</span><span class="n">businessDaysBetween</span><span class="p">(</span><span class="n">startQlDate</span><span class="p">,</span> <span class="n">endQlDate</span><span class="p">,</span> <span class="n">countStart</span><span class="p">,</span> <span class="n">countEnd</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="calendar.numTradingDaysBetweenGrid">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.calendar.numTradingDaysBetweenGrid">[docs]</a>
+    <span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">argKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">],</span> <span class="n">argIterableIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">argIterableKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dateList&#39;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">numTradingDaysBetweenGrid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span> <span class="n">dateList</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">],</span> <span class="n">countStart</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">countEnd</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return number of trading days between a date and a date list.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">numTradingDaysBetween</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">countStart</span><span class="p">,</span> <span class="n">countEnd</span><span class="p">)</span> <span class="k">for</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">dateList</span><span class="p">]</span></div>
+</div>
+
+
+    <span class="c1">#&lt;calendar&gt;</span>
+    <span class="c1">#&lt;/calendar&gt;</span>
+
+
+<div class="viewcode-block" id="getNthWeekday">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.getNthWeekday">[docs]</a>
+<span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">argKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;on&#39;</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">getNthWeekday</span><span class="p">(</span><span class="n">count</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">weekdayCode</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">on</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will return the n-th weekday of the month, which contains the given day.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    count : int</span>
+<span class="sd">        The n-th weekday you want to get</span>
+<span class="sd">    weekdayCode : int</span>
+<span class="sd">        The weekday code, use int from 1 to 7</span>
+<span class="sd">    on : pd.Timestamp</span>
+<span class="sd">        The standing point, calculation will be done based on this day.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    result : pd.Timestamp</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">firstDayAtThatMonth</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">on</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">on</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">weekdayCodeBenchMark</span> <span class="o">=</span> <span class="n">firstDayAtThatMonth</span><span class="o">.</span><span class="n">dayofweek</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Error: N can&#39;t be 0!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">count</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">count</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">weekdayCode</span><span class="o">&gt;=</span><span class="n">weekdayCodeBenchMark</span><span class="p">:</span>
+        <span class="n">days</span> <span class="o">=</span> <span class="p">(</span><span class="n">count</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">7</span> <span class="o">+</span> <span class="n">weekdayCode</span><span class="o">-</span><span class="n">weekdayCodeBenchMark</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">days</span> <span class="o">=</span> <span class="n">count</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">+</span> <span class="n">weekdayCode</span> <span class="o">-</span> <span class="n">weekdayCodeBenchMark</span>
+    <span class="n">resultDay</span> <span class="o">=</span> <span class="n">firstDayAtThatMonth</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">resultDay</span></div>
+
+
+<div class="viewcode-block" id="generateBusinessDateList">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.generateBusinessDateList">[docs]</a>
+<span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">argKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">generateBusinessDateList</span><span class="p">(</span><span class="n">start</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span> <span class="n">freq</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will generate a list of business day.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    start : pd.Timestamp</span>
+<span class="sd">        The range start.</span>
+<span class="sd">    end : pd.Timestamp</span>
+<span class="sd">        The range end</span>
+<span class="sd">    freq : str</span>
+<span class="sd">        The frequency used to generate date list.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">businessList</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span><span class="n">end</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span><span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">)</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">businessList</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">dayofweek</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="generateNextNWeekday">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.generateNextNWeekday">[docs]</a>
+<span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">argKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">generateNextNWeekday</span><span class="p">(</span><span class="n">start</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will return a list, whose elements are the next n weekdays.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">startDate_FormedStr</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">endDate_FormedStr</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="o">/</span><span class="mi">5</span><span class="o">*</span><span class="mi">7</span><span class="p">)</span><span class="o">+</span><span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">startDate_FormedStr</span><span class="p">,</span><span class="n">endDate_FormedStr</span><span class="p">,</span><span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">dayofweek</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">][:</span><span class="n">count</span><span class="p">]</span></div>
+
+
+
+<span class="c1">#&lt;dateTool&gt;</span>
+<span class="c1">#&lt;/dateTool&gt;</span>
+
+<span class="c1"># Quick link for non-QuantLib users.</span>
+
+<div class="viewcode-block" id="null">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.null">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">null</span><span class="p">(</span><span class="n">calendar</span><span class="p">):</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">NullCalendar</span><span class="p">()</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize a null calendar.&quot;&quot;&quot;</span>
+    <span class="nd">@stringTimestampConverter</span><span class="p">(</span><span class="n">argIterableIndexList</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">argIterableKeyList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;otherHolidays&#39;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">otherHolidays</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">holidayRule</span><span class="p">,</span> <span class="n">otherHolidays</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="argentinaMerval">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.argentinaMerval">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">argentinaMerval</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Argentina Merval.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Argentina</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Argentina</span><span class="o">.</span><span class="n">Merval</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="australiaSettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.australiaSettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">australiaSettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Australia Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Australia</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Australia</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="australiaASX">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.australiaASX">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">australiaASX</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Australia ASX.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Australia</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Australia</span><span class="o">.</span><span class="n">ASX</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="austriaSettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.austriaSettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">austriaSettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Austria Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Austria</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Austria</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="austriaExchange">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.austriaExchange">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">austriaExchange</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Austria Exchange.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Austria</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Austria</span><span class="o">.</span><span class="n">Exchange</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="botswana">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.botswana">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">botswana</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Botswana.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Botswana</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="brazilSettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.brazilSettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">brazilSettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Brazil Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Brazil</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Brazil</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="brazilExchange">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.brazilExchange">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">brazilExchange</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Brazil Exchange.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Brazil</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Brazil</span><span class="o">.</span><span class="n">Exchange</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="canadaSettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.canadaSettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">canadaSettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Canada Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Canada</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Canada</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="canadaTSX">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.canadaTSX">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">canadaTSX</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Canada TSX.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Canada</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Canada</span><span class="o">.</span><span class="n">TSX</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="chileSSE">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.chileSSE">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">chileSSE</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Chile SSE.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Chile</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Chile</span><span class="o">.</span><span class="n">SSE</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="chinaSSE">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.chinaSSE">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">chinaSSE</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of China SSE.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">China</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">China</span><span class="o">.</span><span class="n">SSE</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="chinaIB">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.chinaIB">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">chinaIB</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of China IB.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">China</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">China</span><span class="o">.</span><span class="n">IB</span><span class="p">)</span></div>
+
+    
+
+<div class="viewcode-block" id="czechRepublicPSE">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.czechRepublicPSE">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">czechRepublicPSE</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of CzechRepublic PSE.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">CzechRepublic</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">CzechRepublic</span><span class="o">.</span><span class="n">PSE</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="denmark">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.denmark">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">denmark</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Denmark.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Denmark</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="finland">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.finland">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">finland</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Finland.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Finland</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="franceSettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.franceSettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">franceSettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of France Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">France</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">France</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="franceExchange">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.franceExchange">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">franceExchange</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of France Exchange.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">France</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">France</span><span class="o">.</span><span class="n">Exchange</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="germanySettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.germanySettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">germanySettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Germany Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Germany</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Germany</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="germanyFrankfurtStockExchange">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.germanyFrankfurtStockExchange">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">germanyFrankfurtStockExchange</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Germany FrankfurtStockExchange.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Germany</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Germany</span><span class="o">.</span><span class="n">FrankfurtStockExchange</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="germanyXetra">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.germanyXetra">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">germanyXetra</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Germany Xetra.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Germany</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Germany</span><span class="o">.</span><span class="n">Xetra</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="germanyEurex">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.germanyEurex">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">germanyEurex</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Germany Eurex.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Germany</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Germany</span><span class="o">.</span><span class="n">Eurex</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="hongKongHKEx">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.hongKongHKEx">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">hongKongHKEx</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of HongKong HKEx.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">HongKong</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">HongKong</span><span class="o">.</span><span class="n">HKEx</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="hungary">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.hungary">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">hungary</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Hungary.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Hungary</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="icelandICEX">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.icelandICEX">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">icelandICEX</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Iceland ICEX.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Iceland</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Iceland</span><span class="o">.</span><span class="n">ICEX</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="indiaNSE">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.indiaNSE">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">indiaNSE</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of India NSE.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">India</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">India</span><span class="o">.</span><span class="n">NSE</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="indonesiaBEJ">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.indonesiaBEJ">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">indonesiaBEJ</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Indonesia BEJ.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Indonesia</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Indonesia</span><span class="o">.</span><span class="n">BEJ</span><span class="p">)</span></div>
+
+    
+    
+<div class="viewcode-block" id="indonesiaJSX">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.indonesiaJSX">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">indonesiaJSX</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Indonesia JSX.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Indonesia</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Indonesia</span><span class="o">.</span><span class="n">JSX</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="israelSettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.israelSettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">israelSettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Israel Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Israel</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Israel</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="israelTASE">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.israelTASE">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">israelTASE</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Israel TASE.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Israel</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Israel</span><span class="o">.</span><span class="n">TASE</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="israelSHIR">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.israelSHIR">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">israelSHIR</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Israel SHIR.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Israel</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Israel</span><span class="o">.</span><span class="n">SHIR</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="italySettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.italySettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">italySettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Italy Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Italy</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Italy</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="italyExchange">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.italyExchange">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">italyExchange</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Italy Exchange.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Italy</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Italy</span><span class="o">.</span><span class="n">Exchange</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="japan">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.japan">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">japan</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Japan.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Japan</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="mexicoBMV">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.mexicoBMV">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">mexicoBMV</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Mexico BMV.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Mexico</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Mexico</span><span class="o">.</span><span class="n">BMV</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="newZealandWellington">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.newZealandWellington">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">newZealandWellington</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of NewZealand Wellington.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">NewZealand</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">NewZealand</span><span class="o">.</span><span class="n">Wellington</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="newZealandAuckland">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.newZealandAuckland">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">newZealandAuckland</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of NewZealand Auckland.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">NewZealand</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">NewZealand</span><span class="o">.</span><span class="n">Auckland</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="norway">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.norway">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">norway</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Norway.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Norway</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="polandSettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.polandSettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">polandSettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Poland Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Poland</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Poland</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="polandWSE">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.polandWSE">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">polandWSE</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Poland WSE.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Poland</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Poland</span><span class="o">.</span><span class="n">WSE</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="romaniaPublic">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.romaniaPublic">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">romaniaPublic</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Romania Public.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Romania</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Romania</span><span class="o">.</span><span class="n">Public</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="romaniaBVB">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.romaniaBVB">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">romaniaBVB</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Romania BVB.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Romania</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Romania</span><span class="o">.</span><span class="n">BVB</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="russiaSettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.russiaSettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">russiaSettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Russia Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Russia</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Russia</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="russiaMOEX">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.russiaMOEX">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">russiaMOEX</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Russia MOEX.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Russia</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Russia</span><span class="o">.</span><span class="n">MOEX</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="saudiArabiaTadawul">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.saudiArabiaTadawul">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">saudiArabiaTadawul</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of SaudiArabia Tadawul.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SaudiArabia</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SaudiArabia</span><span class="o">.</span><span class="n">Tadawul</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="singaporeSGX">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.singaporeSGX">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">singaporeSGX</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Singapore SGX.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Singapore</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Singapore</span><span class="o">.</span><span class="n">SGX</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="slovakiaBSSE">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.slovakiaBSSE">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">slovakiaBSSE</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Slovakia BSSE.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Slovakia</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Slovakia</span><span class="o">.</span><span class="n">BSSE</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="southAfrica">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.southAfrica">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">southAfrica</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of SouthAfrica.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SouthAfrica</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="southKoreaSettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.southKoreaSettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">southKoreaSettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of SouthKorea Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SouthKorea</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SouthKorea</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="southKoreaKRX">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.southKoreaKRX">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">southKoreaKRX</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of SouthKorea KRX.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">SouthKorea</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">SouthKorea</span><span class="o">.</span><span class="n">KRX</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="sweden">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.sweden">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">sweden</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Sweden.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Sweden</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="switzerland">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.switzerland">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">switzerland</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Switzerland.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Switzerland</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="taiwanTSEC">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.taiwanTSEC">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">taiwanTSEC</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Taiwan TSEC.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Taiwan</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Taiwan</span><span class="o">.</span><span class="n">TSEC</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="thailand">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.thailand">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">thailand</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Thailand.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Thailand</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="turkey">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.turkey">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">turkey</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Turkey.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Turkey</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ukraineUSE">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.ukraineUSE">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ukraineUSE</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of Ukraine USE.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">Ukraine</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">Ukraine</span><span class="o">.</span><span class="n">USE</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="unitedKingdomSettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.unitedKingdomSettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">unitedKingdomSettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of UnitedKingdom Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedKingdom</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedKingdom</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="unitedKingdomExchange">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.unitedKingdomExchange">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">unitedKingdomExchange</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of UnitedKingdom Exchange.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedKingdom</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedKingdom</span><span class="o">.</span><span class="n">Exchange</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="unitedKingdomMetals">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.unitedKingdomMetals">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">unitedKingdomMetals</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of UnitedKingdom Metals.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedKingdom</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedKingdom</span><span class="o">.</span><span class="n">Metals</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="unitedStatesSettlement">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.unitedStatesSettlement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">unitedStatesSettlement</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of UnitedStates Settlement.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="o">.</span><span class="n">Settlement</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="unitedStatesNYSE">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.unitedStatesNYSE">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">unitedStatesNYSE</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of UnitedStates NYSE.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="o">.</span><span class="n">NYSE</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="unitedStatesGovernmentBond">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.unitedStatesGovernmentBond">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">unitedStatesGovernmentBond</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of UnitedStates GovernmentBond.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="o">.</span><span class="n">GovernmentBond</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="unitedStatesNERC">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.unitedStatesNERC">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">unitedStatesNERC</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of UnitedStates NERC.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="o">.</span><span class="n">NERC</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="unitedStatesLiborImpact">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.unitedStatesLiborImpact">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">unitedStatesLiborImpact</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of UnitedStates LiborImpact.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="o">.</span><span class="n">LiborImpact</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="unitedStatesFederalReserve">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.unitedStatesFederalReserve">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">unitedStatesFederalReserve</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of UnitedStates FederalReserve.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="o">.</span><span class="n">FederalReserve</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="unitedStatesSOFR">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.dateTool.unitedStatesSOFR">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">unitedStatesSOFR</span><span class="p">(</span><span class="n">null</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick way to initialize calendar of UnitedStates SOFR.&quot;&quot;&quot;</span>
+    <span class="n">holidayRule</span> <span class="o">=</span> <span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="p">(</span><span class="n">ql</span><span class="o">.</span><span class="n">UnitedStates</span><span class="o">.</span><span class="n">SOFR</span><span class="p">)</span></div>
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

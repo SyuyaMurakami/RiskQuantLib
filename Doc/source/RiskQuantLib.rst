@@ -7,28 +7,22 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   RiskQuantLib.Auto
    RiskQuantLib.Build
-   RiskQuantLib.Company
-   RiskQuantLib.CompanyList
-   RiskQuantLib.DataInputAPI
-   RiskQuantLib.Index
-   RiskQuantLib.IndexList
-   RiskQuantLib.InterestRate
+   RiskQuantLib.Instrument
+   RiskQuantLib.InstrumentList
    RiskQuantLib.Model
    RiskQuantLib.Operation
    RiskQuantLib.Property
-   RiskQuantLib.Security
-   RiskQuantLib.SecurityList
-   RiskQuantLib.Set
    RiskQuantLib.Tool
 
 Submodules
 ----------
 
-RiskQuantLib.Module module
+RiskQuantLib.module module
 --------------------------
 
-.. automodule:: RiskQuantLib.Module
+.. automodule:: RiskQuantLib.module
    :members:
    :undoc-members:
    :show-inheritance:

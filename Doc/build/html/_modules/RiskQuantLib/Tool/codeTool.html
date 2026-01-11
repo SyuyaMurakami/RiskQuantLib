@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RiskQuantLib.Tool.codeTool &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/readthedocs-custom.css" />
+
+  
+      <script src="../../../_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../RiskQuantLib.html">RiskQuantLib</a></li>
+      <li class="breadcrumb-item active">RiskQuantLib.Tool.codeTool</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for RiskQuantLib.Tool.codeTool</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># coding = utf-8</span>
+
+<span class="c1">#&lt;import&gt;</span>
+<span class="c1">#&lt;/import&gt;</span>
+
+<div class="viewcode-block" id="codeBuilder">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.codeBuilder">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">codeBuilder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is the basic class used to generate source code of any language.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">globalIndentStep</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">INDENT_STEP</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span> <span class="o">=</span> <span class="n">indent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iniIndentLevel</span> <span class="o">=</span> <span class="n">indent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">globalIndentStep</span> <span class="o">=</span> <span class="n">globalIndentStep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+
+<div class="viewcode-block" id="codeBuilder.addLine">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.codeBuilder.addLine">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">addLine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+        <span class="c1"># Add a line of source to the code.</span>
+        <span class="c1"># Indentation and new line will be added for you, don&#39;t provide them.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">globalIndentStep</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">line</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="codeBuilder.indent">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.codeBuilder.indent">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">indent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Increase the current indent for following lines</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">INDENT_STEP</span></div>
+
+
+<div class="viewcode-block" id="codeBuilder.dedent">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.codeBuilder.dedent">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dedent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Decrease the current indent for following lines</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">INDENT_STEP</span></div>
+
+
+<div class="viewcode-block" id="codeBuilder.addSection">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.codeBuilder.addSection">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">addSection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Add a section, a sub-CodeBuilder</span>
+        <span class="n">section</span> <span class="o">=</span> <span class="n">codeBuilder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">section</span></div>
+
+    
+<div class="viewcode-block" id="codeBuilder.getGlobals">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.codeBuilder.getGlobals">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getGlobals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Turn all blocks into code string.</span>
+        <span class="c1"># A check that caller really finished all the blocks</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">iniIndentLevel</span>
+        <span class="c1"># Get the Python source as a single string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+</div>
+
+
+    <span class="c1">#&lt;codeBuilder&gt;</span>
+    <span class="c1">#&lt;/codeBuilder&gt;</span>
+
+
+<div class="viewcode-block" id="codeBuilderPython">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.codeBuilderPython">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">codeBuilderPython</span><span class="p">(</span><span class="n">codeBuilder</span><span class="p">):</span>
+
+<div class="viewcode-block" id="codeBuilderPython.addSection">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.codeBuilderPython.addSection">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">addSection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Add a section, a sub-CodeBuilder</span>
+        <span class="n">section</span> <span class="o">=</span> <span class="n">codeBuilderPython</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indentLevel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">section</span></div>
+
+
+<div class="viewcode-block" id="codeBuilderPython.getGlobals">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.codeBuilderPython.getGlobals">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getGlobals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">execute</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">getGlobals</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">execute</span><span class="p">:</span>
+            <span class="c1"># Execute the source, defining globals, and return them.</span>
+            <span class="n">globalNameSpace</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iniIndentLevel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">exec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">globalNameSpace</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">globalNameSpace</span></div>
+</div>
+
+    
+    <span class="c1">#&lt;codeBuilderPython&gt;</span>
+    <span class="c1">#&lt;/codeBuilderPython&gt;</span>
+
+
+<div class="viewcode-block" id="pythonScriptBuilder">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.pythonScriptBuilder">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">pythonScriptBuilder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is the python source code builder, used to generate python</span>
+<span class="sd">    source code automatically.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">importLibrary</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">className</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="pythonScriptBuilder.setTitle">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.pythonScriptBuilder.setTitle">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setTitle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set python source file title, including coding method and python version.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">title</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;#!/usr/bin/python</span><span class="se">\n</span><span class="s1"># coding = utf-8</span><span class="se">\n</span><span class="s1">&#39;&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span></div>
+
+
+<div class="viewcode-block" id="pythonScriptBuilder.setImport">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.pythonScriptBuilder.setImport">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setImport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">libraryName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">libraryAbbr</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">importSubModule</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">subModuleName</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Import a module to python source file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        libraryName : str</span>
+<span class="sd">            The library name you want to import.</span>
+<span class="sd">        libraryAbbr : str</span>
+<span class="sd">            If not blank, library will be imported with the form &#39;import libraryName as libraryAbbr&#39;</span>
+<span class="sd">        importSubModule : bool</span>
+<span class="sd">            If True, library will be imported with the form &#39;from libraryName import subModuleName</span>
+<span class="sd">            as libraryAbbr&#39;</span>
+<span class="sd">        subModuleName : str</span>
+<span class="sd">            If not blank and importSubModule is true, library will be imported with the form &#39;from</span>
+<span class="sd">            libraryName import subModuleName as libraryAbbr&#39;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">importSubModule</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">libraryAbbr</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">importLibrary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">importLibrary</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;from &#39;&#39;&#39;</span><span class="o">+</span><span class="n">libraryName</span><span class="o">+</span><span class="s1">&#39;&#39;&#39; import &#39;&#39;&#39;</span> <span class="o">+</span> <span class="n">subModuleName</span><span class="o">+</span><span class="s1">&#39;&#39;&#39;</span><span class="se">\n</span><span class="s1">&#39;&#39;&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">importLibrary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">importLibrary</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;from &#39;&#39;&#39;</span><span class="o">+</span><span class="n">libraryName</span><span class="o">+</span><span class="s1">&#39;&#39;&#39; import &#39;&#39;&#39;</span> <span class="o">+</span> <span class="n">subModuleName</span> <span class="o">+</span><span class="s1">&#39;&#39;&#39; as &#39;&#39;&#39;</span><span class="o">+</span><span class="n">libraryAbbr</span><span class="o">+</span> <span class="s1">&#39;&#39;&#39;</span><span class="se">\n</span><span class="s1">&#39;&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">libraryAbbr</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">importLibrary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">importLibrary</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;import &#39;&#39;&#39;</span><span class="o">+</span><span class="n">libraryName</span><span class="o">+</span><span class="s1">&#39;&#39;&#39;</span><span class="se">\n</span><span class="s1">&#39;&#39;&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">importLibrary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">importLibrary</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;import &#39;&#39;&#39;</span> <span class="o">+</span> <span class="n">libraryName</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39; as &#39;&#39;&#39;</span><span class="o">+</span><span class="n">libraryAbbr</span><span class="o">+</span><span class="s1">&#39;&#39;&#39;</span><span class="se">\n</span><span class="s1">&#39;&#39;&#39;</span></div>
+
+
+<div class="viewcode-block" id="pythonScriptBuilder.startClass">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.pythonScriptBuilder.startClass">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">startClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">className</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parentClassName</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Start a new class. This function must be followed by endClass()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">className</span> <span class="o">=</span> <span class="n">className</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">codeBuilderPython</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">parentClassName</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;class &#39;&#39;&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">className</span><span class="o">+</span><span class="s1">&#39;&#39;&#39;():&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">parentClassName</span><span class="p">)</span><span class="o">==</span><span class="nb">type</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;class &#39;&#39;&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">className</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;(&#39;&#39;&#39;</span><span class="o">+</span><span class="n">parentClassName</span><span class="o">+</span><span class="s1">&#39;&#39;&#39;):&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parentClassNameList</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">i</span><span class="o">+</span><span class="s1">&#39;,&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">parentClassName</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;class &#39;&#39;&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">className</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;(&#39;&#39;&#39;</span> <span class="o">+</span> <span class="n">parentClassNameList</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;):&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">indent</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s2">&quot;def __nullFunction__(self):&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">indent</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s2">&quot;pass&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">dedent</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span></div>
+
+
+<div class="viewcode-block" id="pythonScriptBuilder.startFunction">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.pythonScriptBuilder.startFunction">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">startFunction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">functionName</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">variableName</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Start a function. This function must be followed by endFunction()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">=</span> <span class="n">functionName</span>
+
+        <span class="k">if</span> <span class="n">variableName</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s2">&quot;def &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">+</span> <span class="s2">&quot;(self):&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">variableName</span><span class="p">)</span><span class="o">==</span><span class="nb">type</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s2">&quot;def &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">+</span> <span class="s2">&quot;(self, &quot;</span><span class="o">+</span><span class="n">variableName</span><span class="o">+</span><span class="s2">&quot;):&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">variableNameList</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">i</span><span class="o">+</span><span class="s1">&#39;,&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">variableName</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">addLine</span><span class="p">(</span><span class="s2">&quot;def &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">+</span> <span class="s2">&quot;(self, &quot;</span><span class="o">+</span><span class="n">variableNameList</span><span class="o">+</span><span class="s2">&quot;):&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">indent</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="pythonScriptBuilder.endFunction">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.pythonScriptBuilder.endFunction">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">endFunction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Specify the end of a function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">functionName</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">dedent</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="pythonScriptBuilder.endClass">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.pythonScriptBuilder.endClass">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">endClass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Specify the end of a class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">className</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">dedent</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="pythonScriptBuilder.getSource">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.pythonScriptBuilder.getSource">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getSource</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get source code string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">getGlobals</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">importLibrary</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">source</span></div>
+
+
+<div class="viewcode-block" id="pythonScriptBuilder.writeToFile">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.codeTool.pythonScriptBuilder.writeToFile">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">writeToFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filePathString</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Output the source code to a file, use mode &#39;w+&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getSource</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filePathString</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span>  <span class="c1"># clear all contents</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\n</span><span class="s1">&#39;</span><span class="p">))</span></div>
+</div>
+
+
+    <span class="c1">#&lt;pythonScriptBuilder&gt;</span>
+    <span class="c1">#&lt;/pythonScriptBuilder&gt;</span>
+
+
+<span class="c1">#&lt;codeTool&gt;</span>
+<span class="c1">#&lt;/codeTool&gt;</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

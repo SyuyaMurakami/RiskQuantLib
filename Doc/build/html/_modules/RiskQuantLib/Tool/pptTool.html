@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RiskQuantLib.Tool.pptTool &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/readthedocs-custom.css" />
+
+  
+      <script src="../../../_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../E_project.html">Process Graph-Structure Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../RiskQuantLib.html">RiskQuantLib</a></li>
+      <li class="breadcrumb-item active">RiskQuantLib.Tool.pptTool</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for RiskQuantLib.Tool.pptTool</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1">#coding = utf-8</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.Tool.wordTool</span><span class="w"> </span><span class="kn">import</span> <span class="n">replaceParagraphContent</span> <span class="c1"># use package python-docx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pptx</span> <span class="c1"># use package python-pptx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pptx</span><span class="w"> </span><span class="kn">import</span> <span class="n">Presentation</span>
+
+<span class="c1">#&lt;import&gt;</span>
+<span class="c1">#&lt;/import&gt;</span>
+
+<div class="viewcode-block" id="replaceTableContent">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.pptTool.replaceTableContent">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">replaceTableContent</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span><span class="n">pptx</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">placeholder</span><span class="o">.</span><span class="n">PlaceholderGraphicFrame</span><span class="p">,</span> <span class="n">dfInput</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will replace the content of table into given dataframe. If two tables have different</span>
+<span class="sd">    shapes, then only the common part will be changed, other cells in original table will remain unchanged.</span>
+<span class="sd">    The change is in place, but the shape of original table won&#39;t be changed after this function is called.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    shape : pptx.shapes.placeholder.PlaceholderGraphicFrame</span>
+<span class="sd">        The shape object that you want to change, usually this shape is a table.</span>
+<span class="sd">    dfInput : pd.DataFrame</span>
+<span class="sd">        The dataframe that the original table should be changed to.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dfInput</span> <span class="o">=</span> <span class="n">dfInput</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">table</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">dfInput</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">rows</span><span class="p">))):</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">dfInput</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">columns</span><span class="p">))):</span>
+            <span class="k">for</span> <span class="n">num</span><span class="p">,</span><span class="n">paragraph</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">text_frame</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">dfInput</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+                        <span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
+                        <span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="replaceChart">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.pptTool.replaceChart">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">replaceChart</span><span class="p">(</span><span class="n">slide</span><span class="p">:</span><span class="n">pptx</span><span class="o">.</span><span class="n">slide</span><span class="o">.</span><span class="n">Slide</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span><span class="n">pptx</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">placeholder</span><span class="o">.</span><span class="n">PlaceholderGraphicFrame</span><span class="p">,</span> <span class="n">picturePath</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will replace the chart in given slide into the given picture. This change is in place.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    slide : pptx.slide.Slide</span>
+<span class="sd">        The slide where the shape object lies.</span>
+<span class="sd">    shape : pptx.shapes.placeholder.PlaceholderGraphicFrame</span>
+<span class="sd">        The shape object that you want to change, usually this shape is a chart.</span>
+<span class="sd">    picturePath : str</span>
+<span class="sd">        The path of picture that you want to use to replace the original chart.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">_element</span>
+    <span class="n">tmp</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+    <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">add_picture</span><span class="p">(</span><span class="n">picturePath</span><span class="p">,</span> <span class="n">shape</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">shape</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="replacePicture">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.pptTool.replacePicture">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">replacePicture</span><span class="p">(</span><span class="n">slide</span><span class="p">:</span><span class="n">pptx</span><span class="o">.</span><span class="n">slide</span><span class="o">.</span><span class="n">Slide</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span><span class="n">pptx</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">placeholder</span><span class="o">.</span><span class="n">PlaceholderGraphicFrame</span><span class="p">,</span> <span class="n">picturePath</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will replace the old picture in given slide into the given picture. This change is in place.</span>
+<span class="sd">    And the new picture has the same shape with the original one.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    slide : pptx.slide.Slide</span>
+<span class="sd">        The slide where the shape object lies.</span>
+<span class="sd">    shape : pptx.shapes.placeholder.PlaceholderGraphicFrame</span>
+<span class="sd">        The shape object that you want to change, usually this shape is a picture.</span>
+<span class="sd">    picturePath : str</span>
+<span class="sd">        The path of new picture that you want to use to replace the original picture.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">_pic</span>
+    <span class="n">tmp</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+    <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">add_picture</span><span class="p">(</span><span class="n">picturePath</span><span class="p">,</span> <span class="n">shape</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">shape</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="formatTextFrameWithTemplate">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.pptTool.formatTextFrameWithTemplate">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">formatTextFrameWithTemplate</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span><span class="n">pptx</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">placeholder</span><span class="o">.</span><span class="n">PlaceholderGraphicFrame</span><span class="p">,</span> <span class="n">paraDict</span><span class="p">:</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will use the content of paraDict to fill the mark in shape object. If it</span>
+<span class="sd">    find any mark like {symbolName}, it will replace it into the value declared by paraDict.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    shape : pptx.shapes.placeholder.PlaceholderGraphicFrame</span>
+<span class="sd">        The shape object that you want to change, usually this shape is a text frame.</span>
+<span class="sd">    paraDict : dict</span>
+<span class="sd">        The key-&gt;value pairs that declare what the symbols should be replaced to.</span>
+<span class="sd">        The key of this dict should be string type and like &#39;{symbolName}&#39;, and</span>
+<span class="sd">        the value of this dict should be string type.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">textFrame</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">text_frame</span>
+    <span class="k">for</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="n">textFrame</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">:</span>
+        <span class="n">replaceParagraphContent</span><span class="p">(</span><span class="n">paragraph</span><span class="p">,</span><span class="n">paraDict</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="formatTableWithTemplate">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.pptTool.formatTableWithTemplate">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">formatTableWithTemplate</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span><span class="n">pptx</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">placeholder</span><span class="o">.</span><span class="n">PlaceholderGraphicFrame</span><span class="p">,</span> <span class="n">paraDict</span><span class="p">:</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will use the content of paraDict to fill the mark in shape object. If it</span>
+<span class="sd">    find any mark like {symbolName}, it will replace it into the value declared by paraDict.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    shape : pptx.shapes.placeholder.PlaceholderGraphicFrame</span>
+<span class="sd">        The shape object that you want to change, usually this shape is a table.</span>
+<span class="sd">    paraDict : dict</span>
+<span class="sd">        The key-&gt;value pairs that declare what the symbols should be replaced to.</span>
+<span class="sd">        The key of this dict should be string type and like &#39;{symbolName}&#39;, and</span>
+<span class="sd">        the value of this dict should be string type.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">table</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">rows</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">columns</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">num</span><span class="p">,</span><span class="n">paragraph</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">text_frame</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">):</span>
+                <span class="n">replaceParagraphContent</span><span class="p">(</span><span class="n">paragraph</span><span class="p">,</span><span class="n">paraDict</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="formatSlide">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.pptTool.formatSlide">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">formatSlide</span><span class="p">(</span><span class="n">slide</span><span class="p">:</span> <span class="n">pptx</span><span class="o">.</span><span class="n">slide</span><span class="o">.</span><span class="n">Slide</span><span class="p">,</span> <span class="n">tableDict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">textDict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">graphDict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will use the content of tableDict and textDict and graphDict to change given</span>
+<span class="sd">    slide. The first table in the slide will be changed into tableDict[0] and the second table</span>
+<span class="sd">    in the slide will be changed into tableDict[1], etc... The first picture in the slide will</span>
+<span class="sd">    be changed into graphDict[0] and the second table in the slide will be changed into graphDict[1],</span>
+<span class="sd">    etc... Any symbols like {symbolName} will be changed into given string specified by textDict.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    slide : pptx.slide.Slide</span>
+<span class="sd">        The slide which you want to change.</span>
+<span class="sd">    tableDict : dict</span>
+<span class="sd">        The key-&gt;value pairs that declare what the table should be replaced to. The key</span>
+<span class="sd">        of this dict should be int number and start from 0, like 0, 1, 2... and the value</span>
+<span class="sd">        of this dict should be pandas.DataFrame object.</span>
+<span class="sd">    textDict : dict</span>
+<span class="sd">        The key-&gt;value pairs that declare what the symbols should be replaced to.</span>
+<span class="sd">        The key of this dict should be string type and like &#39;{symbolName}&#39;, and</span>
+<span class="sd">        the value of this dict should be string type.</span>
+<span class="sd">    graphDict : dict</span>
+<span class="sd">        The key-&gt;value pairs that declare what the graph should be replaced to. The key</span>
+<span class="sd">        of this dict should be int number and start from 0, like 0, 1, 2... and the value</span>
+<span class="sd">        of this dict should be path string of pictures.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">shapes</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="p">]</span>
+    <span class="n">tbId</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">imageId</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">tableDict</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">tableDict</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">tableDict</span>
+    <span class="n">textDict</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">textDict</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">textDict</span>
+    <span class="n">graphDict</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">graphDict</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">graphDict</span>
+    <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">shapes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">shape</span><span class="o">.</span><span class="n">has_table</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tableDict</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">replaceTableContent</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">tableDict</span><span class="p">[</span><span class="n">tbId</span><span class="p">])</span>
+                <span class="n">tbId</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">textDict</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">formatTableWithTemplate</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">textDict</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">shape</span><span class="o">.</span><span class="n">has_text_frame</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">textDict</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">formatTextFrameWithTemplate</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">textDict</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">shape</span><span class="o">.</span><span class="n">has_chart</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">graphDict</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">replaceChart</span><span class="p">(</span><span class="n">slide</span><span class="p">,</span><span class="n">shape</span><span class="p">,</span><span class="n">graphDict</span><span class="p">[</span><span class="n">imageId</span><span class="p">])</span>
+            <span class="n">imageId</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="n">pptx</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">picture</span><span class="o">.</span><span class="n">Picture</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">graphDict</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">replacePicture</span><span class="p">(</span><span class="n">slide</span><span class="p">,</span><span class="n">shape</span><span class="p">,</span><span class="n">graphDict</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="formatPPTX">
+<a class="viewcode-back" href="../../../RiskQuantLib.Tool.html#RiskQuantLib.Tool.pptTool.formatPPTX">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">formatPPTX</span><span class="p">(</span><span class="n">filePath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">targetPath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tableDict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">textDict</span><span class="p">:</span><span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">graphDict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">slideIndex</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will use the content of tableDict and textDict and graphDict to change given</span>
+<span class="sd">    PPT. It will iterate across every slide and modify it. The first table in the slide will be</span>
+<span class="sd">    changed into tableDict[0] and the second table in the slide will be changed into tableDict[1],</span>
+<span class="sd">    etc... The first picture in the slide will be changed into graphDict[0] and the second table</span>
+<span class="sd">    in the slide will be changed into graphDict[1], etc... Any symbols like {symbolName} will be</span>
+<span class="sd">    changed into given string specified by textDict.</span>
+
+<span class="sd">    After change is done, this PPT will be saved into target file. You can also specify the slideIndex</span>
+<span class="sd">    so that only the specified slide will be changed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filePath : str</span>
+<span class="sd">        The path of PPT file which you want to change.</span>
+<span class="sd">    targetPath : str</span>
+<span class="sd">        The path where you want to change the modified file.</span>
+<span class="sd">    tableDict :dict</span>
+<span class="sd">        The key-&gt;value pairs that declare what the table should be replaced to. The key</span>
+<span class="sd">        of this dict should be int number and start from 0, like 0, 1, 2... and the value</span>
+<span class="sd">        of this dict should be pandas.DataFrame object.</span>
+<span class="sd">    textDict : dict</span>
+<span class="sd">        The key-&gt;value pairs that declare what the symbols should be replaced to.</span>
+<span class="sd">        The key of this dict should be string type and like &#39;{symbolName}&#39;, and</span>
+<span class="sd">        the value of this dict should be string type.</span>
+<span class="sd">    graphDict :dict</span>
+<span class="sd">        The key-&gt;value pairs that declare what the graph should be replaced to. The key</span>
+<span class="sd">        of this dict should be int number and start from 0, like 0, 1, 2... and the value</span>
+<span class="sd">        of this dict should be path string of pictures.</span>
+<span class="sd">    slideIndex : int</span>
+<span class="sd">        The int number i which specify the i-th slide should be changed. If you specify this</span>
+<span class="sd">        parameter, then all the rest will not be changed.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">(</span><span class="n">filePath</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">slideIndex</span><span class="p">)</span><span class="o">==</span><span class="nb">int</span><span class="p">:</span>
+        <span class="n">formatSlide</span><span class="p">(</span><span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="p">[</span><span class="n">slideIndex</span><span class="p">],</span> <span class="n">tableDict</span><span class="p">,</span> <span class="n">textDict</span><span class="p">,</span> <span class="n">graphDict</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="p">[</span><span class="n">formatSlide</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">tableDict</span><span class="p">,</span><span class="n">textDict</span><span class="p">,</span><span class="n">graphDict</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="p">]</span>
+    <span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">targetPath</span><span class="p">)</span></div>
+
+
+<span class="c1">#&lt;pptTool&gt;</span>
+<span class="c1">#&lt;/pptTool&gt;</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

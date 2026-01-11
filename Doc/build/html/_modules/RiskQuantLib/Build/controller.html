@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RiskQuantLib.Build.controller &mdash; RiskQuantLib 0.3.8 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/readthedocs-custom.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/documentation_options.js?v=c1cae59a"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_ORM.html">With ORM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../E_project.html">图数据结构编程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../With_Github.html">与Github配合使用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Advance.html">高级教程</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../RiskQuantLib.html">RiskQuantLib</a></li>
+      <li class="breadcrumb-item active">RiskQuantLib.Build.controller</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for RiskQuantLib.Build.controller</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># coding = utf-8</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<div class="viewcode-block" id="controller">
+<a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.controller.controller">[docs]</a>
+<span class="k">class</span> <span class="nc">controller</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="controller.findDeclareTag">
+<a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.controller.controller.findDeclareTag">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">findDeclareTag</span><span class="p">(</span><span class="n">sourceCode</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the line start with #-|, return a list whose element is each line string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">declarePosition</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">regs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;^#-\|.*:.*$&#39;&#39;&#39;</span><span class="p">,</span> <span class="n">sourceCode</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)]</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="p">[</span><span class="n">sourceCode</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span> <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">declarePosition</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">content</span></div>
+
+
+<div class="viewcode-block" id="controller.parseDeclareTagByGivenString">
+<a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.controller.controller.parseDeclareTagByGivenString">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">parseDeclareTagByGivenString</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">splitLineBy</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">splitWordBy</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;@&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Split content by given string, and split each element of line by given string.</span>
+<span class="sd">        Return the list whose element is the first part of word of each line, and the list</span>
+<span class="sd">        whose element if the last part of word of each line.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lineSplit</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">splitLineBy</span><span class="p">)]</span>
+        <span class="n">wordSplit</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">splitWordBy</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lineSplit</span><span class="p">]</span>
+        <span class="n">contentBeforeWordSplit</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">wordSplit</span><span class="p">]</span>
+        <span class="n">contentAfterWordSplit</span> <span class="o">=</span> <span class="p">[</span><span class="n">splitWordBy</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">2</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">wordSplit</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">contentBeforeWordSplit</span><span class="p">,</span> <span class="n">contentAfterWordSplit</span></div>
+
+
+<div class="viewcode-block" id="controller.parseDeclareTagAsSeries">
+<a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.controller.controller.parseDeclareTagAsSeries">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">parseDeclareTagAsSeries</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">tagName</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">defaultTagName</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform each declaration line about instrument into Series, which contains instrument build information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tagNameAdj</span> <span class="o">=</span> <span class="n">defaultTagName</span> <span class="k">if</span> <span class="n">tagName</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="k">else</span> <span class="n">tagName</span>
+        <span class="n">controlCommandIndex</span><span class="p">,</span> <span class="n">controlCommandValue</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">parseDeclareTagByGivenString</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="n">controlCommandIndexRoot</span><span class="p">,</span> <span class="n">controlCommandIndexRest</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">parseDeclareTagByGivenString</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">controlCommandIndex</span><span class="p">),</span> <span class="n">splitWordBy</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+        <span class="n">controlCommandSeries</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">controlCommandValue</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">([</span><span class="n">controlCommandIndexRoot</span><span class="p">,</span><span class="n">controlCommandIndexRest</span><span class="p">],</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Root&#39;</span><span class="p">,</span><span class="s1">&#39;Rest&#39;</span><span class="p">]))</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">tagNameAdj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">controlCommandSeries</span></div>
+
+
+<div class="viewcode-block" id="controller.parseDeclareTagAsDF">
+<a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.controller.controller.parseDeclareTagAsDF">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">parseDeclareTagAsDF</span><span class="p">(</span><span class="n">controlSyntaxList</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span> <span class="n">instrumentColDefault</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;InstrumentName&#39;</span><span class="p">,</span><span class="s1">&#39;ParentRQLClassName&#39;</span><span class="p">,</span><span class="s1">&#39;ParentQuantLibClassName&#39;</span><span class="p">,</span><span class="s1">&#39;LibraryName&#39;</span><span class="p">,</span><span class="s1">&#39;DefaultInstrumentType&#39;</span><span class="p">],</span><span class="n">attributeColDefault</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;SecurityType&#39;</span><span class="p">,</span><span class="s1">&#39;AttrName&#39;</span><span class="p">,</span><span class="s1">&#39;AttrType&#39;</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given the list whose element is line string of declaration content, transfer instrument declaration and attribute declaration into series, and</span>
+<span class="sd">        merge all series into a build dataframe. Return the buildInstrument dataframe and buildAttr dataframe.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">declareTagNameOrigin</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;#-|&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">controlSyntaxList</span><span class="p">]</span>
+        <span class="n">declareTagContentOrigin</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">controlSyntaxList</span><span class="p">]</span>
+        <span class="n">declareTagMerged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">declareTagContentOrigin</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">declareTagNameOrigin</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">group_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">declareTagName</span> <span class="o">=</span> <span class="n">declareTagMerged</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+        <span class="n">declareTagContent</span> <span class="o">=</span> <span class="n">declareTagMerged</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">declareTagNameType</span><span class="p">,</span> <span class="n">declareTagNameSubType</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">parseDeclareTagByGivenString</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">declareTagName</span><span class="p">),</span><span class="n">splitWordBy</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+        <span class="n">declareTagDefaultCol</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ParentRQLClassName&#39;</span> <span class="k">if</span> <span class="n">tnt</span><span class="o">==</span><span class="s1">&#39;instrument&#39;</span> <span class="k">else</span> <span class="s1">&#39;AttrType&#39;</span> <span class="k">if</span> <span class="n">tnt</span> <span class="o">==</span> <span class="s1">&#39;attribute&#39;</span> <span class="k">else</span> <span class="n">tn</span> <span class="k">for</span> <span class="n">tnt</span><span class="p">,</span><span class="n">tn</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">declareTagNameType</span><span class="p">,</span><span class="n">declareTagName</span><span class="p">)]</span>
+        <span class="n">declareTagParse</span> <span class="o">=</span> <span class="p">{</span><span class="n">tn</span><span class="p">:(</span><span class="n">controller</span><span class="o">.</span><span class="n">parseDeclareTagAsSeries</span><span class="p">(</span><span class="n">tc</span><span class="p">,</span><span class="n">tnst</span><span class="p">,</span><span class="n">tdc</span><span class="p">))</span> <span class="k">for</span> <span class="n">tn</span><span class="p">,</span><span class="n">tc</span><span class="p">,</span><span class="n">tnst</span><span class="p">,</span><span class="n">tdc</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">declareTagName</span><span class="p">,</span><span class="n">declareTagContent</span><span class="p">,</span><span class="n">declareTagNameSubType</span><span class="p">,</span><span class="n">declareTagDefaultCol</span><span class="p">)}</span>
+        <span class="n">declareTagNameTypeDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">declareTagName</span><span class="p">,</span><span class="n">declareTagNameType</span><span class="p">))</span>
+
+        <span class="n">instrumentInfo</span> <span class="o">=</span> <span class="p">[</span><span class="n">declareTagParse</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">declareTagParse</span> <span class="k">if</span> <span class="n">declareTagNameTypeDict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;instrument&#39;</span><span class="p">]</span>
+        <span class="n">attributeInfo</span> <span class="o">=</span> <span class="p">[</span><span class="n">declareTagParse</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">declareTagParse</span> <span class="k">if</span> <span class="n">declareTagNameTypeDict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;attribute&#39;</span><span class="p">]</span>
+        <span class="n">otherInfo</span> <span class="o">=</span> <span class="p">[</span><span class="n">declareTagParse</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">declareTagParse</span> <span class="k">if</span> <span class="n">declareTagNameTypeDict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;instrument&#39;</span><span class="p">,</span><span class="s1">&#39;attribute&#39;</span><span class="p">}]</span>
+
+        <span class="n">buildInstrumentTotal</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">instrumentInfo</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">instrumentInfo</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">instrumentColDefault</span><span class="p">)</span>
+        <span class="n">buildInstrumentTotal</span><span class="p">[</span><span class="s1">&#39;InstrumentName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">buildInstrumentTotal</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">buildInstrumentDefault</span> <span class="o">=</span> <span class="n">buildInstrumentTotal</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">instrumentColDefault</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">buildInstrumentOption</span> <span class="o">=</span> <span class="n">buildInstrumentTotal</span><span class="p">[[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">buildInstrumentTotal</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">instrumentColDefault</span><span class="p">]]</span>
+        <span class="n">buildInstrument</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">buildInstrumentDefault</span><span class="p">,</span><span class="n">buildInstrumentOption</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">buildAttributeTotal</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">attributeInfo</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">attributeInfo</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">attributeColDefault</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="p">(</span><span class="n">levels</span><span class="o">=</span><span class="p">[[],[]],</span><span class="n">codes</span><span class="o">=</span><span class="p">[[],[]]))</span>
+        <span class="n">buildAttributeTotal</span><span class="p">[</span><span class="s1">&#39;SecurityType&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">buildAttributeTotal</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">buildAttributeTotal</span><span class="p">[</span><span class="s1">&#39;AttrName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">buildAttributeTotal</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">buildAttributeDefault</span> <span class="o">=</span> <span class="n">buildAttributeTotal</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">attributeColDefault</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">buildAttributeOption</span> <span class="o">=</span> <span class="n">buildAttributeTotal</span><span class="p">[[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">buildAttributeTotal</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">attributeColDefault</span><span class="p">]]</span>
+        <span class="n">buildAttr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">buildAttributeDefault</span><span class="p">,</span> <span class="n">buildAttributeOption</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">buildOtherTotal</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">otherInfo</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">otherInfo</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">buildInstrument</span><span class="p">,</span> <span class="n">buildAttr</span><span class="p">,</span> <span class="n">buildOtherTotal</span></div>
+
+
+<div class="viewcode-block" id="controller.linkController">
+<a class="viewcode-back" href="../../../RiskQuantLib.Build.html#RiskQuantLib.Build.controller.controller.linkController">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">linkController</span><span class="p">(</span><span class="n">linkToBuilder</span><span class="p">,</span> <span class="n">controlSyntaxList</span><span class="p">:</span><span class="nb">list</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given original builder, create a new builder, this new builder will copy all build path of original builder, but use</span>
+<span class="sd">        additional build information declared by declaration content to modify itself. Then the new builder will trigger a</span>
+<span class="sd">        build action. This function will return the new builder as a mimic one of original builder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">RiskQuantLib.Build.builder</span> <span class="kn">import</span> <span class="n">validateBuilder</span><span class="p">,</span><span class="n">builder</span>
+        <span class="p">[</span><span class="n">linkToBuilder</span><span class="o">.</span><span class="n">mimicBuilder</span><span class="o">.</span><span class="n">bindContent</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bindType</span><span class="o">=</span><span class="n">bt</span><span class="p">,</span> <span class="n">persist</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">bt</span> <span class="ow">in</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">mimicBuilder</span><span class="o">.</span><span class="n">bindType</span><span class="p">]</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">linkToBuilder</span><span class="p">,</span><span class="s1">&#39;mimicBuilder&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">linkToBuilder</span><span class="o">.</span><span class="n">mimicBuilder</span><span class="p">,</span><span class="n">builder</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">linkToBuilder</span><span class="o">.</span><span class="n">buildFromPath</span><span class="p">,</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">projectPath</span><span class="p">,</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">targetPath</span><span class="p">,</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">templatePath</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">linkToBuilder</span><span class="o">.</span><span class="n">mimicBuilder</span><span class="o">.</span><span class="n">buildFromPath</span><span class="p">,</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">mimicBuilder</span><span class="o">.</span><span class="n">projectPath</span><span class="p">,</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">mimicBuilder</span><span class="o">.</span><span class="n">targetPath</span><span class="p">,</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">mimicBuilder</span><span class="o">.</span><span class="n">templatePath</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">mimicBuilder</span> <span class="o">=</span> <span class="n">validateBuilder</span><span class="p">()</span>
+        <span class="n">mimicBuilder</span><span class="o">.</span><span class="n">projectPath</span> <span class="o">=</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">projectPath</span>
+        <span class="n">mimicBuilder</span><span class="o">.</span><span class="n">targetPath</span> <span class="o">=</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">targetPath</span>
+        <span class="n">mimicBuilder</span><span class="o">.</span><span class="n">buildFromPath</span> <span class="o">=</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">buildFromPath</span>
+        <span class="n">mimicBuilder</span><span class="o">.</span><span class="n">templatePath</span> <span class="o">=</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">templatePath</span>
+        <span class="n">mimicBuilder</span><span class="o">.</span><span class="n">instrumentTree</span> <span class="o">=</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">instrumentTree</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">mimicBuilder</span><span class="o">.</span><span class="n">propertyTree</span> <span class="o">=</span> <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">propertyTree</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">buildInstrument</span><span class="p">,</span> <span class="n">buildAttr</span><span class="p">,</span> <span class="n">buildOther</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">parseDeclareTagAsDF</span><span class="p">(</span><span class="n">controlSyntaxList</span><span class="p">)</span>
+        <span class="n">buildInstrument</span> <span class="o">=</span> <span class="n">buildInstrument</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;InstrumentName&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">buildInstrument</span> <span class="o">=</span> <span class="n">buildInstrument</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">buildInstrument</span><span class="p">[[</span><span class="s1">&#39;InstrumentName&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">buildAttr</span> <span class="o">=</span> <span class="n">buildAttr</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;AttrName&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">buildAttr</span> <span class="o">=</span> <span class="n">buildAttr</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">buildAttr</span><span class="p">[[</span><span class="s1">&#39;SecurityType&#39;</span><span class="p">,</span><span class="s1">&#39;AttrName&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">dfName</span> <span class="o">=</span> <span class="p">[</span><span class="n">buildInstrument</span><span class="p">,</span> <span class="n">buildInstrument</span><span class="p">,</span> <span class="n">buildInstrument</span><span class="p">,</span> <span class="n">buildInstrument</span><span class="p">,</span> <span class="n">buildInstrument</span><span class="p">,</span> <span class="n">buildAttr</span><span class="p">,</span> <span class="n">buildAttr</span><span class="p">,</span> <span class="n">buildAttr</span><span class="p">]</span>
+        <span class="n">dfCol</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;InstrumentName&#39;</span><span class="p">,</span> <span class="s1">&#39;ParentRQLClassName&#39;</span><span class="p">,</span> <span class="s1">&#39;ParentQuantLibClassName&#39;</span><span class="p">,</span> <span class="s1">&#39;LibraryName&#39;</span><span class="p">,</span> <span class="s1">&#39;DefaultInstrumentType&#39;</span><span class="p">,</span> <span class="s1">&#39;SecurityType&#39;</span><span class="p">,</span> <span class="s1">&#39;AttrName&#39;</span><span class="p">,</span> <span class="s1">&#39;AttrType&#39;</span><span class="p">]</span>
+        <span class="n">dfNanInstrument</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">buildInstrument</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+        <span class="n">dfNanAttr</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">buildAttr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span> <span class="k">if</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span> <span class="k">else</span> <span class="n">dfNanInstrument</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">dfNanInstrument</span><span class="p">)</span> <span class="k">else</span> <span class="n">dfNanAttr</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">dfNanAttr</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="s1">&#39;&#39;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dfName</span><span class="p">,</span><span class="n">dfCol</span><span class="p">)])</span>
+        <span class="n">mimicBuilder</span><span class="o">.</span><span class="n">validateTree</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">validateBuilder</span><span class="p">,</span> <span class="n">mimicBuilder</span><span class="p">)</span><span class="o">.</span><span class="n">buildProject</span><span class="p">(</span><span class="n">dumpCache</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">mimicBuilder</span><span class="o">.</span><span class="n">delRender</span><span class="p">()</span>
+        <span class="n">linkToBuilder</span><span class="o">.</span><span class="n">mimicBuilder</span> <span class="o">=</span> <span class="n">mimicBuilder</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

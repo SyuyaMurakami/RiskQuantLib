@@ -12,7 +12,9 @@
 # Problems with imports? Could try `export PYTHONPATH=$PYTHONPATH:`pwd`` from root project dir...
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../..'))  # Source code dir relative to this file
+sys.path.insert(0, os.path.abspath('../RiskQuantLib/Tool'))
+sys.path.insert(0, os.path.abspath('../RiskQuantLib'))
+sys.path.insert(0, os.path.abspath('..'))  # Source code dir relative to this file
 
 # -- Project information -----------------------------------------------------
 
@@ -20,7 +22,7 @@ project = 'RiskQuantLib'
 author = 'Murakami'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.24'
+release = '0.4.3'
 
 # -- General configuration ---------------------------------------------------
 

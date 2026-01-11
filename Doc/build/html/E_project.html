@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Process Graph-Structure Data &mdash; RiskQuantLib 0.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/readthedocs-custom.css" />
+
+  
+      <script src="_static/documentation_options.js?v=5bfaad31"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="With Github" href="With_Github.html" />
+    <link rel="prev" title="With ORM" href="With_ORM.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            RiskQuantLib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">RiskQuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Create_Project.html">Create A New Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Build_Project.html">Build Your Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument.html">Instrument</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Instrument_List.html">Instrument List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tool.html">Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project_Management.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Variable_Type.html">Variable Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_QuantLib.html">With QuantLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_Pandas.html">With Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="With_ORM.html">With ORM</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Process Graph-Structure Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fundamentals-of-graph-structure-data">Fundamentals of Graph-Structure Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#one-more-step-with-riskquantlib">One More Step With RiskQuantLib</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#join"><em>Join</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#match"><em>Match</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connect"><em>Connect</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#link"><em>Link</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#a-text-counting-project">A Text Counting Project</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-input"><em>Data Input</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-analysis"><em>Data Analysis</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-output"><em>Data Output</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="With_Github.html">With Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advance.html">Advance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="About.html">About</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RiskQuantLib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Process Graph-Structure Data</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="process-graph-structure-data">
+<h1>Process Graph-Structure Data<a class="headerlink" href="#process-graph-structure-data" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<section id="fundamentals-of-graph-structure-data">
+<h2>Fundamentals of Graph-Structure Data<a class="headerlink" href="#fundamentals-of-graph-structure-data" title="Link to this heading">¶</a></h2>
+<p>Generally when we talk about databases, the first impression is usually SQL. As a common query language for <strong>relational</strong> databases, SQL has been widely developed and used in the past decades. But as its name suggests, it is only a query method for relational databases, while other types of databases, such as graph databases, use Cypher as a query language. If we open our minds, we realize that data is not only handled in a relational way.</p>
+<p>In many cases, relational data is indeed the easiest data structure for people to understand and manipulate. Any table-like data, for example, excel document, can be seen as relational data. They are typically characterized by data stored in the form of rows and columns, with fixed relationships between the data in each row, and these relationships are usually identified by column names.</p>
+<p>However, as data science advances, in more and more cases, the relationships between data become less standardized. You may have noticed that it is not always the most convenient way to save data in a matrix form like rows and columns at all times. You may find that certain rows have a lot of null values, or that the length of the previous row is not equal to the length of the next row (Excel may deal with this by merging cells). But if we think carefully, we will find that the so-called null value often comes from the lack of relationship, that is, in that line does not actually exist in such a relationship. And further thinking will allow us to realize that the null value comes from the way we use data, that is, to force the data to be presented as rows and columns. By this, the relationship that should never exist must occupy a position, the value of this position can only be null.</p>
+<p><strong>So it’s time we start recognizing that data doesn’t always behave in a relational form like a matrix, nor should it.</strong></p>
+<p>Graph data structures are a good alternative to relational data structures. It origins from Set Theory. The most basic concepts in graph data structures are <strong>Node</strong> and <strong>Edge</strong>, a node is a unit used to store static data, while an edge usually represents a relationship between nodes. For example, if we have a node called <code class="docutils literal notranslate"><span class="pre">human</span></code> , and nodes named as <code class="docutils literal notranslate"><span class="pre">father</span></code> and <code class="docutils literal notranslate"><span class="pre">son</span></code> , then we can use two edges to link them. These links represent the truth that <code class="docutils literal notranslate"><span class="pre">human</span></code> includes <code class="docutils literal notranslate"><span class="pre">father</span></code> and <code class="docutils literal notranslate"><span class="pre">son</span></code>.</p>
+<p>You can find a lot of information about graph-structure data, so we won’t go into it here. The well-known graph-structure database Neo4j provides a lot of material for introducing graph-structure data. You may find them in official website.</p>
+</section>
+<section id="one-more-step-with-riskquantlib">
+<h2>One More Step With RiskQuantLib<a class="headerlink" href="#one-more-step-with-riskquantlib" title="Link to this heading">¶</a></h2>
+<p>RiskQuantLib uses <code class="docutils literal notranslate"><span class="pre">Instrument</span></code> and <code class="docutils literal notranslate"><span class="pre">Instrument</span> <span class="pre">List</span></code> to process and analyze data, but if we stop there, then RiskQuantLib’s functionality will be very limited. To realize the full potential of RiskQuantLib, we need to treat <code class="docutils literal notranslate"><span class="pre">Instrument</span></code> and <code class="docutils literal notranslate"><span class="pre">Instrument</span> <span class="pre">List</span></code> in a different way:</p>
+<blockquote>
+<div><p><cite>The Instrument and Instrument List are not just a python class file, they are also node of graph-structure data in RiskQuantLib.</cite></p>
+</div></blockquote>
+<p>This is the core design of RiskQuantLib. There are two layers of any type of node (you can also call these two layers together as one node), the top-level <code class="docutils literal notranslate"><span class="pre">Instrument</span> <span class="pre">List</span></code> and the bottom-level <code class="docutils literal notranslate"><span class="pre">Instrument</span></code> . The top-level <code class="docutils literal notranslate"><span class="pre">Instrument</span> <span class="pre">List</span></code> is typically used to handle relationships within nodes of the <code class="docutils literal notranslate"><span class="pre">Instrument</span></code> , while the bottom-level <code class="docutils literal notranslate"><span class="pre">Instrument</span></code> acts as a specific standalone node, responsible for interacting with other types of nodes or performing operations under its own scope.</p>
+<p>RiskQuantLib add edges between nodes through four key functions: <code class="docutils literal notranslate"><span class="pre">join</span></code>, <code class="docutils literal notranslate"><span class="pre">match</span></code>, <code class="docutils literal notranslate"><span class="pre">connect</span></code> , <code class="docutils literal notranslate"><span class="pre">link</span></code> :</p>
+<section id="join">
+<h3><em>Join</em><a class="headerlink" href="#join" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">join</span></code> is a function used to build <strong>one-way link</strong> between two nodes.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">stockListA</span></code> is an instance of <code class="docutils literal notranslate"><span class="pre">stockList</span></code> , while <code class="docutils literal notranslate"><span class="pre">companyListB</span></code> is an instance of <code class="docutils literal notranslate"><span class="pre">companyList</span></code> , and we still have a dictionary named as <code class="docutils literal notranslate"><span class="pre">stockIPODetail</span></code>, whose key is name of company and value is name of stock issued by that company, for example, company A issued a stock named 123.HK. Notice here, the same company may issue shares with different name on two different exchanges, for example, it was once a popular thing to be listed on both the New York Stock Exchange and the Hong Kong Stock Exchange. The return value of <code class="docutils literal notranslate"><span class="pre">stockIPODetail[companyName]</span></code> is a python list, whose element is the stock code that issued by that company, and sorted by ascending order.</p>
+<p><code class="docutils literal notranslate"><span class="pre">join</span></code> is the attribute function of any InstrumentList, you can use it with any instance of InstrumentList, only need to pass parameters like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">riskQuantLibList</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">anotherList</span><span class="p">,</span> <span class="n">targetAttrName</span><span class="p">,</span> <span class="n">filterFunction</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When you call this function, for every element <code class="docutils literal notranslate"><span class="pre">Ai</span></code> of <code class="docutils literal notranslate"><span class="pre">riskQuantLibList</span></code> , RiskQuntLib will find those element from <code class="docutils literal notranslate"><span class="pre">anotherList</span></code> , which satisfy given conditions, and then use these element to initialize a new instance of InstrumentList, then set this instance as an attribute of element <code class="docutils literal notranslate"><span class="pre">Ai</span></code> . The name of attribute is <code class="docutils literal notranslate"><span class="pre">targetAttrName</span></code> , and the condition used to filter element is <code class="docutils literal notranslate"><span class="pre">filterFunction</span></code> , which is a function that return a bool value. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">companyListB</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stockListA</span><span class="p">,</span> <span class="s1">&#39;issuedStock&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">company</span><span class="p">,</span> <span class="n">stock</span><span class="p">:</span> <span class="n">stockIPODetail</span><span class="p">[</span><span class="n">company</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">==</span><span class="n">stock</span><span class="o">.</span><span class="n">stockBelongToSameCompany</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After you call this function, every element of <code class="docutils literal notranslate"><span class="pre">companyListB</span></code> , which is an instance of <code class="docutils literal notranslate"><span class="pre">company</span></code> , will be added one more attribute named as <code class="docutils literal notranslate"><span class="pre">issuedStock</span></code>, the value of this attribute is an instance of <code class="docutils literal notranslate"><span class="pre">stockList</span></code> , which contains all stock that issued by that company. If that company never issued shares, then the length of <code class="docutils literal notranslate"><span class="pre">stockList</span></code> will be 0.</p>
+</section>
+<section id="match">
+<h3><em>Match</em><a class="headerlink" href="#match" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">match</span></code> is a vectorized version of <code class="docutils literal notranslate"><span class="pre">join</span></code> , so that it is usually faster. Use the same example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">riskQuantLibList</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">anotherList</span><span class="p">,</span> <span class="n">targetAttrName</span><span class="p">,</span> <span class="n">matchFunctionOnLeft</span><span class="p">,</span> <span class="n">matchFunctionOnRight</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When you call this function, first, for every element <code class="docutils literal notranslate"><span class="pre">Ai</span></code> of <code class="docutils literal notranslate"><span class="pre">riskQuantLibList</span></code> , which is an instance of <code class="docutils literal notranslate"><span class="pre">company</span></code> , this element will be passed to <code class="docutils literal notranslate"><span class="pre">matchFunctionOnLeft</span></code> and get result as P. Second, for every element of <code class="docutils literal notranslate"><span class="pre">anotherList</span></code> , which is an instance of <code class="docutils literal notranslate"><span class="pre">stock</span></code> , that element will be passed to <code class="docutils literal notranslate"><span class="pre">matchFunctionOnRight</span></code> and get result as Q. Finally, those element from <code class="docutils literal notranslate"><span class="pre">anotherList</span></code> that satisfy P==Q will be used to initialized a new instance of  <code class="docutils literal notranslate"><span class="pre">stockList</span></code> , and setted as an attribute of <code class="docutils literal notranslate"><span class="pre">Ai</span></code> . The name of attribute is <code class="docutils literal notranslate"><span class="pre">targetAttrName</span></code> . For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">companyListB</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">stockListA</span><span class="p">,</span> <span class="s1">&#39;issuedStock&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">company</span><span class="p">:</span><span class="n">stockIPODetail</span><span class="p">[</span><span class="n">company</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="k">lambda</span> <span class="n">stock</span><span class="p">:</span> <span class="n">stock</span><span class="o">.</span><span class="n">stockBelongToSameCompany</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When you run this, each element of <code class="docutils literal notranslate"><span class="pre">companyListB</span></code>, which is an instance of <code class="docutils literal notranslate"><span class="pre">company</span></code> , will have an additional attribute called <code class="docutils literal notranslate"><span class="pre">issuedStock</span></code> , whose value is an instance of <code class="docutils literal notranslate"><span class="pre">stockList</span></code> , which contains all stock issued by that company. If that company never issued shares, then the length of <code class="docutils literal notranslate"><span class="pre">stockList</span></code> will be 0.</p>
+<p><code class="docutils literal notranslate"><span class="pre">match</span></code> <strong>sacrifices flexibility, notice that not every matching condition can be rewritten in a decoupled form.</strong></p>
+</section>
+<section id="connect">
+<h3><em>Connect</em><a class="headerlink" href="#connect" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">connect</span></code> is a function used to build <strong>both-way link</strong> between two nodes.</p>
+<p>Just like <code class="docutils literal notranslate"><span class="pre">join</span></code> , <code class="docutils literal notranslate"><span class="pre">connect</span></code> is also the attribute function of any InstrumentList, you can use it with any instance of InstrumentList, only need to pass parameters like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">riskQuantLibList</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">anotherList</span><span class="p">,</span> <span class="n">targetAttrNameOnLeft</span><span class="p">,</span> <span class="n">targetAttrNameOnRight</span><span class="p">,</span> <span class="n">filterFunction</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When you call this function, for every element <code class="docutils literal notranslate"><span class="pre">Ai</span></code> of <code class="docutils literal notranslate"><span class="pre">riskQuantLibList</span></code> , RiskQuntLib will find those element from <code class="docutils literal notranslate"><span class="pre">anotherList</span></code> , which satisfy given conditions, and then use these element to initialize a new instance of InstrumentList, then set this instance as an attribute of element <code class="docutils literal notranslate"><span class="pre">Ai</span></code> . The name of attribute is <code class="docutils literal notranslate"><span class="pre">targetAttrNameOnLeft</span></code> , and the condition used to filter element is <code class="docutils literal notranslate"><span class="pre">filterFunction</span></code> , which is a function that return a bool value.</p>
+<p>Then, for every element <code class="docutils literal notranslate"><span class="pre">Bi</span></code> of <code class="docutils literal notranslate"><span class="pre">anotherList</span></code> , RiskQuntLib will find those element from <code class="docutils literal notranslate"><span class="pre">riskQuantLibList</span></code> , which satisfy given conditions, and then use these element to initialize a new instance of InstrumentList, then set this instance as an attribute of element <code class="docutils literal notranslate"><span class="pre">Bi</span></code> . The name of attribute is <code class="docutils literal notranslate"><span class="pre">targetAttrNameOnRight</span></code> , and the condition used to filter element is also <code class="docutils literal notranslate"><span class="pre">filterFunction</span></code> .</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">companyListB</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">stockListA</span><span class="p">,</span> <span class="s1">&#39;issuedStock&#39;</span><span class="p">,</span> <span class="s1">&#39;issuedBy&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">company</span><span class="p">,</span> <span class="n">stock</span><span class="p">:</span> <span class="n">stockIPODetail</span><span class="p">[</span><span class="n">company</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">==</span><span class="n">stock</span><span class="o">.</span><span class="n">stockBelongToSameCompany</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After you call this function, every element of <code class="docutils literal notranslate"><span class="pre">companyListB</span></code> , which is an instance of <code class="docutils literal notranslate"><span class="pre">company</span></code> , will be added one more attribute named as <code class="docutils literal notranslate"><span class="pre">issuedStock</span></code>, the value of this attribute is an instance of <code class="docutils literal notranslate"><span class="pre">stockList</span></code> , which contains all stock that issued by that company. If that company never issued shares, then the length of <code class="docutils literal notranslate"><span class="pre">stockList</span></code> will be 0.</p>
+<p>At the same time, every element of <code class="docutils literal notranslate"><span class="pre">stockListA</span></code> , which is an instance of <code class="docutils literal notranslate"><span class="pre">stock</span></code> , will be added one more attribute named as <code class="docutils literal notranslate"><span class="pre">issuedBy</span></code>, the value of this attribute is an instance of <code class="docutils literal notranslate"><span class="pre">companyList</span></code> , which contains the issuer of that stock. Usually one stock can only be issued by one issuer, so the length of <code class="docutils literal notranslate"><span class="pre">stockList</span></code> will be 1.</p>
+</section>
+<section id="link">
+<h3><em>Link</em><a class="headerlink" href="#link" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">link</span></code> is a vectorized version of <code class="docutils literal notranslate"><span class="pre">connect</span></code> , so that it is usually faster. Use the same example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">riskQuantLibList</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">anotherList</span><span class="p">,</span> <span class="n">targetAttrNameOnLeft</span><span class="p">,</span> <span class="n">targetAttrNameOnRight</span><span class="p">,</span> <span class="n">matchFunctionOnLeft</span><span class="p">,</span> <span class="n">matchFunctionOnRight</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When you call this function, first, for every element <code class="docutils literal notranslate"><span class="pre">Ai</span></code> of <code class="docutils literal notranslate"><span class="pre">riskQuantLibList</span></code> , which is an instance of <code class="docutils literal notranslate"><span class="pre">company</span></code> , this element will be passed to <code class="docutils literal notranslate"><span class="pre">matchFunctionOnLeft</span></code> and get result as P. Second, for every element <code class="docutils literal notranslate"><span class="pre">Bi</span></code> of <code class="docutils literal notranslate"><span class="pre">anotherList</span></code> , which is an instance of <code class="docutils literal notranslate"><span class="pre">stock</span></code> , that element will be passed to <code class="docutils literal notranslate"><span class="pre">matchFunctionOnRight</span></code> and get result as Q.</p>
+<p>Finally, those element from <code class="docutils literal notranslate"><span class="pre">anotherList</span></code> that satisfy P==Q will be used to initialized a new instance of  <code class="docutils literal notranslate"><span class="pre">stockList</span></code> , and setted as an attribute of <code class="docutils literal notranslate"><span class="pre">Ai</span></code> . The name of attribute is <code class="docutils literal notranslate"><span class="pre">targetAttrNameOnLeft</span></code> . Those element from <code class="docutils literal notranslate"><span class="pre">riskQuantLibList</span></code> that satisfy P==Q will be used to initialized a new instance of  <code class="docutils literal notranslate"><span class="pre">companyList</span></code> , and setted as an attribute of <code class="docutils literal notranslate"><span class="pre">Bi</span></code> . The name of attribute is <code class="docutils literal notranslate"><span class="pre">targetAttrNameOnRight</span></code> .</p>
+<p><code class="docutils literal notranslate"><span class="pre">link</span></code> <strong>sacrifices flexibility, notice that not every matching condition can be rewritten in a decoupled form.</strong></p>
+<p><strong>Let’s work together on a task with more complex data relationships. This will give you an idea of how RQL uses graph structure data, two-layer nodes, string puppets (pointers), and other designs to make problems simple.</strong></p>
+</section>
+</section>
+<section id="a-text-counting-project">
+<h2>A Text Counting Project<a class="headerlink" href="#a-text-counting-project" title="Link to this heading">¶</a></h2>
+<p>Let’s say you’re an ESG researcher of company. ESG means Environment, Society, Government. You are reviewing ESG reports of some company and you know some key words in these report will lead to higher ESG ratings for companies. Prior to the analysis, your strict supervisor makes some head-scratching demands. He believes that only a subset of words, rather than all of them, can reflect the behavior of a company in conducting environmental protection, and these words should meet the following criteria:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">In</span> <span class="n">more</span> <span class="n">than</span> <span class="mi">75</span><span class="o">%</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">companies</span><span class="p">,</span> <span class="n">the</span> <span class="n">word</span> <span class="n">appears</span> <span class="n">at</span> <span class="n">least</span> <span class="mi">1</span> <span class="n">time</span><span class="o">.</span> <span class="n">This</span> <span class="n">implies</span> <span class="n">that</span> <span class="n">the</span> <span class="n">word</span> <span class="n">may</span> <span class="n">have</span> <span class="n">some</span> <span class="n">relevance</span> <span class="n">to</span> <span class="n">embodying</span> <span class="n">ESG</span> <span class="n">behaviors</span><span class="o">.</span>
+<span class="mf">2.</span><span class="n">The</span> <span class="n">word</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">specific</span> <span class="n">to</span> <span class="n">a</span> <span class="n">particular</span> <span class="n">industry</span><span class="o">.</span> <span class="n">This</span> <span class="n">means</span> <span class="n">that</span> <span class="n">the</span> <span class="n">word</span> <span class="n">should</span> <span class="ow">not</span> <span class="n">appear</span> <span class="n">significantly</span> <span class="n">more</span> <span class="n">often</span> <span class="ow">in</span> <span class="nb">any</span> <span class="n">one</span> <span class="n">industry</span> <span class="n">than</span> <span class="ow">in</span> <span class="n">others</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>You have now gathered some industry information on Japanese listed companies, saved as <code class="docutils literal notranslate"><span class="pre">JP.xlsx</span></code> . You still have a file showing which words are used in ESG report of that company, saved in some <code class="docutils literal notranslate"><span class="pre">.txt</span></code> files. Your data may be like:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Company</p></th>
+<th class="head"><p>Industry</p></th>
+<th class="head"><p>E Using Words</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Asahi</p></td>
+<td><p>Chemical Product</p></td>
+<td><p>fuel, air, efficiency, coast,…</p></td>
+</tr>
+<tr class="row-odd"><td><p>Chubu</p></td>
+<td><p>Electric Power</p></td>
+<td><p>carbon, nature, cloud,…</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>To finish a task that is complicated like this, you decide to use RiskQuantLib. You open terminal and type <code class="docutils literal notranslate"><span class="pre">newRQL</span> <span class="pre">path\myESG</span></code> to start a new project. Then you edit <code class="docutils literal notranslate"><span class="pre">config.py</span></code> and <a class="reference external" href="https://riskquantlib-doc.readthedocs.io/en/latest/Build_Project.html">Build Your Project</a> to generate <code class="docutils literal notranslate"><span class="pre">company</span></code> and <code class="docutils literal notranslate"><span class="pre">industry</span></code> class.</p>
+<p><code class="docutils literal notranslate"><span class="pre">config.py</span></code> looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument: industry, company</span>
+</pre></div>
+</div>
+<p>You want to add attribute of <code class="docutils literal notranslate"><span class="pre">industry</span></code> and <code class="docutils literal notranslate"><span class="pre">usedWords</span></code> to <code class="docutils literal notranslate"><span class="pre">company</span></code> . After <code class="docutils literal notranslate"><span class="pre">build</span></code> , any instance of  <code class="docutils literal notranslate"><span class="pre">company</span></code> will have method of <code class="docutils literal notranslate"><span class="pre">set</span></code> .</p>
+<p>To do this, add declaration to <code class="docutils literal notranslate"><span class="pre">config.py</span></code> and make it look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#-|instrument: industry, company</span>
+<span class="c1">#-|attribute: company.industry@string, company.usedWords</span>
+</pre></div>
+</div>
+<p>Run <code class="docutils literal notranslate"><span class="pre">build.py</span></code> with python to automatically create classes you need and add attributes you want. Then open <code class="docutils literal notranslate"><span class="pre">main.py</span></code> to start your data analyse. By this time, <code class="docutils literal notranslate"><span class="pre">main.py</span></code> looks like:</p>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">RiskQuantLib.module</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>A common design framework for an RQL project is Data Input, Data Analysis and Data Output. You try to design code using such a framework.</p>
+<section id="data-input">
+<h3><em>Data Input</em><a class="headerlink" href="#data-input" title="Link to this heading">¶</a></h3>
+<p>Let’s start by importing the data. To make it easier to set the values of the instances in bulk later, we often import the properties as iterative objects in the same order as the instances (i.e., if company A appears in the 3rd position of the list of companies, then company A’s <code class="docutils literal notranslate"><span class="pre">usedWords</span></code> property should also appear in the 3rd position of the <code class="docutils literal notranslate"><span class="pre">usedWords</span></code> list). So we design the <code class="docutils literal notranslate"><span class="pre">usedWords</span></code> for companies as a list as follows.</p>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;.\Data\JP.xlsx&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">input_text</span><span class="p">(</span><span class="n">dirpath</span><span class="p">):</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dirpath</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s2">&quot;noun.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">words</span>
+
+<span class="n">companies</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">]</span>
+<span class="n">industries</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Industry&quot;</span><span class="p">]</span>
+<span class="n">companies_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_text</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;.\Data\</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">companies</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Instantiate <code class="docutils literal notranslate"><span class="pre">company_list</span></code> and <code class="docutils literal notranslate"><span class="pre">industry_list</span></code> and add elements to them using the <code class="docutils literal notranslate"><span class="pre">add</span></code> function family, which also adds the <code class="docutils literal notranslate"><span class="pre">code</span></code> attribute to the elements for identification purposes. The <code class="docutils literal notranslate"><span class="pre">set</span></code> function family can be used to add <code class="docutils literal notranslate"><span class="pre">industry</span></code> attribute and the <code class="docutils literal notranslate"><span class="pre">usedWords</span></code> attribute to the <code class="docutils literal notranslate"><span class="pre">company</span></code> element of the <code class="docutils literal notranslate"><span class="pre">company_list</span></code>.
+<code class="docutils literal notranslate"><span class="pre">main.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">company_list</span> <span class="o">=</span> <span class="n">companyList</span><span class="p">()</span>
+<span class="n">company_list</span><span class="o">.</span><span class="n">addCompanySeries</span><span class="p">(</span><span class="n">companies</span><span class="p">,</span> <span class="n">companies</span><span class="p">)</span>
+<span class="n">company_list</span><span class="o">.</span><span class="n">setIndustry</span><span class="p">(</span><span class="n">companies</span><span class="p">,</span> <span class="n">industries</span><span class="p">)</span>
+<span class="n">company_list</span><span class="o">.</span><span class="n">setUsedWords</span><span class="p">(</span><span class="n">companies</span><span class="p">,</span> <span class="n">companies_words</span><span class="p">)</span>
+
+<span class="n">industry_list</span> <span class="o">=</span> <span class="n">industryList</span><span class="p">()</span>
+<span class="n">industry_list</span><span class="o">.</span><span class="n">addIndustrySeries</span><span class="p">(</span><span class="n">industries</span><span class="p">,</span> <span class="n">industries</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">company_list[code]</span></code> or <code class="docutils literal notranslate"><span class="pre">company_list[0]</span></code> during debug to find the corresponding <code class="docutils literal notranslate"><span class="pre">company</span></code> element (returning an instance of <code class="docutils literal notranslate"><span class="pre">company</span></code>).</p>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">company_list</span><span class="p">[</span><span class="s2">&quot;Asahi&quot;</span><span class="p">]</span>
+<span class="c1"># or company_list[0]</span>
+</pre></div>
+</div>
+<p>When examining the property of <code class="docutils literal notranslate"><span class="pre">company</span></code> , you find that there are some company for which the <code class="docutils literal notranslate"><span class="pre">wordsList</span></code> has a length of 0, which indicates that there is missing data for this company. You decide to filter out these elements with the <code class="docutils literal notranslate"><span class="pre">filter</span></code> function of the <code class="docutils literal notranslate"><span class="pre">Instrument</span> <span class="pre">List</span></code> . When <code class="docutils literal notranslate"><span class="pre">filter</span></code>’s parameter <code class="docutils literal notranslate"><span class="pre">useObj</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, his result is still an <code class="docutils literal notranslate"><span class="pre">Instrument</span> <span class="pre">List</span></code> . so you continue typing in <code class="docutils literal notranslate"><span class="pre">main.py</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">company_list</span> <span class="o">=</span> <span class="n">company_list</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">company</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">company</span><span class="o">.</span><span class="n">usedWords</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">useObj</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="data-analysis">
+<h3><em>Data Analysis</em><a class="headerlink" href="#data-analysis" title="Link to this heading">¶</a></h3>
+<p>Let’s then move on to the (complicated) process of analyzing. You decided to start by counting the frequency of words used for each company. You opened <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/Instrument/Company/company.py</span></code> and added a <code class="docutils literal notranslate"><span class="pre">countUsedWords</span></code> method to the <code class="docutils literal notranslate"><span class="pre">Company</span></code> class as follows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">RiskQuantLib.Instrument.Company.company</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">company</span><span class="p">(</span><span class="n">setCompany</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">countUsedWordsDict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">usedWordsDict</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">usedWords</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You write <code class="docutils literal notranslate"><span class="pre">company_list.exec(&quot;countUsedWords&quot;)</span> <span class="pre">``</span> <span class="pre">in</span> <span class="pre">``main.py</span></code>, calling <code class="docutils literal notranslate"><span class="pre">countUsedWords</span></code> method for each element in the list. Each of your <code class="docutils literal notranslate"><span class="pre">Company</span></code> elements gets the additional attribute <code class="docutils literal notranslate"><span class="pre">usedWordsDict</span></code> as a result.</p>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">company_list</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s2">&quot;countUsedWordsDict&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To fulfill boss’s requirement 1, you need to count which words appear at least once in at least 75% of companies. You open <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/InstrumentList/CompanyList/companyList.py</span></code> and add a method to <code class="docutils literal notranslate"><span class="pre">Company_list</span></code> as follows.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RiskQuantLib.InstrumentList.CompanyList.companyList</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">companyList</span><span class="p">(</span><span class="n">listBase</span><span class="p">,</span><span class="n">setCompanyList</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rule_one</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.75</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+    <span class="n">word_dict</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">company</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all</span><span class="p">:</span>
+        <span class="n">word_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">word</span><span class="p">:</span><span class="mi">1</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">company</span><span class="o">.</span><span class="n">usedWordsDict</span><span class="o">.</span><span class="n">keys</span><span class="p">()})</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">rule_one</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">word_dict</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Calling the <code class="docutils literal notranslate"><span class="pre">rule_one</span></code> method of <code class="docutils literal notranslate"><span class="pre">company_list</span></code> in <code class="docutils literal notranslate"><span class="pre">main.py</span></code> adds an attribute <code class="docutils literal notranslate"><span class="pre">rule_one</span></code> to <code class="docutils literal notranslate"><span class="pre">company_list</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">company_list</span><span class="o">.</span><span class="n">rule_one</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>After that, you decide to use RQL’s <code class="docutils literal notranslate"><span class="pre">connect</span></code> function to link certain related elements in <code class="docutils literal notranslate"><span class="pre">company_list</span></code> and <code class="docutils literal notranslate"><span class="pre">industry_list</span></code>, making them callable as attributes of each other, which is one of the core ideas of RQL (graph-structured data stores). You enter the code as follows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">company_list</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">industry_list</span><span class="p">,</span>
+                     <span class="n">targetAttrNameOnLeft</span><span class="o">=</span><span class="s2">&quot;industryObj&quot;</span><span class="p">,</span>
+                     <span class="n">targetAttrNameOnRight</span><span class="o">=</span><span class="s2">&quot;companiesObj&quot;</span><span class="p">,</span>
+                     <span class="n">filterFunction</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">industry</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can see that each <code class="docutils literal notranslate"><span class="pre">company</span></code> element has a new attribute <code class="docutils literal notranslate"><span class="pre">industryObj</span></code>, and the <code class="docutils literal notranslate"><span class="pre">industry</span></code> element has a new attribute <code class="docutils literal notranslate"><span class="pre">companiesObj</span></code>, and they are both RQL lists.</p>
+<p>You decide to start by counting the average word usage by companies in each industry, and you add a method to the <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/Instrument/Industry/industry.py</span></code>, in the <code class="docutils literal notranslate"><span class="pre">industry</span></code> class as follows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">RiskQuantLib.Instrument.Industry.industry</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">industry</span><span class="p">(</span><span class="n">setIndustry</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">countAvgWords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+        <span class="n">countWords</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+        <span class="p">[</span><span class="n">countWords</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">company</span><span class="o">.</span><span class="n">usedWords</span><span class="p">)</span> <span class="k">for</span> <span class="n">company</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">CompaniesObj</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avgWords</span> <span class="o">=</span> <span class="p">{</span><span class="n">word</span><span class="p">:</span><span class="n">countWords</span><span class="p">[</span><span class="n">word</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CompaniesObj</span><span class="o">.</span><span class="n">all</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">countWords</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+</pre></div>
+</div>
+<p>You write <code class="docutils literal notranslate"><span class="pre">industry_list.execFunc(&quot;avgCountWords&quot;)</span></code> in <code class="docutils literal notranslate"><span class="pre">main.py</span></code>, calling its <code class="docutils literal notranslate"><span class="pre">countAvgWords</span></code> method for each element in the list. Each of your <code class="docutils literal notranslate"><span class="pre">Industry</span></code> elements will thus get the new attribute <code class="docutils literal notranslate"><span class="pre">avgWords</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">industry_list</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s2">&quot;countAvgWords&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You want to fulfill boss’s request 2, for each word in <code class="docutils literal notranslate"><span class="pre">company_list.rule_one</span></code>, you need to go through and check if it occurs significantly more often in a particular industry. You decide to count how often each word is used in each industry, and you open <code class="docutils literal notranslate"><span class="pre">RiskQuantLib/InstrumentList/IndustryList/industryList.py</span></code> and add a method <code class="docutils literal notranslate"><span class="pre">removeBiasWords</span></code> to <code class="docutils literal notranslate"><span class="pre">Industrylist</span></code> as follows. <code class="docutils literal notranslate"><span class="pre">RemoveBiasWords</span></code> as follows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">RiskQuantLib.InstrumentList.IndustryList.industryList</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">industryList</span><span class="p">(</span><span class="n">listBase</span><span class="p">,</span><span class="n">setIndustryList</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rule_two</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule_one</span><span class="p">,</span> <span class="n">n_sigma</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rule_two</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">rule_one</span><span class="p">:</span>
+            <span class="n">frequency_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">industry</span><span class="o">.</span><span class="n">avgWords</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="k">if</span> <span class="n">industry</span><span class="o">.</span><span class="n">avgWords</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">industry</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">frequency_list</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">frequency_list</span><span class="p">)</span> <span class="o">+</span> <span class="n">n_sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">frequency_list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rule_two</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After the calling of <code class="docutils literal notranslate"><span class="pre">Industry_list.rule_two</span></code>, <code class="docutils literal notranslate"><span class="pre">industry_list</span></code> adds an attribute <code class="docutils literal notranslate"><span class="pre">rule_two</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">industry_list</span><span class="o">.</span><span class="n">rule_two</span><span class="p">(</span><span class="n">rule_one</span> <span class="o">=</span> <span class="n">company_list</span><span class="o">.</span><span class="n">rule_one</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>So you can use this list of words that satisfy the leader’s requirements to do the filtering! You define the following function <code class="docutils literal notranslate"><span class="pre">findUsefulWords</span></code> in the <code class="docutils literal notranslate"><span class="pre">company</span></code> class:</p>
+<p><code class="docutils literal notranslate"><span class="pre">RiskQuantLib.Instrument.Company.company</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">company</span><span class="p">(</span><span class="n">setCompany</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">findUsefulWordsDict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule_two</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">usefulWordsDict</span> <span class="o">=</span> <span class="p">{</span><span class="n">word</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">usedWordsDict</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">usedWordsDict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">rule_two</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>After calling <code class="docutils literal notranslate"><span class="pre">company_list.execFunc(&quot;findUsefulWords&quot;,</span> <span class="pre">industry.rule_two)</span></code>, each business gets the property <code class="docutils literal notranslate"><span class="pre">usefulWordsDict</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">company_list</span><span class="o">.</span><span class="n">execFunc</span><span class="p">(</span><span class="s2">&quot;findUsefulWords&quot;</span><span class="p">,</span> <span class="n">industry</span><span class="o">.</span><span class="n">rule_two</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="data-output">
+<h3><em>Data Output</em><a class="headerlink" href="#data-output" title="Link to this heading">¶</a></h3>
+<p>This is the word list that satisfies the leader’s requirements, and we can use him for following research now!</p>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
+<p>Let’s review the whole process of the project:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span> <span class="n">Think</span> <span class="n">about</span> <span class="n">the</span> <span class="n">structural</span> <span class="n">relationships</span> <span class="ow">and</span> <span class="n">attributes</span> <span class="n">of</span> <span class="n">the</span> <span class="n">node</span> <span class="n">classes</span><span class="p">,</span> <span class="n">modify</span> <span class="n">the</span> <span class="n">config</span><span class="o">.</span><span class="n">py</span> <span class="n">file</span> <span class="ow">and</span> <span class="n">run</span> <span class="n">build</span><span class="o">.</span><span class="n">py</span><span class="o">.</span>
+<span class="mf">2.</span> <span class="n">Import</span> <span class="n">data</span><span class="o">.</span> <span class="n">Instantiate</span> <span class="n">RQLlist</span> <span class="p">(</span><span class="n">Instrument</span> <span class="n">List</span><span class="p">)</span> <span class="ow">and</span> <span class="n">add</span> <span class="n">elements</span><span class="p">,</span> <span class="n">use</span> <span class="nb">set</span> <span class="n">function</span> <span class="n">family</span> <span class="n">to</span> <span class="nb">set</span> <span class="n">properties</span> <span class="n">of</span> <span class="n">element</span> <span class="n">nodes</span><span class="o">.</span>
+<span class="mf">3.</span> <span class="n">Start</span> <span class="n">analyzing</span><span class="o">.</span> <span class="o">**</span><span class="n">Roundtrip</span><span class="o">**</span> <span class="ow">or</span> <span class="o">**</span><span class="n">Jump</span><span class="o">**</span> <span class="n">Between</span> <span class="n">main</span><span class="o">.</span><span class="n">py</span> <span class="ow">and</span> <span class="n">each</span> <span class="n">node</span> <span class="p">(</span><span class="n">company</span> <span class="ow">and</span> <span class="n">industry</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">project</span><span class="p">),</span> <span class="n">design</span> <span class="n">various</span> <span class="n">methods</span> <span class="k">for</span> <span class="n">element</span> <span class="n">nodes</span> <span class="ow">and</span> <span class="nb">list</span> <span class="n">nodes</span><span class="o">.</span> <span class="n">And</span> <span class="n">the</span> <span class="n">result</span> <span class="n">of</span> <span class="n">calling</span> <span class="n">the</span> <span class="n">methods</span> <span class="ow">is</span> <span class="n">setted</span> <span class="k">as</span> <span class="n">an</span> <span class="n">attribute</span> <span class="n">on</span> <span class="n">that</span> <span class="n">node</span> <span class="p">(</span><span class="ow">or</span> <span class="nb">any</span> <span class="n">other</span> <span class="n">location</span><span class="p">)</span><span class="o">.</span>
+<span class="mf">4.</span> <span class="n">Repeat</span> <span class="n">the</span> <span class="n">process</span> <span class="n">of</span> <span class="mi">3</span> <span class="n">until</span> <span class="n">you</span> <span class="n">get</span> <span class="n">the</span> <span class="n">final</span> <span class="n">result</span><span class="o">.</span>
+<span class="mf">5.</span> <span class="n">Export</span> <span class="n">the</span> <span class="n">data</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>RiskQuantLib is designed to provide the user with a customized data analysis model, and what design to use depends on the data problem the user is facing.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="With_ORM.html" class="btn btn-neutral float-left" title="With ORM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="With_Github.html" class="btn btn-neutral float-right" title="With Github" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
