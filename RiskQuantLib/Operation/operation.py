@@ -723,7 +723,7 @@ class operation(object):
         will be set as an attribute of 'rolling', thus the present element can reach to
         the information of its former elements.
         """
-        rollingList = [self[max((i-windowNumber+1),0):(i+1)] for i in range(len(self))]
+        rollingList = [self.all[max((i-windowNumber+1),0):(i+1)] for i in range(len(self))]
         if useObj:
             rollingObj = [self.__new__(type(self)) for i in range(len(self))]
             [i.__init__() for i in rollingObj]
